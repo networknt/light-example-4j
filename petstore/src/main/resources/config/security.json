@@ -1,0 +1,14 @@
+{
+  "description": "security configuration",
+  "enableVerifyJwt": true,
+  "enableVerifyScope": true,
+  "jwt": {
+    "certificate": {
+      "100": "oauth/primary.crt",
+      "101": "oauth/secondary.crt"
+    },
+    "clockSkewInSeconds": 60
+  },
+  "logJwtToken": true,
+  "logClientUserScope": false
+}
