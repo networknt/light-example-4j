@@ -1,7 +1,8 @@
 {
   "description": "security configuration",
-  "enableVerifyJwt": true,
+  "enableVerifyJwt": false,
   "enableVerifyScope": true,
+  "enableMockJwt": false,
   "jwt": {
     "certificate": {
       "100": "oauth/primary.crt",

@@ -15,19 +15,26 @@ import java.util.List;
 
 
 
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.UndertowCodegen", date = "2016-09-23T19:13:40.265-04:00")
+@javax.annotation.Generated(value = "class io.swagger.codegen.languages.UndertowCodegen", date = "2016-10-05T20:18:33.233-04:00")
 public class Pet   {
-  
   private Long id = null;
+
   private Category category = null;
+
   private String name = null;
+
   private List<String> photoUrls = new ArrayList<String>();
+
   private List<Tag> tags = new ArrayList<Tag>();
 
-
+  /**
+   * pet status in the store
+   */
   public enum StatusEnum {
     AVAILABLE("available"),
+    
     PENDING("pending"),
+    
     SOLD("sold");
 
     private String value;
@@ -39,7 +46,17 @@ public class Pet   {
     @Override
     @JsonValue
     public String toString() {
-      return value;
+      return String.valueOf(value);
+    }
+
+    @JsonCreator
+    public static StatusEnum fromValue(String text) {
+      for (StatusEnum b : StatusEnum.values()) {
+        if (String.valueOf(b.value).equals(text)) {
+          return b;
+        }
+      }
+      return null;
     }
   }
 

@@ -10,16 +10,22 @@ import io.swagger.annotations.ApiModelProperty;
 
 
 
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.UndertowCodegen", date = "2016-09-23T19:13:40.265-04:00")
+@javax.annotation.Generated(value = "class io.swagger.codegen.languages.UndertowCodegen", date = "2016-10-05T20:18:33.233-04:00")
 public class User   {
-  
   private Long id = null;
+
   private String username = null;
+
   private String firstName = null;
+
   private String lastName = null;
+
   private String email = null;
+
   private String password = null;
+
   private String phone = null;
+
   private Integer userStatus = null;
 
   /**
