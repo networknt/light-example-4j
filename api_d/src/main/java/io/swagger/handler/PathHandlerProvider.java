@@ -7,6 +7,9 @@ import io.undertow.server.HttpHandler;
 import io.undertow.server.HttpServerExchange;
 import io.undertow.util.Methods;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class PathHandlerProvider implements HandlerProvider {
 
     public HttpHandler getHandler() {
@@ -15,7 +18,10 @@ public class PathHandlerProvider implements HandlerProvider {
 
             .add(Methods.GET, "/v1/data", new HttpHandler() {
                         public void handleRequest(HttpServerExchange exchange) throws Exception {
-                            exchange.getResponseSender().send("listData");
+                            List<String> messages = new ArrayList<String>();
+                            messages.add("API D: Message 1");
+                            messages.add("API D: Message 2");
+                            exchange.getResponseSender().send(Config.getInstance().getMapper().writeValueAsString(messages));
                         }
                     })
 
