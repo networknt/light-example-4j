@@ -29,10 +29,14 @@ public class PathHandlerProvider implements HandlerProvider {
 
             .add(Methods.GET, "/v1/data", new HttpHandler() {
                         public void handleRequest(HttpServerExchange exchange) throws Exception {
+                            // get passed in Authorization header
+                            String authHeader = exchange.getRequestHeaders().getFirst("Authorization");
+
                             List<String> list = new ArrayList<String>();
                             try {
                                 CloseableHttpClient client = Client.getInstance().getSyncClient();
                                 HttpGet httpGet = new HttpGet(apidUrl);
+                                Client.getInstance().addAuthorizationWithScopeToken(httpGet, authHeader);
                                 CloseableHttpResponse response = client.execute(httpGet);
                                 int responseCode = response.getStatusLine().getStatusCode();
                                 if(responseCode != 200){

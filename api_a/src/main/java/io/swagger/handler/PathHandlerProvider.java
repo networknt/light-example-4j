@@ -28,6 +28,8 @@ public class PathHandlerProvider implements HandlerProvider {
             .add(Methods.GET, "/v1/data", new HttpHandler() {
                         public void handleRequest(HttpServerExchange exchange) throws Exception {
                             List<String> list = new ArrayList<String>();
+                            // get passed in Authorization header
+                            String authHeader = exchange.getRequestHeaders().getFirst("Authorization");
                             final HttpGet[] requests = new HttpGet[] {
                                     new HttpGet("http://localhost:8081/v1/data"),
                                     new HttpGet("http://localhost:8082/v1/data"),
@@ -36,6 +38,7 @@ public class PathHandlerProvider implements HandlerProvider {
                                 CloseableHttpAsyncClient client = Client.getInstance().getAsyncClient();
                                 final CountDownLatch latch = new CountDownLatch(requests.length);
                                 for (final HttpGet request: requests) {
+                                    Client.getInstance().addAuthorizationWithScopeToken(request, authHeader);
                                     client.execute(request, new FutureCallback<HttpResponse>() {
                                         @Override
                                         public void completed(final HttpResponse response) {

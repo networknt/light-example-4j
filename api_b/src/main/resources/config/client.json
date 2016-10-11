@@ -43,8 +43,8 @@
     "ignoreSSLErrors": false,
     "authorization_code": {
       "uri": "/oauth2/token",
-      "client_id": "fe5dadd9-34ad-430f-a8f7-c75e81cc5d7b",
-      "client_secret": "GXkHy-1aSPyo4pst8WBWbg",
+      "client_id": "10a0a743-4674-4a9d-8867-db63ad4c8b4e",
+      "client_secret": "tcahI1dvT1OsxXxg-IB_-w",
       "redirect_uri": "https://localhost:8080/authorization_code",
       "scope": [
         "api_d.r",
@@ -53,8 +53,8 @@
     },
     "client_credentials": {
       "uri": "/oauth2/token",
-      "client_id": "fe5dadd9-34ad-430f-a8f7-c75e81cc5d7b",
-      "client_secret": "GXkHy-1aSPyo4pst8WBWbg",
+      "client_id": "10a0a743-4674-4a9d-8867-db63ad4c8b4e",
+      "client_secret": "tcahI1dvT1OsxXxg-IB_-w",
       "scope": [
         "api_d.r",
         "api_d_w"
