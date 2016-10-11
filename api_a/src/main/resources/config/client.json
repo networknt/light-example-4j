@@ -35,12 +35,10 @@
     "keyPass": "password"
   },
   "oauth": {
-    "tokenRenewBeforeExpired": 600000,
+    "tokenRenewBeforeExpired": 120000,
     "expiredRefreshRetryDelay": 5000,
     "earlyRefreshRetryDelay": 30000,
     "server_url": "http://localhost:8888",
-    "timeout": 5000,
-    "ignoreSSLErrors": false,
     "authorization_code": {
       "uri": "/oauth2/token",
       "client_id": "fe5dadd9-34ad-430f-a8f7-c75e81cc5d7b",
