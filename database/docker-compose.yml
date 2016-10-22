@@ -1,0 +1,20 @@
+ version: '2'
+ services:
+   mysqldb:
+     image: mysql:5.7.16
+     volumes:
+       - ./docker/db/mysql:/var/lib/mysql
+       - ./src/main/resources/script/mysql:/docker-entrypoint-initdb.d
+     restart: always
+     environment:
+       MYSQL_ROOT_PASSWORD: my-secret-pw
+
+   light:
+     depends_on:
+       - mysqldb
+     image: networknt/example-database:latest
+     links:
+       - mysqldb
+     ports:
+       - 8080:8080
+     restart: always

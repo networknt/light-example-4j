@@ -1,0 +1,13 @@
+{
+  "description": "mysql connection",
+  "jdbcUrl": "jdbc:mysql://172.18.0.2:3306/hello_world",
+  "username": "root",
+  "password": "my-secret-pw",
+  "maximumPoolSize": 150,
+  "useServerPrepStmts": true,
+  "cachePrepStmts": true,
+  "cacheCallableStmts": true,
+  "prepStmtCacheSize": 4096,
+  "prepStmtCacheSqlLimit": 2048
+}
+
