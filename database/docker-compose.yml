@@ -9,12 +9,24 @@
      environment:
        MYSQL_ROOT_PASSWORD: my-secret-pw
 
+   postgresdb:
+     image: postgres:9.6.0
+     volumes:
+       - ./docker/db/postgres:/var/lib/postgresql/data
+       - ./src/main/resources/script/postgres:/docker-entrypoint-initdb.d
+     restart: always
+     environment:
+       POSTGRES_PASSWORD: my-secret-pw
+       POSTGRES_DB: hello_world
+
    light:
      depends_on:
        - mysqldb
+       - postgresdb
      image: networknt/example-database:latest
      links:
        - mysqldb
+       - postgresdb
      ports:
        - 8080:8080
      restart: always

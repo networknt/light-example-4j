@@ -5,3 +5,5 @@
 com.networknt.server.JsonPathStartupHookProvider
 # init mysql connection pool
 com.networknt.db.mysql.MysqlStartupHookProvider
+# init postgres connection pool
+com.networknt.db.postgres.PostgresStartupHookProvider

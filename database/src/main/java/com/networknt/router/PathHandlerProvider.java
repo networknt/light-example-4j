@@ -1,6 +1,7 @@
 package com.networknt.router;
 
 import com.networknt.db.mysql.MysqlStartupHookProvider;
+import com.networknt.db.postgres.PostgresStartupHookProvider;
 import com.networknt.handler.DbSqlHandler;
 import com.networknt.handler.TextHandler;
 import com.networknt.handler.UpdatesSqlHandler;
@@ -15,12 +16,14 @@ import io.undertow.util.Methods;
 public class PathHandlerProvider implements HandlerProvider {
 
     public HttpHandler getHandler() {
-        System.out.println("PathHandlerProvider.getHandler is called ds = " + MysqlStartupHookProvider.ds);
         HttpHandler handler = Handlers.routing()
                 .add(Methods.GET, "/text", new TextHandler())
                 .add(Methods.GET, "/db/mysql", new DbSqlHandler(MysqlStartupHookProvider.ds, false))
                 .add(Methods.GET, "/queries/mysql", new DbSqlHandler(MysqlStartupHookProvider.ds, true))
                 .add(Methods.GET, "/updates/mysql", new UpdatesSqlHandler(MysqlStartupHookProvider.ds))
+                .add(Methods.GET, "/db/postgres", new DbSqlHandler(PostgresStartupHookProvider.ds, false))
+                .add(Methods.GET, "/queries/postgres", new DbSqlHandler(PostgresStartupHookProvider.ds, true))
+                .add(Methods.GET, "/updates/postgres", new UpdatesSqlHandler(PostgresStartupHookProvider.ds))
                 ;
         return handler;
     }

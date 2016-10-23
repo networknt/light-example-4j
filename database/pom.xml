@@ -37,6 +37,7 @@
         <version.swagger>1.5.10</version.swagger>
         <version.hikaricp>2.5.1</version.hikaricp>
         <version.mysql>6.0.4</version.mysql>
+        <version.postgres>9.4.1211</version.postgres>
     </properties>
 
     <dependencies>
@@ -155,6 +156,11 @@
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
             <version>${version.mysql}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <version>${version.postgres}</version>
         </dependency>
 
         <!-- Test Dependencies -->
