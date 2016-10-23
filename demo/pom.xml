@@ -1,18 +1,13 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-    <parent>
-        <groupId>org.sonatype.oss</groupId>
-        <artifactId>oss-parent</artifactId>
-        <version>5</version>
-    </parent>
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <groupId>io.swagger</groupId>
-    <artifactId>swagger-light-java</artifactId>
+    <groupId>com.networknt</groupId>
+    <artifactId>demo</artifactId>
     <packaging>jar</packaging>
-    <name>swagger-light-java</name>
-    <version>1.0.0</version>
-    <prerequisites>
-        <maven>2.2.0</maven>
-    </prerequisites>
+    <version>0.1.0</version>
+    <name>demo</name>
 
     <properties>
         <java.version>1.8</java.version>
@@ -34,9 +29,10 @@
         <version.jsonpath>2.2.0</version.jsonpath>
         <version.httpclient>4.5.2</version.httpclient>
         <version.httpasyncclient>4.1.2</version.httpasyncclient>
-        <version.swagger>1.5.10</version.swagger>
+        <nexus.server>http://nexus.com:8080</nexus.server>
+        <argLine>-Xmx512m -XX:MaxPermSize=256m</argLine>
     </properties>
-
+ 
     <dependencies>
         <dependency>
             <groupId>com.networknt</groupId>
@@ -55,65 +51,10 @@
         </dependency>
         <dependency>
             <groupId>com.networknt</groupId>
-            <artifactId>client</artifactId>
-            <version>${version.framework}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.networknt</groupId>
-            <artifactId>audit</artifactId>
-            <version>${version.framework}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.networknt</groupId>
-            <artifactId>info</artifactId>
-            <version>${version.framework}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.networknt</groupId>
-            <artifactId>validator</artifactId>
-            <version>${version.framework}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.networknt</groupId>
-            <artifactId>status</artifactId>
-            <version>${version.framework}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.networknt</groupId>
-            <artifactId>exception</artifactId>
-            <version>${version.framework}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.networknt</groupId>
-            <artifactId>body</artifactId>
-            <version>${version.framework}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.networknt</groupId>
-            <artifactId>mask</artifactId>
-            <version>${version.framework}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.networknt</groupId>
-            <artifactId>swagger</artifactId>
-            <version>${version.framework}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.networknt</groupId>
-            <artifactId>metrics</artifactId>
-            <version>${version.framework}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.networknt</groupId>
-            <artifactId>handler</artifactId>
-            <version>${version.framework}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.networknt</groupId>
             <artifactId>server</artifactId>
             <version>${version.framework}</version>
         </dependency>
-
+  
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
@@ -139,17 +80,8 @@
             <artifactId>undertow-core</artifactId>
             <version>${version.undertow}</version>
         </dependency>
-        <dependency>
-            <groupId>io.swagger</groupId>
-            <artifactId>swagger-annotations</artifactId>
-            <version>${version.swagger}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.httpcomponents</groupId>
-            <artifactId>httpclient</artifactId>
-            <version>${version.httpclient}</version>
-        </dependency>
 
+      
         <!-- Test Dependencies -->
         <dependency>
             <groupId>junit</groupId>
@@ -157,23 +89,12 @@
             <version>${version.junit}</version>
             <scope>test</scope>
         </dependency>
+
     </dependencies>
 
-
     <build>
-        <defaultGoal>install</defaultGoal>
-        <directory>target</directory>
         <finalName>${project.artifactId}-${project.version}</finalName>
         <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>2.5.1</version>
-                <configuration>
-                    <source>${java.version}</source>
-                    <target>${java.version}</target>
-                </configuration>
-            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-shade-plugin</artifactId>
@@ -219,13 +140,5 @@
         </plugins>
     </build>
 
-    <repositories>
-        <repository>
-            <id>sonatype-snapshots</id>
-            <url>https://oss.sonatype.org/content/repositories/snapshots</url>
-            <snapshots>
-                <enabled>true</enabled>
-            </snapshots>
-        </repository>
-    </repositories>
+
 </project>
