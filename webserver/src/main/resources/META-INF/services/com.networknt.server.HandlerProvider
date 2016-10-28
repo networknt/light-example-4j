@@ -1,1 +1,1 @@
-com.networknt.demo.handler.WebserverHandlerProvider
+com.networknt.webserver.handler.WebServerHandlerProvider

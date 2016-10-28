@@ -1,3 +1,4 @@
 {
-
+  "base": "/public",
+  "transferMinSize": "100"
 }
