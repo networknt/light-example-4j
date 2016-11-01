@@ -1,14 +1,19 @@
 # Introduction
-A web server implementation of light-java that provides two API endpoints and serving static content from
-an extenalized folder. It can be single page javascript application alone with some images, fonts etc.
+A web server implementation of light-java that provides two API endpoints and 
+serving static content from an externalized folder /public. It can be single page 
+javascript application alone with some images, fonts etc.
 
-/text
+/api/text
 
 returns "Hello World"
 
-/json
+/api/json
 
 returns {"message":"Hello World"}
+
+/
+
+returns index.html
 
 # Getting Started
 
@@ -21,9 +26,7 @@ cd light-java-example/webserver
 
 mvn clean install
 
-cd target
-
-java -jar webserver-x.x.x.jar
+java -jar target/webserver-x.x.x.jar
 
 ```
 
@@ -47,7 +50,7 @@ the folder that contains security.json is /tmp/config
 docker run -d -v /tmp/config:/config -p 8080:8080 networknt/example-webserver
 ```
 
-In order to access the demo server you can use a long lived token below issued by my
+In order to access the webserver you can use a long lived token below issued by my
 oauth2 server [light-oauth2](https://github.com/networknt/light-oauth2)
 
 ```
@@ -60,7 +63,12 @@ Add the following header in the request.
 
 Authorization with value as above token.
 
-GET localhost:8080/text
+GET localhost:8080/api/text
 
-GET localhost:8080/json
+GET localhost:8080/api/json
+
+
+The public static site is not protected. 
+
+GET localhost:8080/
 
