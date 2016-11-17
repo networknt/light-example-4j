@@ -1,4 +1,4 @@
-package io.swagger.handler;
+package io.swagger;
 
 import com.networknt.config.Config;
 import com.networknt.server.HandlerProvider;
@@ -6,6 +6,7 @@ import io.undertow.Handlers;
 import io.undertow.server.HttpHandler;
 import io.undertow.server.HttpServerExchange;
 import io.undertow.util.Methods;
+import io.swagger.handler.*;
 
 public class PathHandlerProvider implements HandlerProvider {
 
