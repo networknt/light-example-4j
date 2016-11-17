@@ -9,10 +9,7 @@ import io.undertow.server.HttpServerExchange;
 import io.undertow.util.HttpString;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.CountDownLatch;
 
 import org.apache.commons.lang3.StringEscapeUtils;
@@ -28,7 +25,7 @@ public class DataGetHandler implements HttpHandler {
     static String apicUrl = (String)Config.getInstance().getJsonMapConfig(CONFIG_NAME).get("api_c_endpoint");
 
     public void handleRequest(HttpServerExchange exchange) throws Exception {
-        List<String> list = new ArrayList<String>();
+        List<String> list = new Vector<String>();
         final HttpGet[] requests = new HttpGet[] {
                 new HttpGet(apibUrl),
                 new HttpGet(apicUrl),
@@ -40,29 +37,32 @@ public class DataGetHandler implements HttpHandler {
                 client.execute(request, new FutureCallback<HttpResponse>() {
                     @Override
                     public void completed(final HttpResponse response) {
-                        latch.countDown();
                         try {
                             List<String> apiList = (List<String>) Config.getInstance().getMapper().readValue(response.getEntity().getContent(),
                                     new TypeReference<List<String>>(){});
                             list.addAll(apiList);
                         } catch (IOException e) {
-
+                            e.printStackTrace();
                         }
+                        latch.countDown();
                     }
 
                     @Override
                     public void failed(final Exception ex) {
+                        ex.printStackTrace();
                         latch.countDown();
                     }
 
                     @Override
                     public void cancelled() {
+                        System.out.println("cancelled");
                         latch.countDown();
                     }
                 });
             }
             latch.await();
         } catch (ClientException e) {
+            e.printStackTrace();
             throw new Exception("ClientException:", e);
         }
         // now add API A specific messages
