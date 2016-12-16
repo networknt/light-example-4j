@@ -46,9 +46,9 @@
       "redirect_uri": "https://localhost:8080/authorization_code",
       "scope": [
         "api_b.r",
-        "api_b_w",
+        "api_b.w",
         "api_c.r",
-        "api_c_w"
+        "api_c.w"
       ]
     },
     "client_credentials": {
@@ -57,9 +57,9 @@
       "client_secret": "GXkHy-1aSPyo4pst8WBWbg",
       "scope": [
         "api_b.r",
-        "api_b_w",
+        "api_b.w",
         "api_c.r",
-        "api_c_w"
+        "api_c.w"
       ]
     }
   }
