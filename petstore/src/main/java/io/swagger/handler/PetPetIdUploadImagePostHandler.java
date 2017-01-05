@@ -8,7 +8,7 @@ import java.util.Map;
 import org.apache.commons.lang3.StringEscapeUtils;
 
 public class PetPetIdUploadImagePostHandler implements HttpHandler {
-
+    @Override
     public void handleRequest(HttpServerExchange exchange) throws Exception {
         Map<String, Object> examples = new HashMap<String, Object>();
         examples.put("application/json", StringEscapeUtils.unescapeHtml4("{  &quot;code&quot; : 123,  &quot;type&quot; : &quot;aeiou&quot;,  &quot;message&quot; : &quot;aeiou&quot;}"));

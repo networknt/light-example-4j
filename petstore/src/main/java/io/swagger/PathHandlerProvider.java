@@ -9,7 +9,7 @@ import io.undertow.util.Methods;
 import io.swagger.handler.*;
 
 public class PathHandlerProvider implements HandlerProvider {
-
+    @Override
     public HttpHandler getHandler() {
         HttpHandler handler = Handlers.routing()
             .add(Methods.GET, "/v2/pet/findByStatus", new PetFindByStatusGetHandler())

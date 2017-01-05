@@ -10,7 +10,7 @@ import io.swagger.annotations.ApiModelProperty;
 
 
 
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.LightJavaCodegen", date = "2016-12-13T08:41:47.918-05:00")
+@javax.annotation.Generated(value = "class io.swagger.codegen.languages.LightJavaCodegen", date = "2017-01-04T20:18:27.702-05:00")
 public class ModelApiResponse   {
   private Integer code = null;
 

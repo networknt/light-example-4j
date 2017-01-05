@@ -15,7 +15,7 @@ import java.util.List;
 
 
 
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.LightJavaCodegen", date = "2016-12-13T08:41:47.918-05:00")
+@javax.annotation.Generated(value = "class io.swagger.codegen.languages.LightJavaCodegen", date = "2017-01-04T20:18:27.702-05:00")
 public class Pet   {
   private Long id = null;
 
@@ -37,7 +37,7 @@ public class Pet   {
     
     SOLD("sold");
 
-    private String value;
+    private final String value;
 
     StatusEnum(String value) {
       this.value = value;

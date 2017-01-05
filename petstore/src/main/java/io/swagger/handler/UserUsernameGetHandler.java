@@ -8,7 +8,7 @@ import java.util.Map;
 import org.apache.commons.lang3.StringEscapeUtils;
 
 public class UserUsernameGetHandler implements HttpHandler {
-
+    @Override
     public void handleRequest(HttpServerExchange exchange) throws Exception {
         Map<String, Object> examples = new HashMap<String, Object>();
         examples.put("application/xml", StringEscapeUtils.unescapeHtml4("&lt;User&gt;  &lt;id&gt;123456&lt;/id&gt;  &lt;username&gt;string&lt;/username&gt;  &lt;firstName&gt;string&lt;/firstName&gt;  &lt;lastName&gt;string&lt;/lastName&gt;  &lt;email&gt;string&lt;/email&gt;  &lt;password&gt;string&lt;/password&gt;  &lt;phone&gt;string&lt;/phone&gt;  &lt;userStatus&gt;0&lt;/userStatus&gt;&lt;/User&gt;"));
