@@ -10,7 +10,7 @@ import org.apache.commons.lang3.StringEscapeUtils;
 public class UserLoginGetHandler implements HttpHandler {
     @Override
     public void handleRequest(HttpServerExchange exchange) throws Exception {
-        Map<String, Object> examples = new HashMap<String, Object>();
+        Map<String, Object> examples = new HashMap<>();
         examples.put("application/xml", StringEscapeUtils.unescapeHtml4("string"));
         examples.put("application/json", StringEscapeUtils.unescapeHtml4("&quot;aeiou&quot;"));
         if(examples.size() > 0) {

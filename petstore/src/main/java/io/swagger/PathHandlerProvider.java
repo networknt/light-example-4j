@@ -11,7 +11,7 @@ import io.swagger.handler.*;
 public class PathHandlerProvider implements HandlerProvider {
     @Override
     public HttpHandler getHandler() {
-        HttpHandler handler = Handlers.routing()
+        return Handlers.routing()
             .add(Methods.GET, "/v2/pet/findByStatus", new PetFindByStatusGetHandler())
             .add(Methods.GET, "/v2/pet/findByTags", new PetFindByTagsGetHandler())
             .add(Methods.DELETE, "/v2/pet/{petId}", new PetPetIdDeleteHandler())
@@ -33,7 +33,6 @@ public class PathHandlerProvider implements HandlerProvider {
             .add(Methods.GET, "/v2/user/{username}", new UserUsernameGetHandler())
             .add(Methods.PUT, "/v2/user/{username}", new UserUsernamePutHandler())
         ;
-        return handler;
     }
 }
 

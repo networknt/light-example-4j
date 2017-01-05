@@ -12,7 +12,6 @@ import java.util.Date;
 
 
 
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.LightJavaCodegen", date = "2017-01-04T20:18:27.702-05:00")
 public class Order   {
   private Long id = null;
 

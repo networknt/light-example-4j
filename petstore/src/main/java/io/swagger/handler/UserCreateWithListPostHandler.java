@@ -10,7 +10,7 @@ import org.apache.commons.lang3.StringEscapeUtils;
 public class UserCreateWithListPostHandler implements HttpHandler {
     @Override
     public void handleRequest(HttpServerExchange exchange) throws Exception {
-        Map<String, Object> examples = new HashMap<String, Object>();
+        Map<String, Object> examples = new HashMap<>();
         if(examples.size() > 0) {
             exchange.getResponseHeaders().add(new HttpString("Content-Type"), "application/json");
             exchange.getResponseSender().send((String)examples.get("application/json"));
