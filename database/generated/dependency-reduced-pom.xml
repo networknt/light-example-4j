@@ -7,9 +7,9 @@
     <relativePath>../pom.xml/pom.xml</relativePath>
   </parent>
   <modelVersion>4.0.0</modelVersion>
-  <groupId>io.swagger</groupId>
-  <artifactId>swagger-light-java</artifactId>
-  <name>swagger-light-java</name>
+  <groupId>com.networknt</groupId>
+  <artifactId>database</artifactId>
+  <name>database</name>
   <version>1.0.0</version>
   <prerequisites>
     <maven>2.2.0</maven>
