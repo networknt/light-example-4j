@@ -1,18 +1,12 @@
 DROP TABLE world CASCADE CONSTRAINTS;
 CREATE TABLE  world (
   id int NOT NULL,
-  randomNumber int NOT NULL,
+  randomNumber int NOT NULL default 0,
   PRIMARY KEY  (id)
 );
 
-DROP SEQUENCE id_seq;
-CREATE SEQUENCE id_seq START WITH 1;
-
-INSERT INTO world
-SELECT id_seq.nextval,
-dbms_random.value(1,10000)
-FROM  dual
-CONNECT BY level <= 10000;
+INSERT INTO world (id, randomnumber)
+SELECT x.id, random() * 10000 + 1 FROM generate_series(1,10000) as x(id);
 
 DROP TABLE fortune CASCADE CONSTRAINTS;
 CREATE TABLE fortune (

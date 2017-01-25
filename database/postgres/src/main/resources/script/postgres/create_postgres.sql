@@ -1,23 +1,18 @@
-DROP TABLE world CASCADE CONSTRAINTS;
+
+DROP TABLE IF EXISTS world;
 CREATE TABLE  world (
-  id int NOT NULL,
-  randomNumber int NOT NULL,
+  id integer NOT NULL,
+  randomNumber integer NOT NULL default 0,
   PRIMARY KEY  (id)
 );
 
-DROP SEQUENCE id_seq;
-CREATE SEQUENCE id_seq START WITH 1;
+INSERT INTO world (id, randomnumber)
+SELECT x.id, random() * 10000 + 1 FROM generate_series(1,10000) as x(id);
 
-INSERT INTO world
-SELECT id_seq.nextval,
-dbms_random.value(1,10000)
-FROM  dual
-CONNECT BY level <= 10000;
-
-DROP TABLE fortune CASCADE CONSTRAINTS;
+DROP TABLE IF EXISTS fortune;
 CREATE TABLE fortune (
-  id int NOT NULL,
-  message varchar2(2048) NOT NULL,
+  id integer NOT NULL,
+  message varchar(2048) NOT NULL,
   PRIMARY KEY  (id)
 );
 
@@ -33,3 +28,5 @@ INSERT INTO fortune (id, message) VALUES (9, 'Feature: A bug with seniority.');
 INSERT INTO fortune (id, message) VALUES (10, 'Computers make very fast, very accurate mistakes.');
 INSERT INTO fortune (id, message) VALUES (11, '<script>alert("This should not be displayed in a browser alert box.");</script>');
 INSERT INTO fortune (id, message) VALUES (12, 'フレームワークのベンチマーク');
+
+
