@@ -152,9 +152,9 @@
     <version.light-java>1.2.0</version.light-java>
     <version.swagger>1.5.10</version.swagger>
     <version.mockito>2.1.0-beta.124</version.mockito>
-    <version.slf4j>1.7.21</version.slf4j>
+    <version.slf4j>1.7.22</version.slf4j>
     <version.commons.io>2.5</version.commons.io>
-    <version.logback>1.1.7</version.logback>
+    <version.logback>1.1.9</version.logback>
     <version.junit>4.12</version.junit>
     <version.antlr4>4.5.3</version.antlr4>
     <version.light-java-rest>1.2.0</version.light-java-rest>
