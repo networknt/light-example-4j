@@ -1,12 +1,18 @@
 DROP TABLE world CASCADE CONSTRAINTS;
 CREATE TABLE  world (
   id int NOT NULL,
-  randomNumber int NOT NULL default 0,
+  randomNumber int NOT NULL,
   PRIMARY KEY  (id)
 );
 
-INSERT INTO world (id, randomnumber)
-SELECT x.id, random() * 10000 + 1 FROM generate_series(1,10000) as x(id);
+BEGIN
+FOR loop_counter IN 1..10000 LOOP
+INSERT INTO world (id, randomNumber)
+VALUES (loop_counter, dbms_random.value(1,10000)
+       );
+END LOOP;
+COMMIT;
+END;
 
 DROP TABLE fortune CASCADE CONSTRAINTS;
 CREATE TABLE fortune (
