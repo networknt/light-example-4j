@@ -1,4 +1,5 @@
 
+
 | Framework    | Max Throughput | Avg Latency | Transfer | 
 | ------------ | -------------: | ----------: | -------: |
 | Light Java   | 1457257.99     | 2.46ms      | 141.31MB |
