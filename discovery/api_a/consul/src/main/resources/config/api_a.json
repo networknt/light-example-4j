@@ -1,0 +1,5 @@
+{
+  "description": "api_a config",
+  "api_b_endpoint": "http://localhost:7002/v1/data",
+  "api_c_endpoint": "http://localhost:7003/v1/data"
+}
