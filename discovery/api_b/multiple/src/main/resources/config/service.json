@@ -10,7 +10,7 @@
             "port": 8080,
             "path": "direct",
             "parameters": {
-              "com.networknt.apid-1.0.0": "http://localhost:7004"
+              "light-com.networknt.apid-1.0.0": "http://localhost:7005,http://localhost:7004"
             }
           }
         }

@@ -2,33 +2,37 @@ package com.networknt.apia.handler;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.networknt.client.Client;
+import com.networknt.cluster.Cluster;
 import com.networknt.config.Config;
 import com.networknt.exception.ClientException;
+import com.networknt.service.SingletonServiceFactory;
 import io.undertow.server.HttpHandler;
 import io.undertow.server.HttpServerExchange;
-import io.undertow.util.HttpString;
 
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Vector;
 import java.util.concurrent.CountDownLatch;
 
-import org.apache.commons.lang3.StringEscapeUtils;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.concurrent.FutureCallback;
 import org.apache.http.impl.nio.client.CloseableHttpAsyncClient;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class DataGetHandler implements HttpHandler {
-    static String CONFIG_NAME = "api_a";
-    static String apibUrl = (String)Config.getInstance().getJsonMapConfig(CONFIG_NAME).get("api_b_endpoint");
-    static String apicUrl = (String) Config.getInstance().getJsonMapConfig(CONFIG_NAME).get("api_c_endpoint");
+    private static Logger logger = LoggerFactory.getLogger(DataGetHandler.class);
+    private static Cluster cluster = (Cluster) SingletonServiceFactory.getBean(Cluster.class);
 
     @Override
     public void handleRequest(HttpServerExchange exchange) throws Exception {
-        List<String> list = new Vector<String>();
+        List<String> list = new Vector<>();
+
+        String apibUrl = cluster.serviceToUrl("http", "com.networknt.apib-1.0.0") + "/v1/data";
+        if(logger.isDebugEnabled()) logger.debug("apibUrl = " + apibUrl);
+        String apicUrl = cluster.serviceToUrl("http", "com.networknt.apic-1.0.0") + "/v1/data";
+        if(logger.isDebugEnabled()) logger.debug("apicUrl = " + apicUrl);
         final HttpGet[] requests = new HttpGet[] {
                 new HttpGet(apibUrl),
                 new HttpGet(apicUrl),
