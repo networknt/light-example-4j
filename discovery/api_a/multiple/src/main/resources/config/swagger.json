@@ -1,0 +1,58 @@
+{
+  "swagger" : "2.0",
+  "info" : {
+    "description" : "API A is called by consumer directly and it will call API B and API C to get data",
+    "version" : "1.0.0",
+    "title" : "API A for microservices demo",
+    "contact" : {
+      "email" : "stevehu@gmail.com"
+    },
+    "license" : {
+      "name" : "Apache 2.0",
+      "url" : "http://www.apache.org/licenses/LICENSE-2.0.html"
+    }
+  },
+  "host" : "a.networknt.com",
+  "basePath" : "/v1",
+  "schemes" : [ "http" ],
+  "consumes" : [ "application/json" ],
+  "produces" : [ "application/json" ],
+  "paths" : {
+    "/data" : {
+      "get" : {
+        "description" : "Return an array of strings collected from down stream APIs",
+        "operationId" : "listData",
+        "parameters" : [ ],
+        "responses" : {
+          "200" : {
+            "description" : "Successful response",
+            "schema" : {
+              "type" : "array",
+              "title" : "ArrayOfStrings",
+              "items" : {
+                "type" : "string"
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "a_auth" : [ "api_a.w", "api_a.r" ]
+        } ],
+        "x-accepts" : "application/json",
+        "x-contentType" : "application/json"
+      }
+    }
+  },
+  "securityDefinitions" : {
+    "a_auth" : {
+      "type" : "oauth2",
+      "authorizationUrl" : "http://localhost:8080/oauth2/code",
+      "flow" : "implicit",
+      "scopes" : {
+        "api_a.w" : "write access",
+        "api_a.r" : "read access"
+      }
+    }
+  },
+  "definitions" : { }
+}
