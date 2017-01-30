@@ -3,5 +3,5 @@
   "ip": "0.0.0.0",
   "port": 7003,
   "serviceId": "com.networknt.apic-1.0.0",
-  "enableRegistry": false
+  "enableRegistry": true
 }

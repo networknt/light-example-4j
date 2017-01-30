@@ -121,6 +121,26 @@
         </dependency>
         <dependency>
             <groupId>com.networknt</groupId>
+            <artifactId>registry</artifactId>
+            <version>${version.light-java}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.networknt</groupId>
+            <artifactId>balance</artifactId>
+            <version>${version.light-java}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.networknt</groupId>
+            <artifactId>cluster</artifactId>
+            <version>${version.light-java}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.networknt</groupId>
+            <artifactId>consul</artifactId>
+            <version>${version.light-java}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.networknt</groupId>
             <artifactId>server</artifactId>
             <version>${version.light-java}</version>
         </dependency>

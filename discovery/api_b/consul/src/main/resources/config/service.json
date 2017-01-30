@@ -8,7 +8,10 @@
             "protocol": "light",
             "host": "localhost",
             "port": 8080,
-            "path": "consul"
+            "path": "consul",
+            "parameters": {
+              "registryRetryPeriod": "30000"
+            }
           }
         }
       ]
@@ -26,6 +29,16 @@
     {
       "com.networknt.registry.Registry" : [
         "com.networknt.consul.ConsulRegistry"
+      ]
+    },
+    {
+      "com.networknt.balance.LoadBalance" : [
+        "com.networknt.balance.RoundRobinLoadBalance"
+      ]
+    },
+    {
+      "com.networknt.cluster.Cluster" : [
+        "com.networknt.cluster.LightCluster"
       ]
     }
   ]

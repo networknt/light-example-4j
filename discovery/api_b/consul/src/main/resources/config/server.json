@@ -3,5 +3,5 @@
   "ip": "0.0.0.0",
   "port": 7002,
   "serviceId": "com.networknt.apib-1.0.0",
-  "enableRegistry": false
+  "enableRegistry": true
 }

@@ -121,11 +121,6 @@
         </dependency>
         <dependency>
             <groupId>com.networknt</groupId>
-            <artifactId>service</artifactId>
-            <version>${version.light-java}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.networknt</groupId>
             <artifactId>registry</artifactId>
             <version>${version.light-java}</version>
         </dependency>
