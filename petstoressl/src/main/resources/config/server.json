@@ -1,0 +1,6 @@
+{
+  "description": "server config",
+  "ip": "0.0.0.0",
+  "port": 8080,
+  "serviceId": "io.swagger.swagger-light-java-1.0.0"
+}
