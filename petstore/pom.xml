@@ -5,10 +5,10 @@
         <version>5</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
-    <groupId>io.swagger</groupId>
-    <artifactId>swagger-light-java</artifactId>
+    <groupId>com.networknt</groupId>
+    <artifactId>petstore</artifactId>
     <packaging>jar</packaging>
-    <name>swagger-light-java</name>
+    <name>petstore</name>
     <version>1.0.0</version>
     <prerequisites>
         <maven>2.2.0</maven>
@@ -17,8 +17,8 @@
     <properties>
         <java.version>1.8</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <version.light-java>1.2.1</version.light-java>
-        <version.light-java-rest>1.2.1</version.light-java-rest>
+        <version.light-java>1.2.3</version.light-java>
+        <version.light-java-rest>1.2.3</version.light-java-rest>
         <version.jackson>2.8.2</version.jackson>
         <version.slf4j>1.7.22</version.slf4j>
         <version.jose4j>0.5.2</version.jose4j>
@@ -117,6 +117,26 @@
         <dependency>
             <groupId>com.networknt</groupId>
             <artifactId>service</artifactId>
+            <version>${version.light-java}</version>
+        </dependency>
+       <dependency>
+            <groupId>com.networknt</groupId>
+            <artifactId>registry</artifactId>
+            <version>${version.light-java}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.networknt</groupId>
+            <artifactId>balance</artifactId>
+            <version>${version.light-java}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.networknt</groupId>
+            <artifactId>cluster</artifactId>
+            <version>${version.light-java}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.networknt</groupId>
+            <artifactId>consul</artifactId>
             <version>${version.light-java}</version>
         </dependency>
         <dependency>
