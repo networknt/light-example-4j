@@ -54,7 +54,7 @@ You can create a static index.html in this folder or deploy an SPA into
 this folder.
 
 ```
-docker run -d -p 8080:8080 -v ~/public:/public /networknt/example-webserver
+docker run -d -p 8080:8080 -v ~/public:/public networknt/example-webserver
 ```
 
 # Test
