@@ -1,23 +1,38 @@
 # Introduction
+
 A web server implementation of light-java that provides two API endpoints and 
 serving static content from an externalized folder /public. It can be single page 
 javascript application alone with some images, fonts etc.
 
-/api/text
+- /api/text
 
 returns "Hello World"
 
-/api/json
+- /api/json
 
 returns {"message":"Hello World"}
 
-/
+- /
 
 returns index.html
 
 # Getting Started
 
-Build locally with JDK8 and Maven installed. 
+## Build locally with JDK8 and Maven installed. 
+
+As the public folder must be an absolute path when running locally, before
+building the server, you need to create a folder for your static files outside
+of the project folder and update src/main/resources/config/webserver.json to
+specify base variable to that absolute folder. If you want to use the 
+src/main/resources/public folder as your static file folder, you can set the
+base as "/home/steve/networknt/light-java-example/webserver/src/main/resources/public"
+which is the absolute folder on my desktop.
+
+You can create a static index.html in this folder or deploy an SPA into
+this folder.
+
+
+With the configuration change, let's build and start the server.
 
 ```
 git clone git@github.com:networknt/light-java-example.git
@@ -26,14 +41,20 @@ cd light-java-example/webserver
 
 mvn clean install
 
-java -jar target/webserver-x.x.x.jar
+java -jar target/webserver-0.1.0.jar
 
 ```
 
-Start with Docker.
+## Start with Docker.
+
+Before start the server with docker run, please create a folder for your
+static website. The following command use ~/public as static site folder.
+
+You can create a static index.html in this folder or deploy an SPA into
+this folder.
 
 ```
-docker run -d -p 8080:8080 networknt/example-webserver
+docker run -d -p 8080:8080 -v ~/public:/public /networknt/example-webserver
 ```
 
 # Test
@@ -47,7 +68,7 @@ security.json to that folder and update enableVerifyJwt to true. Let's assume
 the folder that contains security.json is /tmp/config
 
 ```
-docker run -d -v /tmp/config:/config -p 8080:8080 networknt/example-webserver
+docker run -d -v /tmp/config:/config -v /tmp/public:/public -p 8080:8080 networknt/example-webserver
 ```
 
 In order to access the webserver you can use a long lived token below issued by my
