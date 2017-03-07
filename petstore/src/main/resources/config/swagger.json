@@ -328,6 +328,19 @@
         "x-contentType" : "multipart/form-data"
       }
     },
+    "/server/info" : {
+      "get" : {
+        "parameters" : [ ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation"
+          }
+        },
+        "security" : [ {
+          "petstore_auth" : [ "server.info.r" ]
+        } ]
+      }
+    },
     "/store/inventory" : {
       "get" : {
         "tags" : [ "store" ],
@@ -688,7 +701,8 @@
       "flow" : "implicit",
       "scopes" : {
         "write:pets" : "modify pets in your account",
-        "read:pets" : "read your pets"
+        "read:pets" : "read your pets",
+        "server.info.r" : "read server info"
       }
     },
     "api_key" : {

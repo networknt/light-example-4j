@@ -11,6 +11,6 @@
   "enableTwoWayTls": false,
   "truststoreName": "tls/server.truststore",
   "truststorePass": "password",
-  "serviceId": "com.networknt.petstore-1.0.0",
+  "serviceId": "io.swagger.swagger-light-java-1.0.0",
   "enableRegistry": false
 }
