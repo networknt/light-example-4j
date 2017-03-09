@@ -1,0 +1,5 @@
+{
+  "description": "Mongo DB configuration",
+  "host": "localhost:27017",
+  "name": "hello_world"
+}
