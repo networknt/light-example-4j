@@ -4,3 +4,8 @@ is focus on SQL database only.
 ```
 java -jar modules/swagger-codegen-cli/target/swagger-codegen-cli.jar generate -i ~/networknt/swagger/database/swagger.json -c ~/networknt/swagger/database/config.json -l light-java -o ~/networknt/light-java-example/mongodb
 ```
+
+To start mongo db in docker.
+```
+docker run -p 27017:27017 --name mongodb -d mongo
+```
