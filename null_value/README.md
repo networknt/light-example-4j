@@ -1,4 +1,35 @@
-# Swagger Light Java Server
+# Nullable Value Demo
+
+This is a demo to show users how to construct OpenAPI specification to allow
+certain field to be null. If only one data type is defined and a null value
+is passed in, the built-in [JSON schema validator](https://github.com/networknt/json-schema-validator)
+will report an error.
+
+In this demo we have a post endpoint with start date in the body. In order
+to allow startDate to be null, we have to define this field in yaml as
+
+```
+     startDate:
+        type:
+        - "string"
+        - "null"
+        format: "date"
+
+```
+
+And corresponding JSON field is
+
+```
+                "startDate": {
+                    "type": [
+                        "string",
+                        "null"
+                    ],
+                    "format": "date"
+                },
+
+```
+
 
 ## Start server
 
@@ -10,19 +41,25 @@ mvn package exec:exec
 
 ## Test
 
-By default, all endpoints are protected by OAuth jwt token verifier. It can be turned off with config change through for development.
-
-
-In order to access the server, there is a long lived token below issued by my
-oauth2 server [light-oauth2](https://github.com/networknt/light-oauth2)
+As this is just a simple demo, no security definitions in the spec. The post
+endpoint url is
 
 ```
-Bearer eyJraWQiOiIxMDAiLCJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJ1cm46Y29tOm5ldHdvcmtudDpvYXV0aDI6djEiLCJhdWQiOiJ1cm46Y29tLm5ldHdvcmtudCIsImV4cCI6MTc5MDAzNTcwOSwianRpIjoiSTJnSmdBSHN6NzJEV2JWdUFMdUU2QSIsImlhdCI6MTQ3NDY3NTcwOSwibmJmIjoxNDc0Njc1NTg5LCJ2ZXJzaW9uIjoiMS4wIiwidXNlcl9pZCI6InN0ZXZlIiwidXNlcl90eXBlIjoiRU1QTE9ZRUUiLCJjbGllbnRfaWQiOiJmN2Q0MjM0OC1jNjQ3LTRlZmItYTUyZC00YzU3ODc0MjFlNzIiLCJzY29wZSI6WyJ3cml0ZTpwZXRzIiwicmVhZDpwZXRzIl19.mue6eh70kGS3Nt2BCYz7ViqwO7lh_4JSFwcHYdJMY6VfgKTHhsIGKq2uEDt3zwT56JFAePwAxENMGUTGvgceVneQzyfQsJeVGbqw55E9IfM_uSM-YcHwTfR7eSLExN4pbqzVDI353sSOvXxA98ZtJlUZKgXNE1Ngun3XFORCRIB_eH8B0FY_nT_D1Dq2WJrR-re-fbR6_va95vwoUdCofLRa4IpDfXXx19ZlAtfiVO44nw6CS8O87eGfAm7rCMZIzkWlCOFWjNHnCeRsh7CVdEH34LF-B48beiG5lM7h4N12-EME8_VDefgMjZ8eqs1ICvJMxdIut58oYbdnkwTjkA
+localhost:8080/v1/data
 ```
 
-Postman is the best tool to test REST APIs
+Header Content-Type must be set as application/json
 
-Add "Authorization" header with value as above token and a dummy message will return from the generated stub.
+Content-Type=application/json
 
 
+And you can use this JSON object as request body.
 
+```
+{
+	"id": 123,
+	"name": "king",
+	"weight": 76.22,
+	"startDate": null
+}
+```
