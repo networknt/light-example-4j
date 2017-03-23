@@ -1,8 +1,0 @@
-log:
-  level: info
-  loggers:
-    io.bootique.jetty:
-      level: error
-  appenders:
-    - type: console
-      logFormat: '%c{20}: %m%n'
