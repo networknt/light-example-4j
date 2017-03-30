@@ -23,6 +23,7 @@ public class DataGetHandler implements HttpHandler {
         try {
             CloseableHttpClient client = Client.getInstance().getSyncClient();
             HttpGet httpGet = new HttpGet(apibUrl);
+            Client.getInstance().propagateHeaders(httpGet, exchange);
             CloseableHttpResponse response = client.execute(httpGet);
             int responseCode = response.getStatusLine().getStatusCode();
             if(responseCode != 200){

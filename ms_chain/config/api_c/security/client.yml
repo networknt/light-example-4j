@@ -1,0 +1,49 @@
+description: client configuration, all timing is milli-second
+sync:
+  maxConnectionTotal: 100
+  maxConnectionPerRoute: 10
+  routes:
+    api.google.com: 20
+    api.facebook.com: 10
+  timeout: 10000
+  keepAlive: 15000
+async:
+  maxConnectionTotal: 100
+  maxConnectionPerRoute: 10
+  routes:
+    api.google.com: 20
+    api.facebook.com: 10
+  reactor:
+    ioThreadCount: 1
+    connectTimeout: 10000
+    soTimeout: 10000
+  timeout: 10000
+  keepAlive: 15000
+tls:
+  verifyHostname: false
+  loadTrustStore: false
+  trustStore: trust.keystore
+  trustPass: password
+  loadKeyStore: false
+  keyStore: key.jks
+  keyPass: password
+oauth:
+  tokenRenewBeforeExpired: 600000
+  expiredRefreshRetryDelay: 5000
+  earlyRefreshRetryDelay: 30000
+  server_url: http://oauth2-token:6882
+  authorization_code:
+    uri: "/oauth2/token"
+    client_id: 50c92172-d223-4902-9779-df9ef501724f
+    client_secret: ZOz5tiF8TqmichIkVO9EPg
+    redirect_uri: https://localhost:8080/authorization_code
+    scope:
+    - api_d.r
+    - api_d.w
+  client_credentials:
+    uri: "/oauth2/token"
+    client_id: 50c92172-d223-4902-9779-df9ef501724f
+    client_secret: ZOz5tiF8TqmichIkVO9EPg
+    scope:
+    - api_d.r
+    - api_d.w

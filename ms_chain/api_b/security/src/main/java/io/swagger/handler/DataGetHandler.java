@@ -15,18 +15,19 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.CloseableHttpClient;
 
 public class DataGetHandler implements HttpHandler {
-    static String CONFIG_NAME = "api_a";
-    static String apibUrl = (String)Config.getInstance().getJsonMapConfig(CONFIG_NAME).get("api_b_endpoint");
+    static String CONFIG_NAME = "api_b";
+    static String apicUrl = (String)Config.getInstance().getJsonMapConfig(CONFIG_NAME).get("api_c_endpoint");
 
     public void handleRequest(HttpServerExchange exchange) throws Exception {
         List<String> list = new ArrayList<String>();
         try {
             CloseableHttpClient client = Client.getInstance().getSyncClient();
-            HttpGet httpGet = new HttpGet(apibUrl);
+            HttpGet httpGet = new HttpGet(apicUrl);
+            Client.getInstance().propagateHeaders(httpGet, exchange);
             CloseableHttpResponse response = client.execute(httpGet);
             int responseCode = response.getStatusLine().getStatusCode();
             if(responseCode != 200){
-                throw new Exception("Failed to call API B: " + responseCode);
+                throw new Exception("Failed to call API C: " + responseCode);
             }
             List<String> apicList = (List<String>) Config.getInstance().getMapper().readValue(response.getEntity().getContent(),
                     new TypeReference<List<String>>(){});
@@ -37,8 +38,8 @@ public class DataGetHandler implements HttpHandler {
             throw new Exception("IOException:", e);
         }
         // now add API B specific messages
-        list.add("API A: Message 1");
-        list.add("API A: Message 2");
+        list.add("API B: Message 1");
+        list.add("API B: Message 2");
         exchange.getResponseSender().send(Config.getInstance().getMapper().writeValueAsString(list));
     }
 }
