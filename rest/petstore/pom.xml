@@ -30,12 +30,12 @@
         <version.encoder>1.2.1</version.encoder>
         <version.logback>1.2.3</version.logback>
         <version.junit>4.12</version.junit>
-        <version.mockito>2.1.0-RC.1</version.mockito>
+        <version.mockito>2.7.21</version.mockito>
         <version.undertow>1.4.11.Final</version.undertow>
         <version.jsonpath>2.2.0</version.jsonpath>
         <version.httpclient>4.5.2</version.httpclient>
         <version.httpasyncclient>4.1.2</version.httpasyncclient>
-        <version.swagger>1.5.13</version.swagger>
+        <version.swagger>1.5.28</version.swagger>
     </properties>
 
     <dependencies>
