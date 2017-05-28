@@ -35,7 +35,7 @@
         <version.jsonpath>2.2.0</version.jsonpath>
         <version.httpclient>4.5.2</version.httpclient>
         <version.httpasyncclient>4.1.2</version.httpasyncclient>
-        <version.graphql>2.3.0</version.graphql>
+        <version.graphql>3.0.0</version.graphql>
     </properties>
 
     <dependencies>
