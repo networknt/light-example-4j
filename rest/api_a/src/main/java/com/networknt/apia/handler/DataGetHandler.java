@@ -36,6 +36,7 @@ public class DataGetHandler implements HttpHandler {
             CloseableHttpAsyncClient client = Client.getInstance().getAsyncClient();
             final CountDownLatch latch = new CountDownLatch(requests.length);
             for (final HttpGet request: requests) {
+                Client.getInstance().propagateHeaders(request, exchange);
                 client.execute(request, new FutureCallback<HttpResponse>() {
                     @Override
                     public void completed(final HttpResponse response) {
