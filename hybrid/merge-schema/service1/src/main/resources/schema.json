@@ -1,0 +1,13 @@
+{"lightapi.net/service1/query/0.1.0":{"schema": {
+        "title": "Service1",
+        "type": "object",
+        "properties": {
+          "q1": {
+            "type": "string"
+          },
+          "q2": {
+            "type": "string"
+          }
+        },
+        "required": ["q1", "q2"]
+      },"scope": "query.r"}}

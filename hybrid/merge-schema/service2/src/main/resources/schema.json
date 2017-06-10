@@ -1,0 +1,13 @@
+{"lightapi.net/service2/command/0.1.0":{"schema": {
+        "title": "Service2",
+        "type": "object",
+        "properties": {
+          "c1": {
+            "type": "string"
+          },
+          "c2": {
+            "type": "string"
+          }
+        },
+        "required": ["c1", "c2"]
+      },"scope": "command.w"}}
