@@ -1,0 +1,34 @@
+{"basePath": "/v1","paths":{"/data":{"get":{"description": "Return an array of strings collected from down stream APIs","operationId": "listData","responses":{"200":{"schema": {
+                            "title": "ArrayOfStrings",
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        },"examples":{"application/json": [
+                                "Message 1",
+                                "Message 2"
+                            ]},"description": "Successful response"}},"security": [
+                    {
+                        "d_auth": [
+                            "api_d.w",
+                            "api_d.r"
+                        ]
+                    }
+                ]}},"/health":{"get":{"responses":{"200":{"description":"successful operation"}},"parameters":[]}},"/server/info":{"get":{"security":[{"d_auth":["server.info.r"]}],"responses":{"200":{"description":"successful operation"}},"parameters":[]}}},"host": "d.networknt.com","produces": [
+        "application/json"
+    ],"schemes": [
+        "http"
+    ],"securityDefinitions":{"d_auth":{"scopes":{"api_d.r": "read access","server.info.r":"read server info","api_d.w": "write access"},"type": "oauth2","authorizationUrl": "http://localhost:8080/oauth2/code","flow": "implicit"}},"swagger": "2.0","info": {
+        "version": "1.0.0",
+        "title": "API D for microservices demo",
+        "description": "API D is called by API B",
+        "contact": {
+            "email": "stevehu@gmail.com"
+        },
+        "license": {
+            "name": "Apache 2.0",
+            "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+        }
+    },"consumes": [
+        "application/json"
+    ]}
