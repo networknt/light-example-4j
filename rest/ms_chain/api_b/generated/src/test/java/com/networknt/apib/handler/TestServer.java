@@ -7,6 +7,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import com.networknt.server.Server;
+import com.networknt.server.ServerConfig;
+
 public class TestServer extends ExternalResource {
     static final Logger logger = LoggerFactory.getLogger(TestServer.class);
 
@@ -21,6 +24,10 @@ public class TestServer extends ExternalResource {
 
     private TestServer() {
 
+    }
+
+    public ServerConfig getServerConfig() {
+        return Server.config;
     }
 
     @Override

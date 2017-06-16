@@ -8,8 +8,8 @@
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.networknt</groupId>
-  <artifactId>apia</artifactId>
-  <name>apia</name>
+  <artifactId>apib</artifactId>
+  <name>apib</name>
   <version>1.0.0</version>
   <prerequisites>
     <maven>2.2.0</maven>
