@@ -25,4 +25,3 @@ Postman is the best tool to test REST APIs
 Add "Authorization" header with value as above token and a dummy message will return from the generated stub.
 
 
-
