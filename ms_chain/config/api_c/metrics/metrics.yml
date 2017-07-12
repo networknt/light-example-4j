@@ -1,9 +1,0 @@
-description: Metrics handler configuration
-enabled: true
-influxdbProtocol: http
-influxdbHost: influxdb
-influxdbPort: 8086
-influxdbName: metrics
-influxdbUser: root
-influxdbPass: root
-reportInMinutes: 1
