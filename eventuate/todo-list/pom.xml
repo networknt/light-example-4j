@@ -112,6 +112,8 @@
         <module>query</module>
         <module>rest-command</module>
         <module>rest-query</module>
+        <module>hybrid-command</module>
+        <module>hybrid-query</module>
     </modules>
 
     <dependencyManagement>
@@ -142,6 +144,17 @@
                 <artifactId>rest-query</artifactId>
                 <version>${project.version}</version>
             </dependency>
+            <dependency>
+                <groupId>com.networknt</groupId>
+                <artifactId>hybrid-command</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.networknt</groupId>
+                <artifactId>hybrid-query</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
             <dependency>
                 <groupId>com.networknt</groupId>
                 <artifactId>eventuate-todo-e2etest</artifactId>

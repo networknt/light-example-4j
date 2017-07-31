@@ -1,0 +1,12 @@
+{"lightapi.net/todo/gettodos/0.1.0":{"schema": {
+      "title" : "Service"
+    },"scope": "todo.r"},"lightapi.net/todo/gettodo/0.1.0":{"schema": {
+      "title" : "Service",
+      "type" : "object",
+      "properties" : {
+        "id" : {
+          "type" : "string"
+        }
+      },
+      "required" : [ "id" ]
+    },"scope": "todo.r"}}
