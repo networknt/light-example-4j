@@ -1,0 +1,39 @@
+---
+singletons:
+- javax.sql.DataSource:
+  - com.zaxxer.hikari.HikariDataSource:
+      DriverClassName: org.h2.jdbcx.JdbcDataSource
+      jdbcUrl: jdbc:h2:~/test
+      username: sa
+      password: sa
+- com.networknt.eventuate.common.impl.sync.AggregateCrud,com.networknt.eventuate.common.impl.sync.AggregateEvents:
+    - com.networknt.eventuate.test.jdbc.EventuateEmbeddedTestAggregateStore
+- com.networknt.eventuate.common.impl.AggregateCrud:
+  - com.networknt.eventuate.common.impl.adapters.SyncToAsyncAggregateCrudAdapter
+- com.networknt.eventuate.common.impl.AggregateEvents:
+  - com.networknt.eventuate.common.impl.adapters.SyncToAsyncAggregateEventsAdapter
+- com.networknt.eventuate.common.SnapshotManager:
+  - com.networknt.eventuate.common.SnapshotManagerImpl
+- com.networknt.eventuate.common.MissingApplyEventMethodStrategy:
+  - com.networknt.eventuate.common.DefaultMissingApplyEventMethodStrategy
+- com.networknt.eventuate.common.EventuateAggregateStore:
+  - com.networknt.eventuate.common.impl.EventuateAggregateStoreImpl
+- com.networknt.eventuate.common.sync.EventuateAggregateStore:
+  - com.networknt.eventuate.common.impl.sync.EventuateAggregateStoreImpl
+- com.networknt.eventuate.todolist.domain.TodoAggregate:
+  - com.networknt.eventuate.todolist.domain.TodoAggregate
+- com.networknt.eventuate.todolist.domain.TodoBulkDeleteAggregate:
+  - com.networknt.eventuate.todolist.domain.TodoBulkDeleteAggregate
+- com.networknt.eventuate.todolist.TodoQueryRepository:
+  - com.networknt.eventuate.todolist.TodoQueryRepositoryImpl
+- com.networknt.eventuate.todolist.TodoQueryService:
+  - com.networknt.eventuate.todolist.TodoQueryServiceImpl
+- com.networknt.eventuate.todolist.TodoQueryWorkflow:
+  - com.networknt.eventuate.todolist.TodoQueryWorkflow
+- com.networknt.eventuate.event.EventHandlerProcessor:
+  - com.networknt.eventuate.event.EventHandlerProcessorDispatchedEventReturningVoid
+  - com.networknt.eventuate.event.EventHandlerProcessorDispatchedEventReturningCompletableFuture
+  - com.networknt.eventuate.event.EventHandlerProcessorEventHandlerContextReturningCompletableFuture
+  - com.networknt.eventuate.event.EventHandlerProcessorEventHandlerContextReturningVoid
+- com.networknt.eventuate.client.SubscriptionsRegistry:
+  - com.networknt.eventuate.client.SubscriptionsRegistryImpl
