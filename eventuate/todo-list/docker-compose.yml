@@ -1,0 +1,28 @@
+version: "2"
+#
+# Services
+#
+services:
+   command-service:
+      build: ./rest-command/
+      volumes:
+        - ./docker/command-service/config:/config
+      ports:
+        - 8083:8083
+      networks:
+          - localnet
+
+   query-service:
+      build: ./rest-query/
+      volumes:
+        - ./docker/query-service/config:/config
+      ports:
+        - 8082:8082
+      networks:
+          - localnet
+# Networks
+#
+networks:
+  localnet:
+    # driver: bridge
+    external: true
