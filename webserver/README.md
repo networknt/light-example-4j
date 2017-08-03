@@ -25,7 +25,7 @@ building the server, you need to create a folder for your static files outside
 of the project folder and update src/main/resources/config/webserver.json to
 specify base variable to that absolute folder. If you want to use the 
 src/main/resources/public folder as your static file folder, you can set the
-base as "/home/steve/networknt/light-java-example/webserver/src/main/resources/public"
+base as "/home/steve/networknt/light-example-4j/webserver/src/main/resources/public"
 which is the absolute folder on my desktop.
 
 You can create a static index.html in this folder or deploy an SPA into
@@ -35,9 +35,9 @@ this folder.
 With the configuration change, let's build and start the server.
 
 ```
-git clone git@github.com:networknt/light-java-example.git
+git clone git@github.com:networknt/light-example-4j.git
 
-cd light-java-example/webserver
+cd light-example-4j/webserver
 
 mvn clean install
 
