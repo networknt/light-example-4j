@@ -2,7 +2,6 @@ target/
 bower_components/
 node_modules/
 dist/
-docker/
 .idea/
 .tmp/
 .project
