@@ -1,0 +1,54 @@
+{"basePath": "/v1","paths":{"/health":{"get":{"responses":{"200":{"description":"successful operation"}},"parameters":[]}},"/transfers":{"post":{"description": "create Money Transfer Using http POST","operationId": "createMoneyTransferUsingPOST","responses":{"200":{"schema": {
+                      "$ref": "#/definitions/CreateMoneyTransferResponse"
+                },"description": "OK"}},"security": [
+                    {
+                        "transaction_auth": [
+                            "transaction.r", "transaction.w"
+                        ]
+                    }
+                ],"parameters": [
+                  {
+                    "in": "body",
+                    "name": "request",
+                    "description": "create Money Transfer Using http POST",
+                    "required": true,
+                    "schema": {
+                        "$ref": "#/definitions/CreateMoneyTransferRequest"                     }
+                   }
+                  ]}},"/server/info":{"get":{"security":[{"transaction_auth":["server.info.r"]}],"responses":{"200":{"description":"successful operation"}},"parameters":[]}}},"host": "accounttransfer.networknt.com","produces": [
+        "application/json"
+    ],"schemes": [
+        "http"
+    ],"securityDefinitions":{"transaction_auth":{"scopes":{"transaction.w": "write transaction","transaction.r": "read transaction","server.info.r":"read server info"},"type": "oauth2","authorizationUrl": "http://localhost:8080/oauth2/code","flow": "implicit"}},"definitions":{"CreateMoneyTransferResponse": {
+      "properties": {
+        "moneyTransferId": {
+          "type": "string"
+        }
+      }
+    },"CreateMoneyTransferRequest": {
+      "properties": {
+        "amount": {
+          "type": "number",
+          "format": "double"
+        },
+        "fromAccountId": {
+          "type": "string"
+        },
+        "toAccountId": {
+          "type": "string"
+        }
+      }
+    }},"swagger": "2.0","info": {
+        "version": "1.0.0",
+        "title": "Account Money transfer transaction command service API",
+        "description": "Account Money transfer command service API is a microserice that serves transaction command side endpoints for the Account Money transfer example application built on top of light-eventuate.",
+        "contact": {
+            "email": "stevehu@gmail.com"
+        },
+        "license": {
+            "name": "Apache 2.0",
+            "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+        }
+    },"consumes": [
+        "application/json"
+    ]}

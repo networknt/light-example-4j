@@ -1,0 +1,76 @@
+{"basePath": "/v1","paths":{"/openaccount":{"post":{"description": "Return a todo object with Id","operationId": "add","responses":{"200":{"schema": {
+                   "$ref": "#/definitions/CreateAccountResponse"
+                },"description": "OK"}},"security": [
+                    {
+                        "account_auth": [
+                            "account.w"
+                        ]
+                    }
+                ],"parameters": [
+                  {
+                    "in": "body",
+                    "name": "request",
+                    "description": "request to open account",
+                    "required": true,
+                    "schema": {
+                      "$ref": "#/definitions/CreateAccountRequest"
+                     }
+                   }
+                  ]}},"/delete/{accountId}":{"delete":{"description": "Delete an account by Id","operationId": "deleteById","responses":{"400": {
+                        "description": "Invalid ID supplied"
+                    },"404": {
+                        "description": "account not found"
+                    }},"security": [
+                    {
+                        "account_auth": [
+                            "account.r", "account.w"
+                        ]
+                    }
+                ],"parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of taccountodo",
+                        "required": true,
+                        "type": "string"
+                    }
+                ]}},"/health":{"get":{"responses":{"200":{"description":"successful operation"}},"parameters":[]}},"/server/info":{"get":{"security":[{"account_auth":["server.info.r"]}],"responses":{"200":{"description":"successful operation"}},"parameters":[]}}},"host": "accounttransfer.networknt.com","produces": [
+        "application/json"
+    ],"schemes": [
+        "http"
+    ],"securityDefinitions":{"account_auth":{"scopes":{"account.r": "read account","server.info.r":"read server info","account.w": "write account"},"type": "oauth2","authorizationUrl": "http://localhost:8080/oauth2/code","flow": "implicit"}},"definitions":{"CreateAccountRequest": {
+          "properties": {
+          "customerId": {
+            "type": "string"
+           },
+          "description": {
+            "type": "string"
+          },
+          "initialBalance": {
+            "type": "number",
+            "format": "double"
+          },
+          "title": {
+            "type": "string"
+          }
+        }
+      },"CreateAccountResponse": {
+         "properties": {
+           "accountId": {
+             "type": "string"
+           } 
+         }
+       }},"swagger": "2.0","info": {
+        "version": "1.0.0",
+        "title": "Account Money transfer command service API",
+        "description": "Account Money transfer command service API is a microserice that serves command side endpoints for the Account Money transfer example application built on top of light-eventuate.",
+        "contact": {
+            "email": "stevehu@gmail.com"
+        },
+        "license": {
+            "name": "Apache 2.0",
+            "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+        }
+    },"consumes": [
+        "application/json"
+    ]}

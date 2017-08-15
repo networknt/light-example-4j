@@ -1,0 +1,171 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "version": "1.0.0",
+        "title": "Account Money transfer view service API",
+        "description": "Account Money transfer view service API is a microserice that serves view side endpoints for the Account Money transfer example application built on top of light-eventuate.",
+        "contact": {
+            "email": "stevehu@gmail.com"
+        },
+        "license": {
+            "name": "Apache 2.0",
+            "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+        }
+    },
+    "host": "accounttransfer.networknt.com",
+    "schemes": [
+        "http"
+    ],
+    "basePath": "/v1",
+    "consumes": [
+        "application/json"
+    ],
+    "produces": [
+        "application/json"
+    ],
+    "paths": {
+        "/customer/accounts/{customerId}": {
+            "get": {
+                "description": "Return list of account object with Id",
+                "operationId": "add",
+                "parameters": [
+                 {
+                   "name": "customerId",
+                   "in": "path",
+                   "description": "customerId",
+                   "required": true,
+                   "type": "string"
+                 }
+               ],
+              "responses": {
+               "200": {
+                 "description": "OK",
+                 "schema": {
+                   "type": "array",
+                   "items": {
+                      "$ref": "#/definitions/GetAccountResponse"
+                   }
+                 }
+               }
+              },
+             "security": [
+                    {
+                        "account_auth": [
+                            "account.r"
+                        ]
+                    }
+                ]
+            }
+        },
+       "/accounts/{accountId}": {
+            "get": {
+                "description": "get an account by Id",
+                "operationId": "getAccountById",
+                "parameters": [
+                    {
+                        "name": "accountId",
+                        "in": "path",
+                        "description": "ID of accoun",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                 "200": {
+                   "description": "OK",
+                   "schema": {
+                     "$ref": "#/definitions/GetAccountResponse"
+                    }
+                  }
+                },
+                "security": [
+                    {
+                        "account_auth": [
+                            "account.r"
+                        ]
+                    }
+                ]
+            }
+        },
+       "/accounts/{accountId}/history": {
+            "get": {
+                "description": "get Transactions History",
+                "operationId": "getTransactionsHistoryUsingGET",
+                "parameters": [
+                    {
+                        "name": "accountId",
+                        "in": "path",
+                        "description": "ID of accoun",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+               "responses": {
+                   "200": {
+                   "description": "OK",
+                   "schema": {
+                   "type": "array",
+                   "items": {
+                      "$ref": "#/definitions/AccountTransactionInfo"
+                   }
+                   }
+                  }
+                },
+                "security": [
+                    {
+                        "account_auth": [
+                            "account.r", "transaction.r"
+                        ]
+                    }
+                ]
+            }
+        },
+      "/health":{"get":{"responses":{"200":{"description":"successful operation"}},"parameters":[]}},"/server/info":{"get":{"security":[{"account_auth":["server.info.r"]}],"responses":{"200":{"description":"successful operation"}},"parameters":[]}}
+    },
+    "securityDefinitions": {
+        "account_auth": {
+            "type": "oauth2",
+            "authorizationUrl": "http://localhost:8080/oauth2/code",
+            "flow": "implicit",
+            "scopes": {
+                "account.w": "write account",
+                 "account.r": "read account"
+            }
+        },
+        "transaction_auth": {
+            "type": "oauth2",
+            "authorizationUrl": "http://localhost:8080/oauth2/code",
+            "flow": "implicit",
+            "scopes": {
+                "transaction.w": "write transaction",
+                 "transaction.r": "read transaction"
+            }
+        }        
+    },
+    "definitions": {
+    "AccountTransactionInfo": {
+      "properties": {
+        "amount": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "fromAccountId": {
+          "type": "string"
+        },
+        "toAccountId": {
+          "type": "string"
+        },
+        "transactionId": {
+          "type": "string"
+        }
+      }
+    },
+      "CreateAccountResponse": {
+         "properties": {
+           "accountId": {
+             "type": "string"
+           } 
+         }
+       }
+    }
+}

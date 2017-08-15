@@ -1,0 +1,128 @@
+{"basePath": "/v1","paths":{"/customer/{customerId}":{"get":{"description": "get an customer  by Id","operationId": "getcustomerById","responses":{"200":{"schema": {
+                     "$ref": "#/definitions/QuerySideCustomer"
+                    },"description": "OK"}},"security": [
+                    {
+                        "customer_auth": [
+                            "customer.r"
+                        ]
+                    }
+                ],"parameters": [
+                    {
+                        "name": "customerId",
+                        "in": "path",
+                        "description": "ID of accoun",
+                        "required": true,
+                        "type": "string"
+                    }
+                ]}},"/health":{"get":{"responses":{"200":{"description":"successful operation"}},"parameters":[]}},"/customers/{email}":{"get":{"description": "get customers  by email","operationId": "getcustomerByemail","responses":{"200":{"schema": {
+                     "$ref": "#/definitions/CustomersQueryResponse"
+                    },"description": "OK"}},"security": [
+                    {
+                        "customer_auth": [
+                            "customer.r"
+                        ]
+                    }
+                ],"parameters": [
+                    {
+                        "name": "email",
+                        "in": "path",
+                        "description": "email",
+                        "required": true,
+                        "type": "string"
+                    }
+                ]}},"/server/info":{"get":{"security":[{"customer_auth":["server.info.r"]}],"responses":{"200":{"description":"successful operation"}},"parameters":[]}}},"host": "accounttransfer.networknt.com","produces": [
+        "application/json"
+    ],"schemes": [
+        "http"
+    ],"securityDefinitions":{"customer_auth":{"scopes":{"customer.w": "write customer","server.info.r":"read server info","customer.r": "read customer"},"type": "oauth2","authorizationUrl": "http://localhost:8080/oauth2/code","flow": "implicit"}},"definitions":{"ToAccountInfo": {
+      "properties": {
+        "description": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
+        },
+        "owner": {
+          "type": "string"
+        },
+        "title": {
+          "type": "string"
+        }
+      }
+    },"CustomersQueryResponse": {
+      "properties": {
+        "customers": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/QuerySideCustomer"
+          }
+        }
+      }
+    },"QuerySideCustomer": {
+      "properties": {
+        "address": {
+          "$ref": "#/definitions/Address"
+        },
+        "email": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "$ref": "#/definitions/Name"
+        },
+        "phoneNumber": {
+          "type": "string"
+        },
+        "ssn": {
+          "type": "string"
+        },
+        "toAccounts": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/definitions/ToAccountInfo"
+          }
+        }
+      }
+    },"Address": {
+      "properties": {
+        "city": {
+          "type": "string"
+        },
+        "state": {
+          "type": "string"
+        },
+        "street1": {
+          "type": "string"
+        },
+        "street2": {
+          "type": "string"
+        },
+        "zipCode": {
+          "type": "string"
+        }
+      }
+    },"Name": {
+      "properties": {
+        "firstName": {
+          "type": "string"
+        },
+        "lastName": {
+          "type": "string"
+        }
+      }
+    }},"swagger": "2.0","info": {
+        "version": "1.0.0",
+        "title": "Account Money transfer customer view service API",
+        "description": "Account Money transfer view service API is a microserice that serves customer view side endpoints for the Account Money transfer example application built on top of light-eventuate.",
+        "contact": {
+            "email": "stevehu@gmail.com"
+        },
+        "license": {
+            "name": "Apache 2.0",
+            "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+        }
+    },"consumes": [
+        "application/json"
+    ]}

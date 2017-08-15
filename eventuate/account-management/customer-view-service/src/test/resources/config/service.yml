@@ -1,0 +1,39 @@
+---
+singletons:
+- javax.sql.DataSource:
+  - com.zaxxer.hikari.HikariDataSource:
+      DriverClassName: org.h2.jdbcx.JdbcDataSource
+      jdbcUrl: jdbc:h2:~/test
+      username: sa
+      password: sa
+- com.networknt.eventuate.common.impl.sync.AggregateCrud,com.networknt.eventuate.common.impl.sync.AggregateEvents:
+  - com.networknt.eventuate.jdbc.EventuateLocalAggregateStore
+- com.networknt.eventuate.common.impl.AggregateCrud:
+  - com.networknt.eventuate.common.impl.adapters.SyncToAsyncAggregateCrudAdapter
+- com.networknt.eventuate.common.impl.AggregateEvents:
+  - com.networknt.eventuate.common.impl.adapters.SyncToAsyncAggregateEventsAdapter
+- com.networknt.eventuate.common.SnapshotManager:
+  - com.networknt.eventuate.common.SnapshotManagerImpl
+- com.networknt.eventuate.common.MissingApplyEventMethodStrategy:
+  - com.networknt.eventuate.common.DefaultMissingApplyEventMethodStrategy
+- com.networknt.eventuate.common.EventuateAggregateStore:
+  - com.networknt.eventuate.common.impl.EventuateAggregateStoreImpl
+- com.networknt.eventuate.common.sync.EventuateAggregateStore:
+  - com.networknt.eventuate.common.impl.sync.EventuateAggregateStoreImpl
+- com.networknt.eventuate.queryservice.customer.CustomerViewRepository:
+  - com.networknt.eventuate.queryservice.customer.CustomerViewRepositoryImpl
+- com.networknt.eventuate.queryservice.customer.CustomerQueryService:
+  - com.networknt.eventuate.queryservice.customer.CustomerQueryService
+- com.networknt.eventuate.queryservice.customer.CustomerInfoUpdateService:
+  - com.networknt.eventuate.queryservice.customer.CustomerInfoUpdateService
+- com.networknt.eventuate.customer.view.CustomerQueryWorkflow:
+  - com.networknt.eventuate.customer.view.CustomerQueryWorkflow
+- com.networknt.eventuate.event.EventHandlerProcessor:
+  - com.networknt.eventuate.event.EventHandlerProcessorDispatchedEventReturningVoid
+  - com.networknt.eventuate.event.EventHandlerProcessorDispatchedEventReturningCompletableFuture
+  - com.networknt.eventuate.event.EventHandlerProcessorEventHandlerContextReturningCompletableFuture
+  - com.networknt.eventuate.event.EventHandlerProcessorEventHandlerContextReturningVoid
+- com.networknt.eventuate.client.SubscriptionsRegistry:
+  - com.networknt.eventuate.client.SubscriptionsRegistryImpl
+- com.networknt.eventuate.account.command.account.Account:
+  - com.networknt.eventuate.account.command.account.Account
