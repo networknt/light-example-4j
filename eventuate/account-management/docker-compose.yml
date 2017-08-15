@@ -1,0 +1,72 @@
+version: "2"
+#
+# Services
+#
+services:
+  postgresdb:
+    build: ./docker/postgres
+    environment:
+       POSTGRES_USER: postgres
+       POSTGRES_PASSWORD: postgres
+    ports:
+        - 5432:5432
+    networks:
+        - localnet
+
+
+  customer-service:
+      build: ./customer-service/
+      volumes:
+        - ./docker/customer-service/config:/config
+      ports:
+        - 8083:8083
+      networks:
+          - localnet
+
+  customer-view-service:
+      build: ./customer-view-service/
+      volumes:
+        - ./docker/customer-view-service/config:/config
+      ports:
+        - 8084:8084
+      links:
+        - postgresdb
+      networks:
+          - localnet
+
+  account-service:
+      build: ./account-service/
+      volumes:
+        - ./docker/account-service/config:/config
+      ports:
+        - 8081:8081
+      networks:
+          - localnet
+
+  account-view-service:
+      build: ./account-view-service/
+      volumes:
+        - ./docker/account-view-service/config:/config
+      ports:
+        - 8082:8082
+      links:
+        - postgresdb
+      networks:
+          - localnet
+
+  transaction-service:
+      build: ./transaction-service/
+      volumes:
+        - ./docker/transaction-service/config:/config
+      ports:
+        - 8085:8085
+      networks:
+          - localnet
+
+
+# Networks
+#
+networks:
+  localnet:
+    # driver: bridge
+    external: true

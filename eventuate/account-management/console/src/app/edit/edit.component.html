@@ -1,0 +1,34 @@
+<my-header [title]="operateTitle"></my-header>
+<div class="operate">
+  <form #contactForm="ngForm" (ngSubmit)="submitForm()">
+    <ul>
+      <li>
+        <label>Title: </label>
+        <p>
+          <input type="text" value="{{todo.title}}"
+          [(ngModel)]="todo.title" name="title">
+       </p>
+      </li>
+      <li>
+        <label>Order: </label>
+        <p>
+          <input type="text" value="{{todo.order}}"
+          [(ngModel)]="todo.order" name="order">
+        </p>
+      </li>
+      <li>
+        <label>If the TODO is Completed? : </label>
+        <p>
+          <input type="checkbox" value="{{todo.completed}}"
+          [(ngModel)]="todo.completed" name="completed">
+        </p>
+      </li>
+    </ul>
+    <div class="btn">
+      <button type="submit" class="fl">Save</button>
+      <button (click)="cancleOperate()" class=" fr">Cancel</button>
+    </div>
+  </form>
+</div>
+<br><br>
+<my-header  [title]="jsonResult" ></my-header>

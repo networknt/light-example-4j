@@ -1,0 +1,223 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "version": "1.0.0",
+        "title": "Account Money transfer customer command service API",
+        "description": "Account Money transfer command service API is a microserice that serves customer command side endpoints for the Account Money transfer example application built on top of light-eventuate.",
+        "contact": {
+            "email": "stevehu@gmail.com"
+        },
+        "license": {
+            "name": "Apache 2.0",
+            "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+        }
+    },
+    "host": "accounttransfer.networknt.com",
+    "schemes": [
+        "http"
+    ],
+    "basePath": "/v1",
+    "consumes": [
+        "application/json"
+    ],
+    "produces": [
+        "application/json"
+    ],
+    "paths": {
+        "/createcustomer": {
+            "post": {
+                "description": "Return a customer object with Id",
+                "operationId": "createCustomerPost",
+                "parameters": [
+                  {
+                    "in": "body",
+                    "name": "request",
+                    "description": "request to create a customer",
+                    "required": true,
+                    "schema": {
+                        "$ref": "#/definitions/CustomerInfo"                     }
+                   }
+                  ],
+               "responses": {
+                   "200": {
+                   "description": "OK",
+                   "schema": {
+                      "$ref": "#/definitions/CustomerResponse"
+                }
+               }
+              },
+             "security": [
+                    {
+                        "customer_auth": [
+                            "customer.w"
+                        ]
+                    }
+                ]
+            }
+     },
+     "/customers/toaccounts/{id}": {
+       "post": {
+        "description": "addToAccount",
+        "operationId": "addToAccountUsingPOST",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "id",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "request",
+            "description": "request",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/ToAccountInfo"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "string"
+            }
+          }
+        },
+         "security": [
+              {
+                  "customer_auth": [
+                      "customer.r", "customer.w"
+                   ]
+             }
+          ]
+      }
+    },
+     "/toaccounts/{customerId}/{accountId}": {
+         "delete": {
+                "description": "Delete an account from customer link",
+                "operationId": "deleteById",
+                "parameters": [
+                    {
+                        "name": "customerId",
+                        "in": "path",
+                        "description": "ID of taccountodo",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "accountId",
+                        "in": "path",
+                        "description": "ID of taccountodo",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "400": {
+                        "description": "Invalid ID supplied"
+                    },
+                    "404": {
+                        "description": "account not found"
+                    }
+                },
+                "security": [
+                    {
+                        "customer_auth": [
+                            "customer.r", "customer.w"
+                        ]
+                    }
+                ]
+            }
+        },
+      "/health":{"get":{"responses":{"200":{"description":"successful operation"}},"parameters":[]}},"/server/info":{"get":{"security":[{"account_auth":["server.info.r"]}],"responses":{"200":{"description":"successful operation"}},"parameters":[]}}
+    },
+    "securityDefinitions": {
+        "customer_auth": {
+            "type": "oauth2",
+            "authorizationUrl": "http://localhost:8080/oauth2/code",
+            "flow": "implicit",
+            "scopes": {
+                "customer.w": "write customer",
+                 "customer.r": "read customer"
+            }
+        }
+    },
+    "definitions": {
+      "CustomerInfo": {
+        "properties": {
+          "address": {
+            "$ref": "#/definitions/Address"
+          },
+          "email": {
+            "type": "string"
+          },
+          "name": {
+            "$ref": "#/definitions/Name"
+          },
+          "phoneNumber": {
+            "type": "string"
+          },
+          "ssn": {
+              "type": "string"
+          }
+        }
+      },
+     "Name": {
+      "properties": {
+        "firstName": {
+          "type": "string"
+        },
+        "lastName": {
+          "type": "string"
+        }
+      }
+    },
+    "Address": {
+      "properties": {
+        "city": {
+          "type": "string"
+        },
+        "state": {
+          "type": "string"
+        },
+        "street1": {
+          "type": "string"
+        },
+        "street2": {
+          "type": "string"
+        },
+        "zipCode": {
+          "type": "string"
+        }
+      }
+    },
+    "ToAccountInfo": {
+      "properties": {
+        "description": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
+        },
+        "owner": {
+          "type": "string"
+        },
+        "title": {
+          "type": "string"
+        }
+      }
+    },
+      "CustomerResponse": {
+        "properties": {
+          "customerInfo": {
+            "$ref": "#/definitions/CustomerInfo"
+           },
+          "id": {
+            "type": "string"
+          }
+        }
+      }
+    }
+}
