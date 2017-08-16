@@ -18,16 +18,16 @@ import org.slf4j.LoggerFactory;
 import java.io.IOException;
 
 
-public class UserLogoutGetHandlerTest {
+public class ServerInfoGetHandlerTest {
     @ClassRule
     public static TestServer server = TestServer.getInstance();
 
-    static final Logger logger = LoggerFactory.getLogger(UserLogoutGetHandlerTest.class);
+    static final Logger logger = LoggerFactory.getLogger(ServerInfoGetHandlerTest.class);
 
     @Test
-    public void testUserLogoutGetHandlerTest() throws ClientException, ApiException {
+    public void testServerInfoGetHandlerTest() throws ClientException, ApiException {
         CloseableHttpClient client = Client.getInstance().getSyncClient();
-        HttpGet httpGet = new HttpGet ("http://localhost:" + server.getServerConfig().getHttpPort() + "/v2/user/logout");
+        HttpGet httpGet = new HttpGet ("http://localhost:" + server.getServerConfig().getHttpPort() + "/v2/server/info");
         /*
         Client.getInstance().addAuthorization(httpGet);
         try {

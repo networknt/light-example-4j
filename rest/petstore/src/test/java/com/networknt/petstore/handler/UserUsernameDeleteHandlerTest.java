@@ -27,13 +27,15 @@ public class UserUsernameDeleteHandlerTest {
     @Test
     public void testUserUsernameDeleteHandlerTest() throws ClientException, ApiException {
         CloseableHttpClient client = Client.getInstance().getSyncClient();
-        HttpDelete httpDelete = new HttpDelete ("http://localhost:8080/v2/user/username");
+        HttpDelete httpDelete = new HttpDelete ("http://localhost:" + server.getServerConfig().getHttpPort() + "/v2/user/username");
         /*
         Client.getInstance().addAuthorization(httpDelete);
         try {
             CloseableHttpResponse response = client.execute(httpDelete);
-            Assert.assertEquals(200, response.getStatusLine().getStatusCode());
-            Assert.assertEquals("", IOUtils.toString(response.getEntity().getContent(), "utf8"));
+            int statusCode = response.getStatusLine().getStatusCode();
+            String body = IOUtils.toString(response.getEntity().getContent(), "utf8");
+            Assert.assertEquals(200, statusCode);
+            Assert.assertEquals("", body);
         } catch (Exception e) {
             e.printStackTrace();
         }

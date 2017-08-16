@@ -27,13 +27,15 @@ public class PetPostHandlerTest {
     @Test
     public void testPetPostHandlerTest() throws ClientException, ApiException {
         CloseableHttpClient client = Client.getInstance().getSyncClient();
-        HttpPost httpPost = new HttpPost ("http://localhost:8080/v2/pet");
+        HttpPost httpPost = new HttpPost ("http://localhost:" + server.getServerConfig().getHttpPort() + "/v2/pet");
         /*
         Client.getInstance().addAuthorization(httpPost);
         try {
             CloseableHttpResponse response = client.execute(httpPost);
-            Assert.assertEquals(200, response.getStatusLine().getStatusCode());
-            Assert.assertEquals("", IOUtils.toString(response.getEntity().getContent(), "utf8"));
+            int statusCode = response.getStatusLine().getStatusCode();
+            String body = IOUtils.toString(response.getEntity().getContent(), "utf8");
+            Assert.assertEquals(200, statusCode);
+            Assert.assertEquals("", body);
         } catch (Exception e) {
             e.printStackTrace();
         }

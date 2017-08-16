@@ -27,13 +27,15 @@ public class UserPostHandlerTest {
     @Test
     public void testUserPostHandlerTest() throws ClientException, ApiException {
         CloseableHttpClient client = Client.getInstance().getSyncClient();
-        HttpPost httpPost = new HttpPost ("http://localhost:8080/v2/user");
+        HttpPost httpPost = new HttpPost ("http://localhost:" + server.getServerConfig().getHttpPort() + "/v2/user");
         /*
         Client.getInstance().addAuthorization(httpPost);
         try {
             CloseableHttpResponse response = client.execute(httpPost);
-            Assert.assertEquals(200, response.getStatusLine().getStatusCode());
-            Assert.assertEquals("", IOUtils.toString(response.getEntity().getContent(), "utf8"));
+            int statusCode = response.getStatusLine().getStatusCode();
+            String body = IOUtils.toString(response.getEntity().getContent(), "utf8");
+            Assert.assertEquals(200, statusCode);
+            Assert.assertEquals("", body);
         } catch (Exception e) {
             e.printStackTrace();
         }
