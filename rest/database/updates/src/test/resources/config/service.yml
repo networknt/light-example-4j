@@ -1,0 +1,17 @@
+
+# Singleton service factory configuration
+
+singletons:
+- javax.sql.DataSource:
+  - com.zaxxer.hikari.HikariDataSource:
+      DriverClassName: org.h2.jdbcx.JdbcDataSource
+      jdbcUrl: jdbc:h2:~/test
+      username: sa
+      password: sa
+      maximumPoolSize: 10
+      useServerPrepStmts: true,
+      cachePrepStmts: true,
+      cacheCallableStmts: true,
+      prepStmtCacheSize: 10,
+      prepStmtCacheSqlLimit: 2048,
+      connectionTimeout: 2000
