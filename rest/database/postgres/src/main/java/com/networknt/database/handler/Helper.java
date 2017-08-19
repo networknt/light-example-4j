@@ -12,7 +12,7 @@ public class Helper {
 
     /**
      * Returns the value of the "queries" request parameter, which is an integer
-     * bound between 1 and 500 with a default value of 1.
+     * bound between 1 and 5 with a default value of 1.
      *
      * @param exchange the current HTTP exchange
      * @return the value of the "queries" request parameter
@@ -28,7 +28,7 @@ public class Helper {
         }
         try {
             int parsedValue = Integer.parseInt(textValue);
-            return Math.min(500, Math.max(1, parsedValue));
+            return Math.min(5, Math.max(1, parsedValue));
         } catch (NumberFormatException e) {
             return 1;
         }
@@ -41,7 +41,7 @@ public class Helper {
      * @return a random world number
      */
     static int randomWorld() {
-        return 1 + ThreadLocalRandom.current().nextInt(10000);
+        return 1 + ThreadLocalRandom.current().nextInt(10);
     }
 
     private static final int cpuCount = Runtime.getRuntime().availableProcessors();

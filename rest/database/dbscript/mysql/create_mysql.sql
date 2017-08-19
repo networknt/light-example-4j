@@ -17,13 +17,13 @@ DELIMITER #
 CREATE PROCEDURE load_data()
 BEGIN
 
-declare v_max int unsigned default 10000;
+declare v_max int unsigned default 10;
 declare v_counter int unsigned default 0;
 
   TRUNCATE TABLE world;
   START TRANSACTION;
   while v_counter < v_max do
-    INSERT INTO world (randomNumber) VALUES ( floor(0 + (rand() * 10000)) );
+    INSERT INTO world (randomNumber) VALUES ( floor(0 + (rand() * 10)) );
     SET v_counter=v_counter+1;
   end while;
   commit;

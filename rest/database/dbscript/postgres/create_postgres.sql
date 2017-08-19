@@ -7,7 +7,7 @@ CREATE TABLE  world (
 );
 
 INSERT INTO world (id, randomnumber)
-SELECT x.id, random() * 10000 + 1 FROM generate_series(1,10000) as x(id);
+SELECT x.id, random() * 10 + 1 FROM generate_series(1,10) as x(id);
 
 DROP TABLE IF EXISTS fortune;
 CREATE TABLE fortune (

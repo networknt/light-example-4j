@@ -10,9 +10,9 @@ CREATE SEQUENCE id_seq START WITH 1;
 
 INSERT INTO world
 SELECT id_seq.nextval,
-dbms_random.value(1,10000)
+dbms_random.value(1,10)
 FROM  dual
-CONNECT BY level <= 10000;
+CONNECT BY level <= 10;
 
 DROP TABLE fortune CASCADE CONSTRAINTS;
 CREATE TABLE fortune (
