@@ -1,0 +1,19 @@
+# Metrics handler configuration
+
+# If metrics handler is enabled or not
+enabled: true
+
+# influxdb protocal can be http, https
+influxdbProtocol: http
+# influxdb hostname
+influxdbHost: influxdb
+# influxdb port number
+influxdbPort: 8086
+# influxdb database name
+influxdbName: metrics
+# influxdb user
+influxdbUser: root
+# influx db password
+influxdbPass: root
+# report and reset metrics in minutes.
+reportInMinutes: 1
