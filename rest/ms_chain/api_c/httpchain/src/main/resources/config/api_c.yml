@@ -1,1 +1,2 @@
-api_d_endpoint: http://localhost:7004/v1/data
+api_d_host: h2c-prior://localhost:7004
+api_d_path: /v1/data

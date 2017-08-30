@@ -1,1 +1,2 @@
-api_c_endpoint: "http://localhost:7003/v1/data"
+api_c_host: h2c-prior://localhost:7003
+api_c_path: /v1/data
