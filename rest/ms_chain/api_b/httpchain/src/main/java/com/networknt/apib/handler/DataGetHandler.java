@@ -45,7 +45,7 @@ public class DataGetHandler implements HttpHandler {
     public void handleRequest(HttpServerExchange exchange) throws Exception {
         List<String> list = new ArrayList<>();
         final CountDownLatch latch = new CountDownLatch(1);
-        if(!connection.isOpen()) {
+        if(connection == null || !connection.isOpen()) {
             try {
                 connection = client.connect(new URI(apicHost), Http2Client.WORKER, Http2Client.SSL, Http2Client.POOL, OptionMap.create(UndertowOptions.ENABLE_HTTP2, true)).get();
             } catch (Exception e) {
