@@ -1,1 +1,2 @@
-api_d_endpoint: http://localhost:7004/v1/data
+api_d_host: https://localhost:7444
+api_d_path: /v1/data

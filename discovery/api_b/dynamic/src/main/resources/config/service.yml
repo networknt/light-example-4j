@@ -6,7 +6,7 @@ singletons:
       port: 8080
       path: direct
       parameters:
-        com.networknt.apid-1.0.0: http://localhost:7004
+        com.networknt.apid-1.0.0: https://localhost:7444
 - com.networknt.registry.Registry:
   - com.networknt.registry.support.DirectRegistry
 - com.networknt.balance.LoadBalance:

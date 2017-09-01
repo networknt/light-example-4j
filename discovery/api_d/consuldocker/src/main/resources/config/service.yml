@@ -2,8 +2,8 @@ singletons:
 - com.networknt.registry.URL:
   - com.networknt.registry.URLImpl:
       protocol: light
-      host: apid
-      port: 7004
+      host: localhost
+      port: 8080
       path: consul
       parameters:
         registryRetryPeriod: '30000'

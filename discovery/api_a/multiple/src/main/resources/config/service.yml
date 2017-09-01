@@ -6,8 +6,8 @@ singletons:
       port: 8080
       path: direct
       parameters:
-        com.networknt.apib-1.0.0: http://localhost:7002
-        com.networknt.apic-1.0.0: http://localhost:7003
+        com.networknt.apib-1.0.0: https://localhost:7442
+        com.networknt.apic-1.0.0: https://localhost:7443
 - com.networknt.registry.Registry:
   - com.networknt.registry.support.DirectRegistry
 - com.networknt.balance.LoadBalance:
