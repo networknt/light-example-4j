@@ -2,6 +2,7 @@
 package com.networknt.backend.handler;
 
 import com.networknt.client.Http2Client;
+import com.networknt.config.Config;
 import com.networknt.exception.ApiException;
 import com.networknt.exception.ClientException;
 import io.undertow.UndertowOptions;
@@ -18,6 +19,8 @@ import org.slf4j.LoggerFactory;
 import org.xnio.IoUtils;
 import org.xnio.OptionMap;
 import java.net.URI;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.atomic.AtomicReference;
 
@@ -37,7 +40,9 @@ public class PostDataPostHandlerTest {
 
     @Test
     public void testPostDataPostHandlerTest() throws ClientException, ApiException {
-        /*
+        Map<String, String> map = new HashMap<>();
+        map.put("key", "key1");
+        map.put("value", "value1");
         final Http2Client client = Http2Client.getInstance();
         final CountDownLatch latch = new CountDownLatch(1);
         final ClientConnection connection;
@@ -52,8 +57,7 @@ public class PostDataPostHandlerTest {
             
             request.getRequestHeaders().put(Headers.CONTENT_TYPE, "application/json");
             request.getRequestHeaders().put(Headers.TRANSFER_ENCODING, "chunked");
-            connection.sendRequest(request, client.createClientCallback(reference, latch, "request body to be replaced"));
-            
+            connection.sendRequest(request, client.createClientCallback(reference, latch, Config.getInstance().getMapper().writeValueAsString(map)));
             latch.await();
         } catch (Exception e) {
             logger.error("Exception: ", e);
@@ -65,6 +69,5 @@ public class PostDataPostHandlerTest {
         String body = reference.get().getAttachment(Http2Client.RESPONSE_BODY);
         Assert.assertEquals(200, statusCode);
         Assert.assertNotNull(body);
-        */
     }
 }
