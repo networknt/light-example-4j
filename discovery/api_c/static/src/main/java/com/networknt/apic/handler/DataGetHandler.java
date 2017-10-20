@@ -3,12 +3,9 @@ package com.networknt.apic.handler;
 import com.networknt.config.Config;
 import io.undertow.server.HttpHandler;
 import io.undertow.server.HttpServerExchange;
-import io.undertow.util.HttpString;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class DataGetHandler implements HttpHandler {
     @Override

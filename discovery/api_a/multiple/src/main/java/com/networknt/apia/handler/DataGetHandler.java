@@ -6,6 +6,7 @@ import com.networknt.cluster.Cluster;
 import com.networknt.config.Config;
 import com.networknt.exception.ClientException;
 import com.networknt.security.JwtHelper;
+import com.networknt.server.Server;
 import com.networknt.service.SingletonServiceFactory;
 import io.undertow.UndertowOptions;
 import io.undertow.client.ClientConnection;
@@ -35,6 +36,7 @@ public class DataGetHandler implements HttpHandler {
     static String path = "/v1/data";
     static Map<String, Object> securityConfig = (Map)Config.getInstance().getJsonMapConfig(JwtHelper.SECURITY_CONFIG);
     static boolean securityEnabled = (Boolean)securityConfig.get(JwtHelper.ENABLE_VERIFY_JWT);
+    static String tag = Server.config.getEnvironment();
 
     static Http2Client client = Http2Client.getInstance();
     static ClientConnection connectionB;
@@ -42,8 +44,8 @@ public class DataGetHandler implements HttpHandler {
 
     public DataGetHandler() {
         try {
-            apibHost = cluster.serviceToUrl("https", "com.networknt.apib-1.0.0", null);
-            apicHost = cluster.serviceToUrl("https", "com.networknt.apic-1.0.0", null);
+            apibHost = cluster.serviceToUrl("https", "com.networknt.apib-1.0.0", tag, null);
+            apicHost = cluster.serviceToUrl("https", "com.networknt.apic-1.0.0", tag, null);
             connectionB = client.connect(new URI(apibHost), Http2Client.WORKER, Http2Client.SSL, Http2Client.POOL, OptionMap.create(UndertowOptions.ENABLE_HTTP2, true)).get();
             connectionC = client.connect(new URI(apicHost), Http2Client.WORKER, Http2Client.SSL, Http2Client.POOL, OptionMap.create(UndertowOptions.ENABLE_HTTP2, true)).get();
         } catch (Exception e) {
@@ -56,7 +58,7 @@ public class DataGetHandler implements HttpHandler {
         List<String> list = new ArrayList<>();
         if(connectionB == null || !connectionB.isOpen()) {
             try {
-                apibHost = cluster.serviceToUrl("https", "com.networknt.apib-1.0.0", null);
+                apibHost = cluster.serviceToUrl("https", "com.networknt.apib-1.0.0", tag, null);
                 connectionB = client.connect(new URI(apibHost), Http2Client.WORKER, Http2Client.SSL, Http2Client.POOL, OptionMap.create(UndertowOptions.ENABLE_HTTP2, true)).get();
             } catch (Exception e) {
                 logger.error("Exeption:", e);
@@ -65,7 +67,7 @@ public class DataGetHandler implements HttpHandler {
         }
         if(connectionC == null || !connectionC.isOpen()) {
             try {
-                apicHost = cluster.serviceToUrl("https", "com.networknt.apic-1.0.0", null);
+                apicHost = cluster.serviceToUrl("https", "com.networknt.apic-1.0.0", tag, null);
                 connectionC = client.connect(new URI(apicHost), Http2Client.WORKER, Http2Client.SSL, Http2Client.POOL, OptionMap.create(UndertowOptions.ENABLE_HTTP2, true)).get();
             } catch (Exception e) {
                 logger.error("Exeption:", e);

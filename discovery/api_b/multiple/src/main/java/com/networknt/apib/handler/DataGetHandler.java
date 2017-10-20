@@ -6,6 +6,7 @@ import com.networknt.cluster.Cluster;
 import com.networknt.config.Config;
 import com.networknt.exception.ClientException;
 import com.networknt.security.JwtHelper;
+import com.networknt.server.Server;
 import com.networknt.service.SingletonServiceFactory;
 import io.undertow.UndertowOptions;
 import io.undertow.client.ClientConnection;
@@ -32,12 +33,14 @@ public class DataGetHandler implements HttpHandler {
     static String path = "/v1/data";
     static Map<String, Object> securityConfig = (Map)Config.getInstance().getJsonMapConfig(JwtHelper.SECURITY_CONFIG);
     static boolean securityEnabled = (Boolean)securityConfig.get(JwtHelper.ENABLE_VERIFY_JWT);
+    static String tag = Server.config.getEnvironment();
+
     static Http2Client client = Http2Client.getInstance();
     static ClientConnection connection;
 
     public DataGetHandler() {
         try {
-            apidHost = cluster.serviceToUrl("https", "com.networknt.apid-1.0.0", null);
+            apidHost = cluster.serviceToUrl("https", "com.networknt.apid-1.0.0", tag, null);
             connection = client.connect(new URI(apidHost), Http2Client.WORKER, Http2Client.SSL, Http2Client.POOL, OptionMap.create(UndertowOptions.ENABLE_HTTP2, true)).get();
         } catch (Exception e) {
             logger.error("Exeption:", e);
@@ -50,7 +53,7 @@ public class DataGetHandler implements HttpHandler {
         final CountDownLatch latch = new CountDownLatch(1);
         if(connection == null || !connection.isOpen()) {
             try {
-                apidHost = cluster.serviceToUrl("https", "com.networknt.apid-1.0.0", null);
+                apidHost = cluster.serviceToUrl("https", "com.networknt.apid-1.0.0", tag, null);
                 connection = client.connect(new URI(apidHost), Http2Client.WORKER, Http2Client.SSL, Http2Client.POOL, OptionMap.create(UndertowOptions.ENABLE_HTTP2, true)).get();
             } catch (Exception e) {
                 logger.error("Exeption:", e);

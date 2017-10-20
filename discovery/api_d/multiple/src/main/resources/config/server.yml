@@ -11,7 +11,7 @@ httpPort:  7004
 enableHttp: false
 
 # Https port if enableHttps is true.
-httpsPort:  7445
+httpsPort:  7444
 
 # Enable HTTPS should be true on official environment.
 enableHttps: true
