@@ -1,0 +1,13 @@
+variables:
+  regex: '<version.light[a-z-]+4j>\d\.\d\.\d</version.light[a-z-]+4j>'
+paths:
+# upgrade discovery example
+- type: pom.xml
+  path: discovery
+  match: "{{ .regex }}"
+  replace: "{{ .old }}"
+  with: "{{ .new }}"
+  must_include:
+    - modelVersion
+    - groupId
+    - artifactId
