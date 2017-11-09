@@ -18,19 +18,19 @@
     <properties>
         <java.version>1.8</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <version.light-4j>1.4.6</version.light-4j>
-        <version.light-rest-4j>1.4.6</version.light-rest-4j>
+        <version.light-4j>1.5.0</version.light-4j>
+        <version.light-rest-4j>1.5.0</version.light-rest-4j>
         <version.jackson>2.9.1</version.jackson>
         <version.slf4j>1.7.25</version.slf4j>
         <version.jose4j>0.6.1</version.jose4j>
         <version.antlr4>4.7</version.antlr4>
-        <version.commons-text>1.1</version.commons-lang>
+        <version.commons-text>1.1</version.commons-text>
         <version.encoder>1.2.1</version.encoder>
         <version.logback>1.2.3</version.logback>
         <version.junit>4.12</version.junit>
         <version.undertow>1.4.20.Final</version.undertow>
+        <version.swagger>1.0.32</version.swagger>
         <version.json-schema-validator>0.1.10</version.json-schema-validator>
-        <version.hazelcast>3.6.7</version.hazelcast>
         
         
         
@@ -154,6 +154,11 @@
             <groupId>com.networknt</groupId>
             <artifactId>json-schema-validator</artifactId>
             <version>${version.json-schema-validator}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.swagger</groupId>
+            <artifactId>swagger-parser</artifactId>
+            <version>${version.swagger}</version>
         </dependency>
         <dependency>
             <groupId>com.networknt</groupId>
