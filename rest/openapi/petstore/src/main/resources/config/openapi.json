@@ -1,0 +1,235 @@
+{"components":{"securitySchemes":{"petstore_auth":{"type": "oauth2","description": "This API uses OAuth 2 with the client credential grant flow.","flows":{"clientCredentials":{"tokenUrl": "https://localhost:6882/token","scopes":{"write:pets": "modify pets in your account","read:pets": "read your pets","server.info.r":"read server info"}}}}},"schemas":{"Error":{"required":["code",
+          "message"],"properties":{"message":{"type": "string"},"code":{"type": "integer","format": "int32"}}},"Pet":{"required":["id",
+          "name"],"properties":{"name":{"type": "string"},"id":{"type": "integer","format": "int64"},"tag":{"type": "string"}}}}},"servers": [
+    {
+      "url": "http://petstore.swagger.io/v1"
+    }
+  ],"openapi": "3.0.0","paths":{"/pets": {
+      "get": {
+        "summary": "List all pets",
+        "operationId": "listPets",
+        "tags": [
+          "pets"
+        ],
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "How many items to return at one time (max 100)",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "security": [
+          {
+            "petstore_auth": [
+              "read:pets"
+            ]
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "An paged array of pets",
+            "headers": {
+              "x-next": {
+                "description": "A link to the next page of responses",
+                "schema": {
+                  "type": "string"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Pet"
+                  }
+                },
+                "example": [
+                  {
+                    "id": 1,
+                    "name": "catten",
+                    "tag": "cat"
+                  },
+                  {
+                    "id": 2,
+                    "name": "doggy",
+                    "tag": "dog"
+                  }
+                ]
+              }
+            }
+          },
+          "default": {
+            "description": "unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "Create a pet",
+        "operationId": "createPets",
+        "requestBody": {
+          "description": "Pet to add to the store",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Pet"
+              }
+            }
+          }
+        },
+        "tags": [
+          "pets"
+        ],
+        "security": [
+          {
+            "petstore_auth": [
+              "read:pets",
+              "write:pets"
+            ]
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Null response"
+          },
+          "default": {
+            "description": "unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },"/health":{"get":{"responses":{"200":{"description":"successful operation"}},"parameters":[]}},"/pets/{petId}": {
+      "get": {
+        "summary": "Info for a specific pet",
+        "operationId": "showPetById",
+        "tags": [
+          "pets"
+        ],
+        "parameters": [
+          {
+            "name": "petId",
+            "in": "path",
+            "required": true,
+            "description": "The id of the pet to retrieve",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "security": [
+          {
+            "petstore_auth": [
+              "read:pets"
+            ]
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Expected response to a valid request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Pet"
+                },
+                "example": {
+                  "id": 1,
+                  "name": "Jessica Right",
+                  "tag": "pet"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete a specific pet",
+        "operationId": "deletePetById",
+        "tags": [
+          "pets"
+        ],
+        "parameters": [
+          {
+            "name": "petId",
+            "in": "path",
+            "required": true,
+            "description": "The id of the pet to delete",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "key",
+            "in": "header",
+            "required": true,
+            "description": "The key header",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "security": [
+          {
+            "petstore_auth": [
+              "write:pets"
+            ]
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Expected response to a valid request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Pet"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },"/server/info":{"get":{"security":[{"petstore_auth":["server.info.r"]}],"responses":{"200":{"description":"successful operation"}},"parameters":[]}}},"info": {
+    "version": "1.0.0",
+    "title": "Swagger Petstore",
+    "license": {
+      "name": "MIT"
+    }
+  }}
