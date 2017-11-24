@@ -2,6 +2,9 @@ package com.networknt.database.db;
 
 import com.mongodb.DB;
 import com.mongodb.MongoClient;
+import com.mongodb.MongoClientOptions;
+import com.mongodb.ServerAddress;
+import com.mongodb.client.MongoDatabase;
 import com.networknt.config.Config;
 import com.networknt.server.StartupHookProvider;
 
@@ -11,7 +14,7 @@ import com.networknt.server.StartupHookProvider;
 public class MongoStartupHookProvider implements StartupHookProvider {
 
     static String CONFIG_NAME = "mongo";
-    public static DB db;
+    public static MongoDatabase db;
 
     public void onStartup() {
         System.out.println("MongoStartupHookProvider is called");
@@ -21,10 +24,11 @@ public class MongoStartupHookProvider implements StartupHookProvider {
     }
 
     static void initDataSource() {
-
         MongoConfig config = (MongoConfig) Config.getInstance().getJsonObjectConfig(CONFIG_NAME, MongoConfig.class);
-        db = new MongoClient(config.getHost())
-                .getDB(config.getName());
-
+        MongoClientOptions.Builder clientOptions = new MongoClientOptions.Builder();
+        clientOptions.minConnectionsPerHost(10);//minPoolSize
+        clientOptions.connectionsPerHost(50);//maxPoolSize
+        MongoClient mongoClient = new MongoClient(new ServerAddress(config.getHost()), clientOptions.build());
+        db = mongoClient.getDatabase(config.getName());
     }
 }

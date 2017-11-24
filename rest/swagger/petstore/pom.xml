@@ -33,6 +33,10 @@
         <version.json-schema-validator>0.1.10</version.json-schema-validator>
         <version.fastscanner>2.7.0</version.fastscanner>
         
+        
+        
+        
+        
         <versions.maven-version>2.4</versions.maven-version>
     </properties>
 
@@ -146,16 +150,6 @@
             <groupId>com.networknt</groupId>
             <artifactId>server</artifactId>
             <version>${version.light-4j}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.networknt</groupId>
-            <artifactId>json-schema-validator</artifactId>
-            <version>${version.json-schema-validator}</version>
-        </dependency>
-        <dependency>
-            <groupId>io.swagger</groupId>
-            <artifactId>swagger-parser</artifactId>
-            <version>${version.swagger}</version>
         </dependency>
         <dependency>
             <groupId>com.networknt</groupId>
