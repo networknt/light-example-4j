@@ -158,9 +158,9 @@
     <version.slf4j>1.7.25</version.slf4j>
     <version.fastscanner>2.7.0</version.fastscanner>
     <version.json-schema-validator>0.1.10</version.json-schema-validator>
-    <version.openapi-parser>1.5.4</version.openapi-parser>
     <version.commons-text>1.1</version.commons-text>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <version.openapi-parser>1.5.4</version.openapi-parser>
     <version.junit>4.12</version.junit>
     <version.logback>1.2.3</version.logback>
   </properties>
