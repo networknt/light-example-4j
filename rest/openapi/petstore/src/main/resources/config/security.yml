@@ -1,7 +1,7 @@
 # Security configuration in light framework.
 ---
 # Enable JWT verification flag.
-enableVerifyJwt: true
+enableVerifyJwt: false
 
 # Enable JWT scope verification. Only valid when enableVerifyJwt is true.
 enableVerifyScope: true
