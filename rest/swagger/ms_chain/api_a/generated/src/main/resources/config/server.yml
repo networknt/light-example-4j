@@ -8,7 +8,7 @@ ip: 0.0.0.0
 httpPort:  7001
 
 # Enable HTTP should be false on official environment.
-enableHttp: false
+enableHttp: true
 
 # Https port if enableHttps is true.
 httpsPort:  7441
