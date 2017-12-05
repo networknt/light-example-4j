@@ -1,4 +1,3 @@
----
 singletons:
 - javax.sql.DataSource:
   - com.zaxxer.hikari.HikariDataSource:
@@ -11,8 +10,10 @@ singletons:
       cacheCallableStmts: true
       prepStmtCacheSize: 4096
       prepStmtCacheSqlLimit: 2048
-- com.networknt.eventuate.common.impl.sync.AggregateCrud,com.networknt.eventuate.common.impl.sync.AggregateEvents:
-    - com.networknt.eventuate.test.jdbc.EventuateEmbeddedTestAggregateStore
+- com.networknt.eventuate.common.impl.sync.AggregateCrud:
+  - com.networknt.eventuate.client.EventuateLocalDBAggregateCrud
+- com.networknt.eventuate.common.impl.sync.AggregateEvents:
+    - com.networknt.eventuate.client.EventuateLocalAggregatesEvents
 - com.networknt.eventuate.common.impl.AggregateCrud:
   - com.networknt.eventuate.common.impl.adapters.SyncToAsyncAggregateCrudAdapter
 - com.networknt.eventuate.common.impl.AggregateEvents:
@@ -29,20 +30,9 @@ singletons:
   - com.networknt.eventuate.todolist.domain.TodoAggregate
 - com.networknt.eventuate.todolist.domain.TodoBulkDeleteAggregate:
   - com.networknt.eventuate.todolist.domain.TodoBulkDeleteAggregate
-- com.networknt.eventuate.todolist.TodoQueryRepository:
-  - com.networknt.eventuate.todolist.TodoQueryRepositoryImpl
-- com.networknt.eventuate.todolist.TodoQueryService:
-  - com.networknt.eventuate.todolist.TodoQueryServiceImpl
-- com.networknt.eventuate.todolist.TodoQueryWorkflow:
-  - com.networknt.eventuate.todolist.TodoQueryWorkflow
-- com.networknt.eventuate.event.EventHandlerProcessor:
-  - com.networknt.eventuate.event.EventHandlerProcessorDispatchedEventReturningVoid
-  - com.networknt.eventuate.event.EventHandlerProcessorDispatchedEventReturningCompletableFuture
-  - com.networknt.eventuate.event.EventHandlerProcessorEventHandlerContextReturningCompletableFuture
-  - com.networknt.eventuate.event.EventHandlerProcessorEventHandlerContextReturningVoid
 # HandlerProvider implementation
 - com.networknt.server.HandlerProvider:
-  - com.networknt.todolist.restquery.PathHandlerProvider
+  - com.networknt.todolist.restcommand.PathHandlerProvider
 # StartupHookProvider implementations, there are one to many and they are called in the same sequence defined.
 - com.networknt.server.StartupHookProvider:
   - com.networknt.eventuate.client.EventuateClientStartupHookProvider
@@ -72,3 +62,4 @@ singletons:
   - com.networknt.sanitizer.SanitizerHandler
   # Validator Validate request based on swagger specification (depending on Swagger and Body)
   - com.networknt.validator.ValidatorHandler
+

@@ -1,5 +1,5 @@
 
-package com.networknt.todolist.restcommand.handler;
+package com.networknt.todolist.command.handler;
 
 import com.networknt.client.Http2Client;
 import com.networknt.exception.ApiException;
@@ -8,7 +8,9 @@ import io.undertow.UndertowOptions;
 import io.undertow.client.ClientConnection;
 import io.undertow.client.ClientRequest;
 import io.undertow.client.ClientResponse;
+import io.undertow.util.Headers;
 import io.undertow.util.Methods;
+import org.jose4j.json.internal.json_simple.JSONObject;
 import org.junit.Assert;
 import org.junit.ClassRule;
 import org.junit.Test;
@@ -18,15 +20,16 @@ import org.xnio.IoUtils;
 import org.xnio.OptionMap;
 
 import java.net.URI;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.atomic.AtomicReference;
 
-
-public class TodosIdDeleteHandlerTest {
+public class CreateTodoIT {
     @ClassRule
     public static TestServer server = TestServer.getInstance();
 
-    static final Logger logger = LoggerFactory.getLogger(TodosIdDeleteHandlerTest.class);
+    static final Logger logger = LoggerFactory.getLogger(CreateTodo.class);
     static final boolean enableHttp2 = server.getServerConfig().isEnableHttp2();
     static final boolean enableHttps = server.getServerConfig().isEnableHttps();
     static final int httpPort = server.getServerConfig().getHttpPort();
@@ -34,7 +37,7 @@ public class TodosIdDeleteHandlerTest {
     static final String url = enableHttp2 || enableHttps ? "https://localhost:" + httpsPort : "http://localhost:" + httpPort;
 
     @Test
-    public void testTodosIdDeleteHandlerTest() throws ClientException, ApiException {
+    public void testCreateTodo() throws ClientException, ApiException {
         final Http2Client client = Http2Client.getInstance();
         final CountDownLatch latch = new CountDownLatch(1);
         final ClientConnection connection;
@@ -43,12 +46,27 @@ public class TodosIdDeleteHandlerTest {
         } catch (Exception e) {
             throw new ClientException(e);
         }
+
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put("host", "lightapi.net");
+        map.put("service", "todo");
+        map.put("action", "create");
+        map.put("version", "0.1.0");
+        Map<String, Object> data = new HashMap<>();
+        data.put("title", "create todo from hybrid service unit test");
+        data.put("completed", false);
+        data.put("order", 1);
+        map.put("data", data);
+        JSONObject json = new JSONObject();
+        json.putAll( map );
+        System.out.printf( "JSON: %s", json.toString() );
+
         final AtomicReference<ClientResponse> reference = new AtomicReference<>();
         try {
-            ClientRequest request = new ClientRequest().setPath("/v1/todos/id").setMethod(Methods.DELETE);
-
-            connection.sendRequest(request, client.createClientCallback(reference, latch));
-
+            ClientRequest request = new ClientRequest().setPath("/api/json").setMethod(Methods.POST);
+            request.getRequestHeaders().put(Headers.CONTENT_TYPE, "application/json");
+            request.getRequestHeaders().put(Headers.TRANSFER_ENCODING, "chunked");
+            connection.sendRequest(request, client.createClientCallback(reference, latch, json.toString()));
             latch.await();
         } catch (Exception e) {
             logger.error("Exception: ", e);
@@ -60,6 +78,5 @@ public class TodosIdDeleteHandlerTest {
         String body = reference.get().getAttachment(Http2Client.RESPONSE_BODY);
         Assert.assertEquals(200, statusCode);
         Assert.assertNotNull(body);
-
     }
 }

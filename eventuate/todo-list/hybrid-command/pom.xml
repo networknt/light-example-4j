@@ -1,10 +1,12 @@
 
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <parent>
-        <groupId>org.sonatype.oss</groupId>
-        <artifactId>oss-parent</artifactId>
-        <version>5</version>
+        <groupId>com.networknt</groupId>
+        <artifactId>light-eventuate-todo</artifactId>
+        <version>0.1.0</version>
+        <relativePath>..</relativePath>
     </parent>
+
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.networknt</groupId>
     <artifactId>hybrid-command</artifactId>
@@ -18,9 +20,9 @@
     <properties>
         <java.version>1.8</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <version.light-4j>1.3.5</version.light-4j>
-        <version.light-hybrid-4j>1.3.5</version.light-hybrid-4j>
-        <version.light-eventuate-4j>1.3.5</version.light-eventuate-4j>
+        <version.light-4j>1.5.4</version.light-4j>
+        <version.light-hybrid-4j>1.5.4</version.light-hybrid-4j>
+        <version.light-eventuate-4j>1.5.4</version.light-eventuate-4j>
         <version.jackson>2.8.7</version.jackson>
         <version.slf4j>1.7.25</version.slf4j>
         <version.jose4j>0.5.5</version.jose4j>
@@ -32,10 +34,8 @@
         <version.logback>1.2.3</version.logback>
         <version.junit>4.12</version.junit>
         <version.mockito>2.1.0-RC.1</version.mockito>
-        <version.undertow>1.4.11.Final</version.undertow>
+        <version.undertow>1.4.20.Final</version.undertow>
         <version.json-schema-validator>0.1.7</version.json-schema-validator>
-        <version.httpclient>4.5.2</version.httpclient>
-        <version.httpasyncclient>4.1.2</version.httpasyncclient>
         <version.fastscanner>2.0.8</version.fastscanner>
         <version.hikaricp>2.5.1</version.hikaricp>
         <version.h2>1.3.176</version.h2>
@@ -128,11 +128,6 @@
             <groupId>io.undertow</groupId>
             <artifactId>undertow-core</artifactId>
             <version>${version.undertow}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.httpcomponents</groupId>
-            <artifactId>httpclient</artifactId>
-            <version>${version.httpclient}</version>
         </dependency>
         <dependency>
             <groupId>io.github.lukehutch</groupId>
