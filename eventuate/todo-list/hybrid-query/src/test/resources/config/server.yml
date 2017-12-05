@@ -5,16 +5,19 @@
 ip: 0.0.0.0
 
 # Http port if enableHttp is true.
-httpPort: 8080
+httpPort: 49587
 
 # Enable HTTP should be false on official environment.
-enableHttp: true
+enableHttp: false
 
 # Https port if enableHttps is true.
-httpsPort: 8443
+httpsPort: 49588
 
 # Enable HTTPS should be true on official environment.
-enableHttps: false
+enableHttps: true
+
+# Http/2 is enabled by default.
+enableHttp2: true
 
 # Keystore file name in config folder. KeystorePass is in secret.yml to access it.
 keystoreName: tls/server.keystore
@@ -30,3 +33,8 @@ serviceId: com.networknt.hybrid-query-0.1.0
 
 # Flag to enable service registration. Only be true if running as standalone Java jar.
 enableRegistry: false
+
+# environment tag that will be registered on consul to support multiple instances per env for testing.
+# https://github.com/networknt/light-doc/blob/master/docs/content/design/env-segregation.md
+# This tag should only be set for testing env, not production. The production certification process will enforce it.
+# environment: test1
