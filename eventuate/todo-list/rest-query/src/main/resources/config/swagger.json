@@ -43,7 +43,7 @@
                     "type": "string",
                     "description": "title of todo"
                 },
-                "complete": {
+                "completed": {
                     "type": "boolean",
                     "default": false
                 },

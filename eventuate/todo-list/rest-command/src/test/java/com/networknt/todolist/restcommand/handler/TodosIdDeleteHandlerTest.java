@@ -45,7 +45,7 @@ public class TodosIdDeleteHandlerTest {
         }
         final AtomicReference<ClientResponse> reference = new AtomicReference<>();
         try {
-            ClientRequest request = new ClientRequest().setPath("/v1/todos/id").setMethod(Methods.DELETE);
+            ClientRequest request = new ClientRequest().setPath("/v1/todos/100").setMethod(Methods.DELETE);
 
             connection.sendRequest(request, client.createClientCallback(reference, latch));
 

@@ -40,6 +40,7 @@ singletons:
   - com.networknt.eventuate.event.EventHandlerProcessorDispatchedEventReturningCompletableFuture
   - com.networknt.eventuate.event.EventHandlerProcessorEventHandlerContextReturningCompletableFuture
   - com.networknt.eventuate.event.EventHandlerProcessorEventHandlerContextReturningVoid
+- com.networknt.eventuate.client.SubscriptionsRegistry: com.networknt.eventuate.client.EventuateClientServiceInitializer::subscriptionsRegistry
 
 # HandlerProvider implementation
 - com.networknt.server.HandlerProvider:

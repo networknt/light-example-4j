@@ -50,7 +50,7 @@ public class TodosPostHandlerTest {
 
             request.getRequestHeaders().put(Headers.CONTENT_TYPE, "application/json");
             request.getRequestHeaders().put(Headers.TRANSFER_ENCODING, "chunked");
-            connection.sendRequest(request, client.createClientCallback(reference, latch, "request body to be replaced"));
+            connection.sendRequest(request, client.createClientCallback(reference, latch, "{\"title\":\"buy grocery\",\"completed\":false,\"order\":1}"));
 
             latch.await();
         } catch (Exception e) {

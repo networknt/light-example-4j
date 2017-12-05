@@ -32,12 +32,11 @@ public class TodosPutHandler implements HttpHandler {
 
     public void handleRequest(HttpServerExchange exchange) throws Exception {
         ObjectMapper mapper = new ObjectMapper();      // update a new object
-        String id = exchange.getQueryParameters().get("id").getFirst();
         Map s = (Map)exchange.getAttachment(BodyHandler.REQUEST_BODY);
         String json = mapper.writeValueAsString(s);
         TodoInfo todo = mapper.readValue(json, TodoInfo.class);
 
-        CompletableFuture<TodoInfo> result = service.update(id, todo).thenApply((e) -> {
+        CompletableFuture<TodoInfo> result = service.update(todo.getId(), todo).thenApply((e) -> {
             TodoInfo m = e.getAggregate().getTodo();
             return m;
         });

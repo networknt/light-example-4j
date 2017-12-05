@@ -1,12 +1,24 @@
 package com.networknt.eventuate.todolist.common.model;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 public class TodoInfo {
+    @JsonIgnore
+    private String id;
     private String title;
     private boolean completed;
-    private int orderId;
+    private int order;
 
     public TodoInfo() {
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public TodoInfo(String title) {
@@ -30,10 +42,10 @@ public class TodoInfo {
     }
 
     public int getOrder() {
-        return orderId;
+        return order;
     }
 
-    public void setOrder(int orderId) {
-        this.orderId = orderId;
+    public void setOrder(int order) {
+        this.order = order;
     }
 }

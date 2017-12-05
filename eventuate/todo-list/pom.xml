@@ -281,7 +281,17 @@
             </dependency>
             <dependency>
                 <groupId>com.networknt</groupId>
-                <artifactId>eventuate-jdbc</artifactId>
+                <artifactId>eventuate-client-jdbc-common</artifactId>
+                <version>${version.light-eventuate-4j}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.networknt</groupId>
+                <artifactId>eventuate-client-jdbc</artifactId>
+                <version>${version.light-eventuate-4j}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.networknt</groupId>
+                <artifactId>eventuate-server-jdbc</artifactId>
                 <version>${version.light-eventuate-4j}</version>
             </dependency>
             <dependency>
