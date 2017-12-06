@@ -113,6 +113,33 @@
                     }
                 ]
             }
+        },
+        "/health": {
+            "get": {
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    }
+                },
+                "parameters": []
+            }
+        },
+        "/server/info": {
+            "get": {
+                "security": [
+                    {
+                        "a_auth": [
+                            "server.info.r"
+                        ]
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    }
+                },
+                "parameters": []
+            }
         }
     },
     "securityDefinitions": {
