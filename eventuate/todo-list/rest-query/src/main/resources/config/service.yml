@@ -11,8 +11,12 @@ singletons:
       cacheCallableStmts: true
       prepStmtCacheSize: 4096
       prepStmtCacheSqlLimit: 2048
-- com.networknt.eventuate.common.impl.sync.AggregateCrud,com.networknt.eventuate.common.impl.sync.AggregateEvents:
-    - com.networknt.eventuate.test.jdbc.EventuateEmbeddedTestAggregateStore
+- com.networknt.eventuate.jdbc.EventuateJdbcAccess:
+  - com.networknt.eventuate.jdbc.EventuateJdbcAccessImpl
+- com.networknt.eventuate.common.impl.sync.AggregateCrud:
+  - com.networknt.eventuate.server.jdbckafkastore.EventuateLocalAggregateCrud
+- com.networknt.eventuate.common.impl.sync.AggregateEvents:
+  - com.networknt.eventuate.client.EventuateLocalAggregatesEvents
 - com.networknt.eventuate.common.impl.AggregateCrud:
   - com.networknt.eventuate.common.impl.adapters.SyncToAsyncAggregateCrudAdapter
 - com.networknt.eventuate.common.impl.AggregateEvents:
