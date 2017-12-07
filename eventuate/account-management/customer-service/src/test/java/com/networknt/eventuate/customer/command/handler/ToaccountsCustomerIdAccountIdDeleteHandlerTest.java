@@ -1,7 +1,7 @@
 
 package com.networknt.eventuate.customer.command.handler;
 
-import com.networknt.client.Client;
+
 import com.networknt.server.Server;
 import com.networknt.exception.ClientException;
 import com.networknt.exception.ApiException;
@@ -23,11 +23,18 @@ public class ToaccountsCustomerIdAccountIdDeleteHandlerTest {
     public static TestServer server = TestServer.getInstance();
 
     static final Logger logger = LoggerFactory.getLogger(ToaccountsCustomerIdAccountIdDeleteHandlerTest.class);
+    static final boolean enableHttp2 = server.getServerConfig().isEnableHttp2();
+    static final boolean enableHttps = server.getServerConfig().isEnableHttps();
+    static final int httpPort = server.getServerConfig().getHttpPort();
+    static final int httpsPort = server.getServerConfig().getHttpsPort();
+    static final String url = enableHttp2 || enableHttps ? "https://localhost:" + httpsPort : "http://localhost:" + httpPort;
 
     @Test
     public void testToaccountsCustomerIdAccountIdDeleteHandlerTest() throws ClientException, ApiException {
-        CloseableHttpClient client = Client.getInstance().getSyncClient();
-        HttpDelete httpDelete = new HttpDelete ("http://localhost:8083/v1/toaccounts/122222/2222-222");
+
+
+
+        //HttpDelete httpDelete = new HttpDelete ("http://localhost:8083/v1/toaccounts/122222/2222-222");
 
       //  Client.getInstance().addAuthorization(httpDelete);
         try {

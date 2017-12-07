@@ -5,8 +5,8 @@ sync:
   routes:
     api.google.com: 20
     api.facebook.com: 10
-  timeout: 20000
-  keepAlive: 35000
+  timeout: 10000
+  keepAlive: 15000
 async:
   maxConnectionTotal: 100
   maxConnectionPerRoute: 10
@@ -17,8 +17,8 @@ async:
     ioThreadCount: 1
     connectTimeout: 10000
     soTimeout: 10000
-  timeout: 20000
-  keepAlive: 35000
+  timeout: 10000
+  keepAlive: 15000
 tls:
   # if the server is using self-signed certificate, this need to be false. If true, you have to use CA signed certificate
   # or load truststore that contains the self-signed cretificate.
@@ -40,17 +40,17 @@ oauth:
   authorization_code:
     # token endpoint for authorization code grant
     uri: "/oauth2/token"
-    client_id: test_client
-    client_secret: test_secret
+    # client_id for authorization code grant flow. client_secret is in secret.yml
+    client_id: 3798d583-275c-47d7-bf46-a3c436846336
     redirect_uri: https://localhost:8080/authorization_code
     scope:
-    - test.r
-    - test.w
+    - customer.r
+    - customer.w
   client_credentials:
     # token endpoint for client credentials grant
     uri: "/oauth2/token"
     # client_id for client credentials grant flow. client_secret is in secret.yml
-    client_id: test_client
+    client_id: 6e9d1db3-2feb-4c1f-a5ad-9e93ae8ca59d
     scope:
     - account.r
     - account.w

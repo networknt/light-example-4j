@@ -1,8 +1,6 @@
 
 package com.networknt.eventuate.customer.command.handler;
 
-import com.networknt.client.Client;
-import com.networknt.server.Server;
 import com.networknt.exception.ClientException;
 import com.networknt.exception.ApiException;
 import org.apache.commons.io.IOUtils;
@@ -23,20 +21,40 @@ public class ServerInfoGetHandlerTest {
     public static TestServer server = TestServer.getInstance();
 
     static final Logger logger = LoggerFactory.getLogger(ServerInfoGetHandlerTest.class);
+    static final boolean enableHttp2 = server.getServerConfig().isEnableHttp2();
+    static final boolean enableHttps = server.getServerConfig().isEnableHttps();
+    static final int httpPort = server.getServerConfig().getHttpPort();
+    static final int httpsPort = server.getServerConfig().getHttpsPort();
+    static final String url = enableHttp2 || enableHttps ? "https://localhost:" + httpsPort : "http://localhost:" + httpPort;
 
     @Test
     public void testServerInfoGetHandlerTest() throws ClientException, ApiException {
-        CloseableHttpClient client = Client.getInstance().getSyncClient();
-        HttpGet httpGet = new HttpGet ("http://localhost:8083/v1/server/info");
-
-       // Client.getInstance().addAuthorization(httpGet);
+        /*
+        final Http2Client client = Http2Client.getInstance();
+        final CountDownLatch latch = new CountDownLatch(1);
+        final ClientConnection connection;
         try {
-            CloseableHttpResponse response = client.execute(httpGet);
-            Assert.assertEquals(200, response.getStatusLine().getStatusCode());
-         //   Assert.assertEquals("", IOUtils.toString(response.getEntity().getContent(), "utf8"));
+            connection = client.connect(new URI(url), Http2Client.WORKER, Http2Client.SSL, Http2Client.POOL, enableHttp2 ? OptionMap.create(UndertowOptions.ENABLE_HTTP2, true): OptionMap.EMPTY).get();
         } catch (Exception e) {
-            e.printStackTrace();
+            throw new ClientException(e);
         }
+        final AtomicReference<ClientResponse> reference = new AtomicReference<>();
+        try {
+            ClientRequest request = new ClientRequest().setPath("/v1/server/info").setMethod(Methods.GET);
 
+            connection.sendRequest(request, client.createClientCallback(reference, latch));
+
+            latch.await();
+        } catch (Exception e) {
+            logger.error("Exception: ", e);
+            throw new ClientException(e);
+        } finally {
+            IoUtils.safeClose(connection);
+        }
+        int statusCode = reference.get().getResponseCode();
+        String body = reference.get().getAttachment(Http2Client.RESPONSE_BODY);
+        Assert.assertEquals(200, statusCode);
+        Assert.assertNotNull(body);
+        */
     }
 }
