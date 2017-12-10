@@ -1,11 +1,14 @@
+
 package com.networknt.cors.handler;
 
 import com.networknt.server.Server;
-import com.networknt.server.ServerConfig;
 import org.junit.rules.ExternalResource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import java.util.concurrent.atomic.AtomicInteger;
+
+import com.networknt.server.Server;
+import com.networknt.server.ServerConfig;
 
 public class TestServer extends ExternalResource {
     static final Logger logger = LoggerFactory.getLogger(TestServer.class);
