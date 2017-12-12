@@ -2,10 +2,17 @@
 singletons:
 - javax.sql.DataSource:
   - com.zaxxer.hikari.HikariDataSource:
-      DriverClassName: com.mysql.jdbc.Driver
-      jdbcUrl: jdbc:mysql://mysql:3306/eventuate?useSSL=false
-      username: mysqluser
-      password: mysqlpw
+      DriverClassName: oracle.jdbc.pool.OracleDataSource
+      jdbcUrl: jdbc:oracle:thin:@oracle:1521:XE
+      username: SYSTEM
+      password: oracle
+      maximumPoolSize: 10
+      useServerPrepStmts: true
+      cachePrepStmts: true
+      cacheCallableStmts: true
+      prepStmtCacheSize: 10
+      prepStmtCacheSqlLimit: 2048
+      connectionTimeout: 2000
 - com.networknt.eventuate.common.impl.sync.AggregateCrud:
   - com.networknt.eventuate.client.EventuateLocalDBAggregateCrud
 - com.networknt.eventuate.common.impl.AggregateEvents:
@@ -18,22 +25,21 @@ singletons:
   - com.networknt.eventuate.common.DefaultMissingApplyEventMethodStrategy
 - com.networknt.eventuate.common.EventuateAggregateStore:
   - com.networknt.eventuate.common.impl.EventuateAggregateStoreImpl
-- com.networknt.eventuate.account.command.AccountWorkflow:
-  - com.networknt.eventuate.account.command.AccountWorkflow
+- com.networknt.eventuate.account.command.transaction.MoneyTransfer:
+  - com.networknt.eventuate.account.command.transaction.MoneyTransfer
 - com.networknt.eventuate.event.EventHandlerProcessor:
   - com.networknt.eventuate.event.EventHandlerProcessorDispatchedEventReturningVoid
   - com.networknt.eventuate.event.EventHandlerProcessorDispatchedEventReturningCompletableFuture
   - com.networknt.eventuate.event.EventHandlerProcessorEventHandlerContextReturningCompletableFuture
   - com.networknt.eventuate.event.EventHandlerProcessorEventHandlerContextReturningVoid
+- com.networknt.eventuate.transaction.command.MoneyTransferWorkflow:
+  - com.networknt.eventuate.transaction.command.MoneyTransferWorkflow
 - com.networknt.eventuate.client.SubscriptionsRegistry:
   - com.networknt.eventuate.client.SubscriptionsRegistryImpl
-- com.networknt.eventuate.account.command.account.Account:
-  - com.networknt.eventuate.account.command.account.Account
-
 
 # HandlerProvider implementation
 - com.networknt.server.HandlerProvider:
-  - com.networknt.eventuate.account.command.PathHandlerProvider
+  - com.networknt.eventuate.transaction.command.PathHandlerProvider
 # StartupHookProvider implementations, there are one to many and they are called in the same sequence defined.
 - com.networknt.server.StartupHookProvider:
   - com.networknt.eventuate.client.EventuateClientStartupHookProvider
