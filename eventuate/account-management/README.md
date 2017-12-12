@@ -90,10 +90,22 @@ docker-compose -f docker-compose-cdcserver-local-oracle-polling.yml up
 
 # Steps to start account management services
 
+## start service with Event-sourcing with mysql, zookeeper, kafka and cdc with mysql binlog
+
 ```
 cd ~/networknt/light-example-4j/eventuate/account-management
 docker-compose up
 ```
+
+
+## start service with Event-sourcing with oracle, zookeeper, kafka and cdc with oracle db polling
+
+```
+cd ~/networknt/light-example-4j/eventuate/account-management
+docker-compose -f docker-compose-oracle-event-sourcing up
+```
+
+
 
 # Test and verify result:
 
