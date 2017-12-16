@@ -100,6 +100,7 @@
         <version.mysql>6.0.4</version.mysql>
         <version.undertow>1.4.11.Final</version.undertow>
         <version.postgres>42.1.1</version.postgres>
+        <version.oracle>11.2.0.3</version.oracle>
         <argLine>-Xmx512m -XX:MaxPermSize=256m</argLine>
     </properties>
 
@@ -407,6 +408,11 @@
                 <artifactId>postgresql</artifactId>
                 <version>${version.postgres}</version>
             </dependency>
+            <dependency>
+                <groupId>com.oracle</groupId>
+                <artifactId>ojdbc6</artifactId>
+                <version>${version.oracle}</version>
+            </dependency>
             <!-- Test dependencies -->
             <dependency>
                 <groupId>junit</groupId>
@@ -611,4 +617,20 @@
             </build>
         </profile>
     </profiles>
+
+
+
+    <repositories>
+        <repository>
+            <id>sonatype-snapshots</id>
+            <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </repository>
+        <repository>
+            <id>codelds</id>
+            <url>https://code.lds.org/nexus/content/groups/main-repo</url>
+        </repository>
+    </repositories>
 </project>

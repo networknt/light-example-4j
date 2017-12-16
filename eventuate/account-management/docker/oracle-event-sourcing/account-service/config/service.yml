@@ -2,10 +2,18 @@
 singletons:
 - javax.sql.DataSource:
   - com.zaxxer.hikari.HikariDataSource:
-      DriverClassName: com.mysql.jdbc.Driver
-      jdbcUrl: jdbc:mysql://mysql:3306/eventuate?useSSL=false
-      username: mysqluser
-      password: mysqlpw
+      DriverClassName: oracle.jdbc.pool.OracleDataSource
+      jdbcUrl: jdbc:oracle:thin:@oracle:1521:XE
+      username: SYSTEM
+      password: oracle
+      maximumPoolSize: 10
+      useServerPrepStmts: true
+      cachePrepStmts: true
+      cacheCallableStmts: true
+      prepStmtCacheSize: 10
+      prepStmtCacheSqlLimit: 2048
+      connectionTimeout: 2000
+
 - com.networknt.eventuate.common.impl.sync.AggregateCrud:
   - com.networknt.eventuate.client.EventuateLocalDBAggregateCrud
 - com.networknt.eventuate.common.impl.AggregateEvents:

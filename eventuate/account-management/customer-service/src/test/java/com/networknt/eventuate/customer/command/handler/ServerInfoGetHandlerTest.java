@@ -1,8 +1,14 @@
 
 package com.networknt.eventuate.customer.command.handler;
 
+import com.networknt.client.Http2Client;
 import com.networknt.exception.ClientException;
 import com.networknt.exception.ApiException;
+import io.undertow.UndertowOptions;
+import io.undertow.client.ClientConnection;
+import io.undertow.client.ClientRequest;
+import io.undertow.client.ClientResponse;
+import io.undertow.util.Methods;
 import org.apache.commons.io.IOUtils;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
@@ -12,8 +18,13 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.junit.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.xnio.IoUtils;
+import org.xnio.OptionMap;
 
 import java.io.IOException;
+import java.net.URI;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.atomic.AtomicReference;
 
 
 public class ServerInfoGetHandlerTest {
@@ -29,7 +40,7 @@ public class ServerInfoGetHandlerTest {
 
     @Test
     public void testServerInfoGetHandlerTest() throws ClientException, ApiException {
-        /*
+
         final Http2Client client = Http2Client.getInstance();
         final CountDownLatch latch = new CountDownLatch(1);
         final ClientConnection connection;
@@ -55,6 +66,6 @@ public class ServerInfoGetHandlerTest {
         String body = reference.get().getAttachment(Http2Client.RESPONSE_BODY);
         Assert.assertEquals(200, statusCode);
         Assert.assertNotNull(body);
-        */
+
     }
 }
