@@ -1,0 +1,2 @@
+api_b_host: h2c-prior://localhost:7002
+api_b_path: /v1/data
