@@ -1,26 +1,6 @@
----
-singletons:
-- javax.sql.DataSource:
-  - com.zaxxer.hikari.HikariDataSource:
-      DriverClassName: org.h2.jdbcx.JdbcDataSource
-      jdbcUrl: jdbc:h2:~/test
-      username: sa
-      password: sa
-- com.networknt.tram.todolist.command.TodoRepository:
-  - com.networknt.tram.todolist.command.TodoRepositoryImpl
-- com.networknt.eventuate.jdbc.IdGenerator:
-  - com.networknt.eventuate.jdbc.IdGeneratorImpl
-- com.networknt.tram.message.producer.MessageProducer:
-  - com.networknt.tram.message.producer.jdbc.MessageProducerJdbcImpl
-- com.networknt.tram.event.publisher.DomainEventPublisher:
-  - com.networknt.tram.event.publisher.DomainEventPublisherImpl
-- com.networknt.tram.todolist.command.TodoCommandService:
-  - com.networknt.tram.todolist.command.TodoCommandService
-- com.networknt.tram.todolist.view.TodoViewService:
-  - com.networknt.tram.todolist.view.TodoViewServiceImpl:
-    - java.lang.String: 127.0.0.1
-    - int: 9300
 
+# Singleton service factory configuration/IoC injection
+singletons:
 # OpenAPI parser validator implementation
 - com.networknt.oas.validator.Validator<com.networknt.oas.model.Callback>:
   - com.networknt.oas.validator.impl.CallbackValidator
@@ -70,10 +50,17 @@ singletons:
   - com.networknt.oas.validator.impl.TagValidator
 - com.networknt.oas.validator.Validator<com.networknt.oas.model.Xml>:
   - com.networknt.oas.validator.impl.XmlValidator
-
 # HandlerProvider implementation
 - com.networknt.server.HandlerProvider:
   - com.networknt.tram.todolist.PathHandlerProvider
+# StartupHookProvider implementations, there are one to many and they are called in the same sequence defined.
+# - com.networknt.server.StartupHookProvider:
+  # - com.networknt.server.Test1StartupHook
+  # - com.networknt.server.Test2StartupHook
+# ShutdownHookProvider implementations, there are one to many and they are called in the same sequence defined.
+# - com.networknt.server.ShutdownHookProvider:
+  # - com.networknt.server.Test1ShutdownHook
+# MiddlewareHandler implementations, the calling sequence is as defined in the request/response chain.
 - com.networknt.handler.MiddlewareHandler:
   # Exception Global exception handler that needs to be called first to wrap all middleware handlers and business handlers
   - com.networknt.exception.ExceptionHandler
@@ -95,3 +82,4 @@ singletons:
   - com.networknt.sanitizer.SanitizerHandler
   # Validator Validate request based on OpenAPI 3.0 specification (depending on OpenApiHandler and BodyHandler)
   - com.networknt.openapi.ValidatorHandler
+

@@ -10,7 +10,7 @@ import com.networknt.tram.todolist.common.TodoUpdated;
 
 public class TodoEventConsumer {
 
-  private TodoViewService todoViewService;
+  private TodoViewServiceImpl todoViewService;
 
   public DomainEventHandlers domainEventHandlers() {
     return DomainEventHandlersBuilder
