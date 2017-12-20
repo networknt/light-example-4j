@@ -14,8 +14,12 @@ singletons:
   - com.networknt.tram.message.producer.jdbc.MessageProducerJdbcImpl
 - com.networknt.tram.event.publisher.DomainEventPublisher:
   - com.networknt.tram.event.publisher.DomainEventPublisherImpl
+- com.networknt.tram.message.consumer.MessageConsumer:
+  - com.networknt.tram.inmemory.InMemoryMessaging
 - com.networknt.tram.todolist.command.TodoCommandService:
   - com.networknt.tram.todolist.command.TodoCommandService
+- com.networknt.tram.todolist.view.TodoEventConsumer:
+  - com.networknt.tram.todolist.view.TodoEventConsumer
 - com.networknt.tram.todolist.view.TodoViewService:
   - com.networknt.tram.todolist.view.TodoViewServiceImpl:
     - java.lang.String: 127.0.0.1
