@@ -1,0 +1,66 @@
+#
+# docker-compose-app.yml
+#
+
+version: '2'
+
+#
+# Services
+#
+services:
+
+
+    #
+    # Microservice: API A
+    #
+    apia:
+        build: ~/networknt/light-example-4j/rest/swagger/ms_chain/api_a/metrics/
+        ports:
+            - "7441:7441"
+        networks:
+            - localnet
+        volumes:
+            - ~/networknt/light-example-4j/rest/swagger/ms_chain/etc/api_a/config:/config
+
+    #
+    # Microservice: API B
+    #
+    apib:
+        build: ~/networknt/light-example-4j/rest/swagger/ms_chain/api_b/metrics/
+        ports:
+            - "7002:7002"
+        networks:
+            - localnet
+        volumes:
+            - ~/networknt/light-example-4j/rest/swagger/ms_chain/etc/api_b/config:/config
+
+    #
+    # Microservice: API C
+    #
+    apic:
+        build: ~/networknt/light-example-4j/rest/swagger/ms_chain/api_c/metrics/
+        ports:
+            - "7003:7003"
+        networks:
+            - localnet
+        volumes:
+            - ~/networknt/light-example-4j/rest/swagger/ms_chain/etc/api_c/config:/config
+
+    #
+    # Microservice: API D
+    #
+    apid:
+        build: ~/networknt/light-example-4j/rest/swagger/ms_chain/api_d/metrics/
+        ports:
+            - "7004:7004"
+        networks:
+            - localnet
+        volumes:
+            - ~/networknt/light-example-4j/rest/swagger/ms_chain/etc/api_d/config:/config
+
+#
+# Networks
+#
+networks:
+    localnet:
+        external: true
