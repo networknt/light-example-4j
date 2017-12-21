@@ -6,7 +6,7 @@ enabled: true
 # influxdb protocal can be http, https
 influxdbProtocol: http
 # influxdb hostname
-influxdbHost: localhost
+influxdbHost: influxdb
 # influxdb port number
 influxdbPort: 8086
 # influxdb database name
