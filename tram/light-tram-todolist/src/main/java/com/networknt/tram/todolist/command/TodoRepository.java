@@ -12,7 +12,7 @@ public interface TodoRepository {
 
     Todo save(Todo todo);
 
-    Todo update(Todo todo);
+    Todo update(Todo todo) throws  TodoNotFoundException;
 
     void delete(String id);
 }

@@ -52,7 +52,7 @@ public class CommandModuleTest {
   }
 
   @Test
-  public void testUpdate() {
+  public void testUpdate() throws  TodoNotFoundException{
     Todo todo = todoRepository.save(new Todo(Utils.generateUniqueString(), false, 9));
     String title = Utils.generateUniqueString();
     todoCommandService.update(todo.getId(), new UpdateTodoRequest(title, false, 0));

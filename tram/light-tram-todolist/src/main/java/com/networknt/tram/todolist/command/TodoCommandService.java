@@ -38,7 +38,7 @@ public class TodoCommandService {
     domainEventPublisher.publish(Todo.class, id, asList(domainEvents));
   }
 
-  public Todo update(String id, UpdateTodoRequest updateTodoRequest) {
+  public Todo update(String id, UpdateTodoRequest updateTodoRequest) throws  TodoNotFoundException{
     Todo todo = todoRepository.findOne(id);
 
     if (todo == null) {

@@ -40,7 +40,7 @@ public class TodosIdPutHandlerTest {
 
     @Test
     public void testTodosIdPutHandlerTest() throws ClientException, ApiException {
-/*
+
         final Http2Client client = Http2Client.getInstance();
         final CountDownLatch latch = new CountDownLatch(1);
         final ClientConnection connection;
@@ -57,7 +57,7 @@ public class TodosIdPutHandlerTest {
             
             request.getRequestHeaders().put(Headers.CONTENT_TYPE, "application/json");
             request.getRequestHeaders().put(Headers.TRANSFER_ENCODING, "chunked");
-            connection.sendRequest(request, client.createClientCallback(reference, latch, "request body to be replaced"));
+            connection.sendRequest(request, client.createClientCallback(reference, latch, json));
             
             latch.await();
         } catch (Exception e) {
@@ -70,6 +70,6 @@ public class TodosIdPutHandlerTest {
         String body = reference.get().getAttachment(Http2Client.RESPONSE_BODY);
         Assert.assertEquals(200, statusCode);
         Assert.assertNotNull(body);
-*/
+
     }
 }
