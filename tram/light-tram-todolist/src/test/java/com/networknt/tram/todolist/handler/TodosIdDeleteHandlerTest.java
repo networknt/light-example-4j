@@ -37,7 +37,7 @@ public class TodosIdDeleteHandlerTest {
 
     @Test
     public void testTodosIdDeleteHandlerTest() throws ClientException, ApiException {
-        /*
+
         final Http2Client client = Http2Client.getInstance();
         final CountDownLatch latch = new CountDownLatch(1);
         final ClientConnection connection;
@@ -48,7 +48,7 @@ public class TodosIdDeleteHandlerTest {
         }
         final AtomicReference<ClientResponse> reference = new AtomicReference<>();
         try {
-            ClientRequest request = new ClientRequest().setPath("/v1/todos/id").setMethod(Methods.DELETE);
+            ClientRequest request = new ClientRequest().setPath("/v1/todos/12222").setMethod(Methods.DELETE);
             
             connection.sendRequest(request, client.createClientCallback(reference, latch));
             
@@ -63,6 +63,6 @@ public class TodosIdDeleteHandlerTest {
         String body = reference.get().getAttachment(Http2Client.RESPONSE_BODY);
         Assert.assertEquals(200, statusCode);
         Assert.assertNotNull(body);
-        */
+
     }
 }

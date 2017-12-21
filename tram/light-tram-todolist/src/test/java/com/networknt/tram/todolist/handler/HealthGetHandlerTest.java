@@ -37,7 +37,7 @@ public class HealthGetHandlerTest {
 
     @Test
     public void testHealthGetHandlerTest() throws ClientException, ApiException {
-        /*
+
         final Http2Client client = Http2Client.getInstance();
         final CountDownLatch latch = new CountDownLatch(1);
         final ClientConnection connection;
@@ -63,6 +63,6 @@ public class HealthGetHandlerTest {
         String body = reference.get().getAttachment(Http2Client.RESPONSE_BODY);
         Assert.assertEquals(200, statusCode);
         Assert.assertNotNull(body);
-        */
+
     }
 }

@@ -3,10 +3,15 @@
 singletons:
 - javax.sql.DataSource:
   - com.zaxxer.hikari.HikariDataSource:
-      DriverClassName: org.h2.jdbcx.JdbcDataSource
-      jdbcUrl: jdbc:h2:~/test
-      username: sa
-      password: sa
+      jdbcUrl: jdbc:mysql://localhost:3306/eventuate?useSSL=false
+      username: mysqluser
+      password: mysqlpw
+      maximumPoolSize: 15
+      useServerPrepStmts: true
+      cachePrepStmts: true
+      cacheCallableStmts: true
+      prepStmtCacheSize: 4096
+      prepStmtCacheSqlLimit: 2048
 - com.networknt.tram.todolist.command.TodoRepository:
   - com.networknt.tram.todolist.command.TodoRepositoryImpl
 - com.networknt.eventuate.jdbc.IdGenerator:

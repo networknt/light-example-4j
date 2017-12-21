@@ -37,7 +37,7 @@ public class TodoviewsGetHandlerTest {
 
     @Test
     public void testTodoviewsGetHandlerTest() throws ClientException, ApiException {
-        /*
+/*
         final Http2Client client = Http2Client.getInstance();
         final CountDownLatch latch = new CountDownLatch(1);
         final ClientConnection connection;
@@ -63,6 +63,6 @@ public class TodoviewsGetHandlerTest {
         String body = reference.get().getAttachment(Http2Client.RESPONSE_BODY);
         Assert.assertEquals(200, statusCode);
         Assert.assertNotNull(body);
-        */
+*/
     }
 }

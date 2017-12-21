@@ -38,7 +38,7 @@ public class TodoCommandService {
     domainEventPublisher.publish(Todo.class, id, asList(domainEvents));
   }
 
-  public void update(String id, UpdateTodoRequest updateTodoRequest) {
+  public Todo update(String id, UpdateTodoRequest updateTodoRequest) {
     Todo todo = todoRepository.findOne(id);
 
     if (todo == null) {
@@ -51,6 +51,8 @@ public class TodoCommandService {
     todoRepository.update(todo);
 
     publishTodoEvent(todo, new TodoUpdated(todo.getTitle(), todo.isCompleted(), todo.getExecutionOrder()));
+
+    return todo;
   }
 
   public void delete(String id) {
