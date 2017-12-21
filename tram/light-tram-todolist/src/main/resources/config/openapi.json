@@ -272,15 +272,6 @@
             "schema": {
               "type": "string"
             }
-          },
-          {
-            "name": "key",
-            "in": "header",
-            "required": true,
-            "description": "The key header",
-            "schema": {
-              "type": "string"
-            }
           }
         ],
         "security": [

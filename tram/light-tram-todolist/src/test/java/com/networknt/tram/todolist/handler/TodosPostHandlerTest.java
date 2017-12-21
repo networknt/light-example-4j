@@ -2,8 +2,10 @@
 package com.networknt.tram.todolist.handler;
 
 import com.networknt.client.Http2Client;
+import com.networknt.eventuate.common.impl.JSonMapper;
 import com.networknt.exception.ApiException;
 import com.networknt.exception.ClientException;
+import com.networknt.tram.todolist.command.CreateTodoRequest;
 import io.undertow.UndertowOptions;
 import io.undertow.client.ClientConnection;
 import io.undertow.client.ClientRequest;
@@ -37,7 +39,7 @@ public class TodosPostHandlerTest {
 
     @Test
     public void testTodosPostHandlerTest() throws ClientException, ApiException {
-        /*
+
         final Http2Client client = Http2Client.getInstance();
         final CountDownLatch latch = new CountDownLatch(1);
         final ClientConnection connection;
@@ -47,12 +49,15 @@ public class TodosPostHandlerTest {
             throw new ClientException(e);
         }
         final AtomicReference<ClientResponse> reference = new AtomicReference<>();
+
+        CreateTodoRequest createTodoRequest = new CreateTodoRequest("test-todo", false, 0);
+        String json = JSonMapper.toJson(createTodoRequest);
         try {
             ClientRequest request = new ClientRequest().setPath("/v1/todos").setMethod(Methods.POST);
             
             request.getRequestHeaders().put(Headers.CONTENT_TYPE, "application/json");
             request.getRequestHeaders().put(Headers.TRANSFER_ENCODING, "chunked");
-            connection.sendRequest(request, client.createClientCallback(reference, latch, "request body to be replaced"));
+            connection.sendRequest(request, client.createClientCallback(reference, latch, json));
             
             latch.await();
         } catch (Exception e) {
@@ -65,6 +70,6 @@ public class TodosPostHandlerTest {
         String body = reference.get().getAttachment(Http2Client.RESPONSE_BODY);
         Assert.assertEquals(200, statusCode);
         Assert.assertNotNull(body);
-        */
+
     }
 }
