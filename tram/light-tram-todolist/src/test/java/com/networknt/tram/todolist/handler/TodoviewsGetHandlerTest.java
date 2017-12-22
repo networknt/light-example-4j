@@ -48,8 +48,10 @@ public class TodoviewsGetHandlerTest {
         }
         final AtomicReference<ClientResponse> reference = new AtomicReference<>();
         try {
-            ClientRequest request = new ClientRequest().setPath("/v1/todoviews").setMethod(Methods.GET);
-            
+            ClientRequest request = new ClientRequest().setPath("/v1/todoviews?searchValue=test").setMethod(Methods.GET);
+
+
+
             connection.sendRequest(request, client.createClientCallback(reference, latch));
             
             latch.await();

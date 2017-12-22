@@ -1,12 +1,14 @@
 package com.networknt.tram.todolist;
 
-
+/*
+ *  test view service, for the test, please start elasticsearch docker image
+ *  on the project root filer run : docker-compose up
+ */
 
 import com.networknt.service.SingletonServiceFactory;
 import com.networknt.tram.todolist.common.Utils;
 import com.networknt.tram.todolist.view.TodoView;
 import com.networknt.tram.todolist.view.TodoViewService;
-import com.networknt.tram.todolist.view.TodoViewServiceImpl;
 import org.junit.Assert;
 import org.junit.Test;
 

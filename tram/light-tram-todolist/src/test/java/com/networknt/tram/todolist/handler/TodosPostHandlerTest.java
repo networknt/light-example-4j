@@ -52,6 +52,7 @@ public class TodosPostHandlerTest {
 
         CreateTodoRequest createTodoRequest = new CreateTodoRequest("test-todo", false, 0);
         String json = JSonMapper.toJson(createTodoRequest);
+        System.out.println("result:" + json);
         try {
             ClientRequest request = new ClientRequest().setPath("/v1/todos").setMethod(Methods.POST);
             

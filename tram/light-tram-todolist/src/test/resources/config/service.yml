@@ -18,12 +18,12 @@ singletons:
   - com.networknt.tram.inmemory.InMemoryMessaging
 - com.networknt.tram.todolist.command.TodoCommandService:
   - com.networknt.tram.todolist.command.TodoCommandService
-- com.networknt.tram.todolist.view.TodoEventConsumer:
-  - com.networknt.tram.todolist.view.TodoEventConsumer
 - com.networknt.tram.todolist.view.TodoViewService:
   - com.networknt.tram.todolist.view.TodoViewServiceImpl:
     - java.lang.String: 127.0.0.1
     - int: 9300
+- com.networknt.tram.todolist.view.TodoEventConsumer:
+  - com.networknt.tram.todolist.view.TodoEventConsumer
 
 # OpenAPI parser validator implementation
 - com.networknt.oas.validator.Validator<com.networknt.oas.model.Callback>:

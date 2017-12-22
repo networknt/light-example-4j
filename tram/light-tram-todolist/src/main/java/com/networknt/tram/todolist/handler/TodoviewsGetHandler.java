@@ -17,10 +17,12 @@ public class TodoviewsGetHandler implements HttpHandler {
 
     @Override
     public void handleRequest(HttpServerExchange exchange) throws Exception {
-
+        System.out.println("start call view service...");
         String searchValue = exchange.getQueryParameters().get("searchValue").getFirst();
+        System.out.println("value->: " + searchValue);
 
         List<TodoView> todos =  todoViewService.search(searchValue);
+        System.out.println("size:" + todos);
 
         exchange.getResponseHeaders().add(new HttpString("Content-Type"), "application/json");
         exchange.getResponseSender().send(Config.getInstance().getMapper().writeValueAsString(todos));

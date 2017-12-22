@@ -67,6 +67,8 @@ public class TodoViewServiceImpl implements  TodoViewService{
 
   @Override
   public void index(TodoView todoView) {
+
+      System.out.println("view side-------------------->>> " + todoView);
     try {
       IndexResponse ir = transportClient
           .prepareIndex(TodoView.INDEX, TodoView.TYPE, todoView.getId())

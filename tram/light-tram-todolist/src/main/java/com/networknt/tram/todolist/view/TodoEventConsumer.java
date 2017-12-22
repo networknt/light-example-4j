@@ -1,5 +1,6 @@
 package com.networknt.tram.todolist.view;
 
+import com.networknt.service.SingletonServiceFactory;
 import com.networknt.tram.event.subscriber.DomainEventHandlers;
 import com.networknt.tram.event.subscriber.DomainEventHandlersBuilder;
 import com.networknt.tram.todolist.command.Todo;
@@ -10,7 +11,11 @@ import com.networknt.tram.todolist.common.TodoUpdated;
 
 public class TodoEventConsumer {
 
-  private TodoViewServiceImpl todoViewService;
+  private TodoViewService todoViewService;
+
+  public TodoEventConsumer(TodoViewService todoViewService) {
+      this.todoViewService = todoViewService;
+  }
 
   public DomainEventHandlers domainEventHandlers() {
     return DomainEventHandlersBuilder

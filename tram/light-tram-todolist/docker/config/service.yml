@@ -3,7 +3,7 @@
 singletons:
 - javax.sql.DataSource:
   - com.zaxxer.hikari.HikariDataSource:
-      jdbcUrl: jdbc:mysql://localhost:3306/eventuate?useSSL=false
+      jdbcUrl: jdbc:mysql://mysql:3306/eventuate?useSSL=false
       username: mysqluser
       password: mysqlpw
       maximumPoolSize: 15
@@ -28,7 +28,7 @@ singletons:
   - com.networknt.tram.todolist.command.TodoCommandService
 - com.networknt.tram.todolist.view.TodoViewService:
   - com.networknt.tram.todolist.view.TodoViewServiceImpl:
-    - java.lang.String: 127.0.0.1
+    - java.lang.String: 10.200.10.1
     - int: 9300
 - com.networknt.tram.todolist.view.TodoEventConsumer:
   - com.networknt.tram.todolist.view.TodoEventConsumer
