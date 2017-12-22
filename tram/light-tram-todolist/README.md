@@ -13,8 +13,13 @@ When an application creates or updates data, as part of that ACID transaction, i
 ## About the Todo list application
 
 The Todo List application, which lets users maintain a todo list, is the end-to-end POC application for the light-tram-4j framework.
-It shows how use Eventuate Tram to reliably publish domain events as part of a database transaction that updates an aggregate.
-consume domain events to update a CQRS view view
+
+It shows how use Eventuate Tram to:
+
+  --reliably publish domain events as part of a database transaction that updates an aggregate.
+
+  -- consume domain events to update a CQRS view
+  
 When a user creates or updates a todo, the application publishes a domain event. An event handler, subscribes to those events and updates an ElasticSearch-based CQRS view.
 
 ## Todo list architecture
@@ -43,7 +48,7 @@ The application persists the Todo entity in MySQL. It also maintains a materiali
 
 The Todo application uses the light-tram-4j framework to publish and consume domain events.
 
-1. TodoCommandService persist todo entity to local data store and publishes an event when it creates, updates, or deletes a Todo. It uses the DomainEventPublisher, which is implemented by the light-tram-4j Tram framework.
+1. TodoCommandService persist todo entity to local data store and publishes an event when it creates, updates, or deletes a Todo. It uses the DomainEventPublisher, which is implemented by the light-tram-4j framework.
 
 2. light-tram-4j cdc server will get the published enents from MESSAGE/EVENT table and producer to Kafka message broker.
 
@@ -80,7 +85,7 @@ docker-compose -f docker-compose-cdcserver-for-tram.yml up
 
 ## Checkout related projects and run service:
 
-Two things should be vrify before run the service:
+Two things should be verify before run the service:
 
 1. since we are using Elasticsearch (CQRS opensouce), please increase the docker memory space to 4gb  for the docker.
 
