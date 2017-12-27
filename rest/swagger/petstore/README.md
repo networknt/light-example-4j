@@ -1,4 +1,4 @@
-# Swagger Light Java Server
+# Swagger 2.0 Light Java Server
 
 ## Start server
 
