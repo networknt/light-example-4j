@@ -1,4 +1,4 @@
-# Swagger Light Java Server
+# OpenAPI 3.0 Light Java Server
 
 ## Start server
 
