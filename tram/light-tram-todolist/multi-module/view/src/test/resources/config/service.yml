@@ -1,0 +1,26 @@
+---
+singletons:
+- javax.sql.DataSource:
+  - com.zaxxer.hikari.HikariDataSource:
+      DriverClassName: org.h2.jdbcx.JdbcDataSource
+      jdbcUrl: jdbc:h2:~/test
+      username: sa
+      password: sa
+- com.networknt.tram.todolist.command.TodoRepository:
+  - com.networknt.tram.todolist.command.TodoRepositoryImpl
+- com.networknt.eventuate.jdbc.IdGenerator:
+  - com.networknt.eventuate.jdbc.IdGeneratorImpl
+- com.networknt.tram.message.producer.MessageProducer:
+  - com.networknt.tram.message.producer.jdbc.MessageProducerJdbcImpl
+- com.networknt.tram.event.publisher.DomainEventPublisher:
+  - com.networknt.tram.event.publisher.DomainEventPublisherImpl
+- com.networknt.tram.message.consumer.MessageConsumer:
+  - com.networknt.tram.inmemory.InMemoryMessaging
+- com.networknt.tram.todolist.command.TodoCommandService:
+  - com.networknt.tram.todolist.command.TodoCommandService
+- com.networknt.tram.todolist.view.TodoViewService:
+  - com.networknt.tram.todolist.view.TodoViewServiceImpl:
+    - java.lang.String: 127.0.0.1
+    - int: 9300
+- com.networknt.tram.todolist.view.TodoEventConsumer:
+  - com.networknt.tram.todolist.view.TodoEventConsumer
