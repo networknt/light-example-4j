@@ -1,0 +1,306 @@
+{"components":{"securitySchemes":{"todo_auth":{"type": "oauth2","description": "This API uses OAuth 2 with the client credential grant flow.","flows":{"clientCredentials":{"tokenUrl": "https://localhost:6882/token","scopes":{"write:todos": "modify todo in your task list","read:todos": "read your todo from your task list","server.info.r":"read server info"}}}}},"schemas": {
+      "Todo": {
+        "required": [
+          "id",
+          "title"
+        ],
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "title": {
+            "type": "string"
+          },
+          "completed": {
+            "type": "boolean"
+          },
+          "executionOrder": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "TodoView": {
+        "required": [
+          "id",
+          "title"
+        ],
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "title": {
+            "type": "string"
+          },
+          "completed": {
+            "type": "boolean"
+          },
+          "executionOrder": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "CreateTodoRequest": {
+        "required": [
+          "title"
+        ],
+        "properties": {
+          "title": {
+            "type": "string"
+          },
+          "completed": {
+            "type": "boolean"
+          },
+          "executionOrder": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "UpdateTodoRequest": {
+        "required": [
+          "title"
+        ],
+        "properties": {
+          "title": {
+            "type": "string"
+          },
+          "completed": {
+            "type": "boolean"
+          },
+          "executionOrder": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "Error": {
+        "required": [
+          "code",
+          "message"
+        ],
+        "properties": {
+          "code": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "message": {
+            "type": "string"
+          }
+        }
+      }
+    }},"servers": [
+    {
+      "url": "http://light-tram.swagger.io/v1"
+    }
+  ],"openapi": "3.0.0","paths":{"/todoviews": {
+      "get": {
+        "summary": "List of todo task by search",
+        "operationId": "listTodos",
+        "tags": [
+          "todos"
+        ],
+        "parameters": [
+          {
+            "name": "searchValue",
+            "in": "query",
+            "description": "search critiria",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "security": [
+          {
+            "todo_auth": [
+              "read:todo"
+            ]
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of todos",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/TodoView"
+                  }
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },"/health":{"get":{"responses":{"200":{"description":"successful operation"}},"parameters":[]}},"/todos": {
+      "post": {
+        "summary": "Create a new todo task",
+        "operationId": "addTodo",
+        "requestBody": {
+          "description": "Add todo task to the list",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateTodoRequest"
+              }
+            }
+          }
+        },
+        "tags": [
+          "todos"
+        ],
+        "security": [
+          {
+            "todo_auth": [
+              "read:todo",
+              "write:todo"
+            ]
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Todo"
+                }
+              }
+            }
+          },
+          "201": {
+            "description": "Null response"
+          },
+          "default": {
+            "description": "unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },"/todos/{id}": {
+      "put": {
+        "summary": "update todo task",
+        "operationId": "updateTodo",
+        "tags": [
+          "todos"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "The id of the todo task",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Update todo task to the list",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateTodoRequest"
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "todo_auth": [
+              "read:todo",
+              "write:todo"
+            ]
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Expected response to a valid request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Todo"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete a specific todo task",
+        "operationId": "deleteTodoById",
+        "tags": [
+          "todos"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "The id of the todo to delete",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "security": [
+          {
+            "todo_auth": [
+              "write:todo"
+            ]
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Expected response to a valid request"
+          },
+          "default": {
+            "description": "unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },"/server/info":{"get":{"security":[{"todo_auth":["server.info.r"]}],"responses":{"200":{"description":"successful operation"}},"parameters":[]}}},"info": {
+    "version": "1.0.0",
+    "title": "TODO list tram example service API",
+    "license": {
+      "name": "MIT"
+    }
+  }}
