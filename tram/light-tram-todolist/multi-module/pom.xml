@@ -82,6 +82,8 @@
         <module>command</module>
         <module>common</module>
         <module>view</module>
+        <module>tram-todo-command</module>
+        <module>tram-todo-view</module>
     </modules>
 
     <dependencyManagement>
