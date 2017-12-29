@@ -1,0 +1,40 @@
+version: "2"
+#
+# Services
+#
+services:
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:5.6.3
+    environment:
+      - http.host=0.0.0.0
+      - network.publish_host=0.0.0.0
+      - discovery.type=single-node
+      - xpack.security.enabled=false
+    ports:
+      - "9200:9200"
+      - "9300:9300"
+
+  tram-todolist-command-service:
+    build: ./tram-todo-command
+    volumes:
+      - ./docker/command-service/config:/config
+    ports:
+      - 8081:8081
+    networks:
+      - localnet
+
+  tram-todolist-view-service:
+    build: ./tram-todo-view
+    volumes:
+      - ./docker/view-service/config:/config
+    ports:
+      - 8082:8082
+    networks:
+      - localnet
+
+# Networks
+#
+networks:
+  localnet:
+    # driver: bridge
+    external: true
