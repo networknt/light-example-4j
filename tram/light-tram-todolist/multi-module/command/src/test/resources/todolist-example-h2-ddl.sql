@@ -1,6 +1,9 @@
+CREATE SCHEMA IF NOT EXISTS todo_db;
+SET SCHEMA todo_db;
 DROP table IF EXISTS TODO;
 DROP table IF EXISTS message;
 DROP table IF EXISTS received_messages;
+
 
 CREATE  TABLE TODO (
   ID varchar(255) PRIMARY KEY,
@@ -9,7 +12,6 @@ CREATE  TABLE TODO (
   ORDER_ID INTEGER,
   ACTIVE_FLG varchar(1) DEFAULT 'Y'
 );
-
 
 CREATE TABLE message (
   ID VARCHAR(120) PRIMARY KEY,
@@ -24,3 +26,4 @@ CREATE TABLE received_messages (
   MESSAGE_ID VARCHAR(120),
   PRIMARY KEY(CONSUMER_ID, MESSAGE_ID)
 );
+
