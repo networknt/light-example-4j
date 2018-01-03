@@ -1,3 +1,4 @@
+
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <parent>
         <groupId>org.sonatype.oss</groupId>
@@ -9,156 +10,161 @@
     <artifactId>example-graphql-relaytodo</artifactId>
     <packaging>jar</packaging>
     <name>example-graphql-relaytodo</name>
-    <version>1.0.0</version>
-    <prerequisites>
-        <maven>2.2.0</maven>
-    </prerequisites>
+    <version>1.0.1</version>
 
     <properties>
         <java.version>1.8</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <version.light-java>1.2.7</version.light-java>
-        <version.light-java-graphql>1.2.7</version.light-java-graphql>
-        <version.jackson>2.8.2</version.jackson>
-        <version.slf4j>1.7.22</version.slf4j>
-        <version.jose4j>0.5.2</version.jose4j>
-        <version.antlr4>4.5.3</version.antlr4>
-        <version.commons-lang>2.6</version.commons-lang>
-        <version.commons.io>2.5</version.commons.io>
-        <version.commons.codec>1.10</version.commons.codec>
-        <version.encoder>1.2</version.encoder>
-        <version.metrics>3.1.2</version.metrics>
-        <version.logback>1.1.9</version.logback>
+        <version.light-4j>1.5.7</version.light-4j>
+        <version.light-graphql-4j>1.5.7</version.light-graphql-4j>
+        <version.jackson>2.9.1</version.jackson>
+        <version.slf4j>1.7.25</version.slf4j>
+        <version.jose4j>0.6.1</version.jose4j>
+        <version.antlr4>4.7</version.antlr4>
+        <version.encoder>1.2.1</version.encoder>
+        <version.logback>1.2.3</version.logback>
         <version.junit>4.12</version.junit>
-        <version.mockito>2.1.0-beta.124</version.mockito>
-        <version.undertow>1.4.10.Final</version.undertow>
-        <version.jsonpath>2.2.0</version.jsonpath>
-        <version.httpclient>4.5.2</version.httpclient>
-        <version.httpasyncclient>4.1.2</version.httpasyncclient>
-        <version.graphql>2.3.0</version.graphql>
+        <version.undertow>1.4.20.Final</version.undertow>
+        <version.graphql>4.2</version.graphql>
+        <version.fastscanner>2.7.0</version.fastscanner>
+        
+        <version.hikaricp>2.6.2</version.hikaricp>
+        
+        
+        
+        <version.mysql>6.0.5</version.mysql>
+        
+        
+        
+        <versions.maven-version>2.4</versions.maven-version>
     </properties>
 
     <dependencies>
         <dependency>
             <groupId>com.networknt</groupId>
             <artifactId>config</artifactId>
-            <version>${version.light-java}</version>
+            <version>${version.light-4j}</version>
         </dependency>
         <dependency>
             <groupId>com.networknt</groupId>
             <artifactId>utility</artifactId>
-            <version>${version.light-java}</version>
+            <version>${version.light-4j}</version>
         </dependency>
         <dependency>
             <groupId>com.networknt</groupId>
             <artifactId>security</artifactId>
-            <version>${version.light-java}</version>
+            <version>${version.light-4j}</version>
         </dependency>
         <dependency>
             <groupId>com.networknt</groupId>
             <artifactId>client</artifactId>
-            <version>${version.light-java}</version>
+            <version>${version.light-4j}</version>
         </dependency>
         <dependency>
             <groupId>com.networknt</groupId>
             <artifactId>audit</artifactId>
-            <version>${version.light-java}</version>
+            <version>${version.light-4j}</version>
         </dependency>
         <dependency>
             <groupId>com.networknt</groupId>
             <artifactId>info</artifactId>
-            <version>${version.light-java}</version>
+            <version>${version.light-4j}</version>
         </dependency>
         <dependency>
             <groupId>com.networknt</groupId>
             <artifactId>status</artifactId>
-            <version>${version.light-java}</version>
+            <version>${version.light-4j}</version>
         </dependency>
         <dependency>
             <groupId>com.networknt</groupId>
             <artifactId>exception</artifactId>
-            <version>${version.light-java}</version>
+            <version>${version.light-4j}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.networknt</groupId>
+            <artifactId>body</artifactId>
+            <version>${version.light-4j}</version>
         </dependency>
         <dependency>
             <groupId>com.networknt</groupId>
             <artifactId>mask</artifactId>
-            <version>${version.light-java}</version>
+            <version>${version.light-4j}</version>
         </dependency>
         <dependency>
             <groupId>com.networknt</groupId>
             <artifactId>metrics</artifactId>
-            <version>${version.light-java}</version>
+            <version>${version.light-4j}</version>
         </dependency>
         <dependency>
             <groupId>com.networknt</groupId>
             <artifactId>handler</artifactId>
-            <version>${version.light-java}</version>
+            <version>${version.light-4j}</version>
         </dependency>
         <dependency>
             <groupId>com.networknt</groupId>
             <artifactId>sanitizer</artifactId>
-            <version>${version.light-java}</version>
+            <version>${version.light-4j}</version>
         </dependency>
         <dependency>
             <groupId>com.networknt</groupId>
             <artifactId>traceability</artifactId>
-            <version>${version.light-java}</version>
+            <version>${version.light-4j}</version>
         </dependency>
         <dependency>
             <groupId>com.networknt</groupId>
             <artifactId>correlation</artifactId>
-            <version>${version.light-java}</version>
+            <version>${version.light-4j}</version>
         </dependency>
         <dependency>
             <groupId>com.networknt</groupId>
             <artifactId>service</artifactId>
-            <version>${version.light-java}</version>
+            <version>${version.light-4j}</version>
         </dependency>
        <dependency>
             <groupId>com.networknt</groupId>
             <artifactId>registry</artifactId>
-            <version>${version.light-java}</version>
+            <version>${version.light-4j}</version>
         </dependency>
         <dependency>
             <groupId>com.networknt</groupId>
             <artifactId>balance</artifactId>
-            <version>${version.light-java}</version>
+            <version>${version.light-4j}</version>
         </dependency>
         <dependency>
             <groupId>com.networknt</groupId>
             <artifactId>cluster</artifactId>
-            <version>${version.light-java}</version>
+            <version>${version.light-4j}</version>
         </dependency>
         <dependency>
             <groupId>com.networknt</groupId>
             <artifactId>consul</artifactId>
-            <version>${version.light-java}</version>
+            <version>${version.light-4j}</version>
         </dependency>
         <dependency>
             <groupId>com.networknt</groupId>
             <artifactId>server</artifactId>
-            <version>${version.light-java}</version>
+            <version>${version.light-4j}</version>
         </dependency>
 
         <dependency>
             <groupId>com.networknt</groupId>
             <artifactId>graphql-common</artifactId>
-            <version>${version.light-java-graphql}</version>
+            <version>${version.light-graphql-4j}</version>
         </dependency>
         <dependency>
             <groupId>com.networknt</groupId>
             <artifactId>graphql-router</artifactId>
-            <version>${version.light-java-graphql}</version>
+            <version>${version.light-graphql-4j}</version>
         </dependency>
         <dependency>
             <groupId>com.networknt</groupId>
             <artifactId>graphql-security</artifactId>
-            <version>${version.light-java-graphql}</version>
+            <version>${version.light-graphql-4j}</version>
         </dependency>
         <dependency>
             <groupId>com.networknt</groupId>
             <artifactId>graphql-validator</artifactId>
-            <version>${version.light-java-graphql}</version>
+            <version>${version.light-graphql-4j}</version>
         </dependency>
 
         <dependency>
@@ -172,15 +178,9 @@
             <version>${version.jackson}</version>
         </dependency>
         <dependency>
-            <groupId>com.jayway.jsonpath</groupId>
-            <artifactId>json-path</artifactId>
-            <version>${version.jsonpath}</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>net.minidev</groupId>
-                    <artifactId>json-smart</artifactId>
-                </exclusion>
-            </exclusions>
+            <groupId>com.fasterxml.jackson.datatype</groupId>
+            <artifactId>jackson-datatype-jsr310</artifactId>
+            <version>${version.jackson}</version>
         </dependency>
         <dependency>
             <groupId>ch.qos.logback</groupId>
@@ -198,11 +198,26 @@
             <version>${version.graphql}</version>
         </dependency>
         <dependency>
-            <groupId>org.apache.httpcomponents</groupId>
-            <artifactId>httpclient</artifactId>
-            <version>${version.httpclient}</version>
+            <groupId>io.github.lukehutch</groupId>
+            <artifactId>fast-classpath-scanner</artifactId>
+            <version>${version.fastscanner}</version>
         </dependency>
-
+        
+        <dependency>
+            <groupId>com.zaxxer</groupId>
+            <artifactId>HikariCP</artifactId>
+            <version>${version.hikaricp}</version>
+        </dependency>
+        
+        
+        
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>${version.mysql}</version>
+        </dependency>
+        
+        
         <!-- Test Dependencies -->
         <dependency>
             <groupId>junit</groupId>
@@ -210,6 +225,7 @@
             <version>${version.junit}</version>
             <scope>test</scope>
         </dependency>
+        
     </dependencies>
 
 
@@ -218,6 +234,11 @@
         <directory>target</directory>
         <finalName>${project.artifactId}-${project.version}</finalName>
         <plugins>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>versions-maven-plugin</artifactId>
+                <version>${versions.maven-version}</version>
+            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-shade-plugin</artifactId>
@@ -235,6 +256,44 @@
                         </configuration>
                     </execution>
                 </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+                <version>3.0.1</version>
+                <executions>
+                    <execution>
+                        <id>attach-sources</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>2.10.4</version>
+                <executions>
+                    <execution>
+                        <id>attach-javadocs</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>2.14</version>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.apache.maven.surefire</groupId>
+                        <artifactId>surefire-junit47</artifactId>
+                        <version>2.14</version>
+                    </dependency>
+                </dependencies>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -333,7 +392,7 @@
         		</plugin>
         	</plugins>
         </pluginManagement>
-        
+
     </build>
 
     <repositories>

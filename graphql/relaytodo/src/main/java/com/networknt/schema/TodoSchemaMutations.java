@@ -1,5 +1,6 @@
 package com.networknt.schema;
 
+import graphql.relay.DefaultEdge;
 import graphql.relay.Edge;
 import graphql.schema.*;
 
@@ -70,7 +71,7 @@ public class TodoSchemaMutations {
                     Map source = (Map) environment.getSource();
                     String todoId = (String) source.get("todoId");
                     Todo todo = todoSchema.getTodo(todoId);
-                    return new Edge(todo, todoSchema.getSimpleConnection().cursorForObjectInConnection(todo));
+                    return new DefaultEdge(todo, todoSchema.getSimpleConnection().cursorForObjectInConnection(todo));
                 })
                 .build();
 
@@ -120,7 +121,7 @@ public class TodoSchemaMutations {
             Map<String, Object> input = environment.getArgument("input");
             String id = (String) input.get("id");
             boolean complete = (boolean) input.get("complete");
-            String localId = todoSchema.getRelay().fromGlobalId(id).id;
+            String localId = todoSchema.getRelay().fromGlobalId(id).getId();
             todoSchema.changeTodoStatus(localId, complete);
             Map<String, String> result = new LinkedHashMap<>();
             result.put("clientMutationId", (String) input.get("clientMutationId"));
@@ -207,7 +208,7 @@ public class TodoSchemaMutations {
         DataFetcher mutate = environment -> {
             Map<String, Object> input = environment.getArgument("input");
             String id = (String) input.get("id");
-            String localId = todoSchema.getRelay().fromGlobalId(id).id;
+            String localId = todoSchema.getRelay().fromGlobalId(id).getId();
             todoSchema.removeTodo(localId);
             Map<String, Object> result = new LinkedHashMap<>();
             result.put("clientMutationId", (String) input.get("clientMutationId"));
@@ -248,7 +249,7 @@ public class TodoSchemaMutations {
             Map<String, Object> input = environment.getArgument("input");
             String id = (String) input.get("id");
             String text = (String) input.get("text");
-            String localId = todoSchema.getRelay().fromGlobalId(id).id;
+            String localId = todoSchema.getRelay().fromGlobalId(id).getId();
             todoSchema.renameTodo(localId, text);
             Map<String, Object> result = new LinkedHashMap<>();
             result.put("clientMutationId", (String) input.get("clientMutationId"));

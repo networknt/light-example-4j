@@ -3,6 +3,7 @@ package com.networknt.schema;
 import com.networknt.graphql.router.SchemaProvider;
 import graphql.Scalars;
 import graphql.relay.Connection;
+import graphql.relay.DefaultEdge;
 import graphql.relay.Relay;
 import graphql.relay.SimpleListConnection;
 import graphql.schema.*;
@@ -59,17 +60,6 @@ public class TodoSchema implements SchemaProvider {
         createTodoType();
         createConnectionFromUserToTodos();
         createUserType();
-
-
-        typeResolverProxy.setTypeResolver(object -> {
-            if (object instanceof User) {
-                return userType;
-            } else if (object instanceof Todo) {
-                return todoType;
-            }
-            return null;
-        });
-
 
         DataFetcher todoDataFetcher = environment -> {
             String id = environment.getArgument("id");
@@ -161,7 +151,7 @@ public class TodoSchema implements SchemaProvider {
                 .type(GraphQLInt)
                 .dataFetcher(environment -> {
                     Connection connection = (Connection) environment.getSource();
-                    return (int) connection.getEdges().stream().filter(edge -> ((Todo) edge.getNode()).isComplete()).count();
+                    return (int) connection.getEdges().stream().filter(edge -> ((Todo)((DefaultEdge)edge).getNode()).isComplete()).count();
                 })
                 .build();
         connectionFromUserToTodos = relay.connectionType("Todo", todosEdge, Arrays.asList(totalCount, completedCount));

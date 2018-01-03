@@ -1,53 +1,27 @@
-# GraphQL Mutation Example
+# Swagger Light Java Server
 
-## Build and Start
+## Start server
 
-```
-mvn clean install exec:exec
-```
-
-## Test the server with GraphiQL
-
-Open your browser and point to 
+Run with
 
 ```
-localhost:8080/graphql
-```
-Now you can explore the schema on Documentation Explorer. There should be a query and a mutation.
+mvn package exec:exec
+``
 
-## Test query with GraphiQL
+## Test
 
-```
-query {
-  numberHolder {
-    theNumber
-  }
-}
-```
+By default, all endpoints are protected by OAuth jwt token verifier. It can be turned off with config change through for development.
 
-## Test mutation with GraphiQL
+
+In order to access the server, there is a long lived token below issued by my
+oauth2 server [light-oauth2](https://github.com/networknt/light-oauth2)
 
 ```
-mutation {
-  changeTheNumber(newNumber:4) {
-    theNumber
-  }
-}
+Bearer eyJraWQiOiIxMDAiLCJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJ1cm46Y29tOm5ldHdvcmtudDpvYXV0aDI6djEiLCJhdWQiOiJ1cm46Y29tLm5ldHdvcmtudCIsImV4cCI6MTc5MDAzNTcwOSwianRpIjoiSTJnSmdBSHN6NzJEV2JWdUFMdUU2QSIsImlhdCI6MTQ3NDY3NTcwOSwibmJmIjoxNDc0Njc1NTg5LCJ2ZXJzaW9uIjoiMS4wIiwidXNlcl9pZCI6InN0ZXZlIiwidXNlcl90eXBlIjoiRU1QTE9ZRUUiLCJjbGllbnRfaWQiOiJmN2Q0MjM0OC1jNjQ3LTRlZmItYTUyZC00YzU3ODc0MjFlNzIiLCJzY29wZSI6WyJ3cml0ZTpwZXRzIiwicmVhZDpwZXRzIl19.mue6eh70kGS3Nt2BCYz7ViqwO7lh_4JSFwcHYdJMY6VfgKTHhsIGKq2uEDt3zwT56JFAePwAxENMGUTGvgceVneQzyfQsJeVGbqw55E9IfM_uSM-YcHwTfR7eSLExN4pbqzVDI353sSOvXxA98ZtJlUZKgXNE1Ngun3XFORCRIB_eH8B0FY_nT_D1Dq2WJrR-re-fbR6_va95vwoUdCofLRa4IpDfXXx19ZlAtfiVO44nw6CS8O87eGfAm7rCMZIzkWlCOFWjNHnCeRsh7CVdEH34LF-B48beiG5lM7h4N12-EME8_VDefgMjZ8eqs1ICvJMxdIut58oYbdnkwTjkA
 ```
 
-## Test mutation with variables
+Postman is the best tool to test REST APIs
 
-Query: 
+Add "Authorization" header with value as above token and a dummy message will return from the generated stub.
 
-```
-mutation ($n: Int!) {
-  changeTheNumber(newNumber: $n) {
-    theNumber
-  }
-}
 
-```
-Variables
-```
-{"n": 5}
-```
