@@ -15,18 +15,26 @@ public class TodoRepositoryImpl implements TodoRepository {
 
     protected Logger logger = LoggerFactory.getLogger(getClass());
 
-    private DataSource dataSource;
+    private Connection connection;
 
-    public TodoRepositoryImpl(DataSource dataSource) {
-        this.dataSource = dataSource;
+    public TodoRepositoryImpl() {
+
     }
 
-    public void setDataSource(DataSource dataSource) {this.dataSource = dataSource;}
+    public TodoRepositoryImpl(Connection connection) {
+        this.connection = connection;
+    }
+
+    public void setConnection(Connection connection) {
+        this.connection = connection;
+    }
+
+
     @Override
     public List<Todo> getAll() {
         List<Todo> todos = new ArrayList<>();
 
-        try (final Connection connection = dataSource.getConnection()){
+        try {
             String psSelect = "SELECT ID, TITLE, COMPLETED, ORDER_ID FROM todo_db.TODO WHERE ACTIVE_FLG = 'Y' order by ORDER_ID asc";
             PreparedStatement stmt = connection.prepareStatement(psSelect);
             ResultSet rs = stmt.executeQuery();
@@ -48,7 +56,7 @@ public class TodoRepositoryImpl implements TodoRepository {
     @Override
     public Todo findOne(String id) {
         Todo todo = null;
-        try (final Connection connection = dataSource.getConnection()){
+        try {
             String psSelect = "SELECT ID, TITLE, COMPLETED, ORDER_ID FROM todo_db.TODO WHERE ACTIVE_FLG = 'Y' AND ID = ?";
             PreparedStatement stmt = connection.prepareStatement(psSelect);
             stmt.setString(1, id);
@@ -71,64 +79,67 @@ public class TodoRepositoryImpl implements TodoRepository {
     }
 
     @Override
-    public Todo save(Todo todo) {
-        try (final Connection connection = dataSource.getConnection()){
+    public Todo save(Todo todo) throws SQLException{
             String psInsert = "INSERT INTO todo_db.TODO (ID, TITLE, COMPLETED, ORDER_ID) VALUES (?, ?, ?, ?)";
-            PreparedStatement stmt = connection.prepareStatement(psInsert);
-            stmt.setString(1, todo.getId());
-            stmt.setString(2, todo.getTitle());
-            stmt.setBoolean(3, todo.isCompleted());
-            stmt.setInt(4, todo.getExecutionOrder());
-            int count = stmt.executeUpdate();
-            if (count != 1) {
-                logger.error("Failed to insert TODO: {}", todo.getId());
-            } else {
-                return todo;
+            try (PreparedStatement stmt = connection.prepareStatement(psInsert)) {
+                stmt.setString(1, todo.getId());
+                stmt.setString(2, todo.getTitle());
+                stmt.setBoolean(3, todo.isCompleted());
+                stmt.setInt(4, todo.getExecutionOrder());
+                int count = stmt.executeUpdate();
+                if (count != 1) {
+                    logger.error("Failed to insert TODO: {}", todo.getId());
+                } else {
+                    return todo;
+                }
+            } catch (SQLException e) {
+                logger.error("SqlException:", e);
+                throw new SQLException(e);
             }
-        } catch (SQLException e) {
-            logger.error("SqlException:", e);
-        }
 
-        return null;
+
+            return null;
     }
 
     @Override
-    public Todo update(Todo todo) {
-        try (final Connection connection = dataSource.getConnection()){
+    public Todo update(Todo todo)  throws SQLException{
             String psUpdate = "UPDATE todo_db.TODO SET TITLE=?, COMPLETED=?, ORDER_ID=? WHERE ID=? ";
-            PreparedStatement stmt = connection.prepareStatement(psUpdate);
+            try (PreparedStatement stmt = connection.prepareStatement(psUpdate)) {
+                stmt.setString(1, todo.getTitle());
+                stmt.setBoolean(2, todo.isCompleted());
+                stmt.setInt(3, todo.getExecutionOrder());
+                stmt.setString(4, todo.getId());
+                int count = stmt.executeUpdate();
+                if (count != 1) {
+                    logger.error("Failed to update TODO: {}", todo.getId());
+                } else {
+                    return todo;
+                }
 
-            stmt.setString(1, todo.getTitle());
-            stmt.setBoolean(2, todo.isCompleted());
-            stmt.setInt(3, todo.getExecutionOrder());
-            stmt.setString(4, todo.getId());
-            int count = stmt.executeUpdate();
-            if (count != 1) {
-                logger.error("Failed to update TODO: {}", todo.getId());
-            } else {
-                return todo;
+            } catch (SQLException e) {
+                logger.error("SqlException:", e);
+                throw new SQLException(e);
             }
-        } catch (SQLException e) {
-            logger.error("SqlException:", e);
-        }
 
-        return null;
+
+            return null;
     }
 
     @Override
-    public void delete(String id) {
-        try (final Connection connection = dataSource.getConnection()){
+    public void delete(String id)  throws SQLException{
             String psDelete = "UPDATE todo_db.TODO SET ACTIVE_FLG = 'N' WHERE ID = ?";
-            PreparedStatement psEntity = connection.prepareStatement(psDelete);
-            psEntity.setString(1, id);
-            int count = psEntity.executeUpdate();
-            if (count != 1) {
-                logger.error("Failed to update TODO: {}", id);
+            try (PreparedStatement psEntity = connection.prepareStatement(psDelete)) {
+                psEntity.setString(1, id);
+                int count = psEntity.executeUpdate();
+                if (count != 1) {
+                    logger.error("Failed to delete TODO: {}", id);
+                }
+            } catch (SQLException e) {
+                logger.error("SqlException:", e);
+                throw new SQLException(e);
             }
 
-        } catch (SQLException e) {
-            logger.error("SqlException:", e);
-        }
+
 
     }
 

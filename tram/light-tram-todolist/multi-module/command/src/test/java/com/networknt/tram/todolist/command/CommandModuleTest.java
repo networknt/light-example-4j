@@ -36,34 +36,31 @@ public class CommandModuleTest {
     }
   }
 
-
-  private TodoRepository todoRepository = (TodoRepository)SingletonServiceFactory.getBean(TodoRepository.class);
-
   private TodoCommandService todoCommandService = (TodoCommandService)SingletonServiceFactory.getBean(TodoCommandService.class);
 
   @Test
   public void testCreate() {
     String title = Utils.generateUniqueString();
     String id = todoCommandService.create(new CreateTodoRequest(title, false, 0)).getId();
-    Todo todo = todoRepository.findOne(id);
+    Todo todo = todoCommandService.findOne(id);
     Assert.assertNotNull(todo);
     Assert.assertEquals(title, todo.getTitle());
   }
 
   @Test
-  public void testUpdate() throws TodoNotFoundException {
-    Todo todo = todoRepository.save(new Todo(Utils.generateUniqueString(), false, 9));
+  public void testUpdate() throws TodoNotFoundException, SQLException {
+    Todo todo = todoCommandService.create(new CreateTodoRequest(Utils.generateUniqueString(), false, 9));
     String title = Utils.generateUniqueString();
     todoCommandService.update(todo.getId(), new UpdateTodoRequest(title, false, 0));
-    todo = todoRepository.findOne(todo.getId());
+    todo = todoCommandService.findOne(todo.getId());
     Assert.assertNotNull(todo);
     Assert.assertEquals(title, todo.getTitle());
   }
 
   @Test
-  public void testDelete() {
-    Todo todo = todoRepository.save(new Todo(Utils.generateUniqueString(), false, 9));
+  public void testDelete() throws SQLException {
+    Todo todo = todoCommandService.create(new CreateTodoRequest(Utils.generateUniqueString(), false, 9));
     todoCommandService.delete(todo.getId());
-    Assert.assertNull(todoRepository.findOne(todo.getId()));
+    Assert.assertNull(todoCommandService.findOne(todo.getId()));
   }
 }
