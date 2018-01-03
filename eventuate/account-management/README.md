@@ -102,7 +102,7 @@ docker-compose up
 
 ```
 cd ~/networknt/light-example-4j/eventuate/account-management
-docker-compose -f docker-compose-oracle-event-sourcing up
+docker-compose -f docker-compose-oracle-event-sourcing.yml up
 ```
 
 
