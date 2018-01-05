@@ -46,7 +46,7 @@ public class Http2ClientExample {
     long expiration;
 
     public static void main(String[] args) throws Exception {
-        apiHost = cluster.serviceToUrl("https", "io.swagger.swagger-light-java-1.0.0", null);
+        apiHost = cluster.serviceToUrl("https", "io.swagger.swagger-light-java-1.0.0", null, null);
         reusedConnection = client.connect(new URI(apiHost), Http2Client.WORKER, Http2Client.SSL, Http2Client.POOL, OptionMap.create(UndertowOptions.ENABLE_HTTP2, true)).get();
         Http2ClientExample e = new Http2ClientExample();
         e.testHttp2Get();
