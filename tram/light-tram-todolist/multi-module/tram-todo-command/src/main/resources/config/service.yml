@@ -1,7 +1,6 @@
 
 # Singleton service factory configuration/IoC injection
 singletons:
-singletons:
 - javax.sql.DataSource:
   - com.zaxxer.hikari.HikariDataSource:
       jdbcUrl: jdbc:mysql://localhost:3306/eventuate?useSSL=false

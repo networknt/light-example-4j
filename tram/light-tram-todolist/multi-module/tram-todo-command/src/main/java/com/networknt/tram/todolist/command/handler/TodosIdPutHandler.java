@@ -37,8 +37,5 @@ public class TodosIdPutHandler implements HttpHandler {
             exchange.getResponseHeaders().add(new HttpString("Content-Type"), "application/json");
             exchange.getResponseSender().send("No record been updated");
         }
-
-
-
     }
 }

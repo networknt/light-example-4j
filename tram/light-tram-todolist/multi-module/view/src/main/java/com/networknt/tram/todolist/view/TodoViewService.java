@@ -1,20 +1,13 @@
 package com.networknt.tram.todolist.view;
 
-
 import java.util.List;
-
 
 public interface TodoViewService {
 
+  List<TodoView> search(String value);
 
+  void index(TodoView todoView) ;
 
-
-  public List<TodoView> search(String value);
-
-
-  public void index(TodoView todoView) ;
-
-
-  public void remove(String id) ;
+  void remove(String id) ;
 
 }

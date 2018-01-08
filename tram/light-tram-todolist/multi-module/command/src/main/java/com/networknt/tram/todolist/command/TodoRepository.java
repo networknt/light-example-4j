@@ -11,7 +11,7 @@ public interface TodoRepository {
 
     List<Todo>  getAll();
 
-   Todo findOne(String id);
+    Todo findOne(String id);
 
     Todo save(Todo todo) throws SQLException;
 

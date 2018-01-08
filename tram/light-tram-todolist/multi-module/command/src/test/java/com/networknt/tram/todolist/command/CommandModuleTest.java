@@ -19,7 +19,7 @@ public class CommandModuleTest {
   public static DataSource ds;
 
   static {
-    ds = (DataSource) SingletonServiceFactory.getBean(DataSource.class);
+    ds = SingletonServiceFactory.getBean(DataSource.class);
     try (Connection connection = ds.getConnection()) {
       // Runscript doesn't work need to execute batch here.
       String schemaResourceName = "/todolist-example-h2-ddl.sql";
@@ -36,7 +36,7 @@ public class CommandModuleTest {
     }
   }
 
-  private TodoCommandService todoCommandService = (TodoCommandService)SingletonServiceFactory.getBean(TodoCommandService.class);
+  private TodoCommandService todoCommandService = SingletonServiceFactory.getBean(TodoCommandService.class);
 
   @Test
   public void testCreate() {
@@ -48,7 +48,7 @@ public class CommandModuleTest {
   }
 
   @Test
-  public void testUpdate() throws TodoNotFoundException, SQLException {
+  public void testUpdate() throws TodoNotFoundException {
     Todo todo = todoCommandService.create(new CreateTodoRequest(Utils.generateUniqueString(), false, 9));
     String title = Utils.generateUniqueString();
     todoCommandService.update(todo.getId(), new UpdateTodoRequest(title, false, 0));
@@ -58,7 +58,7 @@ public class CommandModuleTest {
   }
 
   @Test
-  public void testDelete() throws SQLException {
+  public void testDelete() {
     Todo todo = todoCommandService.create(new CreateTodoRequest(Utils.generateUniqueString(), false, 9));
     todoCommandService.delete(todo.getId());
     Assert.assertNull(todoCommandService.findOne(todo.getId()));

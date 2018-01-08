@@ -1,6 +1,5 @@
 package com.networknt.tram.todolist.command;
 
-import com.networknt.eventuate.common.Int128;
 import com.networknt.eventuate.jdbc.IdGenerator;
 import com.networknt.eventuate.jdbc.IdGeneratorImpl;
 import com.networknt.tram.event.common.DomainEvent;
@@ -15,7 +14,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.sql.DataSource;
-
 import java.sql.Connection;
 import java.sql.SQLException;
 
