@@ -18,7 +18,7 @@ singletons:
   - com.networknt.tram.consumer.kafka.MessageConsumerKafkaImpl
 - com.networknt.tram.todolist.view.TodoViewService:
   - com.networknt.tram.todolist.view.TodoViewServiceImpl:
-    - java.lang.String: 192.168.1.120
+    - java.lang.String: 10.200.10.1
     - int: 9300
 - com.networknt.tram.todolist.view.TodoEventConsumer:
   - com.networknt.tram.todolist.view.TodoEventConsumer
