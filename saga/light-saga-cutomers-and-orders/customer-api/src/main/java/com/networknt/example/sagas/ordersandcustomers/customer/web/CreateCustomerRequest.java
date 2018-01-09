@@ -5,12 +5,12 @@ import com.networknt.example.sagas.ordersandcustomers.commondomain.Money;
 
 public class CreateCustomerRequest {
   private String name;
-  private Money creditLimit;
-
+  private Money creditLimitMoney;
+  private String creditLimit;
   public CreateCustomerRequest() {
   }
 
-  public CreateCustomerRequest(String name, Money creditLimit) {
+  public CreateCustomerRequest(String name, String creditLimit) {
 
     this.name = name;
     this.creditLimit = creditLimit;
@@ -21,7 +21,11 @@ public class CreateCustomerRequest {
     return name;
   }
 
-  public Money getCreditLimit() {
+  public String getCreditLimit() {
     return creditLimit;
+  }
+
+  public Money getCreditLimitMoney() {
+    return new Money(creditLimit);
   }
 }
