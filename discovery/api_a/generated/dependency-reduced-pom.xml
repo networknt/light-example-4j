@@ -11,9 +11,6 @@
   <artifactId>apia</artifactId>
   <name>apia</name>
   <version>1.0.0</version>
-  <prerequisites>
-    <maven>2.2.0</maven>
-  </prerequisites>
   <build>
     <defaultGoal>install</defaultGoal>
     <directory>target</directory>
@@ -69,6 +66,41 @@
             </configuration>
           </execution>
         </executions>
+      </plugin>
+      <plugin>
+        <artifactId>maven-source-plugin</artifactId>
+        <version>3.0.1</version>
+        <executions>
+          <execution>
+            <id>attach-sources</id>
+            <goals>
+              <goal>jar</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <artifactId>maven-javadoc-plugin</artifactId>
+        <version>2.10.4</version>
+        <executions>
+          <execution>
+            <id>attach-javadocs</id>
+            <goals>
+              <goal>jar</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <version>2.14</version>
+        <dependencies>
+          <dependency>
+            <groupId>org.apache.maven.surefire</groupId>
+            <artifactId>surefire-junit47</artifactId>
+            <version>2.14</version>
+          </dependency>
+        </dependencies>
       </plugin>
       <plugin>
         <artifactId>maven-jar-plugin</artifactId>
@@ -149,13 +181,14 @@
     <version.jose4j>0.6.1</version.jose4j>
     <versions.maven-version>2.4</versions.maven-version>
     <version.jackson>2.9.1</version.jackson>
-    <version.light-4j>1.5.0</version.light-4j>
+    <version.light-4j>1.5.8</version.light-4j>
     <java.version>1.8</java.version>
     <version.encoder>1.2.1</version.encoder>
     <version.undertow>1.4.20.Final</version.undertow>
     <version.antlr4>4.7</version.antlr4>
-    <version.light-rest-4j>1.5.0</version.light-rest-4j>
+    <version.light-rest-4j>1.5.8</version.light-rest-4j>
     <version.slf4j>1.7.25</version.slf4j>
+    <version.fastscanner>2.7.0</version.fastscanner>
     <version.json-schema-validator>0.1.10</version.json-schema-validator>
     <version.swagger>1.0.32</version.swagger>
     <version.commons-text>1.1</version.commons-text>
