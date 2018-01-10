@@ -1,4 +1,4 @@
-package com.networknt.schema;
+package com.networknt.subscription.schema;
 
 /**
  * Created by steve on 26/03/17.

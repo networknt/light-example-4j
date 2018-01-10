@@ -1,0 +1,42 @@
+type Channel {
+  id: ID!
+  name: String
+  messages: [Message]!
+}
+
+type Message {
+  id: ID
+  text: String
+}
+
+type MessageAddedEvent {
+  channelId: ID
+  message: Message
+}
+
+input MessageInput {
+  channelId: ID!
+  text: String
+}
+
+# The mutation root type, used to define all mutations
+type Mutation {
+  addChannel(name: String!): Channel
+  addMessage(message: MessageInput!): Message
+}
+
+# This type specifies the entry points into our API
+type Query {
+  channels: [Channel]
+  channel(id: ID!): Channel
+}
+
+type Subscription {
+  messageAdded(channelId: ID!): MessageAddedEvent!
+}
+
+schema {
+  query: Query
+  mutation: Mutation
+  subscription: Subscription
+}

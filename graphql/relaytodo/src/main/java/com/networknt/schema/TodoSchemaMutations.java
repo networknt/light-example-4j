@@ -1,4 +1,4 @@
-package com.networknt.schema;
+package com.networknt.subscription.schema;
 
 import graphql.relay.DefaultEdge;
 import graphql.relay.Edge;

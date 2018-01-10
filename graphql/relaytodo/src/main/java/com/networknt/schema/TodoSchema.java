@@ -1,4 +1,4 @@
-package com.networknt.schema;
+package com.networknt.subscription.schema;
 
 import com.networknt.graphql.router.SchemaProvider;
 import graphql.Scalars;
