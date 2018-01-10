@@ -27,6 +27,8 @@ singletons:
   - com.networknt.audit.AuditHandler
   # Validator Validate request based on graphql schema
   - com.networknt.graphql.validator.ValidatorHandler
+  # Add Cors response headers.
+  - com.networknt.cors.CorsHttpHandler
 # GraphQL schema provider interface implementation
 - com.networknt.graphql.router.SchemaProvider:
   - com.networknt.subscription.schema.SubscriptionSchemaIDL
