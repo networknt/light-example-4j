@@ -2,7 +2,6 @@
 package com.networknt.eventuate.account.command.handler;
 
 import com.networknt.client.Http2Client;
-import com.networknt.server.Server;
 import com.networknt.exception.ClientException;
 import com.networknt.exception.ApiException;
 import com.networknt.service.SingletonServiceFactory;
@@ -11,10 +10,6 @@ import io.undertow.client.ClientConnection;
 import io.undertow.client.ClientRequest;
 import io.undertow.client.ClientResponse;
 import io.undertow.util.Methods;
-import org.apache.commons.io.IOUtils;
-
-import org.apache.http.client.methods.*;
-import org.apache.http.impl.client.CloseableHttpClient;
 import org.h2.tools.RunScript;
 import org.junit.*;
 import org.slf4j.Logger;

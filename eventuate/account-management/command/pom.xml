@@ -42,6 +42,10 @@
             <groupId>com.networknt</groupId>
             <artifactId>eventuate-common</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.networknt</groupId>
+            <artifactId>eventuate-account-common</artifactId>
+        </dependency>
 
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
@@ -50,10 +54,6 @@
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-ext</artifactId>
         </dependency>
 
         <dependency>
@@ -70,10 +70,6 @@
             <groupId>org.mockito</groupId>
             <artifactId>mockito-core</artifactId>
             <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>com.networknt</groupId>
-            <artifactId>eventuate-account-common</artifactId>
         </dependency>
 
     </dependencies>

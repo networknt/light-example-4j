@@ -117,25 +117,28 @@
         </dependency>
         <dependency>
             <groupId>com.networknt</groupId>
+            <artifactId>eventuate-account-command</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.networknt</groupId>
             <artifactId>eventuate-account-query</artifactId>
         </dependency>
         <dependency>
             <groupId>com.networknt</groupId>
-            <artifactId>eventuate-account-command</artifactId>
+            <artifactId>eventuate-client-jdbc-common</artifactId>
         </dependency>
-
 
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-api</artifactId>
+            <groupId>com.fasterxml.jackson.datatype</groupId>
+            <artifactId>jackson-datatype-jdk8</artifactId>
         </dependency>
         <dependency>
             <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-ext</artifactId>
+            <artifactId>slf4j-api</artifactId>
         </dependency>
         <dependency>
             <groupId>io.undertow</groupId>
@@ -162,10 +165,6 @@
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>com.zaxxer</groupId>
-            <artifactId>HikariCP</artifactId>
-        </dependency>
-        <dependency>
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
             <scope>test</scope>
@@ -174,10 +173,6 @@
             <groupId>com.networknt</groupId>
             <artifactId>eventuate-client-jdbc</artifactId>
             <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>com.networknt</groupId>
-            <artifactId>eventuate-client-jdbc-common</artifactId>
         </dependency>
     </dependencies>
 

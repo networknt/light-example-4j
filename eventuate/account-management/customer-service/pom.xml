@@ -156,6 +156,10 @@
             <artifactId>jackson-core</artifactId>
         </dependency>
         <dependency>
+            <groupId>com.fasterxml.jackson.datatype</groupId>
+            <artifactId>jackson-datatype-jdk8</artifactId>
+        </dependency>
+        <dependency>
             <groupId>com.networknt</groupId>
             <artifactId>json-schema-validator</artifactId>
         </dependency>
@@ -170,10 +174,6 @@
         <dependency>
             <groupId>io.swagger</groupId>
             <artifactId>swagger-parser</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.httpcomponents</groupId>
-            <artifactId>httpclient</artifactId>
         </dependency>
         <dependency>
             <groupId>com.zaxxer</groupId>
