@@ -48,7 +48,7 @@
                  }
                }
               },
-             "security": [
+               "security": [
                     {
                         "account_auth": [
                             "account.r"
@@ -129,7 +129,8 @@
             "flow": "implicit",
             "scopes": {
                 "account.w": "write account",
-                 "account.r": "read account"
+                "server.info.r":"read server info",
+                "account.r": "read account"
             }
         },
         "transaction_auth": {

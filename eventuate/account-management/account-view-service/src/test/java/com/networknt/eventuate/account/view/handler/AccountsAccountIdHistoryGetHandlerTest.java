@@ -1,20 +1,33 @@
 
-package com.networknt.eventuate.account.command.handler;
+package com.networknt.eventuate.account.view.handler;
 
 
+import com.networknt.client.Http2Client;
 import com.networknt.exception.ApiException;
 import com.networknt.exception.ClientException;
+import io.undertow.UndertowOptions;
+import io.undertow.client.ClientConnection;
+import io.undertow.client.ClientRequest;
+import io.undertow.client.ClientResponse;
+import io.undertow.util.Methods;
+import org.junit.Assert;
 import org.junit.ClassRule;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.xnio.IoUtils;
+import org.xnio.OptionMap;
+
+import java.net.URI;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.atomic.AtomicReference;
 
 
-public class HealthGetHandlerTest {
+public class AccountsAccountIdHistoryGetHandlerTest {
     @ClassRule
     public static TestServer server = TestServer.getInstance();
 
-    static final Logger logger = LoggerFactory.getLogger(HealthGetHandlerTest.class);
+    static final Logger logger = LoggerFactory.getLogger(AccountsAccountIdHistoryGetHandlerTest.class);
     static final boolean enableHttp2 = server.getServerConfig().isEnableHttp2();
     static final boolean enableHttps = server.getServerConfig().isEnableHttps();
     static final int httpPort = server.getServerConfig().getHttpPort();
@@ -22,8 +35,8 @@ public class HealthGetHandlerTest {
     static final String url = enableHttp2 || enableHttps ? "https://localhost:" + httpsPort : "http://localhost:" + httpPort;
 
     @Test
-    public void testHealthGetHandlerTest() throws ClientException, ApiException {
-        /*
+    public void testAccountsAccountIdHistoryGetHandlerTest() throws ClientException, ApiException {
+
         final Http2Client client = Http2Client.getInstance();
         final CountDownLatch latch = new CountDownLatch(1);
         final ClientConnection connection;
@@ -34,7 +47,7 @@ public class HealthGetHandlerTest {
         }
         final AtomicReference<ClientResponse> reference = new AtomicReference<>();
         try {
-            ClientRequest request = new ClientRequest().setPath("/v1/health").setMethod(Methods.GET);
+            ClientRequest request = new ClientRequest().setPath("/v1/accounts/1/history").setMethod(Methods.GET);
 
             connection.sendRequest(request, client.createClientCallback(reference, latch));
 
@@ -47,8 +60,10 @@ public class HealthGetHandlerTest {
         }
         int statusCode = reference.get().getResponseCode();
         String body = reference.get().getAttachment(Http2Client.RESPONSE_BODY);
+        System.out.println("result:" + body);
         Assert.assertEquals(200, statusCode);
         Assert.assertNotNull(body);
-        */
+
+
     }
 }

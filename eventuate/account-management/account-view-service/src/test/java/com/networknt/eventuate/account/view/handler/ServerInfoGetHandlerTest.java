@@ -1,5 +1,5 @@
 
-package com.networknt.eventuate.account.command.handler;
+package com.networknt.eventuate.account.view.handler;
 
 
 import com.networknt.exception.ApiException;

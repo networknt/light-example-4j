@@ -1,9 +1,10 @@
 
-package com.networknt.eventuate.account.command.handler;
+package com.networknt.eventuate.account.view.handler;
+
 
 import com.networknt.client.Http2Client;
-import com.networknt.exception.ClientException;
 import com.networknt.exception.ApiException;
+import com.networknt.exception.ClientException;
 import com.networknt.service.SingletonServiceFactory;
 import io.undertow.UndertowOptions;
 import io.undertow.client.ClientConnection;
@@ -11,7 +12,9 @@ import io.undertow.client.ClientRequest;
 import io.undertow.client.ClientResponse;
 import io.undertow.util.Methods;
 import org.h2.tools.RunScript;
-import org.junit.*;
+import org.junit.Assert;
+import org.junit.ClassRule;
+import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.xnio.IoUtils;
@@ -27,8 +30,7 @@ import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.atomic.AtomicReference;
 
 
-public class AccountsAccountIdGetHandlerTest {
-
+public class CustomerAccountsGetHandlerTest {
     public static DataSource ds;
 
     static {
@@ -36,7 +38,7 @@ public class AccountsAccountIdGetHandlerTest {
         try (Connection connection = ds.getConnection()) {
             // Runscript doesn't work need to execute batch here.
             String schemaResourceName = "/queryside_ddl.sql";
-            InputStream in = AccountsAccountIdGetHandlerTest.class.getResourceAsStream(schemaResourceName);
+            InputStream in = CustomerAccountsGetHandlerTest.class.getResourceAsStream(schemaResourceName);
 
             if (in == null) {
                 throw new RuntimeException("Failed to load resource: " + schemaResourceName);
@@ -53,16 +55,15 @@ public class AccountsAccountIdGetHandlerTest {
     @ClassRule
     public static TestServer server = TestServer.getInstance();
 
-    static final Logger logger = LoggerFactory.getLogger(AccountsAccountIdGetHandlerTest.class);
+    static final Logger logger = LoggerFactory.getLogger(CustomerAccountsGetHandlerTest.class);
     static final boolean enableHttp2 = server.getServerConfig().isEnableHttp2();
     static final boolean enableHttps = server.getServerConfig().isEnableHttps();
     static final int httpPort = server.getServerConfig().getHttpPort();
     static final int httpsPort = server.getServerConfig().getHttpsPort();
     static final String url = enableHttp2 || enableHttps ? "https://localhost:" + httpsPort : "http://localhost:" + httpPort;
 
-
     @Test
-    public void testAccountsAccountIdGetHandlerTest() throws ClientException, ApiException {
+    public void testAccountsGetHandlerTest() throws ClientException, ApiException {
 
         final Http2Client client = Http2Client.getInstance();
         final CountDownLatch latch = new CountDownLatch(1);
@@ -74,7 +75,7 @@ public class AccountsAccountIdGetHandlerTest {
         }
         final AtomicReference<ClientResponse> reference = new AtomicReference<>();
         try {
-            ClientRequest request = new ClientRequest().setPath("/v1/accounts/accountId").setMethod(Methods.GET);
+            ClientRequest request = new ClientRequest().setPath("/v1/customer/accounts/1").setMethod(Methods.GET);
 
             connection.sendRequest(request, client.createClientCallback(reference, latch));
 
@@ -90,7 +91,6 @@ public class AccountsAccountIdGetHandlerTest {
         System.out.println("result:" + body);
         Assert.assertEquals(200, statusCode);
         Assert.assertNotNull(body);
-
 
     }
 }

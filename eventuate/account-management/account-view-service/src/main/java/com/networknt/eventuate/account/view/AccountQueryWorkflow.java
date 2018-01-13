@@ -1,4 +1,4 @@
-package com.networknt.eventuate.account.command;
+package com.networknt.eventuate.account.view;
 
 
 import com.networknt.eventuate.account.common.event.account.*;
