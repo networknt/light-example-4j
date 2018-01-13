@@ -13,10 +13,14 @@ singletons:
       prepStmtCacheSize: 10
       prepStmtCacheSqlLimit: 2048
       connectionTimeout: 2000
+- com.networknt.eventuate.jdbc.EventuateSchema:
+  - com.networknt.eventuate.jdbc.EventuateSchema:
+- com.networknt.eventuate.jdbc.EventuateJdbcAccess:
+  - com.networknt.eventuate.jdbc.EventuateJdbcAccessImpl
 - com.networknt.eventuate.common.impl.sync.AggregateCrud:
-  - com.networknt.eventuate.client.EventuateLocalDBAggregateCrud
-- com.networknt.eventuate.common.impl.sync.AggregateEvents:
-  - com.networknt.eventuate.client.EventuateLocalAggregatesEvents
+  - com.networknt.eventuate.server.jdbckafkastore.EventuateLocalAggregateCrud
+- com.networknt.eventuate.common.impl.AggregateEvents:
+  - com.networknt.eventuate.server.jdbckafkastore.EventuateKafkaAggregateSubscriptions
 - com.networknt.eventuate.common.impl.AggregateCrud:
   - com.networknt.eventuate.common.impl.adapters.SyncToAsyncAggregateCrudAdapter
 - com.networknt.eventuate.common.impl.AggregateEvents:
@@ -28,7 +32,7 @@ singletons:
 - com.networknt.eventuate.common.EventuateAggregateStore:
   - com.networknt.eventuate.common.impl.EventuateAggregateStoreImpl
 - com.networknt.eventuate.common.sync.EventuateAggregateStore:
-  - com.networknt.eventuate.common.impl.sync.EventuateAggregateStoreImpl
+  - com.networknt.eventuate.common.impl.sync.EventuateAggregateStore
 - com.networknt.eventuate.account.command.customer.Customer:
   - com.networknt.eventuate.account.command.customer.Customer
 

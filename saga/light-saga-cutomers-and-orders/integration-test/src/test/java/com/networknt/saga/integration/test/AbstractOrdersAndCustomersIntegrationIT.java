@@ -53,7 +53,7 @@ public abstract class AbstractOrdersAndCustomersIntegrationIT {
   private CommandDispatcher orderCommandDispatcher = ComponentFactory.getOrderCommandDispatcher();
   private CommandDispatcher customerCommandDispatcher = ComponentFactory.getCustomerCommandDispatcher();
 
-  //@Test
+ // @Test
   public void shouldApproveOrder() throws InterruptedException {
     orderCommandDispatcher.initialize();
     customerCommandDispatcher.initialize();

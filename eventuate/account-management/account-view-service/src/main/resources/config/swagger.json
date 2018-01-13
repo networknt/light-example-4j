@@ -114,7 +114,7 @@
                 "security": [
                     {
                         "account_auth": [
-                            "account.r", "transaction.r"
+                            "account.r"
                         ]
                     }
                 ]
@@ -160,11 +160,21 @@
         }
       }
     },
-      "CreateAccountResponse": {
+      "GetAccountResponse": {
          "properties": {
            "accountId": {
              "type": "string"
-           } 
+           },
+           "balance": {
+             "type": "number",
+             "format": "double"
+           },
+           "title": {
+             "type": "string"
+           },
+           "description": {
+             "type": "string"
+           }
          }
        }
     }

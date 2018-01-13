@@ -23,7 +23,7 @@ CREATE TABLE received_messages (
 CREATE TABLE saga_instance(
   saga_type VARCHAR(100) NOT NULL,
   saga_id VARCHAR(100) NOT NULL,
-  state_name VARCHAR(100) NOT NULL,
+  state_name VARCHAR(100),
   last_request_id VARCHAR(100),
   saga_data_type VARCHAR(1000) NOT NULL,
   saga_data_json VARCHAR(1000) NOT NULL,
@@ -39,7 +39,7 @@ CREATE TABLE saga_instance_participants (
   PRIMARY KEY(saga_type, saga_id, destination, resource)
 );
 
-CREATE TABLE aggre_instance_subscription(
+CREATE TABLE aggre_instance_subscriptions(
   aggregate_type VARCHAR(100) DEFAULT NULL,
   aggregate_id VARCHAR(100) NOT NULL,
   event_type VARCHAR(100) NOT NULL,
