@@ -7,7 +7,7 @@ singletons:
       username: postgres
       password: postgres
 - com.networknt.eventuate.jdbc.EventuateSchema:
-  - com.networknt.eventuate.jdbc.EventuateSchema:
+  - com.networknt.eventuate.jdbc.EventuateSchema
 - com.networknt.eventuate.jdbc.EventuateJdbcAccess:
   - com.networknt.eventuate.jdbc.EventuateJdbcAccessImpl
 - com.networknt.eventuate.common.impl.sync.AggregateCrud:
@@ -28,8 +28,8 @@ singletons:
   - com.networknt.eventuate.queryservice.account.AccountQueryService
 - com.networknt.eventuate.queryservice.account.AccountInfoUpdateService:
   - com.networknt.eventuate.queryservice.account.AccountInfoUpdateService
-- com.networknt.eventuate.account.command.AccountQueryWorkflow:
-  - com.networknt.eventuate.account.command.AccountQueryWorkflow
+- com.networknt.eventuate.account.view.AccountQueryWorkflow:
+  - com.networknt.eventuate.account.view.AccountQueryWorkflow
 - com.networknt.eventuate.event.EventHandlerProcessor:
   - com.networknt.eventuate.event.EventHandlerProcessorDispatchedEventReturningVoid
   - com.networknt.eventuate.event.EventHandlerProcessorDispatchedEventReturningCompletableFuture
@@ -42,7 +42,7 @@ singletons:
 
 # HandlerProvider implementation
 - com.networknt.server.HandlerProvider:
-  - com.networknt.eventuate.account.command.PathHandlerProvider
+  - com.networknt.eventuate.account.view.PathHandlerProvider
 # StartupHookProvider implementations, there are one to many and they are called in the same sequence defined.
 - com.networknt.server.StartupHookProvider:
   - com.networknt.eventuate.client.EventuateClientStartupHookProvider

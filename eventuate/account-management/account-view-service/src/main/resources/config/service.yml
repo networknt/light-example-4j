@@ -7,7 +7,7 @@ singletons:
       username: postgres
       password: postgres
 - com.networknt.eventuate.jdbc.EventuateSchema:
-  - com.networknt.eventuate.jdbc.EventuateSchema:
+  - com.networknt.eventuate.jdbc.EventuateSchema
 - com.networknt.eventuate.jdbc.EventuateJdbcAccess:
   - com.networknt.eventuate.jdbc.EventuateJdbcAccessImpl
 - com.networknt.eventuate.common.impl.sync.AggregateCrud:
