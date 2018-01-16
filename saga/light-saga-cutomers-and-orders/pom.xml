@@ -74,6 +74,7 @@
         <version.mysql>6.0.5</version.mysql>
         <version.h2>1.3.176</version.h2>
         <version.caffeine>2.5.6</version.caffeine>
+        <version.assertj>3.8.0</version.assertj>
     </properties>
 
 
@@ -129,11 +130,6 @@
                 <groupId>com.networknt</groupId>
                 <artifactId>saga-dsl</artifactId>
                 <version>${version.light-saga-4j}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.networknt</groupId>
-                <artifactId>tram-consumer-kafka</artifactId>
-                <version>${version.light-tram-4j}</version>
             </dependency>
             <dependency>
                 <groupId>com.networknt</groupId>
@@ -356,7 +352,12 @@
                 <version>${version.h2}</version>
                 <scope>test</scope>
             </dependency>
-
+            <dependency>
+                <groupId>org.assertj</groupId>
+                <artifactId>assertj-core</artifactId>
+                <version>${version.assertj}</version>
+                <scope>test</scope>
+            </dependency>
         </dependencies>
 
     </dependencyManagement>
