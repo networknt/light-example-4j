@@ -46,7 +46,7 @@
     <dependencies>
         <dependency>
             <groupId>com.networknt</groupId>
-            <artifactId>common</artifactId>
+            <artifactId>customer-order-common</artifactId>
             <version>1.0.0</version>
         </dependency>
         <dependency>
@@ -76,6 +76,11 @@
         </dependency>
         <dependency>
             <groupId>com.networknt</groupId>
+            <artifactId>tram-producer-jdbc</artifactId>
+            <version>${version.light-tram-4j}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.networknt</groupId>
             <artifactId>saga-framework</artifactId>
             <version>${version.light-saga-4j}</version>
         </dependency>
@@ -88,6 +93,11 @@
         <dependency>
             <groupId>com.networknt</groupId>
             <artifactId>config</artifactId>
+            <version>${version.light-4j}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.networknt</groupId>
+            <artifactId>common</artifactId>
             <version>${version.light-4j}</version>
         </dependency>
         <dependency>

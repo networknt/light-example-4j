@@ -78,7 +78,6 @@
 
 
     <modules>
-        <module>common</module>
         <module>customer-api</module>
         <module>customer-backend</module>
         <module>order-api</module>
@@ -86,6 +85,7 @@
         <module>integration-test</module>
         <module>customer-service</module>
         <module>order-service</module>
+        <module>customer-order-common</module>
     </modules>
 
     <dependencyManagement>
@@ -138,6 +138,11 @@
             <dependency>
                 <groupId>com.networknt</groupId>
                 <artifactId>config</artifactId>
+                <version>${version.light-4j}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.networknt</groupId>
+                <artifactId>common</artifactId>
                 <version>${version.light-4j}</version>
             </dependency>
             <dependency>

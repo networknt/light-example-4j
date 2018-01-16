@@ -37,7 +37,6 @@ public class OrdersOrderIdGetHandlerTest {
 
     @Test
     public void testOrdersOrderIdGetHandlerTest() throws ClientException, ApiException {
-        /*
         final Http2Client client = Http2Client.getInstance();
         final CountDownLatch latch = new CountDownLatch(1);
         final ClientConnection connection;
@@ -48,10 +47,10 @@ public class OrdersOrderIdGetHandlerTest {
         }
         final AtomicReference<ClientResponse> reference = new AtomicReference<>();
         try {
-            ClientRequest request = new ClientRequest().setPath("/v1/orders/orderId").setMethod(Methods.GET);
-            
+            ClientRequest request = new ClientRequest().setPath("/v1/orders/122").setMethod(Methods.GET);
+
             connection.sendRequest(request, client.createClientCallback(reference, latch));
-            
+
             latch.await();
         } catch (Exception e) {
             logger.error("Exception: ", e);
@@ -61,8 +60,9 @@ public class OrdersOrderIdGetHandlerTest {
         }
         int statusCode = reference.get().getResponseCode();
         String body = reference.get().getAttachment(Http2Client.RESPONSE_BODY);
+        System.out.println("result:" + body);
         Assert.assertEquals(200, statusCode);
         Assert.assertNotNull(body);
-        */
+
     }
 }

@@ -27,6 +27,9 @@ singletons:
   - com.networknt.example.sagas.ordersandcustomers.customer.domain.CustomerRepositoryJdbc
 - com.networknt.example.sagas.ordersandcustomers.customer.service.CustomerService:
   - com.networknt.example.sagas.ordersandcustomers.customer.service.CustomerService
+# customerCommandHandler depends on CustomerRepository
+- com.networknt.example.sagas.ordersandcustomers.customer.service.CustomerCommandHandler:
+  - com.networknt.example.sagas.ordersandcustomers.customer.service.CustomerCommandHandler
 
 # OpenAPI parser validator implementation
 - com.networknt.oas.validator.Validator<com.networknt.oas.model.Callback>:

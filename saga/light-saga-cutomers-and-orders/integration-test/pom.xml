@@ -15,7 +15,7 @@
     <dependencies>
         <dependency>
             <groupId>com.networknt</groupId>
-            <artifactId>common</artifactId>
+            <artifactId>customer-order-common</artifactId>
             <version>1.0.0</version>
         </dependency>
         <dependency>

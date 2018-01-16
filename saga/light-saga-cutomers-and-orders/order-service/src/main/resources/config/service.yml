@@ -1,6 +1,58 @@
 
 # Singleton service factory configuration/IoC injection
 singletons:
+
+- javax.sql.DataSource:
+  - com.zaxxer.hikari.HikariDataSource:
+      DriverClassName: org.h2.jdbcx.JdbcDataSource
+      jdbcUrl: jdbc:h2:~/test
+      username: sa
+      password: sa
+# IdGeneratorImpl implements IdGenerator without any parameter dependency
+- com.networknt.eventuate.jdbc.IdGenerator:
+  - com.networknt.eventuate.jdbc.IdGeneratorImpl
+- com.networknt.tram.consumer.kafka.DuplicateMessageDetector:
+  - com.networknt.tram.consumer.kafka.SqlTableBasedDuplicateMessageDetector
+- com.networknt.tram.message.consumer.MessageConsumer:
+  - com.networknt.tram.consumer.kafka.MessageConsumerKafkaImpl
+- com.networknt.tram.message.producer.MessageProducer:
+  - com.networknt.tram.message.producer.jdbc.MessageProducerJdbcImpl
+# SagaLockManagerImpl implements SagaLockManager and depends on DataSource.
+- com.networknt.saga.participant.SagaLockManager:
+  - com.networknt.saga.participant.SagaLockManagerImpl
+- com.networknt.example.sagas.ordersandcustomers.data.TramCommandsAndEventsIntegrationData:
+  - com.networknt.example.sagas.ordersandcustomers.data.TramCommandsAndEventsIntegrationData
+# ChannelMapping depends on TramCommandsAndEventsIntegrationData
+- com.networknt.tram.command.common.ChannelMapping: com.networknt.saga.example.order.service.OrderServiceInitializer::channelMapping
+# SagaInstanceRepositoryJdbc depends on IdGenerator and DataSource
+- com.networknt.saga.orchestration.SagaInstanceRepository:
+  - com.networknt.saga.orchestration.SagaInstanceRepositoryJdbc
+# AggregateInstanceSubscriptionsDAOImpl depends on DataSource
+- com.networknt.saga.orchestration.AggregateInstanceSubscriptionsDAO:
+  - com.networknt.saga.orchestration.AggregateInstanceSubscriptionsDAOImpl
+# EnlistedAggregatesDaoImpl depends on DataSource
+- com.networknt.saga.orchestration.EnlistedAggregatesDao:
+  - com.networknt.saga.orchestration.EnlistedAggregatesDaoImpl
+# CommandProducerImpl depends on MessageProducer and ChannelMapping
+- com.networknt.tram.command.producer.CommandProducer:
+  - com.networknt.tram.command.producer.CommandProducerImpl
+# DomainEventPublisherImpl depends on MessageProducer
+- com.networknt.tram.event.publisher.DomainEventPublisher:
+  - com.networknt.tram.event.publisher.DomainEventPublisherImpl
+# CreateOrderSaga doesn't depend on anything
+- com.networknt.example.sagas.ordersandcustomers.order.saga.createorder.CreateOrderSaga: com.networknt.saga.example.order.service.OrderServiceInitializer::createOrderSaga
+# createOrderSagaManager depends on CreateOrderSaga and a lot other beans above.
+- com.networknt.saga.orchestration.SagaManager: com.networknt.saga.example.order.service.OrderServiceInitializer::createOrderSagaManager
+# MapConsumerRepository implements CustomerRepository with no other dependency
+- com.networknt.example.sagas.ordersandcustomers.order.domain.OrderRepository:
+  - com.networknt.example.sagas.ordersandcustomers.order.domain.OrderRepositoryJdbc
+- com.networknt.example.sagas.ordersandcustomers.order.service.OrderService:
+  - com.networknt.example.sagas.ordersandcustomers.order.service.OrderService
+# OrderCommandHandler depends on OrderRepository defined above
+- com.networknt.example.sagas.ordersandcustomers.order.service.OrderCommandHandler:
+  - com.networknt.example.sagas.ordersandcustomers.order.service.OrderCommandHandler
+
+
 # OpenAPI parser validator implementation
 - com.networknt.oas.validator.Validator<com.networknt.oas.model.Callback>:
   - com.networknt.oas.validator.impl.CallbackValidator
@@ -54,6 +106,8 @@ singletons:
 - com.networknt.server.HandlerProvider:
   - com.networknt.saga.example.order.service.PathHandlerProvider
 # StartupHookProvider implementations, there are one to many and they are called in the same sequence defined.
+- com.networknt.server.StartupHookProvider:
+  - com.networknt.saga.example.order.service.startup.StartUpOrderCommandDispacher
 # - com.networknt.server.StartupHookProvider:
   # - com.networknt.server.Test1StartupHook
   # - com.networknt.server.Test2StartupHook
