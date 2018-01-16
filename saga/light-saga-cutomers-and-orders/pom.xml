@@ -117,8 +117,8 @@
             </dependency>
             <dependency>
                 <groupId>com.networknt</groupId>
-                <artifactId>saga-core</artifactId>
-                <version>${version.light-saga-4j}</version>
+                <artifactId>tram-message</artifactId>
+                <version>${version.light-tram-4j}</version>
             </dependency>
             <dependency>
                 <groupId>com.networknt</groupId>

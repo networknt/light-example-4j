@@ -4,6 +4,7 @@ package com.networknt.example.sagas.ordersandcustomers.customer.domain;
 
 import com.networknt.example.sagas.ordersandcustomers.commondomain.Money;
 
+import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -27,6 +28,14 @@ public class Customer {
   public Customer() {
   }
 
+  public String getName() {
+    return name;
+  }
+
+  public void setName(String name) {
+    this.name = name;
+  }
+
   public void setId(Long id) {
     this.id = id;
   }
@@ -48,5 +57,12 @@ public class Customer {
       creditReservations.put(orderId, orderTotal);
     } else
       throw new CustomerCreditLimitExceededException();
+  }
+
+  public BigDecimal getCreditLimit() {
+    if (creditLimit!=null) {
+      return creditLimit.getAmount();
+    }
+    return null;
   }
 }

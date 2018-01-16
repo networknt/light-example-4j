@@ -49,4 +49,12 @@ public class Order {
   public OrderState getState() {
     return state;
   }
+
+  public void setState(OrderState state) {
+    this.state = state;
+  }
+
+  public OrderDetails getOrderDetails() {
+    return orderDetails;
+  }
 }

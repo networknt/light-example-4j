@@ -20,13 +20,10 @@ singletons:
 # SagaLockManagerImpl implements SagaLockManager and depends on DataSource.
 - com.networknt.saga.participant.SagaLockManager:
   - com.networknt.saga.participant.SagaLockManagerImpl
-- com.networknt.example.sagas.ordersandcustomers.data.TramCommandsAndEventsIntegrationData:
-  - com.networknt.example.sagas.ordersandcustomers.data.TramCommandsAndEventsIntegrationData
 # MapConsumerRepository implements CustomerRepository with no other dependency
 - com.networknt.example.sagas.ordersandcustomers.customer.domain.CustomerRepository:
   - com.networknt.example.sagas.ordersandcustomers.customer.domain.CustomerRepositoryJdbc
-- com.networknt.example.sagas.ordersandcustomers.customer.service.CustomerService:
-  - com.networknt.example.sagas.ordersandcustomers.customer.service.CustomerService
+
 
 # OpenAPI parser validator implementation
 - com.networknt.oas.validator.Validator<com.networknt.oas.model.Callback>:
@@ -81,8 +78,7 @@ singletons:
 - com.networknt.server.HandlerProvider:
   - com.networknt.saga.example.customer.service.PathHandlerProvider
 # StartupHookProvider implementations, there are one to many and they are called in the same sequence defined.
-- com.networknt.server.StartupHookProvider:
-  - com.networknt.saga.example.customer.service.startup.StartUpCustomerCommandDispacher
+# - com.networknt.server.StartupHookProvider:
   # - com.networknt.server.Test1StartupHook
   # - com.networknt.server.Test2StartupHook
 # ShutdownHookProvider implementations, there are one to many and they are called in the same sequence defined.

@@ -2,6 +2,8 @@
 package com.networknt.saga.example.customer.service.handler;
 
 import com.networknt.client.Http2Client;
+import com.networknt.eventuate.common.impl.JSonMapper;
+import com.networknt.example.sagas.ordersandcustomers.customer.web.CreateCustomerRequest;
 import com.networknt.exception.ApiException;
 import com.networknt.exception.ClientException;
 import io.undertow.UndertowOptions;
@@ -37,7 +39,6 @@ public class CustomersPostHandlerTest {
 
     @Test
     public void testCustomersPostHandlerTest() throws ClientException, ApiException {
-        /*
         final Http2Client client = Http2Client.getInstance();
         final CountDownLatch latch = new CountDownLatch(1);
         final ClientConnection connection;
@@ -47,13 +48,17 @@ public class CustomersPostHandlerTest {
             throw new ClientException(e);
         }
         final AtomicReference<ClientResponse> reference = new AtomicReference<>();
+        CreateCustomerRequest createCustomerRequest = new CreateCustomerRequest("test-customer", "200");
+
+
+        String json = JSonMapper.toJson(createCustomerRequest);
         try {
             ClientRequest request = new ClientRequest().setPath("/v1/customers").setMethod(Methods.POST);
-            
+
             request.getRequestHeaders().put(Headers.CONTENT_TYPE, "application/json");
             request.getRequestHeaders().put(Headers.TRANSFER_ENCODING, "chunked");
-            connection.sendRequest(request, client.createClientCallback(reference, latch, "request body to be replaced"));
-            
+            connection.sendRequest(request, client.createClientCallback(reference, latch, json));
+
             latch.await();
         } catch (Exception e) {
             logger.error("Exception: ", e);
@@ -63,8 +68,8 @@ public class CustomersPostHandlerTest {
         }
         int statusCode = reference.get().getResponseCode();
         String body = reference.get().getAttachment(Http2Client.RESPONSE_BODY);
+        System.out.println("response:" + body);
         Assert.assertEquals(200, statusCode);
         Assert.assertNotNull(body);
-        */
     }
 }
