@@ -31,7 +31,7 @@
         <version.undertow>1.4.20.Final</version.undertow>
         <version.json-schema-validator>0.1.10</version.json-schema-validator>
         <version.fastscanner>2.7.0</version.fastscanner>
-        
+        <version.mysql>6.0.5</version.mysql>
         <version.hikaricp>2.6.2</version.hikaricp>
         
         
@@ -272,10 +272,15 @@
             <artifactId>HikariCP</artifactId>
             <version>${version.hikaricp}</version>
         </dependency>
-        
-        
-        
-        
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>${version.mysql}</version>
+        </dependency>
+
+
+
+
         <!-- Test Dependencies -->
         <dependency>
             <groupId>junit</groupId>

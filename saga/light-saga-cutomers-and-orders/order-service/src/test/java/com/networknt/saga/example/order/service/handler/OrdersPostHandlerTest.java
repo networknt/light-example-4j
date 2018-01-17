@@ -80,6 +80,7 @@ public class OrdersPostHandlerTest {
 
 
         String json = JSonMapper.toJson(createOrderRequest);
+        System.out.println("json" + json);
         try {
             ClientRequest request = new ClientRequest().setPath("/v1/orders").setMethod(Methods.POST);
 

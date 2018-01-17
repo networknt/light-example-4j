@@ -78,6 +78,7 @@ public class CustomersPostHandlerTest {
 
 
         String json = JSonMapper.toJson(createCustomerRequest);
+        System.out.println("json:" + json);
         try {
             ClientRequest request = new ClientRequest().setPath("/v1/customers").setMethod(Methods.POST);
 
