@@ -33,7 +33,7 @@ public class CustomerRepositoryJdbc implements CustomerRepository {
 
         customer.setId(IdentityGenerator.generate());
 
-        String psInsert = "INSERT INTO customer (customer_Id, name, creditLimit) VALUES (?, ?, ?)";
+        String psInsert = "INSERT INTO customerorder.customer (customer_Id, name, creditLimit) VALUES (?, ?, ?)";
 
         try (final Connection connection = dataSource.getConnection()) {
             PreparedStatement stmt = connection.prepareStatement(psInsert);
@@ -55,7 +55,7 @@ public class CustomerRepositoryJdbc implements CustomerRepository {
     @Override
     public Customer findOne(Long id) {
 
-        String psSelect = "SELECT customer_Id,name, creditLimit from customer WHERE customer_id = ?";
+        String psSelect = "SELECT customer_Id,name, creditLimit from customerorder.customer WHERE customer_id = ?";
         Customer customer = null;
         try (final Connection connection = dataSource.getConnection()){
             PreparedStatement stmt = connection.prepareStatement(psSelect);
@@ -90,7 +90,7 @@ public class CustomerRepositoryJdbc implements CustomerRepository {
     public Map<Long, Customer> findAll() {
         Map<Long, Customer> customers = new HashMap<>();
 
-        String psSelect = "SELECT customer_Id,name, creditLimit from customer";
+        String psSelect = "SELECT customer_Id,name, creditLimit from customerorder.customer";
         try (final Connection connection = dataSource.getConnection()){
             PreparedStatement stmt = connection.prepareStatement(psSelect);
             ResultSet rs = stmt.executeQuery();

@@ -32,7 +32,7 @@ public class OrderRepositoryJdbc implements OrderRepository {
         order.setId(atomicOrderId.incrementAndGet());
 
 
-        String psInsert = "INSERT INTO order_detail (order_id, customer_Id, state, amount) VALUES (?, ?, ?, ?)";
+        String psInsert = "INSERT INTO customerorder.order_detail (order_id, customer_Id, state, amount) VALUES (?, ?, ?, ?)";
 
         try (final Connection connection = dataSource.getConnection()) {
             PreparedStatement stmt = connection.prepareStatement(psInsert);
@@ -55,7 +55,7 @@ public class OrderRepositoryJdbc implements OrderRepository {
     @Override
     public Order findOne(Long id) {
 
-        String psSelect = "SELECT order_id,  customer_Id,state, amount from order_detail WHERE order_id = ?";
+        String psSelect = "SELECT order_id,  customer_Id,state, amount from customerorder.order_detail WHERE order_id = ?";
         Order order = null;
         try (final Connection connection = dataSource.getConnection()){
             PreparedStatement stmt = connection.prepareStatement(psSelect);
@@ -91,7 +91,7 @@ public class OrderRepositoryJdbc implements OrderRepository {
     @Override
     public Map<Long, Order> findAll() {
         Map<Long, Order> orders = new HashMap<>();
-        String psSelect = "SELECT order_id,  customer_Id,state, amount from order_detail ";
+        String psSelect = "SELECT order_id,  customer_Id,state, amount from customerorder.order_detail ";
         Order order = null;
         try (final Connection connection = dataSource.getConnection()){
             PreparedStatement stmt = connection.prepareStatement(psSelect);
