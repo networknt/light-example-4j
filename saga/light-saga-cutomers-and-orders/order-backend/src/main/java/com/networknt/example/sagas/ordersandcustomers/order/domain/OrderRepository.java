@@ -72,4 +72,6 @@ public interface OrderRepository{
      * Deletes all entities managed by the repository.
      */
     void deleteAll();
+
+    <S extends Order> S update(S entity);
 }

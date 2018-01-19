@@ -16,7 +16,7 @@ public interface CustomerRepository {
      */
     <S extends Customer> S save(S entity);
 
-
+    <S extends Customer> S update(S entity);
     /**
      * Retrieves an entity by its id.
      *

@@ -116,6 +116,27 @@ public class OrderRepositoryJdbc implements OrderRepository {
     }
 
     @Override
+    public Order update(Order order) {
+
+        String psUpdate = "UPDATE customerorder.order_detail SET state = ? WHERE  order_id = ?";
+
+        try (final Connection connection = dataSource.getConnection()) {
+            PreparedStatement stmt = connection.prepareStatement(psUpdate);
+            stmt.setString(1, order.getState().name());
+            stmt.setLong(2, order.getId());
+            int count = stmt.executeUpdate();
+            if (count != 1) {
+                logger.error("Failed to update order: {}", order.getId());
+            }
+        } catch (SQLException e) {
+            logger.error("SqlException:", e);
+        }
+
+        return order;
+
+    }
+
+    @Override
     public void delete(Long id) {
        //TODO
     }

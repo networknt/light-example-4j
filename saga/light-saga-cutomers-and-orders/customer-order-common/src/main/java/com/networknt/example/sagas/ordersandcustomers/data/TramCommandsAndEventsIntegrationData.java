@@ -3,10 +3,10 @@ package com.networknt.example.sagas.ordersandcustomers.data;
 public class TramCommandsAndEventsIntegrationData {
 
   private long now = System.currentTimeMillis();
-  private String commandDispatcherId = "command-dispatcher-" + now;
-  private String commandChannel = "command-channel-" + now;
-  private String aggregateDestination = "aggregate-destination-" + now;
-  private String eventDispatcherId  = "event-dispatcher-" + now;
+  private String commandDispatcherId = "command-dispatcher-0000001";
+  private String commandChannel = "command-channel-0000001";
+  private String aggregateDestination = "aggregate-destination-0000001";
+  private String eventDispatcherId  = "event-dispatcher-0000001";
 
   public String getAggregateDestination() {
     return aggregateDestination;

@@ -25,6 +25,7 @@ public class StartUpCustomerCommandDispacher implements StartupHookProvider {
 		CustomerCommandHandler customerCommandHandler = SingletonServiceFactory.getBean(CustomerCommandHandler.class);
 
 		TramCommandsAndEventsIntegrationData data = SingletonServiceFactory.getBean(TramCommandsAndEventsIntegrationData.class);
+
 		ChannelMapping channelMapping =  DefaultChannelMapping.builder()
 				.with("CustomerAggregate", data.getAggregateDestination())
 				.with("customerService", data.getCommandChannel())

@@ -72,4 +72,12 @@ public class MapOrderRepository implements OrderRepository {
     public void deleteAll() {
         orders.invalidateAll();
     }
+
+    @Override
+    public Order update(Order order) {
+        this.orders.put(order.getId(), order);
+        return    order;
+
+    }
+
 }

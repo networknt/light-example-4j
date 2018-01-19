@@ -34,6 +34,8 @@ public class OrderCommandHandler {
     long orderId = cm.getCommand().getOrderId();
     Order order = orderRepository.findOne(orderId);
     order.noteCreditReserved();
+    System.out.println("order with new status-->" + order.getState().name());
+    orderRepository.update(order);
     return withSuccess();
   }
 
@@ -41,6 +43,8 @@ public class OrderCommandHandler {
     long orderId = cm.getCommand().getOrderId();
     Order order = orderRepository.findOne(orderId);
     order.noteCreditReservationFailed();
+    System.out.println("order with new status-->" + order.getState().name());
+    orderRepository.update(order);
     return withSuccess();
   }
 

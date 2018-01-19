@@ -31,6 +31,12 @@ public class MapCustomerRepository implements CustomerRepository {
     }
 
     @Override
+    public Customer update(Customer customer) {
+        this.customers.put(customer.getId(), customer);
+        return customer;
+    }
+
+    @Override
     public Customer findOne(Long id) {
         Customer customer = this.customers.getIfPresent(id);
         return customer;

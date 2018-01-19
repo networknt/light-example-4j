@@ -30,13 +30,16 @@ public class CustomerCommandHandler {
   }
 
   public Message reserveCredit(CommandMessage<ReserveCreditCommand> cm) {
+
     ReserveCreditCommand cmd = cm.getCommand();
     long customerId = cmd.getCustomerId();
     Customer customer = (Customer)customerRepository.findOne(customerId);
     // TODO null check
     try {
       customer.reserveCredit(cmd.getOrderId(), cmd.getOrderTotal());
+      customerRepository.update(customer);
       return CommandHandlerReplyBuilder.withSuccess(new CustomerCreditReserved());
+
     } catch (CustomerCreditLimitExceededException e) {
       return CommandHandlerReplyBuilder.withFailure(new CustomerCreditReservationFailed());
     }

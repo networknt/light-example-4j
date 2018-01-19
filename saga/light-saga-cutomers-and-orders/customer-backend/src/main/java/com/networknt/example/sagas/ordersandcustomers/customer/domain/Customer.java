@@ -19,6 +19,7 @@ public class Customer {
   private Money creditLimit;
 
 
+
   private Map<Long, Money> creditReservations;
 
   Money availableCredit() {
@@ -65,4 +66,13 @@ public class Customer {
     }
     return null;
   }
+
+  public Map<Long, Money> getCreditReservations() {
+    return creditReservations;
+  }
+
+  public void setCreditReservations(Map<Long, Money> creditReservations) {
+    this.creditReservations = creditReservations;
+  }
+
 }

@@ -56,6 +56,7 @@ public class CustomerRepositoryJdbc implements CustomerRepository {
     public Customer findOne(Long id) {
 
         String psSelect = "SELECT customer_Id,name, creditLimit from customerorder.customer WHERE customer_id = ?";
+
         Customer customer = null;
         try (final Connection connection = dataSource.getConnection()){
             PreparedStatement stmt = connection.prepareStatement(psSelect);
@@ -67,12 +68,32 @@ public class CustomerRepositoryJdbc implements CustomerRepository {
             while (rs.next()) {
                 Money money = new Money ( rs.getBigDecimal("creditLimit"));
                 customer = new Customer(rs.getString("name"), money);
+
+                customer.setCreditReservations(creditReservations(id));
             }
         } catch (SQLException e) {
             logger.error("SqlException:", e);
         }
 
         return customer;
+    }
+
+    public  Map<Long, Money> creditReservations(Long id) {
+        Map<Long, Money> creditReservations = new HashMap<>();
+        String psSelect = "SELECT customer_Id,order_id, orderTotal from customerorder.customer_order WHERE customer_id = ?";
+        try (final Connection connection = dataSource.getConnection()){
+            PreparedStatement stmt = connection.prepareStatement(psSelect);
+            stmt.setLong(1, id);
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                Money money = new Money ( rs.getBigDecimal("orderTotal"));
+                creditReservations.put(rs.getLong("order_id"), money);
+            }
+        } catch (SQLException e) {
+            logger.error("SqlException:", e);
+        }
+        return creditReservations;
     }
 
     @Override
@@ -111,6 +132,37 @@ public class CustomerRepositoryJdbc implements CustomerRepository {
     @Override
     public long count() {
         return findAll().size();
+    }
+
+    @Override
+    public Customer update(Customer customer) {
+
+        customer.setId(IdentityGenerator.generate());
+
+        String psDelete = "DELETE FROM  customerorder.customer_order WHERE customer_id = ?";
+        String psInsert = "INSERT INTO customerorder.customer_order (customer_Id, order_id, orderTotal) VALUES (?, ?, ?)";
+
+        try (final Connection connection = dataSource.getConnection()) {
+            connection.setAutoCommit(false);
+            PreparedStatement stmt = connection.prepareStatement(psDelete);
+            stmt.setLong(1, customer.getId());
+            stmt.executeUpdate();
+            if (customer.getCreditReservations().size()>0) {
+                for (Map.Entry<Long, Money> entry : customer.getCreditReservations().entrySet()) {
+                    PreparedStatement stmt2 = connection.prepareStatement(psInsert);
+                    stmt2.setLong(1, customer.getId());
+                    stmt2.setLong(2, entry.getKey());
+                    stmt2.setBigDecimal(3, entry.getValue().getAmount());
+                    stmt2.executeUpdate();
+                }
+            }
+
+            connection.commit();
+        } catch (SQLException e) {
+            logger.error("SqlException:", e);
+        }
+
+        return customer;
     }
 
     @Override
