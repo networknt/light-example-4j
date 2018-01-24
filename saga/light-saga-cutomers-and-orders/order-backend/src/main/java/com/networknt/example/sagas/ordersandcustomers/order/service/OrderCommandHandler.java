@@ -7,6 +7,7 @@ import com.networknt.example.sagas.ordersandcustomers.order.command.RejectOrderC
 import com.networknt.example.sagas.ordersandcustomers.order.domain.Order;
 import com.networknt.example.sagas.ordersandcustomers.order.domain.OrderRepository;
 import com.networknt.saga.participant.SagaCommandHandlersBuilder;
+import com.networknt.saga.participant.SagaReplyMessageBuilder;
 import com.networknt.tram.command.consumer.CommandHandlers;
 import com.networknt.tram.command.consumer.CommandMessage;
 import com.networknt.tram.message.common.Message;
@@ -36,7 +37,8 @@ public class OrderCommandHandler {
     order.noteCreditReserved();
     System.out.println("order with new status-->" + order.getState().name());
     orderRepository.update(order);
-    return withSuccess();
+    return SagaReplyMessageBuilder.withLock(Order.class, order.getId()).withSuccess();
+    //return withSuccess();
   }
 
   public Message reject(CommandMessage<RejectOrderCommand> cm) {
@@ -45,7 +47,8 @@ public class OrderCommandHandler {
     order.noteCreditReservationFailed();
     System.out.println("order with new status-->" + order.getState().name());
     orderRepository.update(order);
-    return withSuccess();
+    return SagaReplyMessageBuilder.withLock(Order.class, order.getId()).withSuccess();
+    //return withSuccess();
   }
 
 }
