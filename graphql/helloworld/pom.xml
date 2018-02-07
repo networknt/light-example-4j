@@ -26,8 +26,7 @@
         <version.junit>4.12</version.junit>
         <version.undertow>1.4.20.Final</version.undertow>
         <version.graphql>4.2</version.graphql>
-        <version.fastscanner>2.7.0</version.fastscanner>
-        
+        <version.rxjava>2.1.5</version.rxjava>
         <version.hikaricp>2.6.2</version.hikaricp>
         
         
@@ -183,6 +182,11 @@
             <version>${version.jackson}</version>
         </dependency>
         <dependency>
+            <groupId>io.reactivex.rxjava2</groupId>
+            <artifactId>rxjava</artifactId>
+            <version>${version.rxjava}</version>
+        </dependency>
+        <dependency>
             <groupId>ch.qos.logback</groupId>
             <artifactId>logback-classic</artifactId>
             <version>${version.logback}</version>
@@ -197,12 +201,6 @@
             <artifactId>graphql-java</artifactId>
             <version>${version.graphql}</version>
         </dependency>
-        <dependency>
-            <groupId>io.github.lukehutch</groupId>
-            <artifactId>fast-classpath-scanner</artifactId>
-            <version>${version.fastscanner}</version>
-        </dependency>
-        
         <dependency>
             <groupId>com.zaxxer</groupId>
             <artifactId>HikariCP</artifactId>
