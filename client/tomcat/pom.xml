@@ -14,17 +14,17 @@
         <dependency>
             <groupId>com.networknt</groupId>
             <artifactId>client</artifactId>
-            <version>1.5.7</version>
+            <version>1.5.8</version>
         </dependency>
         <dependency>
             <groupId>com.networknt</groupId>
             <artifactId>cluster</artifactId>
-            <version>1.5.7</version>
+            <version>1.5.8</version>
         </dependency>
         <dependency>
             <groupId>com.networknt</groupId>
             <artifactId>service</artifactId>
-            <version>1.5.7</version>
+            <version>1.5.8</version>
         </dependency>
         <dependency>
             <groupId>io.undertow</groupId>
