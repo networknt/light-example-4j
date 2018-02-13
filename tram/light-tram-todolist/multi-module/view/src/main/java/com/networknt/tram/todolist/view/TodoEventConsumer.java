@@ -21,6 +21,7 @@ public class TodoEventConsumer {
             .forAggregateType(Todo.class.getName())
             .onEvent(TodoCreated.class, dee -> {
               TodoCreated todoCreated = dee.getEvent();
+            //    throw new RuntimeException("test exception");
               todoViewService.index(new TodoView(dee.getAggregateId(),
                   todoCreated.getTitle(), todoCreated.isCompleted(), todoCreated.getExecutionOrder()));
             })

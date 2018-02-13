@@ -27,7 +27,7 @@ public class TodoRepositoryImpl implements TodoRepository {
         List<Todo> todos = new ArrayList<>();
 
         try (final Connection connection = dataSource.getConnection()){
-            String psSelect = "SELECT ID, TITLE, COMPLETED, ORDER_ID FROM TODO WHERE ACTIVE_FLG = 'Y' order by ORDER_ID asc";
+            String psSelect = "SELECT ID, TITLE, COMPLETED, ORDER_ID FROM todo_db.TODO WHERE ACTIVE_FLG = 'Y' order by ORDER_ID asc";
             PreparedStatement stmt = connection.prepareStatement(psSelect);
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
@@ -49,7 +49,7 @@ public class TodoRepositoryImpl implements TodoRepository {
     public  Todo findOne(String id) {
         Todo todo = null;
         try (final Connection connection = dataSource.getConnection()){
-            String psSelect = "SELECT ID, TITLE, COMPLETED, ORDER_ID FROM TODO WHERE ACTIVE_FLG = 'Y' AND ID = ?";
+            String psSelect = "SELECT ID, TITLE, COMPLETED, ORDER_ID FROM todo_db.TODO WHERE ACTIVE_FLG = 'Y' AND ID = ?";
             PreparedStatement stmt = connection.prepareStatement(psSelect);
             stmt.setString(1, id);
             ResultSet rs = stmt.executeQuery();
@@ -73,7 +73,7 @@ public class TodoRepositoryImpl implements TodoRepository {
     @Override
     public Todo save(Todo todo) {
         try (final Connection connection = dataSource.getConnection()){
-            String psInsert = "INSERT INTO TODO (ID, TITLE, COMPLETED, ORDER_ID) VALUES (?, ?, ?, ?)";
+            String psInsert = "INSERT INTO todo_db.TODO (ID, TITLE, COMPLETED, ORDER_ID) VALUES (?, ?, ?, ?)";
             PreparedStatement stmt = connection.prepareStatement(psInsert);
             stmt.setString(1, todo.getId());
             stmt.setString(2, todo.getTitle());
@@ -95,7 +95,7 @@ public class TodoRepositoryImpl implements TodoRepository {
     @Override
     public Todo update(Todo todo) {
         try (final Connection connection = dataSource.getConnection()){
-            String psUpdate = "UPDATE TODO SET TITLE=?, COMPLETED=?, ORDER_ID=? WHERE ID=? ";
+            String psUpdate = "UPDATE todo_db.TODO SET TITLE=?, COMPLETED=?, ORDER_ID=? WHERE ID=? ";
             PreparedStatement stmt = connection.prepareStatement(psUpdate);
 
             stmt.setString(1, todo.getTitle());
@@ -118,7 +118,7 @@ public class TodoRepositoryImpl implements TodoRepository {
     @Override
     public void delete(String id) {
         try (final Connection connection = dataSource.getConnection()){
-            String psDelete = "UPDATE TODO SET ACTIVE_FLG = 'N' WHERE ID = ?";
+            String psDelete = "UPDATE todo_db.TODO SET ACTIVE_FLG = 'N' WHERE ID = ?";
             PreparedStatement psEntity = connection.prepareStatement(psDelete);
             psEntity.setString(1, id);
             int count = psEntity.executeUpdate();
