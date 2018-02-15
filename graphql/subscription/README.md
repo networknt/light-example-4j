@@ -3,7 +3,10 @@
 ## Build and Start
 
 ```
-mvn clean install exec:exec
+// windows
+gradlew.bat run
+// *nix
+./gradlew run 
 ```
 
 ## Test the server with GraphiQL

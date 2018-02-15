@@ -1,0 +1,64 @@
+apply plugin: 'java'
+apply plugin: 'maven'
+
+group = 'com.networknt'
+version = '1.0.0'
+
+description = """example-graphql-subscription"""
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+tasks.withType(JavaCompile) {
+	options.encoding = 'UTF-8'
+}
+
+apply plugin: 'application'
+mainClassName = 'com.networknt.server.Server'
+
+configurations.all {
+}
+
+repositories {
+    mavenLocal()
+     maven { url "https://oss.sonatype.org/content/repositories/snapshots" }
+     maven { url "https://jitpack.io" }
+     maven { url "http://repo.maven.apache.org/maven2" }
+}
+dependencies {
+    compile group: 'com.networknt', name: 'config', version:'1.5.9'
+    compile group: 'com.networknt', name: 'utility', version:'1.5.9'
+    compile group: 'com.networknt', name: 'security', version:'1.5.9'
+    compile group: 'com.networknt', name: 'client', version:'1.5.9'
+    compile group: 'com.networknt', name: 'audit', version:'1.5.9'
+    compile group: 'com.networknt', name: 'info', version:'1.5.9'
+    compile group: 'com.networknt', name: 'status', version:'1.5.9'
+    compile group: 'com.networknt', name: 'exception', version:'1.5.9'
+    compile group: 'com.networknt', name: 'body', version:'1.5.9'
+    compile group: 'com.networknt', name: 'mask', version:'1.5.9'
+    compile group: 'com.networknt', name: 'metrics', version:'1.5.9'
+    compile group: 'com.networknt', name: 'handler', version:'1.5.9'
+    compile group: 'com.networknt', name: 'sanitizer', version:'1.5.9'
+    compile group: 'com.networknt', name: 'traceability', version:'1.5.9'
+    compile group: 'com.networknt', name: 'correlation', version:'1.5.9'
+    compile group: 'com.networknt', name: 'service', version:'1.5.9'
+    compile group: 'com.networknt', name: 'registry', version:'1.5.9'
+    compile group: 'com.networknt', name: 'balance', version:'1.5.9'
+    compile group: 'com.networknt', name: 'cluster', version:'1.5.9'
+    compile group: 'com.networknt', name: 'consul', version:'1.5.9'
+    compile group: 'com.networknt', name: 'server', version:'1.5.9'
+    compile group: 'com.networknt', name: 'cors', version:'1.5.9'
+    compile group: 'com.networknt', name: 'graphql-common', version:'1.5.9'
+    compile group: 'com.networknt', name: 'graphql-router', version:'1.5.9'
+    compile group: 'com.networknt', name: 'graphql-security', version:'1.5.9'
+    compile group: 'com.networknt', name: 'graphql-validator', version:'1.5.9'
+    compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version:'2.9.1'
+    compile group: 'com.fasterxml.jackson.core', name: 'jackson-core', version:'2.9.1'
+    compile group: 'com.fasterxml.jackson.datatype', name: 'jackson-datatype-jsr310', version:'2.9.1'
+    compile group: 'ch.qos.logback', name: 'logback-classic', version:'1.2.3'
+    compile group: 'io.undertow', name: 'undertow-core', version:'1.4.20.Final'
+    compile group: 'com.graphql-java', name: 'graphql-java', version:'6.0'
+    compile group: 'org.apache.httpcomponents', name: 'httpclient', version:'4.5.2'
+    compile group: 'io.reactivex.rxjava2', name: 'rxjava', version:'2.1.5'
+    compile group: 'org.projectlombok', name: 'lombok', version:'1.16.18'
+    testCompile group: 'junit', name: 'junit', version:'4.12'
+}
