@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: apia-deployment
+  labels:
+    app: apia
+spec:
+  replicas: 6
+  selector:
+    matchLabels:
+      app: apia
+  template:
+    metadata:
+      labels:
+        app: apia
+    spec:
+      hostNetwork: true
+      containers:
+      - name: apia
+        image: networknt/api_a
+        env:
+        - name: STATUS_HOST_IP
+          valueFrom:
+            fieldRef:
+              fieldPath: status.hostIP
