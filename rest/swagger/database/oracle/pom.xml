@@ -30,7 +30,7 @@
         <version.junit>4.12</version.junit>
         <version.undertow>1.4.20.Final</version.undertow>
         <version.swagger>1.0.32</version.swagger>
-        <version.json-schema-validator>0.1.10</version.json-schema-validator>
+        <version.json-schema-validator>0.1.15</version.json-schema-validator>
         <version.fastscanner>2.7.0</version.fastscanner>
         
         <version.hikaricp>2.6.2</version.hikaricp>
