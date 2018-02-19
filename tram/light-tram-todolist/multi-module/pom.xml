@@ -67,7 +67,7 @@
         <version.mockito>2.7.21</version.mockito>
         <version.undertow>1.4.20.Final</version.undertow>
         <version.swagger>1.0.32</version.swagger>
-        <version.json-schema-validator>0.1.7</version.json-schema-validator>
+        <version.json-schema-validator>0.1.10</version.json-schema-validator>
         <version.hikaricp>2.6.2</version.hikaricp>
         <version.fastscanner>2.0.8</version.fastscanner>
         <version.mysql>6.0.5</version.mysql>

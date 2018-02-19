@@ -147,7 +147,7 @@
   </dependencies>
   <properties>
     <version.hikaricp>2.6.2</version.hikaricp>
-    <version.json-schema-validator>0.1.7</version.json-schema-validator>
+    <version.json-schema-validator>0.1.10</version.json-schema-validator>
     <version.commons.codec>1.10</version.commons.codec>
     <version.fastscanner>2.0.8</version.fastscanner>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

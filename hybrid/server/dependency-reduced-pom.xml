@@ -137,7 +137,7 @@
     </dependency>
   </dependencies>
   <properties>
-    <version.json-schema-validator>0.1.7</version.json-schema-validator>
+    <version.json-schema-validator>0.1.10</version.json-schema-validator>
     <version.httpasyncclient>4.1.2</version.httpasyncclient>
     <version.commons.codec>1.10</version.commons.codec>
     <version.jsonpath>2.2.0</version.jsonpath>
