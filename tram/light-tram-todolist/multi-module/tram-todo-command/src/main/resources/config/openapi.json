@@ -225,7 +225,7 @@
           }
         }
       }
-    },"/server/info":{"get":{"security":[{"todo_auth":["server.info.r"]}],"responses":{"200":{"description":"successful operation"}},"parameters":[]}}},"info": {
+    },"/server/info":{"get":{"security":[{"todo_auth":["server.info.r"]}],"responses":{"200":{"description":"successful operation"}},"parameters":[]}},"/prometheus":{"get":{"responses":{"200":{"description":"successful operation"}},"parameters":[]}}},"info": {
     "version": "1.0.0",
     "title": "TODO list tram example service API",
     "license": {

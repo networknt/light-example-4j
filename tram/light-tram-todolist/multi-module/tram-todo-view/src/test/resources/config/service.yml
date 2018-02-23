@@ -82,7 +82,9 @@ singletons:
   # Exception Global exception handler that needs to be called first to wrap all middleware handlers and business handlers
   - com.networknt.exception.ExceptionHandler
   # Metrics handler to calculate response time accurately, this needs to be the second handler in the chain.
-  - com.networknt.metrics.MetricsHandler
+
+  - com.networknt.metrics.prometheus.PrometheusHandler
+
   # Traceability Put traceabilityId into response header from request header if it exists
   - com.networknt.traceability.TraceabilityHandler
   # Correlation Create correlationId if it doesn't exist in the request header and put it into the request header
@@ -99,4 +101,3 @@ singletons:
   - com.networknt.sanitizer.SanitizerHandler
   # Validator Validate request based on OpenAPI 3.0 specification (depending on OpenApiHandler and BodyHandler)
   - com.networknt.openapi.ValidatorHandler
-
