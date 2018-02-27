@@ -4,31 +4,22 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.networknt</groupId>
-    <artifactId>webserver</artifactId>
+    <artifactId>api-simple-web</artifactId>
     <packaging>jar</packaging>
     <version>0.1.0</version>
-    <name>webserver</name>
+    <name>api-simple-web</name>
 
     <properties>
         <java.version>1.8</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <version.framework>1.3.5</version.framework>
-        <version.jackson>2.8.2</version.jackson>
-        <version.slf4j>1.7.21</version.slf4j>
-        <version.jose4j>0.5.2</version.jose4j>
-        <version.antlr4>4.5.3</version.antlr4>
-        <version.commons-lang>2.6</version.commons-lang>
-        <version.commons.io>2.5</version.commons.io>
-        <version.commons.codec>1.10</version.commons.codec>
-        <version.encoder>1.2</version.encoder>
-        <version.metrics>3.1.2</version.metrics>
-        <version.logback>1.1.7</version.logback>
+        <version.light-4j>1.5.10</version.light-4j>
+        <version.jackson>2.9.1</version.jackson>
+        <version.slf4j>1.7.25</version.slf4j>
+        <version.jose4j>0.6.1</version.jose4j>
+        <version.encoder>1.2.1</version.encoder>
+        <version.logback>1.2.3</version.logback>
         <version.junit>4.12</version.junit>
-        <version.mockito>2.1.0-beta.124</version.mockito>
-        <version.undertow>1.4.0.Final</version.undertow>
-        <version.jsonpath>2.2.0</version.jsonpath>
-        <version.httpclient>4.5.2</version.httpclient>
-        <version.httpasyncclient>4.1.2</version.httpasyncclient>
+        <version.undertow>1.4.20.Final</version.undertow>
         <nexus.server>http://nexus.com:8080</nexus.server>
         <argLine>-Xmx512m -XX:MaxPermSize=256m</argLine>
     </properties>
@@ -37,24 +28,39 @@
         <dependency>
             <groupId>com.networknt</groupId>
             <artifactId>config</artifactId>
-            <version>${version.framework}</version>
+            <version>${version.light-4j}</version>
         </dependency>
         <dependency>
             <groupId>com.networknt</groupId>
             <artifactId>utility</artifactId>
-            <version>${version.framework}</version>
+            <version>${version.light-4j}</version>
         </dependency>
         <dependency>
             <groupId>com.networknt</groupId>
             <artifactId>security</artifactId>
-            <version>${version.framework}</version>
+            <version>${version.light-4j}</version>
         </dependency>
         <dependency>
             <groupId>com.networknt</groupId>
             <artifactId>server</artifactId>
-            <version>${version.framework}</version>
+            <version>${version.light-4j}</version>
         </dependency>
-  
+        <dependency>
+            <groupId>com.networknt</groupId>
+            <artifactId>exception</artifactId>
+            <version>${version.light-4j}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.networknt</groupId>
+            <artifactId>traceability</artifactId>
+            <version>${version.light-4j}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.networknt</groupId>
+            <artifactId>correlation</artifactId>
+            <version>${version.light-4j}</version>
+        </dependency>
+
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
@@ -64,11 +70,6 @@
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-core</artifactId>
             <version>${version.jackson}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.jayway.jsonpath</groupId>
-            <artifactId>json-path</artifactId>
-            <version>${version.jsonpath}</version>
         </dependency>
         <dependency>
             <groupId>ch.qos.logback</groupId>

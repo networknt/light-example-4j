@@ -1,16 +1,11 @@
 package com.networknt.webserver.handler;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 /**
- * Created by stevehu on 2016-10-27.
+ * @author Steve Hu
  */
 public class WebServerConfig {
     String base;
     int transferMinSize;
-
-    @JsonIgnore
-    String description;
 
     public WebServerConfig() {
     }
@@ -29,13 +24,5 @@ public class WebServerConfig {
 
     public void setTransferMinSize(int transferMinSize) {
         this.transferMinSize = transferMinSize;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
     }
 }

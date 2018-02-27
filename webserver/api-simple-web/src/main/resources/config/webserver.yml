@@ -1,0 +1,6 @@
+# If you want to run the application without docker and access the web page. change the base to
+# the absolute path and run mvn clean install exec:exec to start the server.
+# Web page can be accessed through https://localhost:8443/
+# base: /home/steve/networknt/light-example-4j/webserver/api-simple-web/src/main/resources/public
+base: /website
+transferMinSize: 100

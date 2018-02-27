@@ -1,0 +1,22 @@
+
+# Singleton service factory configuration/IoC injection
+singletons:
+# HandlerProvider implementation
+- com.networknt.server.HandlerProvider:
+  - com.networknt.webserver.handler.WebServerHandlerProvider
+# StartupHookProvider implementations, there are one to many and they are called in the same sequence defined.
+# - com.networknt.server.StartupHookProvider:
+  # - com.networknt.server.Test1StartupHook
+  # - com.networknt.server.Test2StartupHook
+# ShutdownHookProvider implementations, there are one to many and they are called in the same sequence defined.
+# - com.networknt.server.ShutdownHookProvider:
+  # - com.networknt.server.Test1ShutdownHook
+# MiddlewareHandler implementations, the calling sequence is as defined in the request/response chain.
+- com.networknt.handler.MiddlewareHandler:
+  # Exception Global exception handler that needs to be called first to wrap all middleware handlers and business handlers
+  - com.networknt.exception.ExceptionHandler
+  # Traceability Put traceabilityId into response header from request header if it exists
+  - com.networknt.traceability.TraceabilityHandler
+  # Correlation Create correlationId if it doesn't exist in the request header and put it into the request header
+  - com.networknt.correlation.CorrelationHandler
+

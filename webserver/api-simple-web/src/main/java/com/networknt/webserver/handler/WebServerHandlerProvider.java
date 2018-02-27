@@ -6,7 +6,6 @@ import io.undertow.Handlers;
 import io.undertow.server.HttpHandler;
 import io.undertow.server.handlers.PathHandler;
 import io.undertow.server.handlers.builder.PredicatedHandlersParser;
-import io.undertow.server.handlers.form.EagerFormParsingHandler;
 import io.undertow.server.handlers.resource.FileResourceManager;
 
 import java.io.File;
@@ -31,4 +30,5 @@ public class WebServerHandlerProvider implements HandlerProvider {
                         .addPrefixPath("/api/text", new TextHandler())
         );
     }
+
 }
