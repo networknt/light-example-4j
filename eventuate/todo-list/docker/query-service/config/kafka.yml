@@ -12,4 +12,4 @@ valueDeSerializer: org.apache.kafka.common.serialization.StringDeserializer
 sessionTimeout: 30000
 autoOffsetreset: earliest
 enableaAutocommit: false
-bootstrapServers: kafka:9092
+bootstrapServers: 198.55.49.187:9092
