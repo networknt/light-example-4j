@@ -13,9 +13,6 @@
     <packaging>jar</packaging>
     <name>hybrid-query</name>
     <version>0.1.0</version>
-    <prerequisites>
-        <maven>2.2.0</maven>
-    </prerequisites>
 
     <properties>
         <java.version>1.8</java.version>
