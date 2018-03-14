@@ -142,10 +142,6 @@
         </dependency>
         <dependency>
             <groupId>com.networknt</groupId>
-            <artifactId>eventuate-event</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.networknt</groupId>
             <artifactId>eventuate-client-jdbc</artifactId>
         </dependency>
         <dependency>

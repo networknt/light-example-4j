@@ -135,7 +135,7 @@
             </dependency>
             <dependency>
                 <groupId>com.networknt</groupId>
-                <artifactId>eventuate-account-command</artifactId>
+                <artifactId>eventuate-customer-command</artifactId>
                 <version>${project.version}</version>
             </dependency>
 
