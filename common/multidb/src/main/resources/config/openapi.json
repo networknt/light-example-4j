@@ -1,0 +1,90 @@
+{"components":{"securitySchemes":{"db_auth":{"type": "oauth2","flows":{"implicit":{"authorizationUrl": "http://localhost:8080/oauth2/code","scopes":{"derby.r": "read access for derby","h2.w": "write access for h2","derby.w": "write access for derby","h2.r": "read access for h2","server.info.r":"read server info"}}}}}},"servers": [
+    {
+      "url": "http://multidb.networknt.com"
+    }
+  ],"openapi": "3.0.0","paths":{"/h2": {
+      "get": {
+        "description": "Get data from h2 database",
+        "operationId": "getH2",
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "title": "ArrayOfStrings",
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "examples": {
+                  "response": {
+                    "value": [
+                      "Message 1 from H2",
+                      "Message 2 from H2"
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "db_auth": [
+              "h2.r",
+              "h2.w"
+            ]
+          }
+        ]
+      }
+    },"/health":{"get":{"responses":{"200":{"description":"successful operation"}},"parameters":[]}},"/derby": {
+      "get": {
+        "description": "Get data from derby database",
+        "operationId": "getDerby",
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "title": "ArrayOfStrings",
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "examples": {
+                  "response": {
+                    "value": [
+                      "Message 1 from Derby",
+                      "Message 2 from Derby"
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "db_auth": [
+              "derby.r",
+              "derby.w"
+            ]
+          }
+        ]
+      }
+    },"/server/info":{"get":{"security":[{"db_auth":["server.info.r"]}],"responses":{"200":{"description":"successful operation"}},"parameters":[]}}},"info": {
+    "version": "1.0.0",
+    "title": "Mutliple databases demo",
+    "description": "This is a demo API that has two databases to choose from endpoints",
+    "contact": {
+      "email": "stevehu@gmail.com"
+    },
+    "license": {
+      "name": "Apache 2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+    }
+  }}
