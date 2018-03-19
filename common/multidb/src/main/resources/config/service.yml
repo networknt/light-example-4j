@@ -86,8 +86,8 @@ singletons:
 
 - javax.sql.DataSource:
   - com.zaxxer.hikari.HikariDataSource:
-      DriverClassName: org.apache.derby.jdbc.EmbeddedDriver
-      jdbcUrl: jdbc:derby:db1
+      DriverClassName: org.h2.jdbcx.JdbcDataSource
+      jdbcUrl: jdbc:h2:~/db1
       username: sa
       password: sa
       maximumPoolSize: 10

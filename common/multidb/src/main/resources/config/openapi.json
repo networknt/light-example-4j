@@ -1,11 +1,11 @@
-{"components":{"securitySchemes":{"db_auth":{"type": "oauth2","flows":{"implicit":{"authorizationUrl": "http://localhost:8080/oauth2/code","scopes":{"derby.r": "read access for derby","h2.w": "write access for h2","derby.w": "write access for derby","h2.r": "read access for h2","server.info.r":"read server info"}}}}}},"servers": [
+{"components":{"securitySchemes":{"db_auth":{"type": "oauth2","flows":{"implicit":{"authorizationUrl": "http://localhost:8080/oauth2/code","scopes":{"db1.r": "read access for db1","db1.w": "write access for db1","db2.w": "write access for db2","db2.r": "read access for db2","server.info.r":"read server info"}}}}}},"servers": [
     {
       "url": "http://multidb.networknt.com"
     }
-  ],"openapi": "3.0.0","paths":{"/h2": {
+  ],"openapi": "3.0.0","paths":{"/db1": {
       "get": {
-        "description": "Get data from h2 database",
-        "operationId": "getH2",
+        "description": "Get data from db1 database",
+        "operationId": "getDb2",
         "responses": {
           "200": {
             "description": "Successful response",
@@ -21,8 +21,8 @@
                 "examples": {
                   "response": {
                     "value": [
-                      "Message 1 from H2",
-                      "Message 2 from H2"
+                      "Message 1 from db1",
+                      "Message 2 from db1"
                     ]
                   }
                 }
@@ -33,16 +33,16 @@
         "security": [
           {
             "db_auth": [
-              "h2.r",
-              "h2.w"
+              "db1.r",
+              "db1.w"
             ]
           }
         ]
       }
-    },"/health":{"get":{"responses":{"200":{"description":"successful operation"}},"parameters":[]}},"/derby": {
+    },"/health":{"get":{"responses":{"200":{"description":"successful operation"}},"parameters":[]}},"/db2": {
       "get": {
-        "description": "Get data from derby database",
-        "operationId": "getDerby",
+        "description": "Get data from db2 database",
+        "operationId": "getDb2",
         "responses": {
           "200": {
             "description": "Successful response",
@@ -58,8 +58,8 @@
                 "examples": {
                   "response": {
                     "value": [
-                      "Message 1 from Derby",
-                      "Message 2 from Derby"
+                      "Message 1 from db2",
+                      "Message 2 from db2"
                     ]
                   }
                 }
@@ -70,15 +70,15 @@
         "security": [
           {
             "db_auth": [
-              "derby.r",
-              "derby.w"
+              "db2.r",
+              "db2.w"
             ]
           }
         ]
       }
     },"/server/info":{"get":{"security":[{"db_auth":["server.info.r"]}],"responses":{"200":{"description":"successful operation"}},"parameters":[]}}},"info": {
     "version": "1.0.0",
-    "title": "Mutliple databases demo",
+    "title": "Mutliple database demo",
     "description": "This is a demo API that has two databases to choose from endpoints",
     "contact": {
       "email": "stevehu@gmail.com"

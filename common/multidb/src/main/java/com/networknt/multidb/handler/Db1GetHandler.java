@@ -7,12 +7,12 @@ import io.undertow.util.HttpString;
 import java.util.HashMap;
 import java.util.Map;
 
-public class DerbyGetHandler implements HttpHandler {
+public class Db1GetHandler implements HttpHandler {
     @Override
     public void handleRequest(HttpServerExchange exchange) throws Exception {
         
             exchange.getResponseHeaders().add(new HttpString("Content-Type"), "application/json");
-             exchange.getResponseSender().send("[\"Message 1 from Derby\",\"Message 2 from Derby\"]");
+             exchange.getResponseSender().send("[\"Message 1 from db1\",\"Message 2 from db1\"]");
         
     }
 }

@@ -17,13 +17,13 @@ public class PathHandlerProvider implements HandlerProvider {
     public HttpHandler getHandler() {
         return Handlers.routing()
         
+            .add(Methods.GET, "/db1", new Db1GetHandler())
+        
             .add(Methods.GET, "/health", new HealthGetHandler())
         
+            .add(Methods.GET, "/db2", new Db2GetHandler())
+        
             .add(Methods.GET, "/server/info", new ServerInfoGetHandler())
-        
-            .add(Methods.GET, "/h2", new H2GetHandler())
-        
-            .add(Methods.GET, "/derby", new DerbyGetHandler())
         
         ;
     }

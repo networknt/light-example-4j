@@ -24,11 +24,11 @@ import java.util.concurrent.atomic.AtomicReference;
 import java.io.IOException;
 
 
-public class DerbyGetHandlerTest {
+public class Db2GetHandlerTest {
     @ClassRule
     public static TestServer server = TestServer.getInstance();
 
-    static final Logger logger = LoggerFactory.getLogger(DerbyGetHandlerTest.class);
+    static final Logger logger = LoggerFactory.getLogger(Db2GetHandlerTest.class);
     static final boolean enableHttp2 = server.getServerConfig().isEnableHttp2();
     static final boolean enableHttps = server.getServerConfig().isEnableHttps();
     static final int httpPort = server.getServerConfig().getHttpPort();
@@ -36,7 +36,7 @@ public class DerbyGetHandlerTest {
     static final String url = enableHttp2 || enableHttps ? "https://localhost:" + httpsPort : "http://localhost:" + httpPort;
 
     @Test
-    public void testDerbyGetHandlerTest() throws ClientException, ApiException {
+    public void testDb2GetHandlerTest() throws ClientException, ApiException {
         /*
         final Http2Client client = Http2Client.getInstance();
         final CountDownLatch latch = new CountDownLatch(1);
@@ -48,7 +48,7 @@ public class DerbyGetHandlerTest {
         }
         final AtomicReference<ClientResponse> reference = new AtomicReference<>();
         try {
-            ClientRequest request = new ClientRequest().setPath("/derby").setMethod(Methods.GET);
+            ClientRequest request = new ClientRequest().setPath("/db2").setMethod(Methods.GET);
             
             connection.sendRequest(request, client.createClientCallback(reference, latch));
             
