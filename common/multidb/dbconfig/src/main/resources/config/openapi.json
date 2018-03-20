@@ -1,0 +1,90 @@
+{"components":{"securitySchemes":{"db_auth":{"type": "oauth2","flows":{"implicit":{"authorizationUrl": "http://localhost:8080/oauth2/code","scopes":{"db1.r": "read access for db1","db1.w": "write access for db1","db2.w": "write access for db2","db2.r": "read access for db2","server.info.r":"read server info"}}}}}},"servers": [
+    {
+      "url": "http://multidb.networknt.com"
+    }
+  ],"openapi": "3.0.0","paths":{"/db1": {
+      "get": {
+        "description": "Get data from db1 database",
+        "operationId": "getDb2",
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "title": "ArrayOfStrings",
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "examples": {
+                  "response": {
+                    "value": [
+                      "Message 1 from db1",
+                      "Message 2 from db1"
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "db_auth": [
+              "db1.r",
+              "db1.w"
+            ]
+          }
+        ]
+      }
+    },"/health":{"get":{"responses":{"200":{"description":"successful operation"}},"parameters":[]}},"/db2": {
+      "get": {
+        "description": "Get data from db2 database",
+        "operationId": "getDb2",
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "title": "ArrayOfStrings",
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "examples": {
+                  "response": {
+                    "value": [
+                      "Message 1 from db2",
+                      "Message 2 from db2"
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "db_auth": [
+              "db2.r",
+              "db2.w"
+            ]
+          }
+        ]
+      }
+    },"/server/info":{"get":{"security":[{"db_auth":["server.info.r"]}],"responses":{"200":{"description":"successful operation"}},"parameters":[]}}},"info": {
+    "version": "1.0.0",
+    "title": "Mutliple database demo",
+    "description": "This is a demo API that has two databases to choose from endpoints",
+    "contact": {
+      "email": "stevehu@gmail.com"
+    },
+    "license": {
+      "name": "Apache 2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+    }
+  }}

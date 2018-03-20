@@ -1,0 +1,14 @@
+db1:
+  DriverClassName: org.h2.jdbcx.JdbcDataSource
+  jdbcUrl: jdbc:h2:mem:XE;MODE=Oracle;INIT=runscript from 'classpath:scripts/db1.sql';
+  username: sa
+  password: sa
+  parameters:
+    maximumPoolSize: '1'
+db2:
+  DriverClassName: org.h2.jdbcx.JdbcDataSource
+  jdbcUrl: jdbc:h2:mem:XE;MODE=Oracle;INIT=runscript from 'classpath:scripts/db2.sql';
+  username: sa
+  password: sa
+  parameters:
+    maximumPoolSize: '1'
