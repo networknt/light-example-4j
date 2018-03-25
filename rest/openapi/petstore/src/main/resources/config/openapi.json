@@ -210,6 +210,15 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/Pet"
+                },
+                "examples": {
+                  "response": {
+                    "value": {
+                      "id": 1,
+                      "name": "Jessica Right",
+                      "tag": "pet"
+                    }
+                  }
                 }
               }
             }
