@@ -1,1 +1,1 @@
-handlerPackage: com.networknt
+handlerPackage: ["com.networknt"]
