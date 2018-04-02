@@ -215,7 +215,9 @@
           "multipart/form-data"
         ]}},"/store/inventory":{"get":{"summary": "Returns pet inventories by status","security": [
           {
-            "api_key": []
+            "petstore_auth": [
+              "read:pets"
+            ]
           }
         ],"produces": [
           "application/json"
@@ -428,7 +430,9 @@
           "pet"
         ]},"get":{"summary": "Find pet by ID","security": [
           {
-            "api_key": []
+            "petstore_auth": [
+              "read:pets"
+            ]
           }
         ],"produces": [
           "application/xml",
@@ -440,20 +444,22 @@
           },"200":{"schema": {
               "$ref": "#/definitions/Pet"
             },"examples":{"application/json": {
-                "photoUrls" : [ "aeiou" ],
-                "name" : "doggie",
-                "id" : 123456789,
-                "category" : {
-                  "name" : "aeiou",
-                  "id" : 123456789
+                "photoUrls": [
+                  "aeiou"
+                ],
+                "name": "doggie",
+                "id": 123456789,
+                "category": {
+                  "name": "aeiou",
+                  "id": 123456789
                 },
-                "tags" : [
+                "tags": [
                   {
-                    "name" : "aeiou",
-                    "id" : 123456789
+                    "name": "aeiou",
+                    "id": 123456789
                   }
                 ],
-                "status" : "aeiou"
+                "status": "aeiou"
               }},"description": "successful operation"}},"parameters": [
           {
             "name": "petId",
@@ -511,11 +517,7 @@
   ],"externalDocs": {
     "description": "Find out more about Swagger",
     "url": "http://swagger.io"
-  },"securityDefinitions":{"petstore_auth":{"scopes":{"write:pets": "modify pets in your account","read:pets": "read your pets","server.info.r":"read server info"},"type": "oauth2","authorizationUrl": "http://petstore.swagger.io/oauth/dialog","flow": "implicit"},"api_key": {
-      "type": "apiKey",
-      "name": "api_key",
-      "in": "header"
-    }},"definitions":{"Order":{"type": "object","properties":{"id":{"type": "integer","format": "int64"},"petId":{"type": "integer","format": "int64"},"quantity":{"type": "integer","format": "int32"},"shipDate":{"type": "string","format": "date-time"},"complete":{"type": "boolean","default":false},"status":{"type": "string","description": "Order Status","enum":["placed",
+  },"securityDefinitions":{"petstore_auth":{"scopes":{"write:pets": "modify pets in your account","read:pets": "read your pets","server.info.r":"read server info"},"type": "oauth2","authorizationUrl": "http://petstore.swagger.io/oauth/dialog","flow": "implicit"}},"definitions":{"Order":{"type": "object","properties":{"id":{"type": "integer","format": "int64"},"petId":{"type": "integer","format": "int64"},"quantity":{"type": "integer","format": "int32"},"shipDate":{"type": "string","format": "date-time"},"complete":{"type": "boolean","default":false},"status":{"type": "string","description": "Order Status","enum":["placed",
             "approved",
             "delivered"]}},"xml": {
         "name": "Order"
