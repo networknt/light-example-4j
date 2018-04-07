@@ -16,7 +16,7 @@
         <version.openapi-parser>1.5.12</version.openapi-parser>
         <version.jackson>2.9.5</version.jackson>
         <version.slf4j>1.7.25</version.slf4j>
-        <version.jose4j>0.6.1</version.jose4j>
+        <version.jose4j>0.6.3</version.jose4j>
         <version.logback>1.2.3</version.logback>
         <version.junit>4.12</version.junit>
         <version.undertow>1.4.20.Final</version.undertow>
