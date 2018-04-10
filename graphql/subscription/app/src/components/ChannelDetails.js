@@ -21,7 +21,7 @@ class ChannelDetails extends Component {
                     return prev;
                 }
                 console.log('subscriptionData: ', subscriptionData);
-                const newMessage = subscriptionData.data.message;
+                const newMessage = subscriptionData.data.messageAdded.message;
                 // Don't double add the message.
                 if (!prev.channel.messages.find((msg) => msg.id === newMessage.id)) {
                     return Object.assign({}, prev, {
