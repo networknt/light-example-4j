@@ -1,5 +1,7 @@
-apply plugin: 'java'
-apply plugin: 'maven'
+plugins {
+    id 'application'
+    id 'maven'
+}
 
 group = 'com.networknt'
 version = '1.0.0'
@@ -12,7 +14,6 @@ tasks.withType(JavaCompile) {
 	options.encoding = 'UTF-8'
 }
 
-apply plugin: 'application'
 mainClassName = 'com.networknt.server.Server'
 
 configurations.all {
@@ -47,16 +48,16 @@ dependencies {
     compile group: 'com.networknt', name: 'consul', version:'1.5.9'
     compile group: 'com.networknt', name: 'server', version:'1.5.9'
     compile group: 'com.networknt', name: 'cors', version:'1.5.9'
-    compile group: 'com.networknt', name: 'graphql-common', version:'1.5.9'
-    compile group: 'com.networknt', name: 'graphql-router', version:'1.5.9'
-    compile group: 'com.networknt', name: 'graphql-security', version:'1.5.9'
-    compile group: 'com.networknt', name: 'graphql-validator', version:'1.5.9'
+    compile group: 'com.networknt', name: 'graphql-common', version:'1.5.12'
+    compile group: 'com.networknt', name: 'graphql-router', version:'1.5.12'
+    compile group: 'com.networknt', name: 'graphql-security', version:'1.5.12'
+    compile group: 'com.networknt', name: 'graphql-validator', version:'1.5.12'
     compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version:'2.9.1'
     compile group: 'com.fasterxml.jackson.core', name: 'jackson-core', version:'2.9.1'
     compile group: 'com.fasterxml.jackson.datatype', name: 'jackson-datatype-jsr310', version:'2.9.1'
     compile group: 'ch.qos.logback', name: 'logback-classic', version:'1.2.3'
     compile group: 'io.undertow', name: 'undertow-core', version:'1.4.20.Final'
-    compile group: 'com.graphql-java', name: 'graphql-java', version:'6.0'
+    compile group: 'com.graphql-java', name: 'graphql-java', version:'8.0'
     compile group: 'org.apache.httpcomponents', name: 'httpclient', version:'4.5.2'
     compile group: 'io.reactivex.rxjava2', name: 'rxjava', version:'2.1.5'
     compile group: 'org.projectlombok', name: 'lombok', version:'1.16.18'

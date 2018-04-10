@@ -33,3 +33,5 @@ singletons:
 - com.networknt.graphql.router.SchemaProvider:
   - com.networknt.subscription.schema.SubscriptionSchemaIDL
 
+- com.networknt.graphql.common.InstrumentationProvider:
+  - com.networknt.subscription.schema.SubscriptionInstrumentation
