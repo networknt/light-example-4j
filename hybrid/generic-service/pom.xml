@@ -35,7 +35,7 @@
         <version.jsonpath>2.2.0</version.jsonpath>
         <version.httpclient>4.5.2</version.httpclient>
         <version.httpasyncclient>4.1.2</version.httpasyncclient>
-        <version.fastscanner>2.0.8</version.fastscanner>
+        <version.fastscanner>2.18.1</version.fastscanner>
     </properties>
 
     <dependencies>

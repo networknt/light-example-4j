@@ -28,7 +28,7 @@
         <version.junit>4.12</version.junit>
         <version.undertow>1.4.23.Final</version.undertow>
         <version.json-schema-validator>0.1.18</version.json-schema-validator>
-        <version.fastscanner>2.7.0</version.fastscanner>
+        <version.fastscanner>2.18.1</version.fastscanner>
         
         
         
