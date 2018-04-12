@@ -27,7 +27,7 @@
         <version.undertow>1.4.23.Final</version.undertow>
         <version.graphql>8.0</version.graphql>
         <version.rxjava>2.1.5</version.rxjava>
-        <version.hikaricp>2.6.2</version.hikaricp>
+        <version.hikaricp>3.0.0</version.hikaricp>
         
         
         

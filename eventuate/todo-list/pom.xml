@@ -86,7 +86,7 @@
         <version.hdrhistogram>2.1.8</version.hdrhistogram>
         <version.json-schema-validator>0.1.18</version.json-schema-validator>
         <version.curator>4.0.0</version.curator>
-        <version.hikaricp>2.7.1</version.hikaricp>
+        <version.hikaricp>3.0.0</version.hikaricp>
         <version.fastscanner>2.18.1</version.fastscanner>
         <version.h2>1.4.196</version.h2>
         <version.mysql>6.0.4</version.mysql>
