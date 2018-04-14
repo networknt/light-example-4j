@@ -5,7 +5,7 @@ singletons:
       jdbcUrl: jdbc:mysql://mysql:3306/todo_db?useSSL=false
       username: mysqluser
       password: mysqlpw
-      maximumPoolSize: 15
+      maximumPoolSize: 2
       useServerPrepStmts: true
       cachePrepStmts: true
       cacheCallableStmts: true
