@@ -1,5 +1,4 @@
 ---
-description: Kafka producer and consumer properties setting
 acks: all
 retries: 0
 batchSize: 16384

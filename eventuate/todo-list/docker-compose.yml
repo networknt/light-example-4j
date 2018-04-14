@@ -4,7 +4,7 @@ version: "2"
 #
 services:
    command-service:
-      build: ./rest-command/
+      image: networknt/com.networknt.rest-command-1.0.0
       volumes:
         - ./docker/command-service/config:/config
       ports:
@@ -13,7 +13,7 @@ services:
           - localnet
 
    query-service:
-      build: ./rest-query/
+      image: networknt/com.networknt.rest-query-1.0.0
       volumes:
         - ./docker/query-service/config:/config
       ports:
