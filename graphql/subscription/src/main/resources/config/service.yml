@@ -35,3 +35,6 @@ singletons:
 
 - com.networknt.graphql.common.InstrumentationProvider:
   - com.networknt.subscription.schema.SubscriptionInstrumentation
+
+- com.networknt.resources.PathResourceProvider:
+  - com.networknt.subscription.schema.SubscriptionResourceProvider

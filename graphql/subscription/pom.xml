@@ -145,6 +145,11 @@
             <artifactId>cors</artifactId>
             <version>${version.light-4j}</version>
         </dependency>
+        <dependency>
+            <groupId>com.networknt</groupId>
+            <artifactId>resources</artifactId>
+            <version>${version.light-4j}</version>
+        </dependency>
 
         <dependency>
             <groupId>com.networknt</groupId>
