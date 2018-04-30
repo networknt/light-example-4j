@@ -4,7 +4,7 @@
 set -ex
 
 VERSION=$1
-IMAGE_NAME="networknt/com.networknt.petstore-1.0.1"
+IMAGE_NAME="networknt/com.networknt.petstore-2.0.0"
 
 showHelp() {
     echo " "

@@ -33,7 +33,7 @@ enableTwoWayTls: false
 truststoreName: tls/server.truststore
 
 # Unique service identifier. Used in service registration and discovery etc.
-serviceId: com.networknt.petstore-1.0.1
+serviceId: com.networknt.petstore-3.0.1
 
 # Flag to enable self service registration. This should be turned on on official test and production. And
 # dyanmicPort should be enabled if any orchestration tool is used like Kubernetes.
