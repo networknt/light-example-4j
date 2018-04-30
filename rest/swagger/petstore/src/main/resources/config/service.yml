@@ -8,6 +8,7 @@ singletons:
 # - com.networknt.server.StartupHookProvider:
   # - com.networknt.server.Test1StartupHook
   # - com.networknt.server.Test2StartupHook
+
 # ShutdownHookProvider implementations, there are one to many and they are called in the same sequence defined.
 # - com.networknt.server.ShutdownHookProvider:
   # - com.networknt.server.Test1ShutdownHook
@@ -33,6 +34,8 @@ singletons:
   - com.networknt.sanitizer.SanitizerHandler
   # Validator Validate request based on swagger specification (depending on Swagger and Body)
   - com.networknt.validator.ValidatorHandler
+
+
 
 
 
