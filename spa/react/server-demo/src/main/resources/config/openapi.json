@@ -1,10 +1,65 @@
-{"components":{"securitySchemes":{"petstore_auth":{"type": "oauth2","description": "This API uses OAuth 2 with the client credential grant flow.","flows":{"clientCredentials":{"tokenUrl": "https://localhost:6882/token","scopes":{"write:pets": "modify pets in your account","read:pets": "read your pets","server.info.r":"read server info"}}}}},"schemas":{"Error":{"required":["code",
-          "message"],"properties":{"message":{"type": "string"},"code":{"type": "integer","format": "int32"}}},"Pet":{"required":["id",
-          "name"],"properties":{"name":{"type": "string"},"id":{"type": "integer","format": "int64"},"tag":{"type": "string"}}}}},"servers": [
+{
+  "components": {
+    "securitySchemes": {
+      "petstore_auth": {
+        "type": "oauth2",
+        "description": "This API uses OAuth 2 with the client credential grant flow.",
+        "flows": {
+          "clientCredentials": {
+            "tokenUrl": "https://localhost:6882/token",
+            "scopes": {
+              "write:pets": "modify pets in your account",
+              "read:pets": "read your pets",
+              "server.info.r": "read server info"
+            }
+          }
+        }
+      }
+    },
+    "schemas": {
+      "Error": {
+        "required": [
+          "code",
+          "message"
+        ],
+        "properties": {
+          "message": {
+            "type": "string"
+          },
+          "code": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "Pet": {
+        "required": [
+          "id",
+          "name"
+        ],
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "tag": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  },
+  "servers": [
     {
       "url": "http://petstore.swagger.io/v1"
     }
-  ],"openapi": "3.0.0","paths":{"/pets": {
+  ],
+  "openapi": "3.0.0",
+  "paths": {
+    "/pets": {
       "get": {
         "summary": "List all pets",
         "operationId": "listPets",
@@ -117,7 +172,28 @@
           }
         }
       }
-    },"/health":{"get":{"responses":{"200":{"description":"successful operation"}},"parameters":[]}},"/pets/{petId}": {
+    },
+    "/health": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "successful operation"
+          }
+        },
+        "parameters": []
+      }
+    },
+    "/authorization": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "successful operation"
+          }
+        },
+        "parameters": []
+      }
+    },
+    "/pets/{petId}": {
       "get": {
         "summary": "Info for a specific pet",
         "operationId": "showPetById",
@@ -235,10 +311,30 @@
           }
         }
       }
-    },"/server/info":{"get":{"security":[{"petstore_auth":["server.info.r"]}],"responses":{"200":{"description":"successful operation"}},"parameters":[]}}},"info": {
+    },
+    "/server/info": {
+      "get": {
+        "security": [
+          {
+            "petstore_auth": [
+              "server.info.r"
+            ]
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation"
+          }
+        },
+        "parameters": []
+      }
+    }
+  },
+  "info": {
     "version": "1.0.0",
     "title": "Swagger Petstore",
     "license": {
       "name": "MIT"
     }
-  }}
+  }
+}
