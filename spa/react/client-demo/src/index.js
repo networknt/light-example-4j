@@ -12,7 +12,7 @@ const Root = () => {
         <div>
           <Route path="/" component={Home}/>
           <Route path="/special" component={Pets}/>
-          <Route path="/login" component={() => window.location = 'https://localhost:6881/oauth2/code?response_type=code&client_id=f7d42348-c647-4efb-a52d-4c5787421e72&redirect_uri=http://localhost:8080/authorization'}/>
+          <Route path="/login" component={() => window.location = 'https://localhost:6881/oauth2/code?response_type=code&client_id=f7d42348-c647-4efb-a52d-4c5787421e72&redirect_uri=http://localhost:3000/authorization'}/>
         </div>
       </BrowserRouter>
     </div>
