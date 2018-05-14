@@ -1,7 +1,7 @@
 
 package com.networknt.petstore;
 
-import com.networknt.auth.AuthHandler;
+import com.networknt.auth.StatelessAuthHandler;
 import com.networknt.config.Config;
 import com.networknt.server.HandlerProvider;
 import io.undertow.Handlers;
@@ -30,7 +30,7 @@ public class PathHandlerProvider implements HandlerProvider {
         
             .add(Methods.DELETE, "/v1/pets/{petId}", new PetsPetIdDeleteHandler())
 
-            .add(Methods.GET, "/v1/authorization", new AuthHandler())
+            .add(Methods.GET, "/v1/authorization", new StatelessAuthHandler())
         ;
     }
 }
