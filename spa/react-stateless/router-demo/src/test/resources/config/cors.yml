@@ -1,0 +1,6 @@
+enabled: true
+allowedOrigins:
+- http://localhost:3000
+allowedMethods:
+- GET
+- POST
