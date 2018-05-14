@@ -73,6 +73,8 @@ singletons:
   - com.networknt.correlation.CorrelationHandler
   # Cors handler to handler post/put pre-flight
   - com.networknt.cors.CorsHttpHandler
+  # Stateless Authorization Handler to handle authorization code redirect from OAuth 2.0 provider
+  - com.networknt.auth.StatelessAuthHandler
   # Stateless Csrf handler to prevent CSRF attack
   - com.networknt.csrf.StatelessCsrfHandler
   # Parsing OpenAPI 3.0 specification based on request uri and method.

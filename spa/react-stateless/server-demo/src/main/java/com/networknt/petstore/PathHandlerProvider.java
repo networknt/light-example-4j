@@ -27,8 +27,6 @@ public class PathHandlerProvider implements HandlerProvider {
             .add(Methods.GET, "/v1/pets/{petId}", new PetsPetIdGetHandler())
         
             .add(Methods.DELETE, "/v1/pets/{petId}", new PetsPetIdDeleteHandler())
-
-            .add(Methods.GET, "/v1/authorization", new StatelessAuthHandler())
         ;
     }
 }
