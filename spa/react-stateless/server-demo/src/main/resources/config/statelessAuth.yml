@@ -20,4 +20,4 @@ cookiePath: /
 # Cookie maxAge
 cookieMaxAge: 600
 # Cookie secured
-cookieSecure: true
+cookieSecure: false

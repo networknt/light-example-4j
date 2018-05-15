@@ -75,6 +75,8 @@ singletons:
   - com.networknt.cors.CorsHttpHandler
   # Stateless Authorization Handler to handle authorization code redirect from OAuth 2.0 provider
   - com.networknt.auth.StatelessAuthHandler
+  # Stateless Token Handler to handle cookie tokens and renewal
+  - com.networknt.token.StatelessTokenHandler
   # Stateless Csrf handler to prevent CSRF attack
   - com.networknt.csrf.StatelessCsrfHandler
   # Parsing OpenAPI 3.0 specification based on request uri and method.

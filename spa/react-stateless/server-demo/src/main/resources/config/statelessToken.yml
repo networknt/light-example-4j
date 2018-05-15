@@ -1,0 +1,6 @@
+# This handler is enabled by default once it is injected into the request/response chain. It checks
+# the csrf token from the header against the token in jwt token to reject all request not send from
+# the original single page application running on browsers.
+---
+# indicate the that the check is enabled. Default value is true.
+enabled: true

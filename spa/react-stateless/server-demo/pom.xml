@@ -12,7 +12,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <version.light-4j>1.5.14</version.light-4j>
         <version.light-rest-4j>1.5.14</version.light-rest-4j>
-        
+        <version.light-spa-4j>1.5.14</version.light-spa-4j>
         <version.openapi-parser>1.5.14</version.openapi-parser>
         <version.jackson>2.9.5</version.jackson>
         <version.slf4j>1.7.25</version.slf4j>
@@ -143,18 +143,23 @@
         </dependency>
         <dependency>
             <groupId>com.networknt</groupId>
-            <artifactId>auth</artifactId>
-            <version>${version.light-4j}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.networknt</groupId>
-            <artifactId>csrf</artifactId>
-            <version>${version.light-4j}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.networknt</groupId>
             <artifactId>server</artifactId>
             <version>${version.light-4j}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.networknt</groupId>
+            <artifactId>stateless-auth</artifactId>
+            <version>${version.light-spa-4j}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.networknt</groupId>
+            <artifactId>stateless-token</artifactId>
+            <version>${version.light-spa-4j}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.networknt</groupId>
+            <artifactId>stateless-csrf</artifactId>
+            <version>${version.light-spa-4j}</version>
         </dependency>
         <dependency>
             <groupId>com.networknt</groupId>
