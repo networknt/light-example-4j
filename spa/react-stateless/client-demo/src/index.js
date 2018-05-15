@@ -4,9 +4,11 @@ import Pets from './components/Pets';
 import Home from './components/Home';
 import { BrowserRouter, Route } from 'react-router-dom';
 import { unregister } from './registerServiceWorker';
+import { CookiesProvider } from 'react-cookie';
 
 const Root = () => {
   return (
+    <CookiesProvider>
     <div className="container">
       <BrowserRouter>
         <div>
@@ -16,6 +18,7 @@ const Root = () => {
         </div>
       </BrowserRouter>
     </div>
+    </CookiesProvider>
   )
 }
 

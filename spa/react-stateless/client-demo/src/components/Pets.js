@@ -2,22 +2,32 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom'
 import Nav from './Nav';
 import { getPetsData } from '../utils/api';
+import { instanceOf } from 'prop-types';
+import { withCookies, Cookies } from 'react-cookie';
 
 class Pets extends Component {
+  
+  static propTypes = {
+    cookies: instanceOf(Cookies).isRequired
+  };
 
   constructor() {
     super();
     this.state = { pets: [] };
   }
 
-  getPets() {
-    getPetsData().then((pets) => {
+  getPets(csrf) {
+    getPetsData(csrf).then((pets) => {
       this.setState({ pets });
     });
   }
+  componentWillMount() {
+  }
 
   componentDidMount() {
-    this.getPets();
+    const { cookies } = this.props;
+    console.log("csrf = " + cookies.get('csrf'));
+    this.getPets(cookies.get('csrf'));
   }
 
   render() {
@@ -47,4 +57,4 @@ class Pets extends Component {
   }
 }
 
-export default Pets;
+export default withCookies(Pets);
