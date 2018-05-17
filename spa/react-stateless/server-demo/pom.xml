@@ -153,16 +153,6 @@
         </dependency>
         <dependency>
             <groupId>com.networknt</groupId>
-            <artifactId>stateless-token</artifactId>
-            <version>${version.light-spa-4j}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.networknt</groupId>
-            <artifactId>stateless-csrf</artifactId>
-            <version>${version.light-spa-4j}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.networknt</groupId>
             <artifactId>json-schema-validator</artifactId>
             <version>${version.json-schema-validator}</version>
         </dependency>
