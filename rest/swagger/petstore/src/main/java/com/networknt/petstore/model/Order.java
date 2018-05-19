@@ -6,9 +6,9 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class Order {
 
     
-    private Integer id;
+    private java.lang.Long id;
     
-    private Integer petId;
+    private java.lang.Long petId;
     
     private Integer quantity;
     
@@ -59,22 +59,22 @@ public class Order {
     
     
     @JsonProperty("id")
-    public Integer getId() {
+    public java.lang.Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(java.lang.Long id) {
         this.id = id;
     }
     
     
     
     @JsonProperty("petId")
-    public Integer getPetId() {
+    public java.lang.Long getPetId() {
         return petId;
     }
 
-    public void setPetId(Integer petId) {
+    public void setPetId(java.lang.Long petId) {
         this.petId = petId;
     }
     

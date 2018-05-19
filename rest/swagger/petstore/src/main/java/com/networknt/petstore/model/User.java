@@ -16,7 +16,7 @@ public class User {
     
     private String phone;
     
-    private Integer id;
+    private java.lang.Long id;
     
     private String email;
     
@@ -84,11 +84,11 @@ public class User {
     
     
     @JsonProperty("id")
-    public Integer getId() {
+    public java.lang.Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(java.lang.Long id) {
         this.id = id;
     }
     

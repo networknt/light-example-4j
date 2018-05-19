@@ -12,7 +12,6 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <version.light-4j>1.5.14</version.light-4j>
         <version.light-rest-4j>1.5.14</version.light-rest-4j>
-        
         <version.openapi-parser>1.5.14</version.openapi-parser>
         <version.jackson>2.9.5</version.jackson>
         <version.slf4j>1.7.25</version.slf4j>
@@ -168,8 +167,6 @@
             <version>${version.light-rest-4j}</version>
         </dependency>
 
-        
-
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
@@ -236,6 +233,16 @@
                             <goal>shade</goal>
                         </goals>
                         <configuration>
+                            <filters>
+                                <filter>
+                                    <artifact>*:*</artifact>
+                                    <excludes>
+                                        <exclude>META-INF/*.SF</exclude>
+                                        <exclude>META-INF/*.DSA</exclude>
+                                        <exclude>META-INF/*.RSA</exclude>
+                                    </excludes>
+                                </filter>
+                            </filters>                            
                             <transformers>
                                 <transformer implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer"/>
                             </transformers>

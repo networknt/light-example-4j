@@ -8,7 +8,7 @@ public class Tag {
     
     private String name;
     
-    private Integer id;
+    private java.lang.Long id;
     
 
     public Tag () {
@@ -28,11 +28,11 @@ public class Tag {
     
     
     @JsonProperty("id")
-    public Integer getId() {
+    public java.lang.Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(java.lang.Long id) {
         this.id = id;
     }
     

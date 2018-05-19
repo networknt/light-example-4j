@@ -35,7 +35,3 @@ singletons:
   # Validator Validate request based on swagger specification (depending on Swagger and Body)
   - com.networknt.validator.ValidatorHandler
 
-
-
-
-
