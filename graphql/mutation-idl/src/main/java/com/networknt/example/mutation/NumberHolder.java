@@ -1,4 +1,4 @@
-package com.networknt.starwars.schema;
+package com.networknt.example.mutation;
 
 /**
  * Created by Nicholas Azar on October 16, 2017.

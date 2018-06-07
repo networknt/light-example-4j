@@ -27,23 +27,10 @@ singletons:
   - com.networknt.audit.AuditHandler
   # Validator Validate request based on graphql schema
   - com.networknt.graphql.validator.ValidatorHandler
+  # Cors handler to handler post/put pre-flight
+  - com.networknt.cors.CorsHttpHandler
 # GraphQL schema provider interface implementation
 - com.networknt.graphql.router.SchemaProvider:
-  - com.networknt.starwars.schema.StarWarsSchema
-
-
-- javax.sql.DataSource:
-  - com.zaxxer.hikari.HikariDataSource:
-      DriverClassName: com.mysql.jdbc.Driver
-      jdbcUrl: jdbc:mysql://mysqldb:3306/oauth2?useSSL=false
-      username: root
-      password: my-secret-pw
-      maximumPoolSize: 10
-      useServerPrepStmts: true,
-      cachePrepStmts: true,
-      cacheCallableStmts: true,
-      prepStmtCacheSize: 10,
-      prepStmtCacheSqlLimit: 2048,
-      connectionTimeout: 2000
+  - com.networknt.example.mutation.MutationSchema
 
 

@@ -1,4 +1,4 @@
-package com.networknt.starwars.schema;
+package com.networknt.example.mutation;
 
 import graphql.schema.DataFetcher;
 

@@ -1,5 +1,5 @@
 
-package com.networknt.starwars.schema;
+package com.networknt.example.mutation;
 
 import com.networknt.graphql.router.SchemaProvider;
 import graphql.schema.GraphQLSchema;
@@ -14,7 +14,7 @@ import java.io.InputStreamReader;
 /**
  * Created by Nicholas Azar on October 16, 2017.
  */
-public class StarWarsSchema implements SchemaProvider {
+public class MutationSchema implements SchemaProvider {
     private static Logger logger = LoggerFactory.getLogger(SchemaProvider.class);
     private static String schemaName = "schema.graphqls";
     @Override

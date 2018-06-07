@@ -7,9 +7,9 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.networknt</groupId>
-    <artifactId>starwars</artifactId>
+    <artifactId>mutation-example</artifactId>
     <packaging>jar</packaging>
-    <name>starwars</name>
+    <name>mutation-example</name>
     <version>1.0.1</version>
 
     <properties>
@@ -27,15 +27,8 @@
         <version.undertow>1.4.23.Final</version.undertow>
         <version.graphql>8.0</version.graphql>
         <version.rxjava>2.1.5</version.rxjava>
-        
         <version.hikaricp>3.1.0</version.hikaricp>
-        
-        
-        
         <version.mysql>6.0.5</version.mysql>
-        
-        
-        
         <versions.maven-version>2.4</versions.maven-version>
     </properties>
 
@@ -143,6 +136,11 @@
         <dependency>
             <groupId>com.networknt</groupId>
             <artifactId>server</artifactId>
+            <version>${version.light-4j}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.networknt</groupId>
+            <artifactId>cors</artifactId>
             <version>${version.light-4j}</version>
         </dependency>
 
