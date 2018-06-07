@@ -33,6 +33,8 @@ import java.util.concurrent.atomic.AtomicReference;
 
 import java.io.IOException;
 
+import static java.nio.charset.StandardCharsets.UTF_8;
+
 
 public class CustomersPostHandlerTest {
     @ClassRule
@@ -56,7 +58,7 @@ public class CustomersPostHandlerTest {
             if (in == null) {
                 throw new RuntimeException("Failed to load resource: " + schemaResourceName);
             }
-            InputStreamReader reader = new InputStreamReader(in);
+            InputStreamReader reader = new InputStreamReader(in, UTF_8);
             RunScript.execute(connection, reader);
 
         } catch (SQLException e) {
