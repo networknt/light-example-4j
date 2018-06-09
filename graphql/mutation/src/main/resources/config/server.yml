@@ -5,7 +5,7 @@
 ip: 0.0.0.0
 
 # Http port if enableHttp is true.
-httpPort:  8080
+httpPort:  8081
 
 # Enable HTTP should be false on official environment.
 enableHttp: true
