@@ -2,10 +2,10 @@
 singletons:
 - javax.sql.DataSource:
   - com.zaxxer.hikari.HikariDataSource:
-      jdbcUrl: jdbc:mysql://198.55.49.187:3306/todo_db?useSSL=false
+      jdbcUrl: jdbc:mysql://localhost:3306/todo_db?useSSL=false
       username: mysqluser
       password: mysqlpw
-      maximumPoolSize: 1
+      maximumPoolSize: 3
       useServerPrepStmts: true
       cachePrepStmts: true
       cacheCallableStmts: true
