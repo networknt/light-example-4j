@@ -1,0 +1,17 @@
+schema {
+  query: Query
+  mutation: Mutation
+}
+
+type Query {
+  numberHolder: NumberHolder
+}
+
+type NumberHolder {
+  theNumber: Int
+}
+
+type Mutation {
+  changeTheNumber(newNumber: Int!): NumberHolder
+  failToChangeTheNumber(newNumber: Int): NumberHolder
+}
