@@ -1,7 +1,7 @@
 package com.networknt.example.handler;
 
 import com.networknt.config.Config;
-import com.networknt.server.HandlerProvider;
+import com.networknt.handler.HandlerProvider;
 import io.undertow.Handlers;
 import io.undertow.predicate.Predicates;
 import io.undertow.server.HttpHandler;

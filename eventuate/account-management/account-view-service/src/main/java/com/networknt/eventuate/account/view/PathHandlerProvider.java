@@ -4,7 +4,7 @@ package com.networknt.eventuate.account.view;
 import com.networknt.eventuate.account.view.handler.AccountsAccountIdGetHandler;
 import com.networknt.eventuate.account.view.handler.AccountsAccountIdHistoryGetHandler;
 import com.networknt.eventuate.account.view.handler.CustomerAccountsGetHandler;
-import com.networknt.server.HandlerProvider;
+import com.networknt.handler.HandlerProvider;
 import io.undertow.Handlers;
 import io.undertow.server.HttpHandler;
 import io.undertow.util.Methods;
