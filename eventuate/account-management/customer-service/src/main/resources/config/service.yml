@@ -31,7 +31,7 @@ singletons:
 
 
 # HandlerProvider implementation
-- com.networknt.server.HandlerProvider:
+- com.networknt.handler.HandlerProvider:
   - com.networknt.eventuate.customer.command.PathHandlerProvider
 
 

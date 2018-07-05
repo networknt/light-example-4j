@@ -38,7 +38,7 @@ singletons:
   - com.networknt.eventuate.client.SubscriptionsRegistry
 
 # HandlerProvider implementation
-- com.networknt.server.HandlerProvider:
+- com.networknt.handler.HandlerProvider:
   - com.networknt.eventuate.transaction.command.PathHandlerProvider
 
 # MiddlewareHandler implementations, the calling sequence is as defined in the request/response chain.

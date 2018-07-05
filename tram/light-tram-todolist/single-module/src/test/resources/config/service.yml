@@ -76,7 +76,7 @@ singletons:
   - com.networknt.oas.validator.impl.XmlValidator
 
 # HandlerProvider implementation
-- com.networknt.server.HandlerProvider:
+- com.networknt.handler.HandlerProvider:
   - com.networknt.tram.todolist.PathHandlerProvider
 - com.networknt.handler.MiddlewareHandler:
   # Exception Global exception handler that needs to be called first to wrap all middleware handlers and business handlers

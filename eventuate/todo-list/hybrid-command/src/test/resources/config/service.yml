@@ -34,7 +34,7 @@ singletons:
 - com.networknt.eventuate.todolist.domain.TodoBulkDeleteAggregate:
   - com.networknt.eventuate.todolist.domain.TodoBulkDeleteAggregate
 # HandlerProvider implementation
-- com.networknt.server.HandlerProvider:
+- com.networknt.handler.HandlerProvider:
   - com.networknt.rpc.router.RpcRouter
 # StartupHookProvider implementations, there are one to many and they are called in the same sequence defined.
 - com.networknt.server.StartupHookProvider:

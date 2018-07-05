@@ -37,7 +37,7 @@ singletons:
   - com.networknt.eventuate.client.SubscriptionsRegistry
 
 # HandlerProvider implementation
-- com.networknt.server.HandlerProvider:
+- com.networknt.handler.HandlerProvider:
   - com.networknt.eventuate.account.command.PathHandlerProvider
 
 
