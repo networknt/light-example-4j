@@ -9,6 +9,7 @@ import com.networknt.common.DecryptUtil;
 import com.networknt.config.Config;
 import com.networknt.exception.ApiException;
 import com.networknt.exception.ClientException;
+import com.networknt.handler.Handler;
 import com.networknt.handler.MiddlewareHandler;
 import com.networknt.router.RouterProxyClient;
 import com.networknt.status.Status;
@@ -129,6 +130,7 @@ public class TokenHandler implements MiddlewareHandler {
         // assume that the subject token has the scope already?)
         checkCCTokenExpired();
         exchange.getRequestHeaders().put(Headers.AUTHORIZATION, "Bearer " + jwt);
+        Handler.next(exchange, next);
     }
 
     @Override
@@ -214,7 +216,7 @@ public class TokenHandler implements MiddlewareHandler {
 
     private void getCCToken() throws ClientException {
         TokenRequest tokenRequest = new ClientCredentialsRequest();
-        TokenResponse tokenResponse = OauthHelper.getToken(tokenRequest, oauthHttp2Support);
+        TokenResponse tokenResponse = OauthHelper.getToken(tokenRequest);
         synchronized (lock) {
             jwt = tokenResponse.getAccessToken();
             // the expiresIn is seconds and it is converted to millisecond in the future.
