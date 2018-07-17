@@ -17,7 +17,7 @@ spec:
       hostNetwork: true
       containers:
       - name: apic
-        image: networknt/api_c
+        image: networknt/com.networknt.apic-1.0.0
         env:
         - name: STATUS_HOST_IP
           valueFrom:
