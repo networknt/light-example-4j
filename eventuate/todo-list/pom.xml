@@ -90,7 +90,7 @@
         <version.fastscanner>2.18.1</version.fastscanner>
         <version.h2>1.4.196</version.h2>
         <version.mysql>6.0.4</version.mysql>
-        <version.undertow>1.4.23.Final</version.undertow>
+        <version.undertow>2.0.11.Final</version.undertow>
         <version.commons.codec>1.11</version.commons.codec>
         <argLine>-Xmx512m -XX:MaxPermSize=256m</argLine>
     </properties>

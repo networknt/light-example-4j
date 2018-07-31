@@ -56,7 +56,7 @@ dependencies {
     compile group: 'com.fasterxml.jackson.core', name: 'jackson-core', version:'2.9.5'
     compile group: 'com.fasterxml.jackson.datatype', name: 'jackson-datatype-jsr310', version:'2.9.5'
     compile group: 'ch.qos.logback', name: 'logback-classic', version:'1.2.3'
-    compile group: 'io.undertow', name: 'undertow-core', version:'1.4.23.Final'
+    compile group: 'io.undertow', name: 'undertow-core', version:'2.0.11.Final'
     compile group: 'com.graphql-java', name: 'graphql-java', version:'8.0'
     compile group: 'org.apache.httpcomponents', name: 'httpclient', version:'4.5.2'
     compile group: 'io.reactivex.rxjava2', name: 'rxjava', version:'2.1.5'
