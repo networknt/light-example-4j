@@ -35,8 +35,7 @@ public class CustomerRepositoryJdbc implements CustomerRepository {
 
         String psInsert = "INSERT INTO customerorder.customer (customer_Id, name, creditLimit) VALUES (?, ?, ?)";
 
-        try (final Connection connection = dataSource.getConnection()) {
-            PreparedStatement stmt = connection.prepareStatement(psInsert);
+        try (final Connection connection = dataSource.getConnection(); PreparedStatement stmt = connection.prepareStatement(psInsert)) {
             stmt.setLong(1, customer.getId());
             stmt.setString(2, customer.getName());
             stmt.setBigDecimal(3, customer.getCreditLimit());
@@ -58,18 +57,18 @@ public class CustomerRepositoryJdbc implements CustomerRepository {
         String psSelect = "SELECT customer_Id,name, creditLimit from customerorder.customer WHERE customer_id = ?";
 
         Customer customer = null;
-        try (final Connection connection = dataSource.getConnection()){
-            PreparedStatement stmt = connection.prepareStatement(psSelect);
+        try (final Connection connection = dataSource.getConnection(); PreparedStatement stmt = connection.prepareStatement(psSelect)){
             stmt.setLong(1, id);
-            ResultSet rs = stmt.executeQuery();
-            if (rs == null || rs.getFetchSize() > 1) {
-                logger.error("incorrect fetch result {}", id);
-            }
-            while (rs.next()) {
-                Money money = new Money ( rs.getBigDecimal("creditLimit"));
-                customer = new Customer(rs.getString("name"), money);
+            try(ResultSet rs = stmt.executeQuery()) {
+                if (rs == null || rs.getFetchSize() > 1) {
+                    logger.error("incorrect fetch result {}", id);
+                }
+                while (rs.next()) {
+                    Money money = new Money ( rs.getBigDecimal("creditLimit"));
+                    customer = new Customer(rs.getString("name"), money);
 
-                customer.setCreditReservations(creditReservations(id));
+                    customer.setCreditReservations(creditReservations(id));
+                }
             }
         } catch (SQLException e) {
             logger.error("SqlException:", e);
@@ -81,14 +80,13 @@ public class CustomerRepositoryJdbc implements CustomerRepository {
     public  Map<Long, Money> creditReservations(Long id) {
         Map<Long, Money> creditReservations = new HashMap<>();
         String psSelect = "SELECT customer_Id,order_id, orderTotal from customerorder.customer_order WHERE customer_id = ?";
-        try (final Connection connection = dataSource.getConnection()){
-            PreparedStatement stmt = connection.prepareStatement(psSelect);
+        try (final Connection connection = dataSource.getConnection(); PreparedStatement stmt = connection.prepareStatement(psSelect)){
             stmt.setLong(1, id);
-            ResultSet rs = stmt.executeQuery();
-
-            while (rs.next()) {
-                Money money = new Money ( rs.getBigDecimal("orderTotal"));
-                creditReservations.put(rs.getLong("order_id"), money);
+            try(ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    Money money = new Money ( rs.getBigDecimal("orderTotal"));
+                    creditReservations.put(rs.getLong("order_id"), money);
+                }
             }
         } catch (SQLException e) {
             logger.error("SqlException:", e);
@@ -112,9 +110,7 @@ public class CustomerRepositoryJdbc implements CustomerRepository {
         Map<Long, Customer> customers = new HashMap<>();
 
         String psSelect = "SELECT customer_Id,name, creditLimit from customerorder.customer";
-        try (final Connection connection = dataSource.getConnection()){
-            PreparedStatement stmt = connection.prepareStatement(psSelect);
-            ResultSet rs = stmt.executeQuery();
+        try (final Connection connection = dataSource.getConnection(); PreparedStatement stmt = connection.prepareStatement(psSelect); ResultSet rs = stmt.executeQuery()){
             while (rs.next()) {
                 Money money = new Money ( rs.getBigDecimal("creditLimit"));
                 Customer customer = new Customer(rs.getString("name"), money);
@@ -142,9 +138,8 @@ public class CustomerRepositoryJdbc implements CustomerRepository {
         String psDelete = "DELETE FROM  customerorder.customer_order WHERE customer_id = ?";
         String psInsert = "INSERT INTO customerorder.customer_order (customer_Id, order_id, orderTotal) VALUES (?, ?, ?)";
 
-        try (final Connection connection = dataSource.getConnection()) {
+        try (final Connection connection = dataSource.getConnection(); PreparedStatement stmt = connection.prepareStatement(psDelete)) {
             connection.setAutoCommit(false);
-            PreparedStatement stmt = connection.prepareStatement(psDelete);
             stmt.setLong(1, customer.getId());
             stmt.executeUpdate();
             if (customer.getCreditReservations().size()>0) {
