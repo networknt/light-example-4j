@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: apic-deployment
+  labels:
+    app: apic
+spec:
+  replicas: 6
+  selector:
+    matchLabels:
+      app: apic
+  template:
+    metadata:
+      labels:
+        app: apic
+    spec:
+      hostNetwork: true
+      containers:
+      - name: apic
+        image: networknt/com.networknt.apic-1.0.0
+        env:
+        - name: STATUS_HOST_IP
+          valueFrom:
+            fieldRef:
+              fieldPath: status.hostIP

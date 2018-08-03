@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: apid-deployment
+  labels:
+    app: apid
+spec:
+  replicas: 6
+  selector:
+    matchLabels:
+      app: apid
+  template:
+    metadata:
+      labels:
+        app: apid
+    spec:
+      hostNetwork: true
+      containers:
+      - name: apid
+        image: networknt/com.networknt.apid-1.0.0
+        env:
+        - name: STATUS_HOST_IP
+          valueFrom:
+            fieldRef:
+              fieldPath: status.hostIP
