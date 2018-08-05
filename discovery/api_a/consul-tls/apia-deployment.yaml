@@ -17,7 +17,7 @@ spec:
       hostNetwork: true
       containers:
       - name: apia
-        image: networknt/com.networknt.apia-1.0.0
+        image: networknt/com.networknt.apia-1.0.0:1.5.18-ct
         env:
         - name: STATUS_HOST_IP
           valueFrom:

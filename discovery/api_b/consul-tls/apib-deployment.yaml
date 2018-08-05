@@ -17,7 +17,7 @@ spec:
       hostNetwork: true
       containers:
       - name: apib
-        image: networknt/com.networknt.apib-1.0.0
+        image: networknt/com.networknt.apib-1.0.0:1.5.18-ct
         env:
         - name: STATUS_HOST_IP
           valueFrom:
