@@ -18,6 +18,7 @@ spec:
       containers:
       - name: apib
         image: networknt/com.networknt.apib-1.0.0:1.5.18-ct
+        imagePullPolicy: Always
         env:
         - name: STATUS_HOST_IP
           valueFrom:
