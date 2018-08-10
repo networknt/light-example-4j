@@ -32,7 +32,7 @@ truststoreName: tls/server.truststore
 serviceId: com.networknt.apib-1.0.0
 
 # Flag to enable service registration. Only be true if running as standalone Java jar.
-enableRegistry: false
+enableRegistry: true
 
 # environment tag that will be registered on consul to support multiple instances per env for testing.
 # https://github.com/networknt/light-doc/blob/master/docs/content/design/env-segregation.md
