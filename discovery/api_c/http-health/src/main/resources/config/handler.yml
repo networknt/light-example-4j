@@ -1,0 +1,56 @@
+---
+enabled: true
+
+handlers:
+  # Exception Global exception handler that needs to be called first to wrap all middleware handlers and business handlers
+  - com.networknt.exception.ExceptionHandler@exception
+  # Metrics handler to calculate response time accurately, this needs to be the second handler in the chain.
+  - com.networknt.metrics.MetricsHandler@metrics
+  # Traceability Put traceabilityId into response header from request header if it exists
+  - com.networknt.traceability.TraceabilityHandler@traceability
+  # Correlation Create correlationId if it doesn't exist in the request header and put it into the request header
+  - com.networknt.correlation.CorrelationHandler@correlation
+  # Swagger Parsing swagger specification based on request uri and method.
+  - com.networknt.swagger.SwaggerHandler@specification
+  # Security JWT token verification and scope verification (depending on SwaggerHandler)
+  - com.networknt.security.JwtVerifyHandler@security
+  # Body Parse body based on content type in the header.
+  - com.networknt.body.BodyHandler@body
+  # SimpleAudit Log important info about the request into audit log
+  - com.networknt.audit.AuditHandler@audit
+  # Sanitizer Encode cross site scripting
+  - com.networknt.sanitizer.SanitizerHandler@sanitizer
+  # Validator Validate request based on swagger specification (depending on Swagger and Body)
+  - com.networknt.validator.ValidatorHandler@validator
+  # Health Check Handler
+  - com.networknt.health.HealthGetHandler@health
+  # Server Info Handler
+  - com.networknt.info.ServerInfoGetHandler@info
+  # Data handler
+  - com.networknt.apic.handler.DataGetHandler@data
+chains:
+  default:
+    - exception
+    - metrics
+    - traceability
+    - correlation
+    - specification
+    - body
+    - audit
+    - sanitizer
+    - validator
+
+paths:
+  - path: '/v1/data'
+    method: 'get'
+    exec:
+      - default
+      - data
+  - path: '/health/com.networknt.apic-1.0.0'
+    method: 'get'
+    exec:
+      - health
+  - path: '/server/info'
+    method: 'get'
+    exec:
+      - info
