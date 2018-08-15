@@ -20,7 +20,7 @@ showHelp() {
 
 build() {
     echo "Building ..."
-    mvn clean install
+    mvn clean install -DskipTests
     echo "Successfully built!"
 }
 

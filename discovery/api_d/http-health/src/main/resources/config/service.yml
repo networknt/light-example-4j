@@ -27,7 +27,6 @@ singletons:
 # ShutdownHookProvider implementations, there are one to many and they are called in the same sequence defined.
 # - com.networknt.server.ShutdownHookProvider:
   # - com.networknt.server.Test1ShutdownHook
-# MiddlewareHandler implementations, the calling sequence is as defined in the request/response chain.
 
 
 

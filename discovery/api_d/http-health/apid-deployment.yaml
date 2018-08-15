@@ -17,7 +17,7 @@ spec:
       hostNetwork: true
       containers:
       - name: apid
-        image: networknt/com.networknt.apid-1.0.0:1.5.18-ct
+        image: networknt/com.networknt.apid-1.0.0:1.5.18-hh
         imagePullPolicy: Always
         env:
         - name: STATUS_HOST_IP
