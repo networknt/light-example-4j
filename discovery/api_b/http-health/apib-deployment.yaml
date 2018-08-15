@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: apib-deployment
+  labels:
+    app: apib
+spec:
+  replicas: 6
+  selector:
+    matchLabels:
+      app: apib
+  template:
+    metadata:
+      labels:
+        app: apib
+    spec:
+      hostNetwork: true
+      containers:
+      - name: apib
+        image: networknt/com.networknt.apib-1.0.0:1.5.18-ct
+        imagePullPolicy: Always
+        env:
+        - name: STATUS_HOST_IP
+          valueFrom:
+            fieldRef:
+              fieldPath: status.hostIP
