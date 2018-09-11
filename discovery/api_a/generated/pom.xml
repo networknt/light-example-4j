@@ -20,7 +20,7 @@
         <version.junit>4.12</version.junit>
         <version.undertow>2.0.11.Final</version.undertow>
         <version.swagger-parser>1.0.34</version.swagger-parser>
-        <version.json-schema-validator>0.1.21</version.json-schema-validator>
+        <version.json-schema-validator>0.1.22</version.json-schema-validator>
         <version.fastscanner>2.18.1</version.fastscanner>
         
         
