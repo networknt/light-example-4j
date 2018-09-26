@@ -1,4 +1,7 @@
-# Security configuration in light framework.
+# Security configuration for swagger-security in light-rest-4j. It is a specific config
+# for Swagger framework security. It is introduced to support multiple frameworks in the
+# same server instance. If this file cannot be found, the generic security.yml will be
+# loaded for backward compatibility.
 ---
 # Enable JWT verification flag.
 enableVerifyJwt: false

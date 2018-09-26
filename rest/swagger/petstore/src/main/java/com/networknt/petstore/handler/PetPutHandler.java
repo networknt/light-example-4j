@@ -1,13 +1,13 @@
 
 package com.networknt.petstore.handler;
 
-import io.undertow.server.HttpHandler;
+import com.networknt.handler.LightHttpHandler;
 import io.undertow.server.HttpServerExchange;
 import io.undertow.util.HttpString;
 import java.util.HashMap;
 import java.util.Map;
 
-public class PetPutHandler implements HttpHandler {
+public class PetPutHandler implements LightHttpHandler {
     @Override
     public void handleRequest(HttpServerExchange exchange) throws Exception {
         

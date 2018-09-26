@@ -35,6 +35,6 @@ singletons:
   # Cors handler to handler post/put pre-flight
   - com.networknt.cors.CorsHttpHandler
   # Stateless CSRF token check handler
-  - com.networknt.csrf.StatelessCsrfHandler
+  - com.networknt.auth.StatelessAuthHandler
   # Header middleware to manipulate request and/or response headers before or after downstream server
   - com.networknt.header.HeaderHandler

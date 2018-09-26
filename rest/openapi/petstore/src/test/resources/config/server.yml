@@ -57,3 +57,7 @@ maxPort: 2500
 # https://github.com/networknt/light-doc/blob/master/docs/content/design/env-segregation.md
 # This tag should only be set for testing env, not production. The production certification process will enforce it.
 # environment: test1
+
+# Build Number
+# Allows teams to audit the value and set it according to their release management processes
+buildNumber: 3.0.1
