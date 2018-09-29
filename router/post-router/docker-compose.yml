@@ -1,0 +1,21 @@
+version: '2'
+
+services:
+
+  light-router:
+    image:  networknt/light-router:latest
+    networks:
+    - localnet
+    ports:
+    - 8080:8080
+    volumes:
+    - ./https:/config
+    # - ./http:/config
+
+#
+# Networks
+#
+networks:
+    localnet:
+        # driver: bridge
+        external: true

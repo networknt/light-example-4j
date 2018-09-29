@@ -1,0 +1,15 @@
+singletons:
+- com.networknt.registry.URL:
+  - com.networknt.registry.URLImpl:
+      protocol: https
+      host: localhost
+      port: 8080
+      path: direct
+      parameters:
+        io.swagger.swagger-light-java-1.0.0: https://localhost:8443
+- com.networknt.registry.Registry:
+  - com.networknt.registry.support.DirectRegistry
+- com.networknt.balance.LoadBalance:
+  - com.networknt.balance.RoundRobinLoadBalance
+- com.networknt.cluster.Cluster:
+  - com.networknt.cluster.LightCluster

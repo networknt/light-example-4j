@@ -1,0 +1,102 @@
+{
+  "openapi": "3.0.0",
+  "servers": [
+    {
+      "url": "http://test.lightapi.net"
+    }
+  ],
+  "info": {
+    "contact": {
+      "name": "Steve Hu",
+      "url": "www.networknt.com/example",
+      "email": "stevehu@gmail.com"
+    },
+    "version": "v1_0_0",
+    "description": "Test API",
+    "title": "TEST API"
+  },
+  "paths": {
+    "/v1/address/{id}": {
+      "get": {
+        "description": "Returns an address.",
+        "operationId": "getAddressById",
+        "security": [
+          {
+            "test_auth": [
+              "api.r"
+            ]
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "description": "The address id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/v2/address": {
+      "get": {
+        "description": "Returns address list.",
+        "operationId": "getAddress",
+        "security": [
+          {
+            "test_auth": [
+              "api.r"
+            ]
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/v1/contact": {
+      "post": {
+        "description": "Update contact",
+        "operationId": "postContact",
+        "security": [
+          {
+            "test_auth": [
+              "api.r"
+            ]
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "test_auth": {
+        "type": "oauth2",
+        "description": "This API uses OAuth 2.0 with the client credential grant flow.",
+        "flows": {
+          "clientCredentials": {
+            "tokenUrl": "https://localhost:6882/token",
+            "scopes": {
+              "api.r": "read information",
+              "api.w": "write information"
+            }
+          }
+        }
+      }
+    }
+  }
+}
