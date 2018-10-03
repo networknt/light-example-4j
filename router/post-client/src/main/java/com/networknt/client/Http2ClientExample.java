@@ -75,7 +75,7 @@ public class Http2ClientExample {
     public void testWrongPath() throws Exception {
         ClientConnection connection = null;
         try {
-            connection = client.connect(new URI("https://localhost:8443"), Http2Client.WORKER, Http2Client.SSL, Http2Client.POOL, OptionMap.create(UndertowOptions.ENABLE_HTTP2, true)).get();
+            connection = client.connect(new URI("https://localhost:8443"), Http2Client.WORKER, Http2Client.SSL, Http2Client.BUFFER_POOL, OptionMap.create(UndertowOptions.ENABLE_HTTP2, true)).get();
             final String json = getResourceFileAsString("4k.json");
             if(logger.isDebugEnabled()) logger.debug(json);
             final CountDownLatch latch = new CountDownLatch(1);
@@ -104,7 +104,7 @@ public class Http2ClientExample {
     public void testDirect4k() throws Exception {
         ClientConnection connection = null;
         try {
-            connection = client.connect(new URI("https://localhost:8443"), Http2Client.WORKER, Http2Client.SSL, Http2Client.POOL, OptionMap.create(UndertowOptions.ENABLE_HTTP2, true)).get();
+            connection = client.connect(new URI("https://localhost:8443"), Http2Client.WORKER, Http2Client.SSL, Http2Client.BUFFER_POOL, OptionMap.create(UndertowOptions.ENABLE_HTTP2, true)).get();
             final String json = getResourceFileAsString("4k.json");
             if(logger.isDebugEnabled()) logger.debug(json);
             for(int i = 0; i < 100; i++) {
@@ -229,7 +229,7 @@ public class Http2ClientExample {
     public void testRouterHttp48k() throws Exception {
         ClientConnection connection = null;
         try {
-            connection = client.connect(new URI("http://localhost:8000"), Http2Client.WORKER, Http2Client.POOL, OptionMap.EMPTY).get();
+            connection = client.connect(new URI("http://localhost:8000"), Http2Client.WORKER, Http2Client.BUFFER_POOL, OptionMap.EMPTY).get();
             final String json = getResourceFileAsString("48k.json");
             if(logger.isDebugEnabled()) logger.debug(json);
             for(int i = 0; i < 100; i++) {
@@ -260,7 +260,7 @@ public class Http2ClientExample {
     public void testProxy4k() throws Exception {
         ClientConnection connection = null;
         try {
-            connection = client.connect(new URI("http://localhost:8000"), Http2Client.WORKER, Http2Client.POOL, OptionMap.EMPTY).get();
+            connection = client.connect(new URI("http://localhost:8000"), Http2Client.WORKER, Http2Client.BUFFER_POOL, OptionMap.EMPTY).get();
             final String json = getResourceFileAsString("4k.json");
             if(logger.isDebugEnabled()) logger.debug(json);
             for(int i = 0; i < 100; i++) {
@@ -292,7 +292,7 @@ public class Http2ClientExample {
     public void testProxy48k() throws Exception {
         ClientConnection connection = null;
         try {
-            connection = client.connect(new URI("http://localhost:8000"), Http2Client.WORKER, Http2Client.POOL, OptionMap.EMPTY).get();
+            connection = client.connect(new URI("http://localhost:8000"), Http2Client.WORKER, Http2Client.BUFFER_POOL, OptionMap.EMPTY).get();
             final String json = getResourceFileAsString("48k.json");
             if(logger.isDebugEnabled()) logger.debug(json);
             for(int i = 0; i < 100; i++) {

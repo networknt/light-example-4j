@@ -42,7 +42,7 @@ public class DataGetHandler implements HttpHandler {
         if(connection == null || !connection.isOpen()) {
             try {
                 apidHost = cluster.serviceToUrl("https", "com.networknt.apid-1.0.0", null, null);
-                connection = client.connect(new URI(apidHost), Http2Client.WORKER, Http2Client.SSL, Http2Client.POOL, OptionMap.create(UndertowOptions.ENABLE_HTTP2, true)).get();
+                connection = client.connect(new URI(apidHost), Http2Client.WORKER, Http2Client.SSL, Http2Client.BUFFER_POOL, OptionMap.create(UndertowOptions.ENABLE_HTTP2, true)).get();
             } catch (Exception e) {
                 logger.error("Exeption:", e);
                 throw new ClientException(e);

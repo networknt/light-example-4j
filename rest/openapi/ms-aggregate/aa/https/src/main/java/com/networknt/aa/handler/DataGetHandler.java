@@ -45,9 +45,9 @@ public class DataGetHandler implements HttpHandler {
             abHost = cluster.serviceToUrl("https", "com.networknt.ab-1.0.0", null, null);
             acHost = cluster.serviceToUrl("https", "com.networknt.ac-1.0.0", null, null);
             adHost = cluster.serviceToUrl("https", "com.networknt.ad-1.0.0", null, null);
-            connectionAb = client.connect(new URI(abHost), Http2Client.WORKER, Http2Client.SSL, Http2Client.POOL, OptionMap.create(UndertowOptions.ENABLE_HTTP2, true)).get();
-            connectionAc = client.connect(new URI(acHost), Http2Client.WORKER, Http2Client.SSL, Http2Client.POOL, OptionMap.create(UndertowOptions.ENABLE_HTTP2, true)).get();
-            connectionAd = client.connect(new URI(adHost), Http2Client.WORKER, Http2Client.SSL, Http2Client.POOL, OptionMap.create(UndertowOptions.ENABLE_HTTP2, true)).get();
+            connectionAb = client.connect(new URI(abHost), Http2Client.WORKER, Http2Client.SSL, Http2Client.BUFFER_POOL, OptionMap.create(UndertowOptions.ENABLE_HTTP2, true)).get();
+            connectionAc = client.connect(new URI(acHost), Http2Client.WORKER, Http2Client.SSL, Http2Client.BUFFER_POOL, OptionMap.create(UndertowOptions.ENABLE_HTTP2, true)).get();
+            connectionAd = client.connect(new URI(adHost), Http2Client.WORKER, Http2Client.SSL, Http2Client.BUFFER_POOL, OptionMap.create(UndertowOptions.ENABLE_HTTP2, true)).get();
         } catch (Exception e) {
             logger.error("Exeption:", e);
         }
@@ -60,7 +60,7 @@ public class DataGetHandler implements HttpHandler {
         if(connectionAb == null || !connectionAb.isOpen()) {
             try {
                 abHost = cluster.serviceToUrl("https", "com.networknt.ab-1.0.0", null, null);
-                connectionAb = client.connect(new URI(abHost), Http2Client.WORKER, Http2Client.SSL, Http2Client.POOL, OptionMap.create(UndertowOptions.ENABLE_HTTP2, true)).get();
+                connectionAb = client.connect(new URI(abHost), Http2Client.WORKER, Http2Client.SSL, Http2Client.BUFFER_POOL, OptionMap.create(UndertowOptions.ENABLE_HTTP2, true)).get();
             } catch (Exception e) {
                 logger.error("Exeption:", e);
                 throw new ClientException(e);
@@ -69,7 +69,7 @@ public class DataGetHandler implements HttpHandler {
         if(connectionAc == null || !connectionAc.isOpen()) {
             try {
                 acHost = cluster.serviceToUrl("https", "com.networknt.ac-1.0.0", null, null);
-                connectionAc = client.connect(new URI(acHost), Http2Client.WORKER, Http2Client.SSL, Http2Client.POOL, OptionMap.create(UndertowOptions.ENABLE_HTTP2, true)).get();
+                connectionAc = client.connect(new URI(acHost), Http2Client.WORKER, Http2Client.SSL, Http2Client.BUFFER_POOL, OptionMap.create(UndertowOptions.ENABLE_HTTP2, true)).get();
             } catch (Exception e) {
                 logger.error("Exeption:", e);
                 throw new ClientException(e);
@@ -78,7 +78,7 @@ public class DataGetHandler implements HttpHandler {
         if(connectionAd == null || !connectionAd.isOpen()) {
             try {
                 adHost = cluster.serviceToUrl("https", "com.networknt.ad-1.0.0", null, null);
-                connectionAd = client.connect(new URI(adHost), Http2Client.WORKER, Http2Client.SSL, Http2Client.POOL, OptionMap.create(UndertowOptions.ENABLE_HTTP2, true)).get();
+                connectionAd = client.connect(new URI(adHost), Http2Client.WORKER, Http2Client.SSL, Http2Client.BUFFER_POOL, OptionMap.create(UndertowOptions.ENABLE_HTTP2, true)).get();
             } catch (Exception e) {
                 logger.error("Exeption:", e);
                 throw new ClientException(e);

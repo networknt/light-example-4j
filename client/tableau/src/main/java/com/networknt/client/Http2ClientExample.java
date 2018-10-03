@@ -56,7 +56,7 @@ public class Http2ClientExample {
         // Create one CountDownLatch that will be reset in the callback function
         final CountDownLatch latch = new CountDownLatch(1);
         // Create an HTTP 1.1 connection to the server
-        final ClientConnection connection = client.connect(new URI("https://us-east-1.online.tableau.com"), Http2Client.WORKER, Http2Client.SSL, Http2Client.POOL, OptionMap.EMPTY).get();
+        final ClientConnection connection = client.connect(new URI("https://us-east-1.online.tableau.com"), Http2Client.WORKER, Http2Client.SSL, Http2Client.BUFFER_POOL, OptionMap.EMPTY).get();
         // Create an AtomicReference object to receive ClientResponse from callback function
         final AtomicReference<ClientResponse> reference = new AtomicReference<>();
         try {

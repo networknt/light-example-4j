@@ -75,7 +75,7 @@ public class RouterProxyClient implements ProxyClient {
         // doesn't exist or it is closed already. discovery here.
         String host = cluster.serviceToUrl(Constants.HTTPS, serviceId, envTag, null);
         try {
-            client.connect(new RouterProxyClient.ConnectNotifier(callback, exchange), new URI(host), Http2Client.WORKER, Http2Client.SSL, Http2Client.POOL, OptionMap.create(UndertowOptions.ENABLE_HTTP2, true));
+            client.connect(new RouterProxyClient.ConnectNotifier(callback, exchange), new URI(host), Http2Client.WORKER, Http2Client.SSL, Http2Client.BUFFER_POOL, OptionMap.create(UndertowOptions.ENABLE_HTTP2, true));
         } catch (URISyntaxException e) {
             logger.error("Invalid URI:" + host, e);
         }

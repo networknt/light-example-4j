@@ -35,7 +35,7 @@ public class DataGetHandler implements HttpHandler {
 
     public DataGetHandler() {
         try {
-            connection = client.connect(new URI(apibHost), Http2Client.WORKER, Http2Client.SSL, Http2Client.POOL, OptionMap.create(UndertowOptions.ENABLE_HTTP2, true)).get();
+            connection = client.connect(new URI(apibHost), Http2Client.WORKER, Http2Client.SSL, Http2Client.BUFFER_POOL, OptionMap.create(UndertowOptions.ENABLE_HTTP2, true)).get();
         } catch (Exception e) {
             logger.error("Exeption:", e);
         }
@@ -47,7 +47,7 @@ public class DataGetHandler implements HttpHandler {
         final CountDownLatch latch = new CountDownLatch(1);
         if(connection == null || !connection.isOpen()) {
             try {
-                connection = client.connect(new URI(apibHost), Http2Client.WORKER, Http2Client.SSL, Http2Client.POOL, OptionMap.create(UndertowOptions.ENABLE_HTTP2, true)).get();
+                connection = client.connect(new URI(apibHost), Http2Client.WORKER, Http2Client.SSL, Http2Client.BUFFER_POOL, OptionMap.create(UndertowOptions.ENABLE_HTTP2, true)).get();
             } catch (Exception e) {
                 logger.error("Exeption:", e);
                 throw new ClientException(e);
