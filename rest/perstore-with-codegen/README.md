@@ -2,7 +2,7 @@
 
 ## Modules
 
--- petstore-spec
+### petstore-spec
 
   The module contains service specification. In the example, we are using openapi-3.0 spec.
 
@@ -37,7 +37,7 @@
   ```
 
 
--- petstore-service
+### petstore-service
 
   The microservice API module.
 
@@ -46,7 +46,7 @@
 
 
 
- In the first time build project, copy the openapi spec to the folder /petstore/config, and set the config.json config value specChangeCodeReGenOnly as false
+ In the first time build project, copy the openapi spec to the folder /petstore/config, and set the config.json config value "specChangeCodeReGenOnly" as false
 
   ```
     "specChangeCodeReGenOnly": false,
@@ -62,7 +62,7 @@
 
    ```
 
- The command will call execute light-codegen command by maven plugin setting to initial generate petstore-service api. After develop started ti developer the service, change specChangeCodeReGenOnly as true;
+ The command will  execute light-codegen command by maven plugin which set in petstore-spec module POM file to initial generate petstore-service api. After developer started to develop the service, change the config value "specChangeCodeReGenOnly" as true;
  then the new code generation will only generate code for specification change, for example, new endpoint, new data module.. etc
 
 
