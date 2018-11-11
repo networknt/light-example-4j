@@ -37,7 +37,7 @@ public class PetsPetIdGetHandlerTest {
 
     @Test
     public void testPetsPetIdGetHandlerTest() throws ClientException, ApiException {
-        /*
+
         final Http2Client client = Http2Client.getInstance();
         final CountDownLatch latch = new CountDownLatch(1);
         final ClientConnection connection;
@@ -48,7 +48,7 @@ public class PetsPetIdGetHandlerTest {
         }
         final AtomicReference<ClientResponse> reference = new AtomicReference<>();
         try {
-            ClientRequest request = new ClientRequest().setPath("/v1/pets/petId").setMethod(Methods.GET);
+            ClientRequest request = new ClientRequest().setPath("/v1/pets/111").setMethod(Methods.GET);
             
             connection.sendRequest(request, client.createClientCallback(reference, latch));
             
@@ -63,7 +63,7 @@ public class PetsPetIdGetHandlerTest {
         String body = reference.get().getAttachment(Http2Client.RESPONSE_BODY);
         Assert.assertEquals(200, statusCode);
         Assert.assertNotNull(body);
-        */
+
     }
 }
 
