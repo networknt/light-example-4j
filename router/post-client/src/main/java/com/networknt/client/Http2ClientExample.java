@@ -58,9 +58,10 @@ public class Http2ClientExample {
         //e.testWrongPath();
         //e.testDirect4k();
         //e.testDirect48k();
+        //e.testDirect1000k();
         //e.testRouterHttps4k();
-        e.testRouterHttps48k();
-        //e.testRouterHttp48k();
+        //e.testRouterHttps48k();
+        e.testRouterHttps1000k();
         //e.testProxy4k();
         //e.testProxy48k();
         System.exit(0);
@@ -159,6 +160,37 @@ public class Http2ClientExample {
     }
 
     /**
+     * This is direct call to the post-service with a 1000k json as body
+     * on 8443 which the post-service is listening.
+     *
+     * @throws Exception
+     */
+    public void testDirect1000k() throws Exception {
+        ClientConnection connection = null;
+        try {
+            connection = client.connect(new URI("https://localhost:8443"), Http2Client.WORKER, Http2Client.SSL, Http2Client.BUFFER_POOL, OptionMap.create(UndertowOptions.ENABLE_HTTP2, true)).get();
+            final String json = getResourceFileAsString("1000k.json");
+            if(logger.isDebugEnabled()) logger.debug(json);
+            for(int i = 0; i < 100; i++) {
+                final CountDownLatch latch = new CountDownLatch(1);
+                final AtomicReference<ClientResponse> reference = new AtomicReference<>();
+                final ClientRequest request = new ClientRequest().setMethod(Methods.POST).setPath("/v1/postData");
+                request.getRequestHeaders().put(Headers.HOST, "localhost");
+                request.getRequestHeaders().put(Headers.TRANSFER_ENCODING, "chunked");
+                request.getRequestHeaders().put(Headers.CONTENT_TYPE, "application/json");
+                connection.sendRequest(request, client.createClientCallback(reference, latch, json));
+                latch.await();
+                int statusCode = reference.get().getResponseCode();
+                String body = reference.get().getAttachment(Http2Client.RESPONSE_BODY);
+                if(statusCode != 200) System.out.println("testDirect4k failed with statusCode = " + statusCode + " body = " + body);
+                if(!body.startsWith("[")) System.out.println(body);
+            }
+        } finally {
+            if(connection != null) IoUtils.safeClose(connection);
+        }
+    }
+
+    /**
      * This is direct call to the post-service with a 4k json as body
      * on 8080 which the post-router is listening
      *
@@ -177,7 +209,7 @@ public class Http2ClientExample {
                 request.getRequestHeaders().put(Headers.TRANSFER_ENCODING, "chunked");
                 request.getRequestHeaders().put(Headers.CONTENT_TYPE, "application/json");
                 connection.sendRequest(request, client.createClientCallback(reference, latch, json));
-                latch.await(100, TimeUnit.MILLISECONDS);
+                latch.await();
                 int statusCode = reference.get().getResponseCode();
                 String body = reference.get().getAttachment(Http2Client.RESPONSE_BODY);
                 if(statusCode != 200) System.out.println("testRoter4k failed with statusCode = " + statusCode + " body = " + body);
@@ -209,6 +241,38 @@ public class Http2ClientExample {
                 request.getRequestHeaders().put(Headers.CONTENT_TYPE, "application/json");
                 connection.sendRequest(request, client.createClientCallback(reference, latch, json));
                 latch.await(1000, TimeUnit.MILLISECONDS);
+                int statusCode = reference.get().getResponseCode();
+                String body = reference.get().getAttachment(Http2Client.RESPONSE_BODY);
+                if(statusCode != 200) System.out.println("testRouter4k failed with statusCode = " + statusCode + " body = " + body);
+                System.out.println(i);
+                if(!body.startsWith("[")) System.out.println(body);
+            }
+        } finally {
+            if(connection != null) IoUtils.safeClose(connection);
+        }
+    }
+
+
+    /**
+     * This is direct call to the post-service with a 48k json as body
+     * on 8080 which the post-router is listening.
+     *
+     * @throws Exception
+     */
+    public void testRouterHttps1000k() throws Exception {
+        ClientConnection connection = null;
+        try {
+            connection = client.connect(new URI("https://localhost:8000"), Http2Client.WORKER, Http2Client.SSL, Http2Client.BUFFER_POOL, OptionMap.create(UndertowOptions.ENABLE_HTTP2, true)).get();
+            final String json = getResourceFileAsString("1000k.json");
+            for(int i = 0; i < 100; i++) {
+                final CountDownLatch latch = new CountDownLatch(1);
+                final AtomicReference<ClientResponse> reference = new AtomicReference<>();
+                final ClientRequest request = new ClientRequest().setMethod(Methods.POST).setPath("/v1/postData");
+                request.getRequestHeaders().put(Headers.HOST, "localhost");
+                request.getRequestHeaders().put(Headers.TRANSFER_ENCODING, "chunked");
+                request.getRequestHeaders().put(Headers.CONTENT_TYPE, "application/json");
+                connection.sendRequest(request, client.createClientCallback(reference, latch, json));
+                latch.await();
                 int statusCode = reference.get().getResponseCode();
                 String body = reference.get().getAttachment(Http2Client.RESPONSE_BODY);
                 if(statusCode != 200) System.out.println("testRouter4k failed with statusCode = " + statusCode + " body = " + body);

@@ -3,19 +3,10 @@ version: '2'
 services:
 
   light-router:
-    image:  networknt/light-router:latest
-    networks:
-    - localnet
+    image:  networknt/light-router:1.5.24
+    network_mode: host
     ports:
-    - 8080:8080
+    - 8000:8000
     volumes:
     - ./https:/config
     # - ./http:/config
-
-#
-# Networks
-#
-networks:
-    localnet:
-        # driver: bridge
-        external: true
