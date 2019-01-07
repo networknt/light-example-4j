@@ -20,7 +20,7 @@
         <version.light-4j>1.5.26</version.light-4j>
         <version.light-hybrid-4j>1.5.26</version.light-hybrid-4j>
         <version.light-eventuate-4j>1.5.26</version.light-eventuate-4j>
-        <version.jackson>2.9.5</version.jackson>
+        <version.jackson>2.9.8</version.jackson>
         <version.slf4j>1.7.25</version.slf4j>
         <version.jose4j>0.6.3</version.jose4j>
         <version.antlr4>4.7</version.antlr4>
