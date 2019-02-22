@@ -1,10 +1,8 @@
 package com.networknt.database;
 
-import com.networknt.config.Config;
-import com.networknt.handler.HandlerProvider;
+import com.networknt.server.HandlerProvider;
 import io.undertow.Handlers;
 import io.undertow.server.HttpHandler;
-import io.undertow.server.HttpServerExchange;
 import io.undertow.util.Methods;
 import com.networknt.info.ServerInfoGetHandler;
 import com.networknt.database.handler.*;
