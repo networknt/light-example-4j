@@ -1,4 +1,3 @@
-
 package com.networknt.petstore.handler;
 
 import com.networknt.handler.LightHttpHandler;
@@ -8,10 +7,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class PetsPostHandler implements LightHttpHandler {
+    
     @Override
     public void handleRequest(HttpServerExchange exchange) throws Exception {
-        
-            exchange.endExchange();
-        
+        exchange.endExchange();
     }
 }

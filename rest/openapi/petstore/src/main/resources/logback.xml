@@ -59,16 +59,39 @@
         </triggeringPolicy>
     </appender>
 
+    <!--dump log-->
+    <appender name="dump" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>target/dump.log</file> <!-- logfile location -->
+        <encoder>
+            <pattern>%-5level [%thread] %date{ISO8601} %X{sId} %X{cId} %F:%L - %msg%n
+            </pattern> <!-- the layout pattern used to format log entries -->
+            <immediateFlush>true</immediateFlush>
+        </encoder>
+        <rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
+            <fileNamePattern>target/audit.log.%i.zip</fileNamePattern>
+            <minIndex>1</minIndex>
+            <maxIndex>5</maxIndex> <!-- max number of archived logs that are kept -->
+        </rollingPolicy>
+        <triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+            <maxFileSize>200MB
+            </maxFileSize> <!-- The size of the logfile that triggers a switch to a new logfile, and the current one archived -->
+        </triggeringPolicy>
+    </appender>
+
     <root level="error">
         <appender-ref ref="stdout"/>
     </root>
 
-    <logger name="com.networknt" level="error">
+    <logger name="com.networknt" level="error" additivity="false">
         <appender-ref ref="log"/>
     </logger>
 
     <logger name="Audit" level="error" additivity="false">
         <appender-ref ref="audit"/>
+    </logger>
+
+    <logger name="com.networknt.dump" level="info" additivity="false">
+        <appender-ref ref="dump"/>
     </logger>
 
 </configuration>
