@@ -1,21 +1,14 @@
 package com.networknt.demo;
 
 import io.undertow.Handlers;
-import io.undertow.Undertow;
 import io.undertow.server.HttpHandler;
 import io.undertow.server.HttpServerExchange;
-import io.undertow.server.RoutingHandler;
 import io.undertow.servlet.api.DeploymentInfo;
-import io.undertow.util.Headers;
-import io.undertow.util.Methods;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.web.embedded.undertow.UndertowBuilderCustomizer;
 import org.springframework.boot.web.embedded.undertow.UndertowDeploymentInfoCustomizer;
 import org.springframework.boot.web.embedded.undertow.UndertowServletWebServerFactory;
 import org.springframework.context.annotation.Bean;
-
-import java.util.Collections;
 
 @SpringBootApplication
 public class DemoApplication {
