@@ -1,0 +1,22 @@
+{"lightapi.net/service1/query/0.1.0":{"schema": {
+        "title": "Service1",
+        "type": "object",
+        "properties": {
+          "param1": {
+            "type": "string"
+          },
+          "param2": {
+            "type": "string"
+          }
+        },
+        "required": ["param1", "param2"]
+      },"scope": "query.r"},"lightapi.net/service1/info/0.1.0":{"schema": {
+        "title": "Service1",
+        "type": "object",
+        "properties": {
+          "filter": {
+            "type": "string"
+          }
+        },
+        "required": ["filter"]
+      },"scope": "info.r"}}
