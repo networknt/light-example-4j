@@ -1,5 +1,8 @@
 package com.networknt.petstore.model;
+
+import java.util.Arrays;
 import java.util.Objects;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class Error {
@@ -18,6 +21,7 @@ public class Error {
     public void setMessage(String message) {
         this.message = message;
     }
+
     @JsonProperty("code")
     public Integer getCode() {
         return code;
@@ -32,26 +36,28 @@ public class Error {
         if (this == o) {
             return true;
         }
+
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
+
         Error Error = (Error) o;
 
         return Objects.equals(message, Error.message) &&
-        
-        Objects.equals(code, Error.code);
+               Objects.equals(code, Error.code);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(message,  code);
+        return Objects.hash(message, code);
     }
 
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("class Error {\n");
-        sb.append("    message: ").append(toIndentedString(message)).append("\n");        sb.append("    code: ").append(toIndentedString(code)).append("\n");
+        sb.append("    message: ").append(toIndentedString(message)).append("\n");
+        sb.append("    code: ").append(toIndentedString(code)).append("\n");
         sb.append("}");
         return sb.toString();
     }
