@@ -1,0 +1,25 @@
+{"lightapi.net/service2/command/0.1.1":{"schema": {
+        "title": "Service2",
+        "type": "object",
+        "properties": {
+          "source": {
+            "type": "string"
+          },
+          "target": {
+            "type": "string"
+          }
+        },
+        "required": ["source", "target"]
+      },"scope": "command.w"},"lightapi.net/service2/command/0.1.0":{"schema": {
+        "title": "Service2",
+        "type": "object",
+        "properties": {
+          "source": {
+            "type": "string"
+          },
+          "target": {
+            "type": "string"
+          }
+        },
+        "required": ["source", "target"]
+      },"scope": "command.w"}}
