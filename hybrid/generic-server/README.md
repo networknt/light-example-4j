@@ -13,7 +13,7 @@ If you have multiple service jar files, you'd better create a directory and incl
 that directory into the classpath when starting the server.
 
 ```
-java -cp petstore-1.0.1.jar:/service com.networknt.server.Server
+java -cp petstore-1.0.1.jar:/service/* com.networknt.server.Server
 ```
 
 
