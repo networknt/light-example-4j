@@ -1,5 +1,8 @@
 package com.networknt.petstore.model;
+
+import java.util.Arrays;
 import java.util.Objects;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class Pet {
@@ -19,6 +22,7 @@ public class Pet {
     public void setName(String name) {
         this.name = name;
     }
+
     @JsonProperty("id")
     public java.lang.Long getId() {
         return id;
@@ -27,6 +31,7 @@ public class Pet {
     public void setId(java.lang.Long id) {
         this.id = id;
     }
+
     @JsonProperty("tag")
     public String getTag() {
         return tag;
@@ -41,27 +46,30 @@ public class Pet {
         if (this == o) {
             return true;
         }
+
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
+
         Pet Pet = (Pet) o;
 
         return Objects.equals(name, Pet.name) &&
-        Objects.equals(id, Pet.id) &&
-        
-        Objects.equals(tag, Pet.tag);
+               Objects.equals(id, Pet.id) &&
+               Objects.equals(tag, Pet.tag);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, id,  tag);
+        return Objects.hash(name, id, tag);
     }
 
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("class Pet {\n");
-        sb.append("    name: ").append(toIndentedString(name)).append("\n");        sb.append("    id: ").append(toIndentedString(id)).append("\n");        sb.append("    tag: ").append(toIndentedString(tag)).append("\n");
+        sb.append("    name: ").append(toIndentedString(name)).append("\n");
+        sb.append("    id: ").append(toIndentedString(id)).append("\n");
+        sb.append("    tag: ").append(toIndentedString(tag)).append("\n");
         sb.append("}");
         return sb.toString();
     }
