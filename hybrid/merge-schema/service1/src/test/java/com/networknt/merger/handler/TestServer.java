@@ -2,6 +2,7 @@
 package com.networknt.merger.handler;
 
 import com.networknt.server.Server;
+import com.networknt.server.ServerConfig;
 import org.junit.rules.ExternalResource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,6 +22,10 @@ public class TestServer extends ExternalResource {
 
     private TestServer() {
 
+    }
+
+    public ServerConfig getServerConfig() {
+        return Server.config;
     }
 
     @Override
