@@ -10,6 +10,8 @@ public class PetsPostHandler implements LightHttpHandler {
     
     @Override
     public void handleRequest(HttpServerExchange exchange) throws Exception {
-        exchange.endExchange();
+        exchange.getResponseHeaders().add(new HttpString("Content-Type"), "application/json");
+        exchange.setStatusCode(201);
+        exchange.getResponseSender().send("{}");
     }
 }
