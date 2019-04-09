@@ -33,7 +33,7 @@ enableTwoWayTls: false
 truststoreName: server.truststore
 
 # Unique service identifier. Used in service registration and discovery etc.
-serviceId: com.networknt.gservice-1.0.0
+serviceId: com.networknt.gserver-1.0.0
 
 # Flag to enable self service registration. This should be turned on on official test and production. And
 # dyanmicPort should be enabled if any orchestration tool is used like Kubernetes.
