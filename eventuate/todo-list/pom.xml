@@ -67,10 +67,7 @@
         <java.version>1.8</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <version.light-4j>1.6.0</version.light-4j>
-        <version.light-rest-4j>1.6.0</version.light-rest-4j>
-        <version.light-eventuate-4j>1.6.0</version.light-eventuate-4j>
-        <version.light-hybrid-4j>1.6.0</version.light-hybrid-4j>
-        <version.kafka-clients>1.0.0</version.kafka-clients>
+        <version.kafka-clients>2.0.0</version.kafka-clients>
         <version.rxjava>1.2.2</version.rxjava>
         <version.jackson>2.9.8</version.jackson>
         <version.slf4j>1.7.21</version.slf4j>
@@ -156,12 +153,12 @@
             <dependency>
                 <groupId>com.networknt</groupId>
                 <artifactId>rpc-router</artifactId>
-                <version>${version.light-hybrid-4j}</version>
+                <version>${version.light-4j}</version>
             </dependency>
             <dependency>
                 <groupId>com.networknt</groupId>
                 <artifactId>rpc-security</artifactId>
-                <version>${version.light-hybrid-4j}</version>
+                <version>${version.light-4j}</version>
             </dependency>
             <dependency>
                 <groupId>com.networknt</groupId>
@@ -251,48 +248,48 @@
             <dependency>
                 <groupId>com.networknt</groupId>
                 <artifactId>swagger-meta</artifactId>
-                <version>${version.light-rest-4j}</version>
+                <version>${version.light-4j}</version>
             </dependency>
             <dependency>
                 <groupId>com.networknt</groupId>
                 <artifactId>swagger-validator</artifactId>
-                <version>${version.light-rest-4j}</version>
+                <version>${version.light-4j}</version>
             </dependency>
             <dependency>
                 <groupId>com.networknt</groupId>
                 <artifactId>swagger-security</artifactId>
-                <version>${version.light-rest-4j}</version>
+                <version>${version.light-4j}</version>
             </dependency>
 
             <dependency>
                 <groupId>com.networknt</groupId>
                 <artifactId>eventuate-common</artifactId>
-                <version>${version.light-eventuate-4j}</version>
+                <version>${version.light-4j}</version>
             </dependency>
             <dependency>
                 <groupId>com.networknt</groupId>
                 <artifactId>eventuate-event</artifactId>
-                <version>${version.light-eventuate-4j}</version>
+                <version>${version.light-4j}</version>
             </dependency>
             <dependency>
                 <groupId>com.networknt</groupId>
                 <artifactId>eventuate-client</artifactId>
-                <version>${version.light-eventuate-4j}</version>
+                <version>${version.light-4j}</version>
             </dependency>
             <dependency>
                 <groupId>com.networknt</groupId>
                 <artifactId>eventuate-client-jdbc-common</artifactId>
-                <version>${version.light-eventuate-4j}</version>
+                <version>${version.light-4j}</version>
             </dependency>
             <dependency>
                 <groupId>com.networknt</groupId>
                 <artifactId>eventuate-client-jdbc</artifactId>
-                <version>${version.light-eventuate-4j}</version>
+                <version>${version.light-4j}</version>
             </dependency>
             <dependency>
                 <groupId>com.networknt</groupId>
                 <artifactId>eventuate-server-jdbc</artifactId>
-                <version>${version.light-eventuate-4j}</version>
+                <version>${version.light-4j}</version>
             </dependency>
             <dependency>
                 <groupId>com.networknt</groupId>
