@@ -1,0 +1,32 @@
+openapi: 3.0.0
+
+info:
+  title: TestProject
+  version: 1.0.0
+
+servers:
+  - url: 'https://localhost:8099/api'
+
+paths:
+  /testEndPoint:
+    get:
+      parameters:
+        - in: query
+          name: TestObject
+          schema: 
+            $ref: '#/components/schemas/TestObject'
+      responses:
+        '200':
+          description: History something something
+          content:
+            application/json:
+              schema:
+                type: string
+
+components:
+  schemas:
+    TestObject:
+      type: object
+      properties:
+        testProperty:
+          type: string
