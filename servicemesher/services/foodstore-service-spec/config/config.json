@@ -1,0 +1,32 @@
+{
+  "name": "foodstore",
+  "version": "3.0.1",
+  "groupId": "com.networknt",
+  "artifactId": "foodstore",
+  "rootPackage": "com.networknt.foodstore",
+  "handlerPackage":"com.networknt.foodstore.handler",
+  "modelPackage":"com.networknt.foodstore.model",
+  "overwriteHandler": true,
+  "overwriteHandlerTest": true,
+  "overwriteModel": true,
+  "httpPort": 8083,
+  "enableHttp": false,
+  "httpsPort": 8444,
+  "enableHttps": true,
+  "enableHttp2": true,
+  "enableRegistry": false,
+  "supportDb": false,
+  "supportH2ForTest": false,
+  "supportClient": false,
+  "specChangeCodeReGenOnly": true,
+  "dockerOrganization": "networknt",
+  "generateEnvVars": {
+    "generate": true,
+    "skipArray": true,
+    "skipMap": true,
+    "exclude": [
+      "handerl.yml",
+      "values.yml"
+    ]
+  }
+}

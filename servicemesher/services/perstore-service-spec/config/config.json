@@ -1,0 +1,32 @@
+{
+  "name": "petstore",
+  "version": "3.0.1",
+  "groupId": "com.networknt",
+  "artifactId": "petstore",
+  "rootPackage": "com.networknt.petstore",
+  "handlerPackage":"com.networknt.petstore.handler",
+  "modelPackage":"com.networknt.petstore.model",
+  "overwriteHandler": true,
+  "overwriteHandlerTest": true,
+  "overwriteModel": true,
+  "httpPort": 8080,
+  "enableHttp": false,
+  "httpsPort": 8443,
+  "enableHttps": true,
+  "enableHttp2": true,
+  "enableRegistry": false,
+  "supportDb": false,
+  "supportH2ForTest": false,
+  "supportClient": false,
+  "specChangeCodeReGenOnly": true,
+  "dockerOrganization": "networknt",
+  "generateEnvVars": {
+    "generate": true,
+    "skipArray": true,
+    "skipMap": true,
+    "exclude": [
+      "handerl.yml",
+      "values.yml"
+    ]
+  }
+}
