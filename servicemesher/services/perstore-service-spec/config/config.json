@@ -2,7 +2,7 @@
   "name": "petstore",
   "version": "3.0.1",
   "groupId": "com.networknt",
-  "artifactId": "petstore",
+  "artifactId": "petstore-service-api",
   "rootPackage": "com.networknt.petstore",
   "handlerPackage":"com.networknt.petstore.handler",
   "modelPackage":"com.networknt.petstore.model",

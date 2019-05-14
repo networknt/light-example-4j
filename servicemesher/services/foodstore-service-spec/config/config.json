@@ -2,7 +2,7 @@
   "name": "foodstore",
   "version": "3.0.1",
   "groupId": "com.networknt",
-  "artifactId": "foodstore",
+  "artifactId": "foodstore-service-api",
   "rootPackage": "com.networknt.foodstore",
   "handlerPackage":"com.networknt.foodstore.handler",
   "modelPackage":"com.networknt.foodstore.model",

@@ -2,7 +2,7 @@
   "name": "computerstore",
   "version": "3.0.1",
   "groupId": "com.networknt",
-  "artifactId": "computerstore",
+  "artifactId": "computerstore-service-api",
   "rootPackage": "com.networknt.computerstore",
   "handlerPackage":"com.networknt.computerstore.handler",
   "modelPackage":"com.networknt.computerstore.model",
