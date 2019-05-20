@@ -1,0 +1,1056 @@
+openapi: 3.0.0
+servers:
+  - url: 'http://goals.cibc.com'
+info:
+  version: 1.0.24
+  title: DGP  Planning service
+  description: >-
+    Provide endpoint for DGP planning service; Save, Retrieve, Update Goal,
+    planning
+  contact:
+    name: DGP Scrum Team 2
+    email: DL-DGPScrumTeam2@cibc.com
+  license:
+    name: Apache 2.0
+    url: 'http://www.apache.org/licenses/LICENSE-2.0.html'
+paths:
+  /planningunit:
+    get:
+      description: return a planning unit based on input query parameter.
+      operationId: getPlanningUnit
+      responses:
+        '200':
+          description: A list of Planning unit
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PlanningUnit'
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      security:
+        - planningunit_auth:
+            - 'read:Planunit'
+      parameters:
+        - name: clientXRefId
+          in: query
+          description: x-ref id of the client
+          required: false
+          schema:
+            type: string
+            minLength: 1
+        - name: clientEcifId
+          in: query
+          description: x-ref id of the client
+          required: false
+          schema:
+            type: string
+            minLength: 1
+    post:
+      description: Add Planning Unit
+      operationId: AddPlanningUnit
+      requestBody:
+        description: Add Planning Unit
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PlanningUnit'
+      responses:
+        '200':
+          description: response with saved planning unit info
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PlanningUnit'
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      security:
+        - planningunit_auth:
+            - 'read:Planunit'
+            - 'write:Planunit'
+  '/planningunit/{planningUnitId}':
+    parameters:
+      - in: path
+        name: planningUnitId
+        required: true
+        schema:
+          type: string
+          minimum: 1
+        description: The planningUnit ID
+    get:
+      description: return a planning unit based on input path parameter.
+      operationId: getPlanningUnitById
+      responses:
+        '200':
+          description: A list containing one Planning unit
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PlanningUnit'
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      security:
+        - planningunit_auth:
+            - 'read:Planunit'
+  '/planningunit/{planningUnitId}/people/{personId}':
+    parameters:
+      - in: path
+        name: planningUnitId
+        required: true
+        schema:
+          type: string
+          minimum: 1
+        description: The planningUnit ID
+      - in: path
+        name: personId
+        required: true
+        schema:
+          type: string
+          minimum: 1
+        description: The person ID        
+    get:
+      description: return a person base on the planning unit and person Id.
+      operationId: getPersonDetail
+      responses:
+        '200':
+          description: A person
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Person'
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      security:
+        - planningunit_auth:
+            - 'read:Planunit'
+    delete:
+      description: return a  deleted Id.
+      operationId: DeletePersonById
+      responses:
+        '200':
+          description: deleted person id
+          content:
+            application/json:
+              schema:
+                type: string
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      security:
+        - planningunit_auth:
+            - 'read:Planunit'
+            - 'write:Planunit'
+    put:
+      description: >-
+        update a person info base on the palnning unitid and person id  from the request and
+        return the updated person details.
+      operationId: UpdatePersonDetails
+      requestBody:
+        description: Update Person details
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Person'
+      responses:
+        '200':
+          description: A person
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Person'
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      security:
+        - planningunit_auth:
+            - 'read:Planunit'
+            - 'write:Planunit'   
+  '/planningunit/{planningUnitId}/people':
+    parameters:
+      - in: path
+        name: planningUnitId
+        required: true
+        schema:
+          type: string
+          minimum: 1
+        description: The planningUnit ID
+    post:
+      description: >-
+        add a person info base on the palnning unitid  from the request and
+        return the new person details.
+      operationId: CreatePersonForPlanningUnit
+      requestBody:
+        description: Create Person 
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Person'
+      responses:
+        '200':
+          description: A person
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Person'
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      security:
+        - planningunit_auth:
+            - 'read:Planunit'
+            - 'write:Planunit'              
+  /goals:
+    get:
+      description: return a list of goals base on the client's X-ref Id.
+      operationId: RetrieveGoalList
+      responses:
+        '200':
+          description: A list of goals
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Goal'
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      security:
+        - goal_auth:
+            - 'read:Goals'
+      parameters:
+        - name: clientXRefId
+          in: query
+          description: x-ref id of the client
+          required: false
+          schema:
+            type: string
+            minLength: 1
+        - name: clientEcifId
+          in: query
+          description: x-ref id of the client
+          required: false
+          schema:
+            type: string
+            minLength: 1
+        - name: goalStatusCode
+          in: query
+          description: Get the goal status code
+          required: false
+          schema:
+            type: string
+            minLength: 1
+    post:
+      description: Add Goal
+      operationId: AddGoal
+      requestBody:
+        description: Add Goal
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Goal'
+      responses:
+        '200':
+          description: response with saved goal info
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Goal'
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      security:
+        - goal_auth:
+            - 'read:Goals'
+            - 'write:Goals'
+  '/goals/{goalId}':
+    parameters:
+      - in: path
+        name: goalId
+        required: true
+        schema:
+          type: string
+          minimum: 1
+        description: The Goal ID
+    get:
+      description: return a goal base on the goalId.
+      operationId: RetrieveGoalDetails
+      responses:
+        '200':
+          description: A goal
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Goal'
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      security:
+        - goal_auth:
+            - 'read:Goals'
+    delete:
+      description: return a goalId deleted Id.
+      operationId: DeleteGoalById
+      responses:
+        '200':
+          description: deleted goal id
+          content:
+            application/json:
+              schema:
+                type: string
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      security:
+        - goal_auth:
+            - 'read:Goals'
+            - 'write:Goals'
+    put:
+      description: >-
+        update a goal base on the goalId and goal details from the request and
+        return the updated goal details.
+      operationId: UpdateGoalDetails
+      requestBody:
+        description: Update goal details
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Goal'
+      responses:
+        '200':
+          description: A goal
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Goal'
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      security:
+        - goal_auth:
+            - 'read:Goals'
+            - 'write:Goals'
+  /goals/{goalId}/recommendations:
+    parameters:
+      - in: path
+        name: goalId
+        required: true
+        schema:
+          type: string
+          minimum: 1
+        description: The Goal ID
+    get:
+      description: return a goal base on the goalId.
+      operationId: getGoalRecommendations
+      responses:
+        '200':
+          description: Goal Recommendations by goal id
+          content:
+            application/json:
+              schema:
+                type: string
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      security:
+        - goal_auth:
+            - 'read:Goals'
+  /goals/goaltypes:
+    get:
+      description: return all goaltypes.
+      operationId: getGoalTypies
+      responses:
+        '200':
+          description: Goal type list
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/GoalTypes'
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      security:
+        - goal_auth:
+            - 'read:Goals'
+  /goals/progress:
+    post:
+      description: re calc goal progress.
+      operationId: goalProgressRecalc
+      parameters:
+        - name: clientXRefId
+          in: query
+          description: x-ref id of the client
+          required: false
+          schema:
+            type: string
+            minLength: 1
+      responses:
+        '200':
+          description: Goal progress info
+          content:
+            application/json:
+              schema:
+                type: string
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      security:
+        - goal_auth:
+            - 'read:Goals'
+  /clientregistration:
+    post:
+      description: check client registration and return clientXrefId.
+      operationId: clientRegistration
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              required:
+                - ecifId
+              properties:
+                ecifId:
+                  description: the ECIF id to look up service registration with
+                  type: string
+      responses:
+        '200':
+          description: registered client's clientXrefId
+          content:
+            application/json:
+              schema:
+                type: string
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      security:
+        - goal_auth:
+            - 'read:Goals'
+  /plan:
+    get:
+      description: return a list of plan base on the client's X-ref Id.
+      operationId: RetrievePlans
+      responses:
+        '200':
+          description: A list of plans
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Plan'
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      security:
+        - plan_auth:
+            - 'read:Plans'
+      parameters:
+        - name: clientXRefId
+          in: query
+          description: x-ref id of the client
+          required: false
+          schema:
+            type: string
+            minLength: 1
+        - name: clientEcifId
+          in: query
+          description: x-ref id of the client
+          required: false
+          schema:
+            type: string
+            minLength: 1
+    post:
+      description: Add Plan
+      operationId: createPlan
+      requestBody:
+        description: Add new Plan
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Goal'
+      responses:
+        '200':
+          description: response with saved Plan info
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Plan'
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      security:
+        - plan_auth:
+            - 'read:Plans'
+            - 'write:Plans'
+  '/plan/{planId}':
+    parameters:
+      - in: path
+        name: planId
+        required: true
+        schema:
+          type: string
+          minimum: 1
+        description: The plan ID
+    get:
+      description: return a plan base on the planId.
+      operationId: getPlanById
+      responses:
+        '200':
+          description: A plan
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Plan'
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      security:
+        - plan_auth:
+            - 'read:Plans'
+    delete:
+      description: return a planId deleted Id.
+      operationId: DeletePlanById
+      responses:
+        '200':
+          description: deleted plan id
+          content:
+            application/json:
+              schema:
+                type: string
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      security:
+        - plan_auth:
+            - 'read:Plans'
+            - 'write:Plans'
+    put:
+      description: >-
+        update a plan base on the planId and plan details from the request and
+        return the updated plan details.
+      operationId: UpdatePlan
+      requestBody:
+        description: Update plan details
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Plan'
+      responses:
+        '200':
+          description: A plan
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Plan'
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      security:
+        - plan_auth:
+            - 'read:Plans'
+            - 'write:Plans'
+components:
+  securitySchemes:
+    goal_auth:
+      type: oauth2
+      flows:
+        implicit:
+          authorizationUrl: 'http://localhost:8080/oauth2/code'
+          scopes:
+            'read:Goals': read access to goals
+            'write:Goals': write access to goals
+    plan_auth:
+      type: oauth2
+      flows:
+        implicit:
+          authorizationUrl: 'http://localhost:8080/oauth2/code'
+          scopes:
+            'read:Plans': read access to plans
+            'write:Plans': write access to Plans
+    planningunit_auth:
+      type: oauth2
+      flows:
+        implicit:
+          authorizationUrl: 'http://localhost:8080/oauth2/code'
+          scopes:
+            'read:Planunit': read access to plans
+            'write:Planunit': write access to Plans            
+  schemas:
+    Plan:
+      type: object
+      required:
+        - palnName
+      properties:
+        planId:
+          description: Plan id.
+          nullable: true
+          type: string
+        planName:
+          description: The plan name
+          type: string
+          minLength: 1
+          maxLength: 60
+    GoalTypes:
+      type: object
+      properties:
+        effectiveDate:
+          description: Effective Date of goal Type
+          type: string
+          nullable: true
+        expiryDate:
+          description: Expiry Date of goal Type
+          type: string
+          nullable: true
+        descriptionEnglish:
+          description: Description in English of goal types
+          type: string
+          nullable: true
+        descriptionFrench:
+          description: Description in French of goal types
+          type: string
+          nullable: true
+        goalTypeCode:
+          $ref: '#/components/schemas/GoalTypeEnum'
+    Goal:
+      type: object
+      required:
+        - goalName
+        - goalTypeCode
+        - persons
+      properties:
+        goalId:
+          description: The goal id. Do not include this field in post method request.
+          type: string
+        planId:
+          description: Plan id.
+          nullable: true
+          type: string
+        goalName:
+          description: The goal name
+          type: string
+          minLength: 1
+          maxLength: 60
+        amount:
+          description: The cost of the goal
+          type: number
+          format: decimal
+          nullable: true
+        goalSubTypeCode:
+          description: The goal subtype
+          type: string
+        startDate:
+          description: The date the plan start.
+          type: string
+          format: date     
+        endDate:
+          description: The date the plan end.
+          type: string
+          format: date            
+        goalTypeCode:
+          $ref: '#/components/schemas/GoalTypeEnum'
+        goalStatusCode:
+          $ref: '#/components/schemas/GoalStatusCodeEnum'
+        modifiedBy:
+          description: >-
+            The last changed operator Id. Do not include this field in post
+            method request.
+          type: string
+          nullable: true
+        modifiedOn:
+          description: >-
+            The last changed date and time. Do not include this field in post
+            method request.
+          type: string
+          nullable: true
+        createdBy:
+          description: >-
+            The created operator Id. Do not include this field in post method
+            request.
+          type: string
+          nullable: true
+        createdOn:
+          description: >-
+            The created date and time. Do not include this field in post method
+            request.
+          type: string
+          nullable: true
+        note:
+          description: The note of the goal
+          type: string
+          nullable: true
+          maxLength: 500
+        isTaxDeductible:
+          description: The indicator to indicate if it is tax deductiable
+          type: boolean
+        isRESPFunded:
+          description: The indicator to indicate if is is RESP funded
+          type: boolean 
+        amountFrequencyDuration:
+          type: number
+          format: int32     
+        channelCode:
+          $ref: '#/components/schemas/ChannelCode'   
+        priority:
+          description: The priority of the goal
+          type: string
+          nullable: true
+        amountFrequency:
+          $ref: '#/components/schemas/Frequency'
+        persons:
+          type: array
+          items:        
+            $ref: '#/components/schemas/Person'
+        saveForAnythingDetails:
+          $ref: '#/components/schemas/SaveForAnythingDetails'
+        payOffDebtDetails:
+          $ref: '#/components/schemas/PayOffDebtDetails'
+    Person:
+      type: object
+      properties:
+        personId:
+          description: The client Id in client table
+          type: string
+          nullable: true
+        connectionRole:
+          $ref: '#/components/schemas/ConnectionRole'
+        ecifClientId:
+          description: The ecif Client Id
+          type: string
+          nullable: true          
+        personFirstName:
+          description: The the first name of the client
+          type: string
+          nullable: true
+        personLastName:
+          description: The the first name of the client
+          type: string
+          nullable: true
+        ecifXrefIdRegistered:
+          description: The indicator to indicate if the person registed on ECIF or not
+          type: boolean
+        isRetired:
+          description: The indicator to indicate if the person retired
+          type: boolean
+        yearOfBirth:
+          type: number
+          format: int32 
+        retirementAge:
+          type: number
+          format: int32             
+        createdBy:
+          description: The operator Id of creating the client
+          type: string
+          nullable: true
+        createdOn:
+          description: The date of creating the client
+          type: string
+          nullable: true
+        lastModifiedBy:
+          description: The operator Id of modifing the client
+          type: string
+          nullable: true
+        lastModifiedOn:
+          description: The date of modifing the client
+          type: string
+          nullable: true
+    PlanningUnit:
+      type: object
+      properties:
+        planningUnitId:
+          description: The planningUnit Id in planning unit table
+          type: string
+          nullable: true
+        description:
+          description: The Planning unit description
+          type: string
+          nullable: true   
+        channelCode:
+          $ref: '#/components/schemas/ChannelCode'   
+        persons:
+          type: array
+          items:        
+            $ref: '#/components/schemas/Person'          
+        createdBy:
+          description: The operator Id of creating the client
+          type: string
+          nullable: true
+        createdOn:
+          description: The date of creating the client
+          type: string
+          nullable: true
+        lastModifiedBy:
+          description: The operator Id of modifing the client
+          type: string
+          nullable: true
+        lastModifiedOn:
+          description: The date of modifing the client
+          type: string
+          nullable: true          
+    SaveForAnythingDetails:
+      type: object
+      nullable: true
+      required:
+        - costFrequencyCode
+        - currencyCode
+      properties:
+        costFrequencyCode:
+          description: The frequency of the goal
+          type: string
+          enum:
+            - NA
+            - ONE_TIME
+            - YEARLY
+            - MONTHLY
+            - BI_WEEKLY
+            - WEEKLY
+        currencyCode:
+          $ref: '#/components/schemas/CurrencyCode'
+        recurrence:
+          description: The recurrence for the frequency
+          type: integer
+          nullable: true
+          minimum: 1
+          maximum: 999
+        ownedHomeCanadaInd:
+          description: Indicator for "Have you owned a home in Canada before"
+          type: string
+          nullable: true
+          enum:
+            - 'Y'
+            - 'N'
+            - NA
+        investmentPropertyInd:
+          description: Indicator for "Is this an investment property"
+          type: string
+          nullable: true
+          enum:
+            - 'Y'
+            - 'N'
+            - NA
+        costTimeValue:
+          description: Indicate the value for the cost is TODAY or FUTURE
+          type: string
+          nullable: true
+          enum:
+            - TODAY
+            - FUTURE
+        targetDateCode:
+          description: The target date of the goal
+          type: string
+          nullable: true
+          enum:
+            - NA
+            - Y_0_5
+            - Y_5_10
+            - Y_10_PLUS
+        startDate:
+          description: The start year month of the goal
+          type: string
+          nullable: true
+          pattern: '^[0-9]{4}(-[0-1]?[0-9])?$'
+        completeDate:
+          description: The complete year month of the goal
+          type: string
+          nullable: true
+          pattern: '^[0-9]{4}(-[0-1]?[0-9])?$'
+    PayOffDebtDetails:
+      type: object
+      nullable: true
+      properties:
+        payOffDebtTypeCode:
+          description: The product type code of the debt
+          type: string
+          nullable: true
+          enum:
+            - MORTGAGE
+            - STUDENT_DEBT
+            - CREDIT_CARD_DEBT
+            - PLC
+            - LOAN
+            - OTHER_DEBT
+        interestRate:
+          description: The interest rate of the debt
+          type: string
+          nullable: true
+          pattern: '^[0-9]+\.[0-9]{3}$'
+          maxLength: 6
+        paymentFrequencyCode:
+          $ref: '#/components/schemas/Frequency'
+        paymentAmount:
+          description: The amount of the debt
+          type: string
+          nullable: true
+          pattern: '^[0-9]+\.[0-9]{2}$'
+          maxLength: 11
+        maturityDate:
+          description: The maturity date of the debt
+          type: string
+          nullable: true
+          pattern: '^([0-9]{4})-(1[0-2]|0[1-9])-(3[01]|0[1-9]|[12][0-9])$'
+        financialInstitutionCode:
+          description: The issuer of the debt
+          type: string
+          nullable: true
+          minLength: 1
+          maxLength: 30
+        prepaymentType:
+          description: The prepayment type of the debt
+          type: string
+          nullable: true
+          enum:
+            - OPEN
+            - CLOSED_ENDED
+    CurrencyCode:
+      type: string
+      enum:
+        - CAD
+        - USD
+        - EUR
+    Frequency:
+      description: The frequency of the goal
+      type: string
+      enum:
+        - NA
+        - ONE_TIME
+        - YEARLY
+        - SEMI_YEARLY
+        - MONTHLY
+        - BI_WEEKLY
+        - WEEKLY
+        - DAILY
+    GoalStatusCodeEnum:
+      description: The goal status code
+      type: string
+      enum:
+        - NON_ACTION
+        - ACTION
+        - RECYCLE
+        - DELETE
+    GoalTypeEnum:
+      description: The goal type
+      type: string
+      enum:
+        - EDUCATION
+        - MILESTONE
+        - RECURRING
+        - RETIREMENT
+        - MULTI_YEAR
+        - ONE_TIME
+        - PAY_DOWN_LOAN
+        - PAY_DOWN_MTG
+    ConnectionRole:
+      description: The connection role
+      type: string
+      enum:
+        - PRIMARY
+        - SPOUSE
+        - COMMON_LAW_PARTNER
+        - CHILD
+        - GRANDCHILD
+        - PARENT
+        - GUARDIAN
+        - SIBLING
+        - FRIEND
+        - OTHER
+    ChannelCode:
+      description: The Channel Code
+      type: string
+      enum:
+        - ASSISTED_VOYANT
+        - DIGITAL_OLB
+    Error:
+      type: object
+      required:
+        - statusCode
+        - code
+        - message
+        - description
+      properties:
+        statusCode:
+          type: integer
+          format: int32
+        code:
+          type: string
+        message:
+          type: string
+        description:
+          type: string
