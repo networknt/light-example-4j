@@ -54,13 +54,13 @@ public class BooksBookIdDeleteHandlerTest {
             throw new ClientException(e);
         }
         final AtomicReference<ClientResponse> reference = new AtomicReference<>();
-        String requestUri = "/v1/books/oExeaRCMXiTwvEhINwFLKkeRUaJm";
+        String requestUri = "/v1/books/ziGIuFB";
         String httpMethod = "delete";
         try {
             ClientRequest request = new ClientRequest().setPath(requestUri).setMethod(Methods.DELETE);
             
             //customized header parameters 
-            request.getRequestHeaders().put(new HttpString("key"), "mJcbHcdm");
+            request.getRequestHeaders().put(new HttpString("key"), "ifLFVJakmraxuiyM");
             connection.sendRequest(request, client.createClientCallback(reference, latch));
             
             latch.await();
