@@ -1,0 +1,28 @@
+{
+  "name": "dgp-planning-service",
+  "version": "1.00",
+  "groupId": "com.cibc.dgp.api",
+  "artifactId": "dgp-planning-service",
+  "rootPackage": "com.cibc.dgp.api.planning",
+  "handlerPackage":"com.cibc.dgp.api.planning.handler",
+  "modelPackage":"com.cibc.dgp.api.planning.model",
+  "overwriteHandler": false,
+  "overwriteHandlerTest": false,
+  "overwriteModel": false,
+  "httpPort": 9053,
+  "enableHttp": false,
+  "httpsPort": 8653,
+  "enableHttps": true,
+  "enableRegistry": false,
+  "specChangeCodeReGenOnly": true,
+  "supportDb": false,
+  "generateEnvVars": {
+    "generate": true,
+    "skipArray": true,
+    "skipMap": true,
+    "exclude": [
+      "handerl.yml",
+      "values.yml"
+    ]
+  }
+}

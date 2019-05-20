@@ -1,0 +1,25 @@
+version: '2'
+
+services:
+
+  consul:
+    image: consul:latest
+    command: "agent -server -data-dir /tmp/consul -bootstrap -ui -client=0.0.0.0"
+    container_name: consul
+    environment:
+    - CONSUL_LOCAL_CONFIG={"acl_datacenter":"dc1","acl_default_policy":"allow","acl_down_policy":"extend-cache","acl_master_token":"the_one_ring","bootstrap_expect":1,"datacenter":"dc1","data_dir":"/usr/local/bin/consul.d/data","server":true}
+    networks:
+      - localnet
+    ports:
+    - 8500:8500
+    - 8400:8400
+    - 8300:8300
+
+
+#
+# Networks
+#
+networks:
+    localnet:
+        # driver: bridge
+        external: true
