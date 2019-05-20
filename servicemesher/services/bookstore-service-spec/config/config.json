@@ -18,7 +18,7 @@
   "supportDb": false,
   "supportH2ForTest": false,
   "supportClient": false,
-  "specChangeCodeReGenOnly": true,
+  "specChangeCodeReGenOnly": false,
   "dockerOrganization": "networknt",
   "generateEnvVars": {
     "generate": true,
