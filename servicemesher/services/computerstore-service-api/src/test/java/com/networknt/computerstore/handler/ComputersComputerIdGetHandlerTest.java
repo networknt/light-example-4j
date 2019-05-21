@@ -54,7 +54,7 @@ public class ComputersComputerIdGetHandlerTest {
             throw new ClientException(e);
         }
         final AtomicReference<ClientResponse> reference = new AtomicReference<>();
-        String requestUri = "/v1/computers/UyxZiwmASFiMcHcUmErsehCdtun";
+        String requestUri = "/v1/computers/nlrZMmvPuYloPtbSsqSpFJxfJN";
         String httpMethod = "get";
         try {
             ClientRequest request = new ClientRequest().setPath(requestUri).setMethod(Methods.GET);

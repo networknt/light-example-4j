@@ -1,6 +1,8 @@
 
 # Singleton service factory configuration/IoC injection
 service.singletons:
+  - com.networknt.utility.Decryptor:
+      - com.networknt.decrypt.AESDecryptor
   - com.networknt.registry.URL:
       - com.networknt.registry.URLImpl:
           parameters:

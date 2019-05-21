@@ -477,6 +477,75 @@
 							</arguments>
 						</configuration>
 					</execution>
+					<execution>
+						<id>light4j-codegen3</id>
+						<phase>process-resources</phase>
+						<goals>
+							<goal>exec</goal>
+						</goals>
+						<inherited>false</inherited>
+						<configuration>
+							<executable>java</executable>
+							<arguments>
+								<argument>-jar</argument>
+								<argument>${settings.localRepository}/com/networknt/codegen-cli/${version.light-4j}/codegen-cli-${version.light-4j}.jar</argument>
+								<argument>-f</argument>
+								<argument>openapi</argument>
+								<argument>-o</argument>
+								<argument>./</argument>
+								<argument>-m</argument>
+								<argument>specification/bookstore/openapi.yaml</argument>
+								<argument>-c</argument>
+								<argument>specification/bookstore/config.json</argument>
+							</arguments>
+						</configuration>
+					</execution>
+					<execution>
+						<id>light4j-codegen4</id>
+						<phase>process-resources</phase>
+						<goals>
+							<goal>exec</goal>
+						</goals>
+						<inherited>false</inherited>
+						<configuration>
+							<executable>java</executable>
+							<arguments>
+								<argument>-jar</argument>
+								<argument>${settings.localRepository}/com/networknt/codegen-cli/${version.light-4j}/codegen-cli-${version.light-4j}.jar</argument>
+								<argument>-f</argument>
+								<argument>openapi</argument>
+								<argument>-o</argument>
+								<argument>./</argument>
+								<argument>-m</argument>
+								<argument>specification/computerstore/openapi.yaml</argument>
+								<argument>-c</argument>
+								<argument>specification/computerstore/config.json</argument>
+							</arguments>
+						</configuration>
+					</execution>
+					<execution>
+						<id>light4j-codegen5</id>
+						<phase>process-resources</phase>
+						<goals>
+							<goal>exec</goal>
+						</goals>
+						<inherited>false</inherited>
+						<configuration>
+							<executable>java</executable>
+							<arguments>
+								<argument>-jar</argument>
+								<argument>${settings.localRepository}/com/networknt/codegen-cli/${version.light-4j}/codegen-cli-${version.light-4j}.jar</argument>
+								<argument>-f</argument>
+								<argument>openapi</argument>
+								<argument>-o</argument>
+								<argument>./</argument>
+								<argument>-m</argument>
+								<argument>specification/foodstore/openapi.yaml</argument>
+								<argument>-c</argument>
+								<argument>specification/foodstore/config.json</argument>
+							</arguments>
+						</configuration>
+					</execution>
 				</executions>
 			</plugin> 
 			<!-- end Google error-proce compiles -->
