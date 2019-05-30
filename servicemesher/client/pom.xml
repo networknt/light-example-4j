@@ -4,7 +4,7 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.networknt</groupId>
-	<artifactId>servicemesher-mock-client</artifactId>
+	<artifactId>marketsample-service</artifactId>
 	<packaging>jar</packaging>
 	<name>servicemesher-client</name>
 	<version>1.00</version>
@@ -118,7 +118,11 @@
 			<artifactId>jackson-datatype-jdk8</artifactId>
 			<version>${version.jackson}</version>
 		</dependency>
-
+		<dependency>
+			<groupId>com.networknt</groupId>
+			<artifactId>light-consumer-4j</artifactId>
+			<version>${version.light-4j}</version>
+		</dependency>
 		<dependency>
 			<groupId>com.networknt</groupId>
 			<artifactId>handler</artifactId>
@@ -454,98 +458,7 @@
 							</arguments>
 						</configuration>
 					</execution>
-					<execution>
-						<id>light4j-codegen2</id>
-						<phase>process-resources</phase>
-						<goals>
-							<goal>exec</goal>
-						</goals>
-						<inherited>false</inherited>
-						<configuration>
-							<executable>java</executable>
-							<arguments>
-								<argument>-jar</argument>
-								<argument>${settings.localRepository}/com/networknt/codegen-cli/${version.light-4j}/codegen-cli-${version.light-4j}.jar</argument>
-								<argument>-f</argument>
-								<argument>openapi</argument>
-								<argument>-o</argument>
-								<argument>./</argument>
-								<argument>-m</argument>
-								<argument>specification/petstore/openapi.yaml</argument>
-								<argument>-c</argument>
-								<argument>specification/petstore/config.json</argument>
-							</arguments>
-						</configuration>
-					</execution>
-					<execution>
-						<id>light4j-codegen3</id>
-						<phase>process-resources</phase>
-						<goals>
-							<goal>exec</goal>
-						</goals>
-						<inherited>false</inherited>
-						<configuration>
-							<executable>java</executable>
-							<arguments>
-								<argument>-jar</argument>
-								<argument>${settings.localRepository}/com/networknt/codegen-cli/${version.light-4j}/codegen-cli-${version.light-4j}.jar</argument>
-								<argument>-f</argument>
-								<argument>openapi</argument>
-								<argument>-o</argument>
-								<argument>./</argument>
-								<argument>-m</argument>
-								<argument>specification/bookstore/openapi.yaml</argument>
-								<argument>-c</argument>
-								<argument>specification/bookstore/config.json</argument>
-							</arguments>
-						</configuration>
-					</execution>
-					<execution>
-						<id>light4j-codegen4</id>
-						<phase>process-resources</phase>
-						<goals>
-							<goal>exec</goal>
-						</goals>
-						<inherited>false</inherited>
-						<configuration>
-							<executable>java</executable>
-							<arguments>
-								<argument>-jar</argument>
-								<argument>${settings.localRepository}/com/networknt/codegen-cli/${version.light-4j}/codegen-cli-${version.light-4j}.jar</argument>
-								<argument>-f</argument>
-								<argument>openapi</argument>
-								<argument>-o</argument>
-								<argument>./</argument>
-								<argument>-m</argument>
-								<argument>specification/computerstore/openapi.yaml</argument>
-								<argument>-c</argument>
-								<argument>specification/computerstore/config.json</argument>
-							</arguments>
-						</configuration>
-					</execution>
-					<execution>
-						<id>light4j-codegen5</id>
-						<phase>process-resources</phase>
-						<goals>
-							<goal>exec</goal>
-						</goals>
-						<inherited>false</inherited>
-						<configuration>
-							<executable>java</executable>
-							<arguments>
-								<argument>-jar</argument>
-								<argument>${settings.localRepository}/com/networknt/codegen-cli/${version.light-4j}/codegen-cli-${version.light-4j}.jar</argument>
-								<argument>-f</argument>
-								<argument>openapi</argument>
-								<argument>-o</argument>
-								<argument>./</argument>
-								<argument>-m</argument>
-								<argument>specification/foodstore/openapi.yaml</argument>
-								<argument>-c</argument>
-								<argument>specification/foodstore/config.json</argument>
-							</arguments>
-						</configuration>
-					</execution>
+
 				</executions>
 			</plugin> 
 			<!-- end Google error-proce compiles -->
