@@ -18,7 +18,8 @@
   "supportDb": false,
   "supportH2ForTest": false,
   "supportClient": false,
-  "specChangeCodeReGenOnly": true,
+  "specChangeCodeReGenOnly": false,
+  "generateValuesYml": true,
   "dockerOrganization": "networknt",
   "generateEnvVars": {
     "generate": true,
@@ -26,7 +27,8 @@
     "skipMap": true,
     "exclude": [
       "handerl.yml",
-      "values.yml"
+      "values.yml",
+      "config.yml"
     ]
   }
 }
