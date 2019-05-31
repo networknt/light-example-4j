@@ -143,11 +143,6 @@
         </dependency>
         <dependency>
             <groupId>com.networknt</groupId>
-            <artifactId>decryptor</artifactId>
-            <version>${version.light-4j}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.networknt</groupId>
             <artifactId>server</artifactId>
             <version>${version.light-4j}</version>
         </dependency>

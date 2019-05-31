@@ -8,12 +8,28 @@ It use java async concurrent feature and process the service call parallel
 
 ## Introduction:
 
+ For microservice application, The application will be split into a set of smaller, interconnected services instead of building a single monolithic application.
+ Each microservice is a small application that has its own hexagonal architecture consisting of business logic along with various adapters.
+ So there will be lots service to service call to get the required data for business method.
+ Microservices architecture adding a complexity to the project just by the fact that a microservices application is a distributed system.
 
 
+ So massive service call need guarantee very good performance in order to complete the business logic in short time. If those service call implement synchronously that means the service calls
+ will be implement one by one and any of them take long time will hangup the whole service.
+
+
+ Light-4j client module and light-consumer-4j component use jave CompletableFuture asynchronous programming to implement
+ non-blocking code by running a task on a separate thread than the main application thread and notifying the main thread about its progress, completion or failure;
+
+
+ We will introduce the detail steps for the implementation in this project as below.
 
 
 
 ![diagram](doc/servicemesher.png)
+
+
+
 
 
 ## Modules
@@ -45,10 +61,159 @@ It use java async concurrent feature and process the service call parallel
     In client folder, we build a client service API which use light-4j client module's consumer component to call the service APIs parallel.
 
 
-
 ##  Structure diagram
 
 
+
+![diagram](doc/servicecall.png)
+
+
+##  Code implementation
+
+
+### service config
+
+Since the client side service API will call multiple services, to avoid hardcode the service id in the code, we define it in the config file.
+By using the light-4j token injection feature, we set the detail value at values.yml:
+
+
+`values.yml`
+
+
+```yaml
+#--------------------------------------------------------------------------------
+# service-define.yml
+#--------------------------------------------------------------------------------
+service-define.serviceMap:
+  petstore:
+    {  serviceId: "com.networknt.petstore-service-api-3.0.1", protocol: "https",   environment: null , requestKey: null}
+  bookstore:
+    {  serviceId: "com.networknt.bookstore-service-api-3.0.1", protocol: "https",   environment: null , requestKey: null}
+  foodstore:
+    {  serviceId: "com.networknt.foodstore-service-api-3.0.1", protocol: "https",   environment: null , requestKey: null}
+  computerstore:
+    {  serviceId: "com.networknt.computerstore-service-api-3.0.1", protocol: "https",   environment: null , requestKey: null}
+
+
+```
+
+The service config will be convert to ServiceMapper object by Config mapping:
+
+```
+    ServiceMapper serviceMapper = (ServiceMapper) Config.getInstance().getJsonObjectConfig(ServiceMapper.CONFIG_NAME, ServiceMapper.class);
+```
+
+
+`ServiceMapper.java`
+
+```java
+package com.networknt.market.service;
+
+import java.util.HashMap;
+import java.util.Map;
+
+public class ServiceMapper {
+    public static final String CONFIG_NAME = "service-define";
+
+    private Map<String, ServiceObject> serviceMap = new HashMap<>();
+
+
+    public ServiceMapper() {
+    }
+
+    public Map<String, ServiceObject> getServiceMap() {
+        return serviceMap;
+    }
+
+    public void setServiceMap(Map<String, ServiceObject> serviceMap) {
+        this.serviceMap = serviceMap;
+    }
+}
+
+```
+
+
+Then in the
+
+`MarketServiceImpl.java`
+
+```java
+
+public class MarketServiceImpl implements MarketService{
+    private static final Logger logger = LoggerFactory.getLogger(MarketServiceImpl.class);
+    private static final String PET_STORE = "petstore";
+    private static final String FOOD_STORE = "foodstore";
+    private static final String BOOK_STORE = "bookstore";
+    private static final String COMPUTER_STORE = "computerstore";
+
+    ServiceMapper serviceMapper = (ServiceMapper) Config.getInstance().getJsonObjectConfig(ServiceMapper.CONFIG_NAME, ServiceMapper.class);
+    @Override
+    public Market getMarket() throws Exception {
+        Market market = new Market();
+        Http2ServiceRequest listAllPets = getHttp2ServiceRequest(PET_STORE, "/v1/pets", "GET");
+        Http2ServiceRequest listAllFood = getHttp2ServiceRequest(FOOD_STORE, "/v1/food", "GET");
+        Http2ServiceRequest listAllComputers = getHttp2ServiceRequest(COMPUTER_STORE, "/v1/computers", "GET");
+        Http2ServiceRequest listAllBooks = getHttp2ServiceRequest(BOOK_STORE, "/v1/books", "GET");
+
+        CompletableFuture<List> petsFutureResponse = listAllPets.callForTypedObject(List.class);
+        CompletableFuture<List> foodFutureResponse = listAllFood.callForTypedObject(List.class);
+        CompletableFuture<List> computersFutureResponse = listAllComputers.callForTypedObject(List.class);
+        CompletableFuture<List> booksFutureResponse = listAllBooks.callForTypedObject(List.class);
+
+        Collection<CompletableFuture<?>> completableFutures = new HashSet<>();
+        completableFutures.add(petsFutureResponse);
+        completableFutures.add(foodFutureResponse);
+        completableFutures.add(computersFutureResponse);
+        completableFutures.add(booksFutureResponse);
+        completableFutures.addAll(mapToMarket(market, petsFutureResponse, foodFutureResponse, computersFutureResponse, booksFutureResponse));
+        try {
+            CompletableFuture.allOf(completableFutures.toArray(new CompletableFuture[0])).get(3, TimeUnit.SECONDS);
+        } catch(Exception e) {
+            logger.error("Some information was unavailable when assembling the market value.", e);
+            System.out.println("error:" + e);
+            throw new ApiException(new Status("ERR10010"));
+        }
+        return market;
+    }
+
+
+    public  Collection<CompletableFuture<?>> mapToMarket(Market market,CompletableFuture<List> petsFutureResponse, CompletableFuture<List> foodFutureResponse,
+                                                              CompletableFuture<List> computersFutureResponse,CompletableFuture<List> booksFutureResponse) {
+        Collection<CompletableFuture<?>> completableFutures = new HashSet<>();
+
+        CompletableFuture<Void> setPets = petsFutureResponse.thenAccept(pets -> market.setPets(pets));
+        CompletableFuture<Void> setFood = foodFutureResponse.thenAccept(food -> market.setFoodbox(food));
+        CompletableFuture<Void> setBooks = booksFutureResponse.thenAccept(books -> market.setBooks(books));
+        CompletableFuture<Void> setComputers = computersFutureResponse.thenAccept(computers -> market.setComputers(computers));
+
+        completableFutures.add(setPets);
+        completableFutures.add(setFood);
+        completableFutures.add(setBooks);
+        completableFutures.add(setComputers);
+        return completableFutures;
+    }
+
+    private Http2ServiceRequest getHttp2ServiceRequest(String serviceName, String path, String method) throws Exception {
+        ServiceObject serviceObject = serviceMapper.getServiceMap().get(serviceName);
+        ServiceDef serviceDef = new ServiceDef(serviceObject.getProtocol(), serviceObject.getServiceId(), serviceObject.getEnvironment(), serviceObject.getRequestKey());
+
+        if (serviceDef==null) throw new Exception("There is no service config in the service-define.yml file.");
+        return  new Http2ServiceRequest(serviceDef, path, HttpVerb.valueOf(method));
+
+    }
+}
+
+```
+
+The `getHttp2ServiceRequest` method will get `Http2ServiceRequest` light-consumer-4j component based on service define. And we will send multi-service APIs call request parallel asynchronously which will return CompletableFuture.
+This will can make sure system won't wait for each service call one by one.
+
+Next step application add the return futures and result process futures to a collection of CompletableFuture. All independent futures run in parallel and system set to return it less than 3 seconds (it should be configurable by application).
+
+```
+CompletableFuture.allOf(completableFutures.toArray(new CompletableFuture[0])).get(3, TimeUnit.SECONDS);
+
+```
 
 ## Build and verify
 

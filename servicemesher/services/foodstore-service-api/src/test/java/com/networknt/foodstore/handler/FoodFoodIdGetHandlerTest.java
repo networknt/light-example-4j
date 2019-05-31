@@ -54,7 +54,7 @@ public class FoodFoodIdGetHandlerTest {
             throw new ClientException(e);
         }
         final AtomicReference<ClientResponse> reference = new AtomicReference<>();
-        String requestUri = "/v1/food/ZwWWQaunxiHnUyvJtObROrQsmz";
+        String requestUri = "/v1/food/qppBYJtitBLbnUyKNUwTZm";
         String httpMethod = "get";
         try {
             ClientRequest request = new ClientRequest().setPath(requestUri).setMethod(Methods.GET);
