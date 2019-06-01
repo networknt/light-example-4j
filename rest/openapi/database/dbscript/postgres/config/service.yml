@@ -1,0 +1,8 @@
+# Singleton service factory configuration/IoC injection
+singletons:
+- javax.sql.DataSource:
+  - com.zaxxer.hikari.HikariDataSource:
+      jdbcUrl: "jdbc:postgresql://localhost:5432/hello_world"
+      username: postgres
+      password: "my-secret-pw"
+      maximumPoolSize: 95
