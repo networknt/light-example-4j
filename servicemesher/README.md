@@ -58,7 +58,7 @@ It use java async concurrent feature and process the service call parallel
 
   -- client
 
-    In client folder, we build a client service API which use light-4j client module's consumer component to call the service APIs parallel.
+  In client folder, we build a client service API which use light-4j client module's consumer component to call the service APIs parallel.
 
 
 ##  Structure diagram
@@ -205,8 +205,31 @@ public class MarketServiceImpl implements MarketService{
 
 ```
 
-The `getHttp2ServiceRequest` method will get `Http2ServiceRequest` light-consumer-4j component based on service define. And we will send multi-service APIs call request parallel asynchronously which will return CompletableFuture.
+The `getHttp2ServiceRequest` method will get `Http2ServiceRequest` light-consumer-4j component based on service define.
+The `Http2ServiceRequest` class provides an abstraction for making parallel HTTP calls.
+
+And we will send multi-service APIs call request parallel asynchronously which will return CompletableFuture.
 This will can make sure system won't wait for each service call one by one.
+
+
+You can specify the JSON response type based on what class you expect it to deserialize to by calling
+
+```java
+CompletableFuture<Pet> petFutureResponse = request.callForTypedObject(Pet.class);
+
+CompletableFuture<List<Pet>> petListFutureResponse = request.callForTypedList(Pet.class);
+```
+
+If you do not have a class definition for the response, you can use a generic Map:
+
+```java
+CompletableFuture<Map> futureResponse = request.callForTypedObject(Map.class);
+```
+
+The response received from making a request can be held in a [CompletableFuture](https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/CompletableFuture.html),
+which allows for further asynchronous chaining of operations. They will be asynchronous with respect to the original thread because a different thread was already assigned
+to execute the HTTP request and wait for its response, so either that thread or an additional thread will be responsible for completing each chained operation.
+
 
 Next step application add the return futures and result process futures to a collection of CompletableFuture. All independent futures run in parallel and system set to return it less than 3 seconds (it should be configurable by application).
 
@@ -214,6 +237,14 @@ Next step application add the return futures and result process futures to a col
 CompletableFuture.allOf(completableFutures.toArray(new CompletableFuture[0])).get(3, TimeUnit.SECONDS);
 
 ```
+
+
+Additional references to the Java 8 CompletableFuture API:
+- [Guide to CompletableFuture](https://www.baeldung.com/java-completablefuture)
+- [Java 8: Definitive guide to CompletableFuture](https://www.nurkiewicz.com/2013/05/java-8-definitive-guide-to.html)
+- [When to use non-async methods of CompletableFuture?](https://stackoverflow.com/q/49649298)
+
+
 
 ## Build and verify
 
