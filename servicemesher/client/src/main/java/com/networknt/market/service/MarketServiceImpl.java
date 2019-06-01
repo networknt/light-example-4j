@@ -1,6 +1,7 @@
 package com.networknt.market.service;
 
 
+import com.networknt.client.ClientConfig;
 import com.networknt.client.model.HttpVerb;
 import com.networknt.client.model.ServiceDef;
 import com.networknt.client.orchestration.Http2ServiceRequest;
@@ -27,6 +28,7 @@ public class MarketServiceImpl implements MarketService{
     @Override
     public Market getMarket() throws Exception {
         Market market = new Market();
+        market.setName("light-4j sample market");
         Http2ServiceRequest listAllPets = getHttp2ServiceRequest(PET_STORE, "/v1/pets", "GET");
         Http2ServiceRequest listAllFood = getHttp2ServiceRequest(FOOD_STORE, "/v1/food", "GET");
         Http2ServiceRequest listAllComputers = getHttp2ServiceRequest(COMPUTER_STORE, "/v1/computers", "GET");
@@ -50,7 +52,7 @@ public class MarketServiceImpl implements MarketService{
         completableFutures.add(booksFutureResponse);
         completableFutures.addAll(mapToMarket(market, petsFutureResponse, foodFutureResponse, computersFutureResponse, booksFutureResponse));
         try {
-            CompletableFuture.allOf(completableFutures.toArray(new CompletableFuture[0])).get(3, TimeUnit.SECONDS);
+            CompletableFuture.allOf(completableFutures.toArray(new CompletableFuture[0])).get(ClientConfig.get().getTimeout(), TimeUnit.MILLISECONDS);
         } catch(Exception e) {
             logger.error("Some information was unavailable when assembling the market value.", e);
             System.out.println("error:" + e);

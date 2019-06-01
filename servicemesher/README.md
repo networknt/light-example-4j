@@ -212,6 +212,14 @@ And we will send multi-service APIs call request parallel asynchronously which w
 This will can make sure system won't wait for each service call one by one.
 
 
+
+Next step application add the return futures and result process futures to a collection of CompletableFuture. All independent futures run in parallel and system set to return it less than 3 seconds (it is configurable based on the config value:  in client.yml file ).
+
+```
+CompletableFuture.allOf(completableFutures.toArray(new CompletableFuture[0])).get(3, TimeUnit.SECONDS);
+
+```
+
 You can specify the JSON response type based on what class you expect it to deserialize to by calling
 
 ```java
@@ -231,12 +239,6 @@ which allows for further asynchronous chaining of operations. They will be async
 to execute the HTTP request and wait for its response, so either that thread or an additional thread will be responsible for completing each chained operation.
 
 
-Next step application add the return futures and result process futures to a collection of CompletableFuture. All independent futures run in parallel and system set to return it less than 3 seconds (it should be configurable by application).
-
-```
-CompletableFuture.allOf(completableFutures.toArray(new CompletableFuture[0])).get(3, TimeUnit.SECONDS);
-
-```
 
 
 Additional references to the Java 8 CompletableFuture API:
@@ -293,11 +295,11 @@ Additional references to the Java 8 CompletableFuture API:
 
    ```
 
-   The client side service will call all four server side services parallel and get the result to build a market object. the same result will like below:
+   The client side service will call all four server side services parallel and get the result to build a market object. The sample result will looks like below:
 
     ```
      {
-         "name": null,
+         "name": "name": "light-4j sample market",
          "pets": [
              {
                  "id": 1,

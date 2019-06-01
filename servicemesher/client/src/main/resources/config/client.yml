@@ -73,3 +73,11 @@ oauth:
     # set to true if the oauth2 provider supports HTTP/2
     enableHttp2: true
 
+# circuit breaker configuration for the client
+request:
+  # number of timeouts/errors to break the circuit
+  errorThreshold: 2
+  # timeout in millisecond to indicate a client error.
+  timeout: 3000
+  # reset the circuit after this timeout in millisecond
+  resetTimeout: 7000
