@@ -1,0 +1,50 @@
+version: "2"
+#
+# Services
+#
+services:
+
+  bookstore-service:
+      build: ./bookstore-service-api
+      volumes:
+        - ./configuration/bookstore:/config
+      ports:
+        - 8444:8444
+      networks:
+          - localnet
+
+  petstore-service:
+    build: ./petstore-service-api
+    volumes:
+      - ./configuration/petstore:/config
+    ports:
+      - 8443:8443
+    networks:
+      - localnet
+
+  computerstore-service:
+    build: ./computerstore-service-api
+    volumes:
+      - ./configuration/computerstore:/config
+    ports:
+      - 8445:8445
+    networks:
+      - localnet
+
+  foodstore-service:
+    build: ./foodstore-service-api
+    volumes:
+      - ./configuration/foodstore:/config
+    ports:
+      - 8447:8447
+    networks:
+      - localnet
+
+
+
+# Networks
+#
+networks:
+  localnet:
+    # driver: bridge
+    external: true

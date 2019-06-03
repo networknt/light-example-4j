@@ -1,0 +1,187 @@
+openapi: 3.0.0
+info:
+  version: 1.0.0
+  title: Swagger BookStore
+  license:
+    name: MIT
+servers:
+  - url: 'http://petstore.swagger.io/v1'
+paths:
+  /books:
+    get:
+      summary: List all books
+      operationId: listBooks
+      tags:
+        - books
+      parameters:
+        - name: limit
+          in: query
+          description: How many items to return at one time (max 100)
+          required: false
+          schema:
+            type: integer
+            format: int32
+      security:
+        - bookstore_auth:
+            - 'read:books'
+      responses:
+        '200':
+          description: An paged array of books
+          headers:
+            x-next:
+              description: A link to the next page of responses
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Book'
+              example:
+                - id: 1
+                  name: Educated
+                  author: James Bond
+                - id: 2
+                  name: The Amazon Job
+                  author: Randy Grieser
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    post:
+      summary: Create a books
+      operationId: createbookss
+      requestBody:
+        description: books to add to the store
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Book'
+      tags:
+        - pets
+      security:
+        - bookstore_auth:
+            - 'read:books'
+            - 'write:books'
+      responses:
+        '201':
+          description: Null response
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  '/books/{bookId}':
+    get:
+      summary: Info for a specific book
+      operationId: showBookById
+      tags:
+        - books
+      parameters:
+        - name: bookId
+          in: path
+          required: true
+          description: The id of the book to retrieve
+          schema:
+            type: string
+      security:
+        - bookstore_auth:
+            - 'read:books'
+      responses:
+        '200':
+          description: Expected response to a valid request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Book'
+              example:
+                id: 1
+                name: Jessica Right
+                author: Jessica Lee
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    delete:
+      summary: Delete a specific book
+      operationId: deleteBookById
+      tags:
+        - books
+      parameters:
+        - name: bookId
+          in: path
+          required: true
+          description: The id of the book to delete
+          schema:
+            type: string
+        - name: key
+          in: header
+          required: true
+          description: The key header
+          schema:
+            type: string
+      security:
+        - bookstore_auth:
+            - 'write:books'
+      responses:
+        '200':
+          description: Expected response to a valid request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Book'
+              examples:
+                response:
+                  value:
+                    id: 1
+                    name: Jessica Right
+                    tag: pet
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+components:
+  securitySchemes:
+    bookstore_auth:
+      type: oauth2
+      description: This API uses OAuth 2 with the client credential grant flow.
+      flows:
+        clientCredentials:
+          tokenUrl: 'https://localhost:6882/token'
+          scopes:
+            'write:books': modify books in your account
+            'read:books': read your books
+  schemas:
+    Book:
+      type: object
+      required:
+        - id
+        - name
+      properties:
+        id:
+          type: integer
+          format: int64
+        name:
+          type: string
+        author:
+          type: string
+    Error:
+      type: object
+      required:
+        - code
+        - message
+      properties:
+        code:
+          type: integer
+          format: int32
+        message:
+          type: string

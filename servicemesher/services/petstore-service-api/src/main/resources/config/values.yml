@@ -1,0 +1,12 @@
+
+# Singleton service factory configuration/IoC injection
+service.singletons:
+  - com.networknt.utility.Decryptor:
+      - com.networknt.decrypt.AESDecryptor
+  - com.networknt.balance.LoadBalance:
+      - com.networknt.balance.RoundRobinLoadBalance
+  - com.networknt.cluster.Cluster:
+      - com.networknt.cluster.LightCluster
+  - com.cibc.dgp.api.parties.data.PartiesStore:
+      - com.cibc.dgp.api.parties.data.RAMPartiesStore
+

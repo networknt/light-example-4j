@@ -162,6 +162,7 @@ components:
             'read:pets': read your pets
   schemas:
     Pet:
+      type: object
       required:
         - id
         - name
@@ -174,6 +175,7 @@ components:
         tag:
           type: string
     Error:
+      type: object
       required:
         - code
         - message

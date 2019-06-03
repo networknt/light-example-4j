@@ -6,3 +6,5 @@
 enabled: true
 # Log error message if validation error occurs
 logError: true
+# Skip body validation set to true if used in light-router, light-proxy and light-spring-boot.
+skipBodyValidation: false

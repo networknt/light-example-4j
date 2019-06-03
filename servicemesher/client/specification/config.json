@@ -1,0 +1,33 @@
+{
+  "name": "marketsample",
+  "version": "3.0.1",
+  "groupId": "com.networknt",
+  "artifactId": "marketsample-service",
+  "rootPackage": "com.networknt.market",
+  "handlerPackage": "com.networknt.market.handler",
+  "modelPackage": "com.networknt.market.model",
+  "overwriteHandler": false,
+  "overwriteHandlerTest": false,
+  "overwriteModel": false,
+  "httpPort": 8081,
+  "enableHttp": false,
+  "httpsPort": 8448,
+  "enableHttps": true,
+  "enableHttp2": true,
+  "enableRegistry": false,
+  "supportDb": false,
+  "supportH2ForTest": false,
+  "supportClient": false,
+  "specChangeCodeReGenOnly": true,
+  "skipPomFile": true,
+  "dockerOrganization": "networknt",
+  "generateEnvVars": {
+    "generate": true,
+    "skipArray": true,
+    "skipMap": true,
+    "exclude": [
+      "handerl.yml",
+      "values.yml"
+    ]
+  }
+}
