@@ -1,0 +1,30 @@
+
+# Singleton service factory configuration/IoC injection
+service.singletons:
+  - com.networknt.utility.Decryptor:
+      - com.networknt.decrypt.AESDecryptor
+  - com.networknt.registry.URL:
+      - com.networknt.registry.URLImpl:
+          parameters:
+            registryRetryPeriod: '30000'
+  - com.networknt.consul.client.ConsulClient:
+      - com.networknt.consul.client.ConsulClientImpl
+  - com.networknt.registry.Registry:
+      - com.networknt.consul.ConsulRegistry
+  - com.networknt.balance.LoadBalance:
+      - com.networknt.balance.RoundRobinLoadBalance
+  - com.networknt.cluster.Cluster:
+      - com.networknt.cluster.LightCluster
+
+
+#--------------------------------------------------------------------------------
+# server.yml
+#--------------------------------------------------------------------------------
+
+server.enableRegistry: true
+
+#--------------------------------------------------------------------------------
+# consul.yml
+#--------------------------------------------------------------------------------
+consul.consulUrl: http://consul:8500
+consul.httpCheck: true

@@ -1,0 +1,135 @@
+openapi: 3.0.0
+info:
+  version: 1.0.0
+  title: Swagger light-market
+  license:
+    name: MIT
+servers:
+  - url: 'http://market.swagger.io/v1'
+paths:
+  /market:
+    get:
+      summary: List all market
+      operationId: getmarket
+      tags:
+        - market
+      security:
+        - market_auth:
+            - 'read:market'
+      responses:
+        '200':
+          description: An paged array of food
+          headers:
+            x-next:
+              description: A link to the next page of responses
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Market'
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+components:
+  securitySchemes:
+    market_auth:
+      type: oauth2
+      description: This API uses OAuth 2 with the client credential grant flow.
+      flows:
+        clientCredentials:
+          tokenUrl: 'https://localhost:6882/token'
+          scopes:
+            'write:market': modify market
+            'read:market': read your market
+  schemas:
+    Market:
+      type: object
+      required:
+        - name
+      properties:
+        name:
+          type: string
+        pets:
+          type: array
+          items:
+            $ref: '#/components/schemas/Pet'
+        books:
+          type: array
+          items:
+            $ref: '#/components/schemas/Book'
+        computers:
+          type: array
+          items:
+            $ref: '#/components/schemas/Computer'
+        foodbox:
+          type: array
+          items:
+            $ref: '#/components/schemas/Food'
+    Book:
+      type: object
+      required:
+        - id
+        - name
+      properties:
+        id:
+          type: integer
+          format: int64
+        name:
+          type: string
+        author:
+          type: string
+    Food:
+      type: object
+      required:
+        - id
+        - name
+      properties:
+        id:
+          type: integer
+          format: int64
+        name:
+          type: string
+        tag:
+          type: string
+    Computer:
+      type: object
+      required:
+        - id
+        - brand
+      properties:
+        id:
+          type: integer
+          format: int64
+        brand:
+          type: string
+        tag:
+          type: string
+    Pet:
+      type: object
+      required:
+        - id
+        - name
+      properties:
+        id:
+          type: integer
+          format: int64
+        name:
+          type: string
+        tag:
+          type: string
+    Error:
+      type: object
+      required:
+        - code
+        - message
+      properties:
+        code:
+          type: integer
+          format: int32
+        message:
+          type: string

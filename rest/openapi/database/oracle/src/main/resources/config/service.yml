@@ -1,0 +1,13 @@
+# Singleton service factory configuration/IoC injection
+singletons:
+- javax.sql.DataSource:
+  - com.zaxxer.hikari.HikariDataSource:
+      DriverClassName: oracle.jdbc.pool.OracleDataSource
+      jdbcUrl: jdbc:oracle:thin:@localhost:1522:XE
+      username: SYSTEM
+      password: oracle
+
+
+
+
+

@@ -1,0 +1,23 @@
+version: "2"
+#
+# Services
+#
+services:
+
+  market-service:
+      build: ./
+      volumes:
+        - ./configuration:/config
+      ports:
+        - 8448:8448
+      networks:
+          - localnet
+
+
+
+# Networks
+#
+networks:
+  localnet:
+    # driver: bridge
+    external: true
