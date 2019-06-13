@@ -2,7 +2,7 @@
 package com.networknt.petstore.handler;
 
 import com.networknt.client.Http2Client;
-import com.networknt.status.exception.ClientException;
+import com.networknt.exception.ClientException;
 import com.networknt.openapi.ResponseValidator;
 import com.networknt.schema.SchemaValidatorsConfig;
 import com.networknt.status.Status;
@@ -54,13 +54,13 @@ public class PetsPetIdDeleteHandlerTest {
             throw new ClientException(e);
         }
         final AtomicReference<ClientResponse> reference = new AtomicReference<>();
-        String requestUri = "/v1/pets/fNFfbawSlLvPHMlzribwF";
+        String requestUri = "/v1/pets/XjXIGhakZnCSi";
         String httpMethod = "delete";
         try {
             ClientRequest request = new ClientRequest().setPath(requestUri).setMethod(Methods.DELETE);
             
             //customized header parameters 
-            request.getRequestHeaders().put(new HttpString("key"), "kDjUm");
+            request.getRequestHeaders().put(new HttpString("key"), "stAoSyaF");
             connection.sendRequest(request, client.createClientCallback(reference, latch));
             
             latch.await();

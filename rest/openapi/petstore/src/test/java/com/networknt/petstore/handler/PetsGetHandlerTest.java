@@ -2,7 +2,7 @@
 package com.networknt.petstore.handler;
 
 import com.networknt.client.Http2Client;
-import com.networknt.status.exception.ClientException;
+import com.networknt.exception.ClientException;
 import com.networknt.openapi.ResponseValidator;
 import com.networknt.schema.SchemaValidatorsConfig;
 import com.networknt.status.Status;
@@ -54,7 +54,7 @@ public class PetsGetHandlerTest {
             throw new ClientException(e);
         }
         final AtomicReference<ClientResponse> reference = new AtomicReference<>();
-        String requestUri = "/v1/pets?limit=13";
+        String requestUri = "/v1/pets?limit=39";
         String httpMethod = "get";
         try {
             ClientRequest request = new ClientRequest().setPath(requestUri).setMethod(Methods.GET);
