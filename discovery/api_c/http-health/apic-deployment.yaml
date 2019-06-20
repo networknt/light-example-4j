@@ -17,7 +17,7 @@ spec:
       hostNetwork: true
       containers:
       - name: apic
-        image: networknt/com.networknt.apic-1.0.0:1.5.18-hh
+        image: networknt/com.networknt.ac-1.0.0:2.0.2-hh
         imagePullPolicy: Always
         env:
         - name: STATUS_HOST_IP

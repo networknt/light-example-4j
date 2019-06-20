@@ -1,0 +1,46 @@
+openapi: 3.0.0
+servers:
+  - url: 'http://ad.networknt.com/v1'
+info:
+  version: 1.0.0
+  title: API AD for aggregate microservices pattern
+  description: API AD is called by API AA along with another two APIs
+  contact:
+    email: stevehu@gmail.com
+  license:
+    name: Apache 2.0
+    url: 'http://www.apache.org/licenses/LICENSE-2.0.html'
+paths:
+  /data:
+    get:
+      description: Return an array of strings collected from down stream APIs
+      operationId: listData
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                title: ArrayOfStrings
+                type: array
+                items:
+                  type: string
+              examples:
+                response:
+                  value:
+                    - Message 1
+                    - Message 2
+      security:
+        - ad_auth:
+            - ad.w
+            - ad.r
+components:
+  securitySchemes:
+    ad_auth:
+      type: oauth2
+      flows:
+        clientCredentials:
+          authorizationUrl: 'http://localhost:8080/oauth2/code'
+          scopes:
+            ad.w: write access
+            ad.r: read access
