@@ -351,3 +351,33 @@ Additional references to the Java 8 CompletableFuture API:
      }
 
      ```
+
+
+ ## Prometheus metrics
+
+ Prometheus is an open-source systems monitoring and alerting toolkit originally built at SoundCloud.
+
+ The ServiceMesher sample implemented with Prometheus metrics middleware handler.
+
+ To Verify, please following the below steps:
+
+
+  ```
+  cd ~/networknt
+  git clone git@github.com:networknt/light-example-4j.git
+  cd ~/networknt/light-docker
+
+   docker-compose -f docker-compose-prometheus.yml up
+
+  ```
+
+  Then you can open Prometheus admin console by:
+
+  http://localhost:9090/
+
+  And use grafana by
+
+    http://localhost:3000
+
+    user: admin
+    password: admim
