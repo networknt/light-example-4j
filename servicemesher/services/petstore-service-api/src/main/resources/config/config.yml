@@ -17,4 +17,4 @@ exclusionConfigFileList:
   - values
   - status
 
-decryptorClass: com.networknt.decrypt.AESDecryptor
+decryptorClass: ${config.decryptorClass:com.networknt.decrypt.AESDecryptor}

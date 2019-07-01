@@ -9,17 +9,16 @@
 
     <properties>
         <java.version>11</java.version>
-        
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.main.class>com.networknt.server.Server</project.main.class>
         <version.light-4j>2.0.2-SNAPSHOT</version.light-4j>
-        <version.jackson>2.9.8</version.jackson>
+        <version.jackson>2.9.9</version.jackson>
         <version.slf4j>1.7.25</version.slf4j>
         <version.jose4j>0.6.3</version.jose4j>
         <version.logback>1.2.3</version.logback>
         <version.junit>4.12</version.junit>
         <version.undertow>2.0.21.Final</version.undertow>
-        <version.json-schema-validator>1.0.8</version.json-schema-validator>
+        <version.json-schema-validator>1.0.15</version.json-schema-validator>
         <version.fastscanner>2.18.1</version.fastscanner>
         
         
@@ -27,6 +26,15 @@
         
         
         <versions.maven-version>2.4</versions.maven-version>
+        <version.javadoc-packagelist-plugin>1.0.0</version.javadoc-packagelist-plugin>
+        <version.maven-javadoc>3.1.0</version.maven-javadoc>
+        <version.maven-jar>3.1.2</version.maven-jar>
+        <version.maven-shade>3.2.1</version.maven-shade>
+        <version.maven-compiler>3.8.1</version.maven-compiler>
+        <version.maven-deploy>2.8.2</version.maven-deploy>
+        <version.exec-maven>1.6.0</version.exec-maven>
+        <version.maven-surefire>2.22.2</version.maven-surefire>
+        <version.maven-source>3.1.0</version.maven-source>
     </properties>
 
     <dependencies>
@@ -49,11 +57,6 @@
             <groupId>com.networknt</groupId>
             <artifactId>client</artifactId>
             <version>${version.light-4j}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.networknt</groupId>
-            <artifactId>prometheus</artifactId>
-            <version>2.0.2-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>com.networknt</groupId>
@@ -148,6 +151,11 @@
         </dependency>
         <dependency>
             <groupId>com.networknt</groupId>
+            <artifactId>decryptor</artifactId>
+            <version>${version.light-4j}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.networknt</groupId>
             <artifactId>server</artifactId>
             <version>${version.light-4j}</version>
         </dependency>
@@ -226,15 +234,29 @@
     </dependencies>
 
     <build>
+        <defaultGoal>install</defaultGoal>
+        <directory>target</directory>
+        <finalName>${project.artifactId}-${project.version}</finalName>
         <plugins>
+            <plugin>
+                <groupId>com.networknt</groupId>
+                <artifactId>javadoc-packagelist-maven-plugin</artifactId>
+                <version>${version.javadoc-packagelist-plugin}</version>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>gen-package-list</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.8.0</version>
+                <version>${version.maven-compiler}</version>
                 <configuration>
-                    <source>8</source>
-                    <target>8</target>
-                    
+                    <release>${java.version}</release>
                 </configuration>
             </plugin>
             <plugin>
@@ -245,19 +267,19 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
-                <version>2.14</version>
+                <version>${version.maven-surefire}</version>
                 <dependencies>
                     <dependency>
                         <groupId>org.apache.maven.surefire</groupId>
                         <artifactId>surefire-junit47</artifactId>
-                        <version>2.14</version>
+                        <version>${version.maven-surefire}</version>
                     </dependency>
                 </dependencies>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
-                <version>2.6</version>
+                <version>${version.maven-jar}</version>
                 <configuration>
                     <archive>
                         <manifest>
@@ -330,7 +352,7 @@
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-shade-plugin</artifactId>
-                        <version>2.4.3</version>
+                        <version>${version.maven-shade}</version>
                         <executions>
                             <execution>
                                 <phase>package</phase>
@@ -359,7 +381,7 @@
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-source-plugin</artifactId>
-                        <version>3.0.1</version>
+                        <version>${version.maven-source}</version>
                         <executions>
                             <execution>
                                 <id>attach-sources</id>
@@ -370,9 +392,22 @@
                         </executions>
                     </plugin>
                     <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-javadoc-plugin</artifactId>
+                        <version>${version.maven-javadoc}</version>
+                        <executions>
+                            <execution>
+                                <id>attach-javadocs</id>
+                                <goals>
+                                    <goal>jar</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
                         <groupId>org.codehaus.mojo</groupId>
                         <artifactId>exec-maven-plugin</artifactId>
-                        <version>1.4.0</version>
+                        <version>${version.exec-maven}</version>
                         <configuration>
                             <executable>java</executable>
                             <arguments>
@@ -398,7 +433,7 @@
                     <plugin>
                         <groupId>org.codehaus.mojo</groupId>
                         <artifactId>exec-maven-plugin</artifactId>
-                        <version>1.4.0</version>
+                        <version>${version.exec-maven}</version>
                         <configuration>
                             <workingDirectory>${project.build.directory}</workingDirectory>
                             <executable>java</executable>
@@ -414,6 +449,5 @@
                 </plugins>
             </build>
         </profile>
-        
     </profiles>
 </project>
