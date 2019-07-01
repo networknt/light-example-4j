@@ -14,8 +14,6 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.main.class>com.networknt.server.Server</project.main.class>
 		<version.light-4j>2.0.2-SNAPSHOT</version.light-4j>
-		<version.light-rest-4j>2.0.2-SNAPSHOT</version.light-rest-4j>
-		<version.openapi-parser>2.0.2-SNAPSHOT</version.openapi-parser>
 		<version.jackson>2.9.5</version.jackson>
 		<version.slf4j>1.7.25</version.slf4j>
 		<version.jose4j>0.6.3</version.jose4j>
@@ -181,17 +179,17 @@
 		<dependency>
 			<groupId>com.networknt</groupId>
 			<artifactId>openapi-parser</artifactId>
-			<version>${version.openapi-parser}</version>
+			<version>${version.light-4j}</version>
 		</dependency>
 		<dependency>
 			<groupId>com.networknt</groupId>
 			<artifactId>openapi-meta</artifactId>
-			<version>${version.light-rest-4j}</version>
+			<version>${version.light-4j}</version>
 		</dependency>
 		<dependency>
 			<groupId>com.networknt</groupId>
 			<artifactId>openapi-security</artifactId>
-			<version>${version.light-rest-4j}</version>
+			<version>${version.light-4j}</version>
 		</dependency>
 		<dependency>
 			<groupId>com.networknt</groupId>
@@ -201,12 +199,12 @@
 		<dependency>
 			<groupId>com.networknt</groupId>
 			<artifactId>openapi-validator</artifactId>
-			<version>${version.light-rest-4j}</version>
+			<version>${version.light-4j}</version>
 		</dependency>
 		<dependency>
 			<groupId>com.networknt</groupId>
 			<artifactId>specification</artifactId>
-			<version>${version.light-rest-4j}</version>
+			<version>${version.light-4j}</version>
 		</dependency>
 		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
