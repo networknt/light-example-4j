@@ -34,6 +34,8 @@ handlers:
   # Light-framework cross-cutting concerns implemented in the microservice
   - com.networknt.exception.ExceptionHandler@exception
   - com.networknt.metrics.MetricsHandler@metrics
+  - com.networknt.metrics.prometheus.PrometheusHandler@prometheus
+  - com.networknt.metrics.prometheus.PrometheusGetHandler@getprometheus
   - com.networknt.traceability.TraceabilityHandler@traceability
   - com.networknt.correlation.CorrelationHandler@correlation
   - com.networknt.openapi.OpenApiHandler@specification
@@ -51,8 +53,7 @@ handlers:
   - com.networknt.info.ServerInfoGetHandler@info
   - com.networknt.specification.SpecDisplayHandler@spec
   - com.networknt.specification.SpecSwaggerUIHandler@swaggerui
-  - com.networknt.metrics.prometheus.PrometheusHandler@prometheus
-  - com.networknt.metrics.prometheus.PrometheusGetHandler@getprometheus
+
   # Business Handlers
   - com.networknt.market.handler.MarketGetHandler
 
@@ -60,7 +61,7 @@ handlers:
 chains:
   default:
     - exception
-    - metrics
+    - prometheus
     - traceability
     - correlation
     - specification
