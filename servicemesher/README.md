@@ -351,3 +351,65 @@ Additional references to the Java 8 CompletableFuture API:
      }
 
      ```
+
+
+ ## Prometheus metrics
+
+ Prometheus is an open-source systems monitoring and alerting toolkit originally built at SoundCloud.
+
+ The ServiceMesher sample implemented with Prometheus metrics middleware handler.
+
+ To Verify, please following the below steps:
+
+
+  ```
+  cd ~/networknt
+  git clone git@github.com:networknt/light-example-4j.git
+  cd ~/networknt/light-docker
+
+   docker-compose -f docker-compose-prometheus.yml up
+
+  ```
+
+
+
+  Then you can open Prometheus admin console by:
+
+  http://localhost:9090/
+
+  Light-4j framework middleware handler provide application defined monitor which include:
+
+  ```
+    public static final String REQUEST_TOTAL = "requests_total";
+    public static final String SUCCESS_TOTAL = "success_total";
+    public static final String AUTO_ERROR_TOTAL = "auth_error_total";
+    public static final String REQUEST_ERROR_TOTAL = "request_error_total";
+    public static final String SERVER_ERROR_TOTAL = "server_error_total";
+    public static final String RESPONSE_TIME_SECOND = "response_time_seconds";
+  ```
+
+  And hotspot monitor, for example:
+
+  ```
+  process_cpu_seconds_total
+  process_open_fds
+
+  jvm_memory_pool_allocated_bytes_total
+  jvm_memory_pool_bytes_init
+  jvm_memory_pool_bytes_max
+  jvm_memory_pool_bytes_used
+
+  jvm_threads_started_total
+  jvm_threads_deadlocked
+  jvm_threads_state
+
+  jvm_gc_collection_seconds
+
+  ```
+
+  And use grafana by
+
+    http://localhost:3000
+
+    user: admin
+    password: admim

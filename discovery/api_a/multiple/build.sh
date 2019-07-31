@@ -4,7 +4,7 @@
 set -ex
 
 VERSION=$1
-IMAGE_NAME="networknt/com.networknt.apia-1.0.0"
+IMAGE_NAME="networknt/com.networknt.aa-1.0.0"
 
 showHelp() {
     echo " "
@@ -20,7 +20,7 @@ showHelp() {
 
 build() {
     echo "Building ..."
-    mvn clean install
+    mvn clean install -Prelease
     echo "Successfully built!"
 }
 
@@ -35,7 +35,6 @@ cleanup() {
 publish() {
     echo "Building Docker image with version $VERSION"
     docker build -t $IMAGE_NAME:$VERSION -t $IMAGE_NAME:latest -f ./docker/Dockerfile . --no-cache=true
-    docker build -t $IMAGE_NAME:$VERSION-redhat -f ./docker/Dockerfile-Redhat . --no-cache=true
     echo "Images built with version $VERSION"
     echo "Pushing image to DockerHub"
     docker push $IMAGE_NAME

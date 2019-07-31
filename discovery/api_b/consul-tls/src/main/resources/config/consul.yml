@@ -1,5 +1,9 @@
 # Consul URL for accessing APIs
 consulUrl: https://198.55.49.188:8500
+# access token to the consul server
+consulToken: d08744e7-bb1e-dfbd-7156-07c2d57a0527
+# number of requests before reset the shared connection.
+maxReqPerConn: 1000000
 # deregister the service after the amount of time after health check failed.
 deregisterAfter: 2m
 # health check interval for TCP or HTTP check. Or it will be the TTL for TTL check. Every 10 seconds,
@@ -18,3 +22,9 @@ httpCheck: false
 # but your service will call check endpoint with heart beat to indicate it is alive. This requires that the service
 # is built on top of light-4j and the above options are not available. For example, your service is behind NAT.
 ttlCheck: false
+# endpoints that support blocking will also honor a wait parameter specifying a maximum duration for the blocking request.
+# This is limited to 10 minutes.This value can be specified in the form of "10s" or "5m" (i.e., 10 seconds or 5 minutes,
+# respectively).
+wait: 600s
+# enable HTTP/2, HTTP/2 used to be default but some users said that newer version of Consul doesn't support HTTP/2 anymore.
+enableHttp2: false

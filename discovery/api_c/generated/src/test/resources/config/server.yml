@@ -12,7 +12,7 @@ httpPort: 49587
 # When enableHttp, you must set enableHttps to false, otherwise, this flag will be ignored. There is
 # only one protocol will be used for the server at anytime. If both http and https are true, only
 # https listener will be created and the server will bind to https port only.
-enableHttp: true
+enableHttp: false
 
 # Https port if enableHttps is true. It will be ignored if dynamicPort is true.
 httpsPort: 49588
@@ -26,14 +26,23 @@ enableHttp2: true
 # Keystore file name in config folder. KeystorePass is in secret.yml to access it.
 keystoreName: server.keystore
 
+# Keystore password
+keystorePass: password
+
+# Private key password
+keyPass: password
+
 # Flag that indicate if two way TLS is enabled. Not recommended in docker container.
 enableTwoWayTls: false
 
 # Truststore file name in config folder. TruststorePass is in secret.yml to access it.
 truststoreName: server.truststore
 
+# Truststore password
+truststorePass: password
+
 # Unique service identifier. Used in service registration and discovery etc.
-serviceId: com.networknt.apic-1.0.0
+serviceId: com.networknt.ac-1.0.0
 
 # Flag to enable self service registration. This should be turned on on official test and production. And
 # dyanmicPort should be enabled if any orchestration tool is used like Kubernetes.
@@ -57,3 +66,7 @@ maxPort: 2500
 # https://github.com/networknt/light-doc/blob/master/docs/content/design/env-segregation.md
 # This tag should only be set for testing env, not production. The production certification process will enforce it.
 # environment: test1
+
+# Build Number
+# Allows teams to audit the value and set it according to their release management processes
+buildNumber: 1.0.0
