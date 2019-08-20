@@ -5,7 +5,7 @@ import com.networknt.client.Http2Client;
 import com.networknt.cluster.Cluster;
 import com.networknt.config.Config;
 import com.networknt.exception.ClientException;
-import com.networknt.security.JwtHelper;
+import com.networknt.security.JwtVerifier;
 import com.networknt.service.SingletonServiceFactory;
 import io.undertow.UndertowOptions;
 import io.undertow.client.ClientConnection;
@@ -30,8 +30,8 @@ public class DataGetHandler implements HttpHandler {
     static Cluster cluster = SingletonServiceFactory.getBean(Cluster.class);
     static String apidHost;
     static String path = "/v1/data";
-    static Map<String, Object> securityConfig = (Map)Config.getInstance().getJsonMapConfig(JwtHelper.SECURITY_CONFIG);
-    static boolean securityEnabled = (Boolean)securityConfig.get(JwtHelper.ENABLE_VERIFY_JWT);
+    static Map<String, Object> securityConfig = (Map)Config.getInstance().getJsonMapConfig(JwtVerifier.SECURITY_CONFIG);
+    static boolean securityEnabled = (Boolean)securityConfig.get(JwtVerifier.ENABLE_VERIFY_JWT);
     static Http2Client client = Http2Client.getInstance();
     static ClientConnection connection;
 
