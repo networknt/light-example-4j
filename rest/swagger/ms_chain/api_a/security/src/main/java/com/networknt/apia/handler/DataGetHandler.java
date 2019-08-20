@@ -4,7 +4,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.networknt.client.Http2Client;
 import com.networknt.config.Config;
 import com.networknt.exception.ClientException;
-import com.networknt.security.JwtHelper;
+import com.networknt.security.JwtVerifier;
 import io.undertow.UndertowOptions;
 import io.undertow.client.ClientConnection;
 import io.undertow.client.ClientRequest;
@@ -28,8 +28,8 @@ public class DataGetHandler implements HttpHandler {
     static Logger logger = LoggerFactory.getLogger(DataGetHandler.class);
     static String apibHost = (String) Config.getInstance().getJsonMapConfig(CONFIG_NAME).get("api_b_host");
     static String apibPath = (String) Config.getInstance().getJsonMapConfig(CONFIG_NAME).get("api_b_path");
-    static Map<String, Object> securityConfig = (Map)Config.getInstance().getJsonMapConfig(JwtHelper.SECURITY_CONFIG);
-    static boolean securityEnabled = (Boolean)securityConfig.get(JwtHelper.ENABLE_VERIFY_JWT);
+    static Map<String, Object> securityConfig = (Map)Config.getInstance().getJsonMapConfig(JwtVerifier.SECURITY_CONFIG);
+    static boolean securityEnabled = (Boolean)securityConfig.get(JwtVerifier.ENABLE_VERIFY_JWT);
     static Http2Client client = Http2Client.getInstance();
     static ClientConnection connection;
 
