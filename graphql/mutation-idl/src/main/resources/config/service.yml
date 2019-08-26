@@ -6,6 +6,8 @@ singletons:
   - com.networknt.graphql.router.GraphqlRouter
 # StartupHookProvider implementations, there are one to many and they are called in the same sequence defined.
 # - com.networknt.server.StartupHookProvider:
+  # If you are using mask module to remove sensitive info before logging, uncomment the following line.
+  # - com.networknt.server.JsonPathStartupHookProvider
   # - com.networknt.server.Test1StartupHook
   # - com.networknt.server.Test1StartupHook
 # ShutdownHookProvider implementations, there are one to many and they are called in the same sequence defined.
@@ -32,5 +34,20 @@ singletons:
 # GraphQL schema provider interface implementation
 - com.networknt.graphql.router.SchemaProvider:
   - com.networknt.example.mutation.MutationSchema
+
+
+- javax.sql.DataSource:
+  - com.zaxxer.hikari.HikariDataSource:
+      DriverClassName: com.mysql.jdbc.Driver
+      jdbcUrl: jdbc:mysql://mysqldb:3306/oauth2?useSSL=false
+      username: root
+      password: my-secret-pw
+      maximumPoolSize: 10
+      useServerPrepStmts: true
+      cachePrepStmts: true
+      cacheCallableStmts: true
+      prepStmtCacheSize: 10
+      prepStmtCacheSqlLimit: 2048
+      connectionTimeout: 2000
 
 
