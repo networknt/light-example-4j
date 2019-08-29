@@ -1,6 +1,6 @@
 package com.networknt.petstore.handler;
 
-import com.networknt.audit.AuditHandler;
+import com.networknt.httpstring.AttachmentConstants;
 import com.networknt.utility.Constants;
 import io.undertow.server.HttpHandler;
 import io.undertow.server.HttpServerExchange;
@@ -18,7 +18,7 @@ public class OpenApiPathHandler implements HttpHandler {
 
     @Override
     public void handleRequest(HttpServerExchange exchange) throws Exception {
-        Map<String, Object> auditInfo = exchange.getAttachment(AuditHandler.AUDIT_INFO);
+        Map<String, Object> auditInfo = exchange.getAttachment(AttachmentConstants.AUDIT_INFO);
         String endpoint = (String)auditInfo.get(Constants.ENDPOINT_STRING);
         switch(endpoint) {
             case "/pets@get":
