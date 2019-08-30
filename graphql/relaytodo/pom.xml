@@ -24,7 +24,7 @@
         <version.logback>1.2.3</version.logback>
         <version.junit>4.12</version.junit>
         <version.undertow>2.0.23.Final</version.undertow>
-        <version.graphql>8.0</version.graphql>
+        <version.graphql>13.0</version.graphql>
         <version.rxjava>2.1.5</version.rxjava>
         
         <version.hikaricp>3.1.0</version.hikaricp>
