@@ -11,14 +11,15 @@
         <java.version>11</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.main.class>com.networknt.server.Server</project.main.class>
-        <version.light-4j>2.0.1</version.light-4j>
+        <version.light-4j>2.0.6-SNAPSHOT</version.light-4j>
         <version.jackson>2.9.9</version.jackson>
+        <version.jackson-databind>2.9.9.3</version.jackson-databind>
         <version.slf4j>1.7.25</version.slf4j>
         <version.jose4j>0.6.3</version.jose4j>
         <version.logback>1.2.3</version.logback>
         <version.junit>4.12</version.junit>
-        <version.undertow>2.0.16.Final</version.undertow>
-        <version.json-schema-validator>1.0.14</version.json-schema-validator>
+        <version.undertow>2.0.23.Final</version.undertow>
+        <version.json-schema-validator>1.0.20</version.json-schema-validator>
         <version.fastscanner>2.18.1</version.fastscanner>
         
         
@@ -192,7 +193,7 @@
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
-            <version>${version.jackson}</version>
+            <version>${version.jackson-databind}</version>
         </dependency>
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
@@ -424,10 +425,6 @@
             <activation>
                 <activeByDefault>true</activeByDefault>
             </activation>
-            <properties>
-                <java.debug.argument>-Xdebug</java.debug.argument>
-                <java.debug.agent>-Xrunjdwp:transport=dt_socket,address=8000,server=y,suspend=n</java.debug.agent>
-            </properties>
             <build>
                 <plugins>
                     <plugin>
@@ -440,8 +437,6 @@
                             <arguments>
                                 <argument>-cp</argument>
                                 <classpath />
-                                <argument>${java.debug.argument}</argument>
-                                <argument>${java.debug.agent}</argument>
                                 <argument>${project.main.class}</argument>
                             </arguments>
                         </configuration>

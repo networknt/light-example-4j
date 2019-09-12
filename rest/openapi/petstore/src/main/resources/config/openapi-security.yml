@@ -4,13 +4,20 @@
 # loaded for backward compatibility.
 ---
 # Enable JWT verification flag.
-enableVerifyJwt: false
+enableVerifyJwt: ${openapi-security.enableVerifyJwt:false}
+
+# Extract JWT scope token from the X-Scope-Token header and validate the JWT token
+enableExtractScopeToken: ${openapi-security.enableExtractScopeToken:true}
 
 # Enable JWT scope verification. Only valid when enableVerifyJwt is true.
-enableVerifyScope: true
+enableVerifyScope: ${openapi-security.enableVerifyScope:true}
+
+# Enable JWT scope verification. 
+# Only valid when (enableVerifyJwt is true) AND (enableVerifyJWTScopeToken is true)
+enableVerifyJWTScopeToken: ${openapi-security.enableVerifyJWTScopeToken:true}
 
 # User for test only. should be always be false on official environment.
-enableMockJwt: false
+enableMockJwt: ${openapi-security.enableMockJwt:false}
 
 # JWT signature public certificates. kid and certificate path mappings.
 jwt:
@@ -20,17 +27,17 @@ jwt:
   clockSkewInSeconds: 60
 
 # Enable or disable JWT token logging
-logJwtToken: true
+logJwtToken: ${openapi-security.logJwtToken:true}
 
 # Enable or disable client_id, user_id and scope logging.
-logClientUserScope: false
+logClientUserScope: ${openapi-security.logClientUserScope:false}
 
 # Enable JWT token cache to speed up verification. This will only verify expired time
 # and skip the signature verification as it takes more CPU power and long time.
-enableJwtCache: true
+enableJwtCache: ${openapi-security.enableJwtCache:true}
 
 # If you are using light-oauth2, then you don't need to have oauth subfolder for public
 # key certificate to verify JWT token, the key will be retrieved from key endpoint once
 # the first token is arrived. Default to false for dev environment without oauth2 server
 # or official environment that use other OAuth 2.0 providers.
-bootstrapFromKeyService: false
+bootstrapFromKeyService: ${openapi-security.bootstrapFromKeyService:false}

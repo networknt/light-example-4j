@@ -54,13 +54,13 @@ public class PetsPetIdDeleteHandlerTest {
             throw new ClientException(e);
         }
         final AtomicReference<ClientResponse> reference = new AtomicReference<>();
-        String requestUri = "/v1/pets/QQMEUwLUYnDJq";
+        String requestUri = "/v1/pets/RzXtXWIqNRUwljaszJOlZnqgSs";
         String httpMethod = "delete";
         try {
             ClientRequest request = new ClientRequest().setPath(requestUri).setMethod(Methods.DELETE);
             
             //customized header parameters 
-            request.getRequestHeaders().put(new HttpString("key"), "zNalMahHGSxYUwWF");
+            request.getRequestHeaders().put(new HttpString("key"), "dLIkzr");
             connection.sendRequest(request, client.createClientCallback(reference, latch));
             
             latch.await();
@@ -73,7 +73,6 @@ public class PetsPetIdDeleteHandlerTest {
         String body = reference.get().getAttachment(Http2Client.RESPONSE_BODY);
         Optional<HeaderValues> contentTypeName = Optional.ofNullable(reference.get().getResponseHeaders().get(Headers.CONTENT_TYPE));
         SchemaValidatorsConfig config = new SchemaValidatorsConfig();
-        config.setMissingNodeAsError(true);
         ResponseValidator responseValidator = new ResponseValidator(config);
         int statusCode = reference.get().getResponseCode();
         Status status;
