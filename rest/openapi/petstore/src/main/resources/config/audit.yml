@@ -4,21 +4,21 @@
 enabled: true
 
 # Enable mask
-mask: true
+mask: ${audit.mask:true}
 
 # Output response status code
-statusCode: true
+statusCode: ${audit.statusCode:true}
 
 # Output response time
-responseTime: true
+responseTime: ${audit.responseTime:true}
 
 # audit only on error responses; by default log for any return status code
 # if true, audit at error level if status code >= 400
 # log level is controlled by logLevel
-auditOnError: false
+auditOnError: ${audit.auditOnError:false}
 
 # log level; by default set to info
-logLevelIsError: false
+logLevelIsError: ${audit.logLevelIsError:false}
 
 
 # Output header elements. You can add more if you want.
@@ -42,7 +42,7 @@ audit:
 # Client Id in scope/access token, this is optional
 - scope_client_id
 
-# Request endpoint uri@method.
+# Request endpoint urimethod.
 - endpoint
 
 # Service ID assigned to the service, this is optional and must be set by the service in its implementation
@@ -53,3 +53,4 @@ audit:
 
 # Response payload, this is optional and must be set by the service in its implementation
 - response
+

@@ -94,4 +94,8 @@
         <appender-ref ref="dump"/>
     </logger>
 
+    <logger name="com.networknt.petstore" level="debug" additivity="false">
+        <appender-ref ref="stdout"/>
+    </logger>
+
 </configuration>
