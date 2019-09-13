@@ -72,7 +72,6 @@ public class BooksGetHandlerTest {
         String body = reference.get().getAttachment(Http2Client.RESPONSE_BODY);
         Optional<HeaderValues> contentTypeName = Optional.ofNullable(reference.get().getResponseHeaders().get(Headers.CONTENT_TYPE));
         SchemaValidatorsConfig config = new SchemaValidatorsConfig();
-        config.setMissingNodeAsError(true);
         ResponseValidator responseValidator = new ResponseValidator(config);
         int statusCode = reference.get().getResponseCode();
         Status status;
