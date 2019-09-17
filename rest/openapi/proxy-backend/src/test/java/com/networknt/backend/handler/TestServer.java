@@ -18,13 +18,14 @@ public class TestServer extends ExternalResource {
 
     private static final TestServer instance  = new TestServer();
 
+    private TestServer() {
+
+    }
+
     public static TestServer getInstance () {
         return instance;
     }
 
-    private TestServer() {
-
-    }
 
     public ServerConfig getServerConfig() {
         return Server.config;
