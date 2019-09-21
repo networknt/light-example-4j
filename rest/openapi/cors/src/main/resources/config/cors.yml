@@ -1,0 +1,8 @@
+enabled: true
+allowedOrigins:
+- https://localhost
+allowedMethods:
+- GET
+- POST
+- PUT
+

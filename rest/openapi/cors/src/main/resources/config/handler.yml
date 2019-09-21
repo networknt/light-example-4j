@@ -49,6 +49,7 @@ handlers:
   - com.networknt.openapi.JwtVerifyHandler@security
   - com.networknt.body.BodyHandler@body
   - com.networknt.audit.AuditHandler@audit
+  - com.networknt.cors.CorsHttpHandler@cors
   # DumpHandler is to dump detail request/response info to log, useful for troubleshooting but not suggested to use in production due to it may lower the performance
   # - com.networknt.dump.DumpHandler@dump
   - com.networknt.sanitizer.SanitizerHandler@sanitizer
@@ -73,6 +74,7 @@ chains:
     - metrics
     - traceability
     - correlation
+    - cors
     - specification
     - security
     - body
@@ -83,15 +85,27 @@ chains:
 
 paths:
   - path: '/v1/getData'
+    method: 'options'
+    exec:
+      - cors
+  - path: '/v1/getData'
     method: 'GET'
     exec:
       - default
       - com.networknt.cors.handler.GetDataGetHandler
   - path: '/v1/postData'
+    method: 'options'
+    exec:
+      - cors
+  - path: '/v1/postData'
     method: 'POST'
     exec:
       - default
       - com.networknt.cors.handler.PostDataPostHandler
+  - path: '/v1/putData'
+    method: 'options'
+    exec:
+      - cors
   - path: '/v1/putData'
     method: 'POST'
     exec:
