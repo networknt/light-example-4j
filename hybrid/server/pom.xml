@@ -35,7 +35,7 @@
         <version.httpclient>4.5.2</version.httpclient>
         <version.httpasyncclient>4.1.2</version.httpasyncclient>
         <version.fastscanner>2.18.1</version.fastscanner>
-        <version.json-schema-validator>1.0.22</version.json-schema-validator>
+        <version.json-schema-validator>1.0.24</version.json-schema-validator>
         <version.swagger>1.5.13</version.swagger>
     </properties>
 
