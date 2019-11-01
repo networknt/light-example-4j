@@ -19,7 +19,7 @@
         <version.logback>1.2.3</version.logback>
         <version.junit>4.12</version.junit>
         <version.undertow>2.0.23.Final</version.undertow>
-        <version.json-schema-validator>1.0.22</version.json-schema-validator>
+        <version.json-schema-validator>1.0.24</version.json-schema-validator>
         <version.fastscanner>2.18.1</version.fastscanner>
         
         
