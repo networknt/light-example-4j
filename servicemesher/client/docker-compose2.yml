@@ -1,0 +1,23 @@
+version: "2"
+#
+# Services
+#
+services:
+
+  market-service2:
+      build: ./
+      volumes:
+        - ./configuration2:/config
+      ports:
+        - 8991:8991
+      networks:
+          - localnet
+
+
+
+# Networks
+#
+networks:
+  localnet:
+    # driver: bridge
+    external: true

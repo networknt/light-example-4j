@@ -1,0 +1,30 @@
+{
+  "name": "example-pdf-service",
+  "version": "1.00",
+  "groupId": "com.networknt.example.pdf",
+  "artifactId": "example-pdf-service",
+  "rootPackage": "com.networknt.example.pdf",
+  "handlerPackage":"com.networknt.example.pdf.handler",
+  "modelPackage":"com.networknt.example.pdf.model",
+  "overwriteHandler": false,
+  "overwriteHandlerTest": false,
+  "overwriteModel": false,
+  "httpPort": 9055,
+  "enableHttp": false,
+  "httpsPort": 8449,
+  "enableHttps": true,
+  "enableRegistry": false,
+  "specChangeCodeReGenOnly": true,
+  "supportDb": false,
+  "supportClient": true,
+  "skipPomFile": true,
+  "generateEnvVars": {
+    "generate": true,
+    "skipArray": true,
+    "skipMap": true,
+    "exclude": [
+      "handerl.yml",
+      "values.yml"
+    ]
+  }
+}
