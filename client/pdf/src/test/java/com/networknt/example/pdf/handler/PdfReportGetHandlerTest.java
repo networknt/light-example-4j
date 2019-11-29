@@ -71,8 +71,8 @@ public class PdfReportGetHandlerTest {
             IoUtils.safeClose(connection);
         }
         byte[] body = reference.get().getAttachment(Http2Client.RESPONSE_BODY).getBytes(UTF_8);
-        System.out.println(body.length);
-          int statusCode = reference.get().getResponseCode();
+        logger.info("result length:" + body.length);
+        int statusCode = reference.get().getResponseCode();
 
         Assert.assertEquals(200, statusCode);
     }

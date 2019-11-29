@@ -65,8 +65,9 @@ public class PdfReportGetHandlerBufferTest {
             IoUtils.safeClose(connection);
         }
         byte[] body = reference.get().getAttachment(BUFFER_BODY).array();
-        System.out.println(body.length);
-          int statusCode = reference.get().getResponseCode();
+        Assert.assertNotNull(body);
+      //  System.out.println(body.length);
+        int statusCode = reference.get().getResponseCode();
 
         Assert.assertEquals(200, statusCode);
     }

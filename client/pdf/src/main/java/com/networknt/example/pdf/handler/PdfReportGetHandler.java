@@ -3,8 +3,10 @@ package com.networknt.example.pdf.handler;
 import com.networknt.handler.LightHttpHandler;
 import io.undertow.server.HttpServerExchange;
 import io.undertow.util.HttpString;
+import org.apache.commons.io.IOUtils;
 
 import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
 import java.io.RandomAccessFile;
 import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
@@ -19,22 +21,8 @@ public class PdfReportGetHandler implements LightHttpHandler {
         byte[] response = null;
 
         try {
-            RandomAccessFile reader = new RandomAccessFile("src/main/resources/sample.pdf", "r");
-            FileChannel ch = reader.getChannel();
-            ByteArrayOutputStream out = new ByteArrayOutputStream();
-            int bufferSize = 1024;
-            if (bufferSize > ch.size()) {
-                bufferSize = (int) ch.size();
-            }
-
-            ByteBuffer buff = ByteBuffer.allocate(bufferSize);
-
-            while(ch.read(buff) > 0) {
-                out.write(buff.array(), 0, buff.position());
-                buff.clear();
-            }
-
-            response = out.toByteArray();
+            InputStream resourceAsStream = this.getClass().getClassLoader().getResourceAsStream("sample.pdf");
+            response = IOUtils.toByteArray(resourceAsStream);
         } catch (Exception e) {
 
         }
