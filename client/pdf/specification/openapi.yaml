@@ -1,0 +1,81 @@
+openapi: 3.0.0
+servers:
+  - url: 'http://www.networknt.com/v1'
+info:
+  version: 1.0.13
+  title: PDF test
+  description: PDF test
+  contact:
+    name: Gavin chen
+    email: gavin.chenyan@gmail.com
+  license:
+    name: Apache 2.0
+    url: 'http://www.apache.org/licenses/LICENSE-2.0.html'
+paths:
+  /pdf/report:
+    get:
+      description: get a updated plan PDF file after plan update operation. (MOCK)
+      operationId: getPlanReport
+      responses:
+        '200':
+          description: PDF file as byte array.
+          content:
+            application/octet-stream:
+              schema:
+                type: string
+                format: byte
+        400:
+          description: Bad Request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        401:
+          description: Not Authenticated.  The request requires the user or application to be authenticated.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        403:
+          description: Forbidden.  The user or application is not authorized to perform this operation.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        404:
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        500:
+          description: Internal Server Error.  An unexpected error has occured.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+components:
+  schemas:
+    Error:
+      type: object
+      required:
+        - statusCode
+        - code
+        - message
+        - description
+      properties:
+        statusCode:
+          type: integer
+          format: int32
+        code:
+          type: string
+        message:
+          type: string
+        description:
+          type: string
