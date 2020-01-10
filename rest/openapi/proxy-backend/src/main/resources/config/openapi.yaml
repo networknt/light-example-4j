@@ -1,0 +1,79 @@
+openapi: 3.0.0
+info:
+  version: 1.0.0
+  title: light-proxy demo backend service
+  license:
+    name: MIT
+servers:
+  - url: 'https://proxy.networknt.com/v1'
+paths:
+  /getData:
+    get:
+      description: Return an array of key/value pairs
+      operationId: getData
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/KeyValue'
+              example:
+                - key: key1
+                  value: value1
+                - key: key2
+                  value: value2
+      security:
+        - demo_auth:
+            - proxy.r
+  /postData:
+    post:
+      description: Return a key/value pair
+      operationId: postData
+      requestBody:
+        description: Key value pair
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/KeyValue'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/KeyValue'
+              example:
+                key: key1
+                value: value1
+      security:
+        - demo_auth:
+            - proxy.r
+            - proxy.w
+components:
+  securitySchemes:
+    demo_auth:
+      type: oauth2
+      description: This API uses OAuth 2 with the client credential grant flow.
+      flows:
+        clientCredentials:
+          tokenUrl: 'https://localhost:6882/token'
+          scopes:
+            proxy.w: write
+            proxy.r: read
+  schemas:
+    KeyValue:
+      type: object
+      required:
+        - key
+        - value
+      properties:
+        key:
+          type: string
+          description: key
+        value:
+          type: string
+          description: value

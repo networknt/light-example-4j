@@ -92,7 +92,7 @@ paths:
       - default
       - com.networknt.backend.handler.PostDataPostHandler
 
-  - path: '/health/com.networknt.backend-1.0.0'
+  - path: '/health/${server.serviceId:com.networknt.backend-1.0.0}'
     method: 'get'
     exec:
       - health

@@ -5,7 +5,7 @@ import java.util.Objects;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class KeyValue {
+public class KeyValue  {
 
     private String value;
     private String key;
@@ -56,8 +56,7 @@ public class KeyValue {
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("class KeyValue {\n");
-        sb.append("    value: ").append(toIndentedString(value)).append("\n");
-        sb.append("    key: ").append(toIndentedString(key)).append("\n");
+        sb.append("    value: ").append(toIndentedString(value)).append("\n");        sb.append("    key: ").append(toIndentedString(key)).append("\n");
         sb.append("}");
         return sb.toString();
     }

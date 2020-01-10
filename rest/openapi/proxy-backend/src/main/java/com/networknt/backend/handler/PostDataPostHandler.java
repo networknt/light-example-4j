@@ -14,7 +14,7 @@ public class PostDataPostHandler implements LightHttpHandler {
     static final boolean enableHttps = Server.config.isEnableHttps();
     static final int httpPort = Server.config.getHttpPort();
     static final int httpsPort = Server.config.getHttpsPort();
-    
+
     @Override
     public void handleRequest(HttpServerExchange exchange) throws Exception {
         Map<String, Object> body = (Map<String, Object>)exchange.getAttachment(BodyHandler.REQUEST_BODY);
