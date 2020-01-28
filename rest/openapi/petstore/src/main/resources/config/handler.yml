@@ -104,7 +104,7 @@ paths:
       - default
       - com.networknt.petstore.handler.PetsPetIdDeleteHandler
 
-  - path: '/health/com.networknt.petstore-3.0.1'
+  - path: '/health/${server.serviceId:com.networknt.petstore-3.0.1}'
     method: 'get'
     exec:
       - health
