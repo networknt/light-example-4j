@@ -187,10 +187,6 @@
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
         </dependency>
-        <dependency>
-            <groupId>com.oracle</groupId>
-            <artifactId>ojdbc6</artifactId>
-        </dependency>
         <!-- Test Dependencies -->
         <dependency>
             <groupId>junit</groupId>
