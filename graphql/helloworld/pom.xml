@@ -18,7 +18,7 @@
         <version.jose4j>0.6.3</version.jose4j>
         <version.logback>1.2.3</version.logback>
         <version.junit>4.12</version.junit>
-        <version.undertow>2.0.30.Final</version.undertow>
+        <version.undertow>2.0.29.Final</version.undertow>
         <version.graphql>13.0</version.graphql>
         <version.rxjava>2.1.5</version.rxjava>
 
