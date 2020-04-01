@@ -54,13 +54,13 @@ public class FoodFoodIdDeleteHandlerTest {
             throw new ClientException(e);
         }
         final AtomicReference<ClientResponse> reference = new AtomicReference<>();
-        String requestUri = "/v1/food/BPzByoXVROyoHNwPfBsOdlaQOW";
+        String requestUri = "/v1/food/CUNWNzCXTXxRbHdf";
         String httpMethod = "delete";
         try {
             ClientRequest request = new ClientRequest().setPath(requestUri).setMethod(Methods.DELETE);
             
             //customized header parameters 
-            request.getRequestHeaders().put(new HttpString("key"), "pgjhcL");
+            request.getRequestHeaders().put(new HttpString("key"), "MfkyOgIIcr");
             connection.sendRequest(request, client.createClientCallback(reference, latch));
             
             latch.await();

@@ -5,7 +5,7 @@ import java.util.Objects;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class Computer {
+public class Computer  {
 
     private String brand;
     private java.lang.Long id;
@@ -67,9 +67,7 @@ public class Computer {
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("class Computer {\n");
-        sb.append("    brand: ").append(toIndentedString(brand)).append("\n");
-        sb.append("    id: ").append(toIndentedString(id)).append("\n");
-        sb.append("    tag: ").append(toIndentedString(tag)).append("\n");
+        sb.append("    brand: ").append(toIndentedString(brand)).append("\n");        sb.append("    id: ").append(toIndentedString(id)).append("\n");        sb.append("    tag: ").append(toIndentedString(tag)).append("\n");
         sb.append("}");
         return sb.toString();
     }
