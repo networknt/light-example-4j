@@ -5,7 +5,7 @@ import java.util.Objects;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class Pet {
+public class Pet  {
 
     private String name;
     private java.lang.Long id;
@@ -67,9 +67,7 @@ public class Pet {
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("class Pet {\n");
-        sb.append("    name: ").append(toIndentedString(name)).append("\n");
-        sb.append("    id: ").append(toIndentedString(id)).append("\n");
-        sb.append("    tag: ").append(toIndentedString(tag)).append("\n");
+        sb.append("    name: ").append(toIndentedString(name)).append("\n");        sb.append("    id: ").append(toIndentedString(id)).append("\n");        sb.append("    tag: ").append(toIndentedString(tag)).append("\n");
         sb.append("}");
         return sb.toString();
     }

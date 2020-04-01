@@ -259,7 +259,7 @@ Additional references to the Java 8 CompletableFuture API:
  git clone git@github.com:networknt/light-example-4j.git
  cd ~/networknt/light-example-4j/servicemesher/services
 
- mvn clean install
+ mvn clean install -Prelease
 
  docker-compose -f docker-compose-consul.yml up
 
@@ -280,7 +280,7 @@ Additional references to the Java 8 CompletableFuture API:
   git clone git@github.com:networknt/light-example-4j.git
   cd ~/networknt/light-example-4j/servicemesher/client
 
-  mvn clean install
+  mvn clean install -Prelease
 
   docker-compose  up
 

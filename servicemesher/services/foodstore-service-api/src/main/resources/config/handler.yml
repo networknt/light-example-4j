@@ -1,8 +1,17 @@
 
 
 # Handler middleware chain configuration
----
+#----------------------------------------
 enabled: true
+
+# Configuration for the LightHttpHandler. The handler is the base class  for all middleware, server and health handlers
+# set the Status Object in the AUDIT_INFO, for auditing purposes
+# default, if not set:false
+auditOnError: ${handler.auditOnError:false}
+
+# set the StackTrace in the AUDIT_INFO, for auditing purposes
+# default, if not set:false
+auditStackTrace: ${handler.auditStackTrace:false}
 
 #------------------------------------------------------------------------------
 # Support individual handler chains for each separate endpoint. It allows framework
@@ -95,7 +104,7 @@ paths:
       - default
       - com.networknt.foodstore.handler.FoodFoodIdDeleteHandler
 
-  - path: '/health/com.networknt.foodstore-service-api-3.0.1'
+  - path: '/health/${server.serviceId:com.networknt.foodstore-service-api-3.0.1}'
     method: 'get'
     exec:
       - health

@@ -12,28 +12,20 @@
 	<properties>
 		<java.version>1.8</java.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<version.light-4j>1.6.2</version.light-4j>
-		<version.light-rest-4j>1.6.2</version.light-rest-4j>
-		<version.openapi-parser>1.6.2</version.openapi-parser>
-		<version.jackson>2.9.5</version.jackson>
+		<version.light-4j>1.6.17</version.light-4j>
+		<version.light-rest-4j>1.6.17</version.light-rest-4j>
+		<version.openapi-parser>1.6.17</version.openapi-parser>
+		<version.jackson>2.10.0</version.jackson>
 		<version.slf4j>1.7.25</version.slf4j>
 		<version.jose4j>0.6.3</version.jose4j>
 		<version.logback>1.2.3</version.logback>
 		<version.junit>4.12</version.junit>
 		<version.undertow>2.0.11.Final</version.undertow>
-		<version.json-schema-validator>0.1.26</version.json-schema-validator>
+		<version.json-schema-validator>1.0.36</version.json-schema-validator>
 		<version.fastscanner>2.18.1</version.fastscanner>
 
-		<version.sqlserver>7.2.1.jre8</version.sqlserver>
 		<version.h2>1.3.176</version.h2>
 		<versions.maven-version>2.4</versions.maven-version>
-
-		<!-- Sonar -->
-		<sonar.exclusions>src/main/java/com/cibc/dgp/api/planning/model/**/*.java</sonar.exclusions>
-		<sonar.jacoco.reportPath>${project.basedir}/target/jacoco.exec</sonar.jacoco.reportPath>
-		<sonar.language>java</sonar.language>
-		<sonar.java.coveragePlugin>jacoco</sonar.java.coveragePlugin>
-		<sonar.dynamicAnalysis>reuseReports</sonar.dynamicAnalysis>
 
 	</properties>
 
@@ -242,16 +234,6 @@
 			<groupId>io.github.lukehutch</groupId>
 			<artifactId>fast-classpath-scanner</artifactId>
 			<version>${version.fastscanner}</version>
-		</dependency>
-		<dependency>
-			<groupId>com.microsoft.sqlserver</groupId>
-			<artifactId>mssql-jdbc</artifactId>
-			<version>${version.sqlserver}</version>
-		</dependency>
-		<dependency>
-			<groupId>com.cibc.dgp.util.integration</groupId>
-			<artifactId>dgp-integration-util</artifactId>
-			<version>1.0-SNAPSHOT</version>
 		</dependency>
 
 		<!-- Test Dependencies -->
