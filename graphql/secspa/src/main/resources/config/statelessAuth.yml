@@ -14,8 +14,6 @@ authPath: /authorization
 cookieDomain: localhost
 # Cookie path
 cookiePath: /
-# Cookie maxAge
-cookieMaxAge: 600
 # Login uri, redirect to it once session is expired
 cookieTimeoutUri: /login
 # Cookie secured
