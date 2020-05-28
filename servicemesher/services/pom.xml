@@ -30,7 +30,7 @@
         <version.slf4j>1.7.25</version.slf4j>
         <version.jose4j>0.6.3</version.jose4j>
         <version.logback>1.2.3</version.logback>
-        <version.undertow>2.0.29.Final</version.undertow>
+        <version.undertow>2.1.1.Final</version.undertow>
         <version.json-schema-validator>0.1.26</version.json-schema-validator>
         <version.fastscanner>2.18.1</version.fastscanner>
 
