@@ -55,7 +55,7 @@ public class PdfReportGetHandlerBufferTest {
             ClientRequest request = new ClientRequest().setPath(requestUri).setMethod(Methods.GET);
             
             //customized header parameters 
-            connection.sendRequest(request, createClientCallback(reference, latch));
+            connection.sendRequest(request, client.byteBufferClientCallback(reference, latch));
             
             latch.await();
         } catch (Exception e) {
@@ -64,7 +64,8 @@ public class PdfReportGetHandlerBufferTest {
         } finally {
             IoUtils.safeClose(connection);
         }
-        byte[] body = reference.get().getAttachment(BUFFER_BODY).array();
+        byte[] body = reference.get().getAttachment(client.BUFFER_BODY).array();
+        logger.info("result length:" + body.length);
         Assert.assertNotNull(body);
       //  System.out.println(body.length);
         int statusCode = reference.get().getResponseCode();
@@ -72,50 +73,50 @@ public class PdfReportGetHandlerBufferTest {
         Assert.assertEquals(200, statusCode);
     }
 
-    public ClientCallback<ClientExchange> createClientCallback(final AtomicReference<ClientResponse> reference, final CountDownLatch latch) {
-        return new ClientCallback<ClientExchange>() {
-            public void completed(ClientExchange result) {
-                result.setResponseListener(new ClientCallback<ClientExchange>() {
-                    public void completed(final ClientExchange result) {
-                        reference.set(result.getResponse());
-                        (new ByteBufferReadChannelListener(result.getConnection().getBufferPool()) {
-                            protected void bufferDone(List<Byte> out) {
-                                byte[] byteArray = new byte[out.size()];
-                                int index = 0;
-                                for (byte b : out) {
-                                    byteArray[index++] = b;
-                                }
-                                result.getResponse().putAttachment(BUFFER_BODY, (ByteBuffer.wrap(byteArray)));
-                                latch.countDown();
-                            }
-
-                            protected void error(IOException e) {
-                                latch.countDown();
-                            }
-                        }).setup(result.getResponseChannel());
-                    }
-                    public void failed(IOException e) {
-                        latch.countDown();
-                    }
-                });
-
-                try {
-                    result.getRequestChannel().shutdownWrites();
-                    if (!result.getRequestChannel().flush()) {
-                        result.getRequestChannel().getWriteSetter().set(ChannelListeners.flushingChannelListener((ChannelListener)null, (ChannelExceptionHandler)null));
-                        result.getRequestChannel().resumeWrites();
-                    }
-                } catch (IOException var3) {
-                    latch.countDown();
-                }
-
-            }
-
-            public void failed(IOException e) {
-                latch.countDown();
-            }
-        };
-    }
+//    public ClientCallback<ClientExchange> createClientCallback(final AtomicReference<ClientResponse> reference, final CountDownLatch latch) {
+//        return new ClientCallback<ClientExchange>() {
+//            public void completed(ClientExchange result) {
+//                result.setResponseListener(new ClientCallback<ClientExchange>() {
+//                    public void completed(final ClientExchange result) {
+//                        reference.set(result.getResponse());
+//                        (new ByteBufferReadChannelListener(result.getConnection().getBufferPool()) {
+//                            protected void bufferDone(List<Byte> out) {
+//                                byte[] byteArray = new byte[out.size()];
+//                                int index = 0;
+//                                for (byte b : out) {
+//                                    byteArray[index++] = b;
+//                                }
+//                                result.getResponse().putAttachment(BUFFER_BODY, (ByteBuffer.wrap(byteArray)));
+//                                latch.countDown();
+//                            }
+//
+//                            protected void error(IOException e) {
+//                                latch.countDown();
+//                            }
+//                        }).setup(result.getResponseChannel());
+//                    }
+//                    public void failed(IOException e) {
+//                        latch.countDown();
+//                    }
+//                });
+//
+//                try {
+//                    result.getRequestChannel().shutdownWrites();
+//                    if (!result.getRequestChannel().flush()) {
+//                        result.getRequestChannel().getWriteSetter().set(ChannelListeners.flushingChannelListener((ChannelListener)null, (ChannelExceptionHandler)null));
+//                        result.getRequestChannel().resumeWrites();
+//                    }
+//                } catch (IOException var3) {
+//                    latch.countDown();
+//                }
+//
+//            }
+//
+//            public void failed(IOException e) {
+//                latch.countDown();
+//            }
+//        };
+//    }
 
 }
 
