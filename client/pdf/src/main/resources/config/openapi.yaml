@@ -60,6 +60,63 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
+    post:
+      description: upload  a pdf or images file. (MOCK)
+      operationId: postPlanReport
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+             type: object
+             properties:      # Request parts
+              name:            # Part 1 (string value)
+               type: string
+              profileFile:  # Part 2 (an image)
+               type: string
+               format: binary
+      responses:
+        '200':
+          description: PDF file as byte array.
+          content:
+            application/json:
+              schema:
+                type: string
+        400:
+          description: Bad Request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        401:
+          description: Not Authenticated.  The request requires the user or application to be authenticated.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        403:
+          description: Forbidden.  The user or application is not authorized to perform this operation.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        404:
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        500:
+          description: Internal Server Error.  An unexpected error has occured.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
 components:
   schemas:
     Error:

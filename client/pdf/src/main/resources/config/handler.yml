@@ -47,7 +47,7 @@ handlers:
   - com.networknt.correlation.CorrelationHandler@correlation
   - com.networknt.openapi.OpenApiHandler@specification
   - com.networknt.openapi.JwtVerifyHandler@security
-  - com.networknt.body.BodyHandler@body
+  - com.networknt.example.pdf.handler.BodyHandler@body
   - com.networknt.audit.AuditHandler@audit
   # DumpHandler is to dump detail request/response info to log, useful for troubleshooting but not suggested to use in production due to it may lower the performance
   # - com.networknt.dump.DumpHandler@dump
@@ -63,6 +63,7 @@ handlers:
   # - com.networknt.metrics.prometheus.PrometheusGetHandler@getprometheus
   # Business Handlers
   - com.networknt.example.pdf.handler.PdfReportGetHandler
+  - com.networknt.example.pdf.handler.PdfReportPostHandler
 
 
 chains:
@@ -85,8 +86,13 @@ paths:
     exec:
       - default
       - com.networknt.example.pdf.handler.PdfReportGetHandler
+  - path: '/v1/pdf/report'
+    method: 'POST'
+    exec:
+      - default
+      - com.networknt.example.pdf.handler.PdfReportPostHandler
 
-  - path: '/health/com.networknt.example.pdf.example-pdf-service-1.00'
+  - path: '/health/${server.serviceId:com.networknt.example.pdf.example-pdf-service-1.00}'
     method: 'get'
     exec:
       - health
