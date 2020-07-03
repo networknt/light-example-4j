@@ -11,6 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.InputStream;
+import java.nio.ByteBuffer;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -24,7 +25,9 @@ public class PdfReportPostHandler implements LightHttpHandler {
      //   Map<String, Object> jsonMap = objectMapper.readValue(result, Map.class);
 
         String fileName = (String)jsonMap.get("name");
+        byte[] fileBody = (byte[])jsonMap.get("profileFile");
         logger.info("file name:"+ fileName);
+        logger.info("file size:"+ fileBody.length);
         exchange.getResponseHeaders().add(new HttpString("Content-Type"), "application/json");
         exchange.getResponseSender().send(Config.getInstance().getMapper().writeValueAsString(fileName));
     }
