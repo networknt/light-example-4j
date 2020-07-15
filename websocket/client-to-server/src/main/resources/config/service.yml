@@ -1,0 +1,3 @@
+singletons:
+  - com.networknt.handler.HandlerProvider:
+    - com.networknt.websocket.handler.WebSocketHandlerProvider
