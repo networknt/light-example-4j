@@ -29,7 +29,7 @@ enableTwoWayTls: false
 truststoreName: server.truststore
 
 # Unique service identifier. Used in service registration and discovery etc.
-serviceId: com.networknt.petstore-1.0.0
+serviceId: com.networknt.chatserver-1.0.0
 
 # Flag to enable service registration. Only be true if running as standalone Java jar.
 enableRegistry: false
