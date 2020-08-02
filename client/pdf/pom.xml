@@ -34,12 +34,6 @@
         	<version.maven-surefire>2.22.2</version.maven-surefire>
         	<version.maven-source>3.1.0</version.maven-source>
 
-		<!-- Sonar -->
-		<sonar.exclusions>src/main/java/com/cibc/dgp/api/planning/model/**/*.java</sonar.exclusions>
-		<sonar.jacoco.reportPath>${project.basedir}/target/jacoco.exec</sonar.jacoco.reportPath>
-		<sonar.language>java</sonar.language>
-		<sonar.java.coveragePlugin>jacoco</sonar.java.coveragePlugin>
-		<sonar.dynamicAnalysis>reuseReports</sonar.dynamicAnalysis>
 
 	</properties>
 
