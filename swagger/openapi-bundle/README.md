@@ -51,3 +51,8 @@ The example project shows have to use the maven plugin and bundle the yml files 
 <output>${project.basedir}/target</output>
 
   ```
+
+And we can implement the openapi bundle together with light-codegen maven plugin together. For the light-codegen with maven build, please refer to:
+
+https://github.com/networknt/light-example-4j/tree/1.6.x/servicemesher/services
+
