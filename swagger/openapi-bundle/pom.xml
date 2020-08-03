@@ -1,0 +1,71 @@
+
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+		 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>com.networknt</groupId>
+	<artifactId>openapi-bundle-sample</artifactId>
+	<packaging>jar</packaging>
+	<name>openapi-bundle-sample</name>
+	<version>1.00</version>
+
+	<properties>
+		<java.version>1.8</java.version>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+		<versions.maven-version>2.4</versions.maven-version>
+
+	</properties>
+
+	<dependencies>
+
+	</dependencies>
+
+
+
+	<build>
+		<defaultGoal>install</defaultGoal>
+		<directory>target</directory>
+		<finalName>${project.artifactId}-${project.version}</finalName>
+		<plugins>
+			<plugin>
+				<groupId>com.soebes.maven.plugins</groupId>
+				<artifactId>iterator-maven-plugin</artifactId>
+				<version>0.5.1</version>
+				<executions>
+					<execution>
+						<goals>
+							<goal>iterator</goal>
+						</goals>
+						<configuration>
+							<items>
+								<item>specification/openapi.yaml</item>
+							</items>
+							<pluginExecutors>
+								<pluginExecutor>
+									<plugin>
+										<groupId>io.swagger.codegen.v3</groupId>
+										<artifactId>swagger-codegen-maven-plugin</artifactId>
+										<version>3.0.21</version>
+									</plugin>
+									<goal>generate</goal>
+									<configuration>
+										<inputSpec>${project.basedir}/${item}</inputSpec>
+										<output>${project.basedir}/target</output>
+										<language>openapi-yaml</language>
+										<generateSupportingFiles>false</generateSupportingFiles>
+										<configOptions>
+											<outputFile>${item}</outputFile>
+										</configOptions>
+									</configuration>
+								</pluginExecutor>
+							</pluginExecutors>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+
+	</build>
+
+</project>
