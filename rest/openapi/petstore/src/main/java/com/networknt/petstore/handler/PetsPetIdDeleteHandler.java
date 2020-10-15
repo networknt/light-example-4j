@@ -6,6 +6,10 @@ import io.undertow.util.HttpString;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+For more information on how to write business handlers, please check the link below.
+https://doc.networknt.com/development/business-handler/rest/
+*/
 public class PetsPetIdDeleteHandler implements LightHttpHandler {
     
     @Override
