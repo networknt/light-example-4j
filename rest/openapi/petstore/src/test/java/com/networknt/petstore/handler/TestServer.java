@@ -35,7 +35,7 @@ public class TestServer extends ExternalResource {
     protected void before() {
         try {
             if (refCount.get() == 0) {
-                Server.start();
+                Server.init();
             }
         }
         finally {

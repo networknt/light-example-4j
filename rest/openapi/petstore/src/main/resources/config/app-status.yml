@@ -1,0 +1,18 @@
+# Put your application specific error code into this file instead of status.yml
+# This file will be merge into the status.yml during the server startup.
+# Please allocate the range for the application error codes within your organization
+# to ensure no reused for an error code across the organization for tracing.
+
+# 20000-29999 common error codes within your business domain.
+# It is highly recommended to have common error codes shared within your organization
+# or your line of business and put them into the externalized status.yml file.
+
+# 30000-99999 customize error code that cannot be found in common range.
+# Only use this section if you cannot make your error code into 20000-29999 range on time.
+# In this case, the error code defined here will be merged to the status.yml during startup.
+# To ensure there is no reuse of error code, this application will use the range 30000-31000.
+ERR30000:
+  statusCode: 400
+  code: ERR30000
+  message: FIRST_ERROR_IN_APP
+  description: This is is the first error in this example application.
