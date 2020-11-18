@@ -213,12 +213,7 @@
             <artifactId>undertow-core</artifactId>
             <version>${version.undertow}</version>
         </dependency>
-        <dependency>
-            <groupId>io.github.lukehutch</groupId>
-            <artifactId>fast-classpath-scanner</artifactId>
-            <version>${version.fastscanner}</version>
-        </dependency>
-        
+
         
         
         
