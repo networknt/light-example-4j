@@ -44,8 +44,12 @@ public class DataGetHandler implements LightHttpHandler {
 
     @Override
     public void handleRequest(HttpServerExchange exchange) throws Exception {
+        // get the current address and port from the Server. Cannot use the server.yml value as the dynamic port might be used.
+        int port = Server.currentPort;
+        String address = Server.currentAddress;
         List<String> list = new ArrayList<>();
         final CountDownLatch latch = new CountDownLatch(1);
+        // to test the portal registry, we don't to cache the connection but to do the discovery for each request.
         ClientConnection connection = null;
         try {
             apidHost = cluster.serviceToUrl("https", "com.networknt.ad-1.0.0", tag, null);
@@ -67,14 +71,14 @@ public class DataGetHandler implements LightHttpHandler {
                 throw new Exception("Failed to call API D: " + statusCode);
             }
             List<String> apidList = Config.getInstance().getMapper().readValue(reference.get().getAttachment(Http2Client.RESPONSE_BODY),
-                    new TypeReference<List<String>>(){});
+                    new TypeReference<>(){});
             list.addAll(apidList);
         } catch (Exception e) {
             logger.error("Exception:", e);
             throw new ClientException(e);
         }
-        list.add("API B: Message 1");
-        list.add("API B: Message 2");
+        list.add("API B: Message 1 from " + address + ":" + port);
+        list.add("API B: Message 2 from " + address + ":" + port);
         exchange.getResponseSender().send(Config.getInstance().getMapper().writeValueAsString(list));
     }
 }

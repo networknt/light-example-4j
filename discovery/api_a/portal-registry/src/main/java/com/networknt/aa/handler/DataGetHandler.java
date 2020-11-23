@@ -39,41 +39,35 @@ public class DataGetHandler implements LightHttpHandler {
     static String tag = Server.getServerConfig().getEnvironment();
 
     static Http2Client client = Http2Client.getInstance();
-    static ClientConnection connectionB;
-    static ClientConnection connectionC;
 
     public DataGetHandler() {
-        try {
-            apibHost = cluster.serviceToUrl("https", "com.networknt.ab-1.0.0", tag, null);
-            apicHost = cluster.serviceToUrl("https", "com.networknt.ac-1.0.0", tag, null);
-            connectionB = client.connect(new URI(apibHost), Http2Client.WORKER, Http2Client.SSL, Http2Client.BUFFER_POOL, OptionMap.create(UndertowOptions.ENABLE_HTTP2, true)).get();
-            connectionC = client.connect(new URI(apicHost), Http2Client.WORKER, Http2Client.SSL, Http2Client.BUFFER_POOL, OptionMap.create(UndertowOptions.ENABLE_HTTP2, true)).get();
-        } catch (Exception e) {
-            logger.error("Exeption:", e);
-        }
     }
 
     @Override
     public void handleRequest(HttpServerExchange exchange) throws Exception {
+        // get the current address and port from the Server. Cannot use the server.yml value as the dynamic port might be used.
+        int port = Server.currentPort;
+        String address = Server.currentAddress;
+
         List<String> list = new ArrayList<>();
-        if(connectionB == null || !connectionB.isOpen()) {
-            try {
-                apibHost = cluster.serviceToUrl("https", "com.networknt.ab-1.0.0", tag, null);
-                connectionB = client.connect(new URI(apibHost), Http2Client.WORKER, Http2Client.SSL, Http2Client.BUFFER_POOL, OptionMap.create(UndertowOptions.ENABLE_HTTP2, true)).get();
-            } catch (Exception e) {
-                logger.error("Exeption:", e);
-                throw new ClientException(e);
-            }
+        // to test the portal registry, we don't to cache the connection but to do the discovery for each request.
+        ClientConnection connectionB = null;
+        try {
+            apibHost = cluster.serviceToUrl("https", "com.networknt.ab-1.0.0", tag, null);
+            connectionB = client.connect(new URI(apibHost), Http2Client.WORKER, Http2Client.SSL, Http2Client.BUFFER_POOL, OptionMap.create(UndertowOptions.ENABLE_HTTP2, true)).get();
+        } catch (Exception e) {
+            logger.error("Exeption:", e);
+            throw new ClientException(e);
         }
-        if(connectionC == null || !connectionC.isOpen()) {
-            try {
-                apicHost = cluster.serviceToUrl("https", "com.networknt.ac-1.0.0", tag, null);
-                connectionC = client.connect(new URI(apicHost), Http2Client.WORKER, Http2Client.SSL, Http2Client.BUFFER_POOL, OptionMap.create(UndertowOptions.ENABLE_HTTP2, true)).get();
-            } catch (Exception e) {
-                logger.error("Exeption:", e);
-                throw new ClientException(e);
-            }
+        ClientConnection connectionC = null;
+        try {
+            apicHost = cluster.serviceToUrl("https", "com.networknt.ac-1.0.0", tag, null);
+            connectionC = client.connect(new URI(apicHost), Http2Client.WORKER, Http2Client.SSL, Http2Client.BUFFER_POOL, OptionMap.create(UndertowOptions.ENABLE_HTTP2, true)).get();
+        } catch (Exception e) {
+            logger.error("Exeption:", e);
+            throw new ClientException(e);
         }
+
         final CountDownLatch latch = new CountDownLatch(2);
         final AtomicReference<ClientResponse> referenceB = new AtomicReference<>();
         final AtomicReference<ClientResponse> referenceC = new AtomicReference<>();
@@ -93,7 +87,7 @@ public class DataGetHandler implements LightHttpHandler {
                 throw new Exception("Failed to call API B: " + statusCodeB);
             }
             List<String> apibList = Config.getInstance().getMapper().readValue(referenceB.get().getAttachment(Http2Client.RESPONSE_BODY),
-                    new TypeReference<List<String>>(){});
+                    new TypeReference<>(){});
             list.addAll(apibList);
 
             int statusCodeC = referenceC.get().getResponseCode();
@@ -101,14 +95,14 @@ public class DataGetHandler implements LightHttpHandler {
                 throw new Exception("Failed to call API C: " + statusCodeC);
             }
             List<String> apicList = Config.getInstance().getMapper().readValue(referenceC.get().getAttachment(Http2Client.RESPONSE_BODY),
-                    new TypeReference<List<String>>(){});
+                    new TypeReference<>(){});
             list.addAll(apicList);
         } catch (Exception e) {
             logger.error("Exception:", e);
             throw new ClientException(e);
         }
-        list.add("API A: Message 1");
-        list.add("API A: Message 2");
+        list.add("API A: Message 1 from " + address + ":" + port);
+        list.add("API A: Message 2 from " + address + ":" + port);
         exchange.getResponseSender().send(Config.getInstance().getMapper().writeValueAsString(list));
     }
 }
