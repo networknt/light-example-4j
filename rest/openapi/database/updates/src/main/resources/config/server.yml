@@ -26,11 +26,20 @@ enableHttp2: true
 # Keystore file name in config folder. KeystorePass is in secret.yml to access it.
 keystoreName: server.keystore
 
+# Keystore password
+keystorePass: ${server.keystorePass:password}
+
+# Private key password
+keyPass: ${server.keyPass:password}
+
 # Flag that indicate if two way TLS is enabled. Not recommended in docker container.
 enableTwoWayTls: false
 
 # Truststore file name in config folder. TruststorePass is in secret.yml to access it.
 truststoreName: server.truststore
+
+# Truststore password
+truststorePass: ${server.truststorePass:password}
 
 # Unique service identifier. Used in service registration and discovery etc.
 serviceId: com.networknt.database-1.0.0

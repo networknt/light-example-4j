@@ -38,6 +38,9 @@ enableTwoWayTls: ${server.enableTwoWayTls:false}
 # Truststore file name in config folder. TruststorePass is in secret.yml to access it.
 truststoreName: ${server.truststoreName:server.truststore}
 
+# Truststore password
+truststorePass: ${server.truststorePass:password}
+
 # Unique service identifier. Used in service registration and discovery etc.
 serviceId: ${server.serviceId:com.networknt.example.pdf.example-pdf-service-1.00}
 
