@@ -5,7 +5,7 @@
 ip: 0.0.0.0
 
 # Http port if enableHttp is true. It will be ignored if dynamicPort is true.
-httpPort: ${server.httpPort:49587}
+httpPort: ${server.httpPort:8080}
 
 # Enable HTTP should be false by default. It should be only used for testing with clients or tools
 # that don't support https or very hard to import the certificate. Otherwise, https should be used.
@@ -15,7 +15,7 @@ httpPort: ${server.httpPort:49587}
 enableHttp: ${server.enableHttp:false}
 
 # Https port if enableHttps is true. It will be ignored if dynamicPort is true.
-httpsPort: ${server.httpsPort:49588}
+httpsPort: ${server.httpsPort:8443}
 
 # Enable HTTPS should be true on official environment and most dev environments.
 enableHttps: ${server.enableHttps:true}
@@ -53,7 +53,7 @@ serviceId: ${server.serviceId:com.networknt.petstore-3.0.1}
 
 # Flag to enable self service registration. This should be turned on on official test and production. And
 # dyanmicPort should be enabled if any orchestration tool is used like Kubernetes.
-enableRegistry: ${server.enableRegistry:false}
+enableRegistry: ${server.enableRegistry:true}
 
 # When enableRegistry is true and the registry/discovery service is not reachable. Stop the server or continue
 # starting the server. When your global registry is not setup as high availability and only for monitoring, you
