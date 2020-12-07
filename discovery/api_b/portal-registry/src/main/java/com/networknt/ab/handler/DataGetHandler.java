@@ -77,8 +77,7 @@ public class DataGetHandler implements LightHttpHandler {
             logger.error("Exception:", e);
             throw new ClientException(e);
         }
-        list.add("API B: Message 1 from " + address + ":" + port);
-        list.add("API B: Message 2 from " + address + ":" + port);
+        list.add("API B: Message from " + address + ":" + port);
         exchange.getResponseSender().send(Config.getInstance().getMapper().writeValueAsString(list));
     }
 }

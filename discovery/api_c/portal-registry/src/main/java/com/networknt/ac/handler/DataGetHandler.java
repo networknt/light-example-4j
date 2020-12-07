@@ -24,8 +24,7 @@ public class DataGetHandler implements LightHttpHandler {
         int port = Server.currentPort;
         String address = Server.currentAddress;
         List<String> messages = new ArrayList<>();
-        messages.add("API C: Message 1 from " + address + ":" + port);
-        messages.add("API C: Message 2 from " + address + ":" + port);
+        messages.add("API C: Message from " + address + ":" + port);
         exchange.getResponseSender().send(Config.getInstance().getMapper().writeValueAsString(messages));
     }
 }
