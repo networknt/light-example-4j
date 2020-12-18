@@ -1,0 +1,137 @@
+
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: >
+  petstore
+
+  Sample SAM Template for petstore
+
+# More info about Globals: https://github.com/awslabs/serverless-application-model/blob/master/docs/globals.rst
+Globals:
+  Function:
+    Timeout: 20
+
+Resources:
+  
+  PetsGetFunction:
+    Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
+    Properties:
+      
+      CodeUri: PetsGetFunction
+      Handler: com.networknt.petstore.handler.App::handleRequest
+      Runtime: java11
+      MemorySize: 512
+      Environment: # More info about Env Vars: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#environment-object
+        Variables:
+          PARAM1: VALUE
+      
+      Events:
+        PetsGet:
+          Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
+          Properties:
+            Path: /v1/pets
+            Method: GET
+    
+  
+  PetsPostFunction:
+    Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
+    Properties:
+      
+      CodeUri: PetsPostFunction
+      Handler: com.networknt.petstore.handler.App::handleRequest
+      Runtime: java11
+      MemorySize: 512
+      Environment: # More info about Env Vars: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#environment-object
+        Variables:
+          PARAM1: VALUE
+      
+      Events:
+        PetsPost:
+          Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
+          Properties:
+            Path: /v1/pets
+            Method: POST
+    
+  
+  PetsPetIdGetFunction:
+    Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
+    Properties:
+      
+      CodeUri: PetsPetIdGetFunction
+      Handler: com.networknt.petstore.handler.App::handleRequest
+      Runtime: java11
+      MemorySize: 512
+      Environment: # More info about Env Vars: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#environment-object
+        Variables:
+          PARAM1: VALUE
+      
+      Events:
+        PetsPetIdGet:
+          Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
+          Properties:
+            Path: /v1/pets/{petId}
+            Method: GET
+    
+  
+  PetsPetIdDeleteFunction:
+    Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
+    Properties:
+      
+      CodeUri: PetsPetIdDeleteFunction
+      Handler: com.networknt.petstore.handler.App::handleRequest
+      Runtime: java11
+      MemorySize: 512
+      Environment: # More info about Env Vars: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#environment-object
+        Variables:
+          PARAM1: VALUE
+      
+      Events:
+        PetsPetIdDelete:
+          Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
+          Properties:
+            Path: /v1/pets/{petId}
+            Method: DELETE
+    
+  
+
+Outputs:
+  # ServerlessRestApi is an implicit API created out of Events key under Serverless::Function
+  # Find out more about other implicit resources you can reference within SAM
+  # https://github.com/awslabs/serverless-application-model/blob/master/docs/internals/generated_resources.rst#api
+  PetsGetApi:
+    Description: "API Gateway endpoint URL for Prod stage for the function"
+    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/v1/pets/"
+  PetsGetFunction:
+    Description: "The Lambda Function ARN"
+    Value: !GetAtt PetsGetFunction.Arn
+  PetsGetFunctionIamRole:
+    Description: "Implicit IAM Role created for the function"
+    Value: !GetAtt PetsGetFunctionRole.Arn
+  PetsPostApi:
+    Description: "API Gateway endpoint URL for Prod stage for the function"
+    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/v1/pets/"
+  PetsPostFunction:
+    Description: "The Lambda Function ARN"
+    Value: !GetAtt PetsPostFunction.Arn
+  PetsPostFunctionIamRole:
+    Description: "Implicit IAM Role created for the function"
+    Value: !GetAtt PetsPostFunctionRole.Arn
+  PetsPetIdGetApi:
+    Description: "API Gateway endpoint URL for Prod stage for the function"
+    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/v1/pets/{petId}/"
+  PetsPetIdGetFunction:
+    Description: "The Lambda Function ARN"
+    Value: !GetAtt PetsPetIdGetFunction.Arn
+  PetsPetIdGetFunctionIamRole:
+    Description: "Implicit IAM Role created for the function"
+    Value: !GetAtt PetsPetIdGetFunctionRole.Arn
+  PetsPetIdDeleteApi:
+    Description: "API Gateway endpoint URL for Prod stage for the function"
+    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/v1/pets/{petId}/"
+  PetsPetIdDeleteFunction:
+    Description: "The Lambda Function ARN"
+    Value: !GetAtt PetsPetIdDeleteFunction.Arn
+  PetsPetIdDeleteFunctionIamRole:
+    Description: "Implicit IAM Role created for the function"
+    Value: !GetAtt PetsPetIdDeleteFunctionRole.Arn
+  
