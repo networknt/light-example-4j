@@ -25,6 +25,11 @@
     <dependencies>
         <dependency>
             <groupId>com.networknt</groupId>
+            <artifactId>utility</artifactId>
+            <version>${version.light-4j}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.networknt</groupId>
             <artifactId>request-handler</artifactId>
             <version>${version.light-4j}</version>
         </dependency>
