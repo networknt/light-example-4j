@@ -174,7 +174,10 @@ Resources:
     Type: AWS::Lambda::Permission
     DependsOn:
       - ApiGateway
+      - Authorizer
     Properties:
       Action: lambda:InvokeFunction
       FunctionName: arn:aws:lambda:us-east-2:964637446810:function:Authorizer
       Principal: apigateway.amazonaws.com
+      SourceArn:
+        'Fn::Sub': 'arn:aws:execute-api:${AWS::Region}:${AWS::AccountId}:*/*/*/*'
