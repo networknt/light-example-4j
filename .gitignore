@@ -8,6 +8,7 @@ dist/
 .classpath
 .settings
 .metadata/
+.aws-sam/
 *.iml
 *.log
 *.tmp
