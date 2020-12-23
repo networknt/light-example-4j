@@ -13,7 +13,7 @@
     <properties>
         <java.version>1.8</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <version.light-4j>1.6.30-SNAPSHOT</version.light-4j>
+        <version.light-4j>1.6.30</version.light-4j>
         <version.undertow>2.1.3.Final</version.undertow>
         <version.assertj>2.1.0</version.assertj>
         <version.hamcrest>1.3</version.hamcrest>
