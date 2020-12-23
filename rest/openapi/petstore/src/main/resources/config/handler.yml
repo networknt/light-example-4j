@@ -58,6 +58,8 @@ handlers:
   # Framework endpoint handlers
   - com.networknt.health.HealthGetHandler@health
   - com.networknt.info.ServerInfoGetHandler@info
+  - com.networknt.logging.handler.LoggerGetHandler@getLogger
+  - com.networknt.logging.handler.LoggerPostHandler@postLogger
   - com.networknt.specification.SpecDisplayHandler@spec
   - com.networknt.specification.SpecSwaggerUIHandler@swaggerui
   # - com.networknt.metrics.prometheus.PrometheusGetHandler@getprometheus
@@ -107,12 +109,27 @@ paths:
   - path: '/health/${server.serviceId:com.networknt.petstore-3.0.1}'
     method: 'get'
     exec:
+      - security
       - health
 
   - path: '/server/info'
     method: 'get'
     exec:
+      - security
       - info
+
+  - path: '/logger'
+    method: 'get'
+    exec:
+      - security
+      - getLogger
+
+  - path: '/logger'
+    method: 'post'
+    exec:
+      - security
+      - body
+      - postLogger
 
 
   - path: '/spec.yaml'
