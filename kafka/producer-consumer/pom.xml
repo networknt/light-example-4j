@@ -104,7 +104,6 @@
             <artifactId>metrics</artifactId>
             <version>${version.light-4j}</version>
         </dependency>
-        
         <dependency>
             <groupId>com.networknt</groupId>
             <artifactId>handler</artifactId>
@@ -153,6 +152,11 @@
         <dependency>
             <groupId>com.networknt</groupId>
             <artifactId>decryptor</artifactId>
+            <version>${version.light-4j}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.networknt</groupId>
+            <artifactId>kafka-producer</artifactId>
             <version>${version.light-4j}</version>
         </dependency>
         <dependency>
