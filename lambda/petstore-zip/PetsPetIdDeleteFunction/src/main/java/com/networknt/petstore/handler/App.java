@@ -1,9 +1,6 @@
 
 package com.networknt.petstore.handler;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
 import com.amazonaws.services.lambda.runtime.events.APIGatewayProxyRequestEvent;
@@ -14,14 +11,16 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Handler for requests to Lambda function.
+ * App for requests to Lambda function. This class is generated, so please don't modify it. For developers, you need to
+ * put your business logic in the BusinessHandler so that it won't be overwritten with regeneration.
+ *
+ * @author Steve Hu
  */
 public class App extends LightRequestHandler implements RequestHandler<APIGatewayProxyRequestEvent, APIGatewayProxyResponseEvent> {
     private static final Logger logger = LoggerFactory.getLogger(App.class);
     private static ObjectMapper objectMapper = new ObjectMapper();
 
     public APIGatewayProxyResponseEvent handleRequest(final APIGatewayProxyRequestEvent input, final Context context) {
-        /* Generated Begin */
         try {
             if(logger.isDebugEnabled()) logger.debug(objectMapper.writeValueAsString(input));
         } catch (Exception e) {
@@ -31,18 +30,7 @@ public class App extends LightRequestHandler implements RequestHandler<APIGatewa
         if(response != null) {
             return interceptResponse(response);
         }
-        /* Generated End */
-
-        Map<String, String> headers = new HashMap<>();
-        headers.put("Content-Type", "application/json");
-        response = new APIGatewayProxyResponseEvent().withHeaders(headers);
-        String output = "";
-        output = "{\"id\":1,\"name\":\"Jessica Right\",\"tag\":\"pet\"}";
-        response.withStatusCode(200)
-                .withBody(output);
-
-        /* Generated Begin */
-        return interceptResponse(response);
-        /* Generated End */
+        BusinessHandler handler = new BusinessHandler();
+        return interceptResponse(handler.handleRequest(input, context));
     }
 }
