@@ -9,28 +9,6 @@ servers:
   - url: https://kafka.networknt.com
 
 paths:
-  /query:
-    get:
-      operationId: getUsers
-      summary: Get a list of registered users
-      responses:
-        '200':
-          description: Successful response
-          content:
-            application/json:
-              schema: 
-                type: array
-                items: 
-                  $ref: '#/components/schemas/User'
-        '400':
-          description: Unexpected error
-          content:
-            application/json:
-              schema:
-                "$ref": "#/components/schemas/Status"
-      security:
-        - user_auth:
-            - user:r  
   /query/{userId}:
     get:
       operationId: getUser

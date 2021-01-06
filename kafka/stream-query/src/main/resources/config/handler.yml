@@ -62,7 +62,6 @@ handlers:
   - com.networknt.specification.SpecSwaggerUIHandler@swaggerui
   # - com.networknt.metrics.prometheus.PrometheusGetHandler@getprometheus
   # Business Handlers
-  - com.networknt.kafka.handler.QueryGetHandler
   - com.networknt.kafka.handler.QueryUserIdGetHandler
 
 
@@ -81,11 +80,6 @@ chains:
     - validator
 
 paths:
-  - path: '/query'
-    method: 'GET'
-    exec:
-      - default
-      - com.networknt.kafka.handler.QueryGetHandler
   - path: '/query/{userId}'
     method: 'GET'
     exec:
