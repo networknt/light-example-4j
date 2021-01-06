@@ -11,4 +11,4 @@ singletons:
 - com.networknt.kafka.producer.LightProducer:
   - com.networknt.kafka.producer.TransactionalProducer
 - com.networknt.kafka.consumer.LightConsumer:
-  - com.networknt.kafka.KeyValueConsumer
+  - com.networknt.kafka.UserConsumer

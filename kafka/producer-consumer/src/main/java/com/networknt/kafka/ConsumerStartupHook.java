@@ -5,10 +5,10 @@ import com.networknt.server.StartupHookProvider;
 import com.networknt.service.SingletonServiceFactory;
 
 public class ConsumerStartupHook implements StartupHookProvider {
-    public static KeyValueConsumer consumer;
+    public static UserConsumer consumer;
     @Override
     public void onStartup() {
-        consumer = (KeyValueConsumer) SingletonServiceFactory.getBean(LightConsumer.class);
+        consumer = (UserConsumer) SingletonServiceFactory.getBean(LightConsumer.class);
         consumer.open();
     }
 }

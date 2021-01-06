@@ -1,6 +1,7 @@
 package com.networknt.kafka.handler;
 
 import com.networknt.body.BodyHandler;
+import com.networknt.config.JsonMapper;
 import com.networknt.handler.LightHttpHandler;
 import com.networknt.kafka.producer.LightProducer;
 import com.networknt.service.SingletonServiceFactory;
@@ -28,16 +29,15 @@ public class ProducerTopicPostHandler implements LightHttpHandler {
         BlockingQueue<ProducerRecord<byte[], byte[]>> txQueue = producer.getTxQueue();
 
         for (int i = 0; i < list.size(); i++) {
-            Map<String, Object> itemMap = list.get(i);
-            String key = (String)itemMap.get("key");
-            String value = (String)itemMap.get("value");
-            ProducerRecord<byte[], byte[]> record = new ProducerRecord<>(topic, key.getBytes(StandardCharsets.UTF_8), value.getBytes(StandardCharsets.UTF_8));
+            Map<String, Object> userMap = list.get(i);
+            String userId = (String)userMap.get("userId");
+            ProducerRecord<byte[], byte[]> record = new ProducerRecord<>(topic, userId.getBytes(StandardCharsets.UTF_8), JsonMapper.toJson(userMap).getBytes(StandardCharsets.UTF_8));
             try {
                 txQueue.put(record);
             } catch (InterruptedException e) {
                 logger.error("Exception:", e);
             }
-            logger.debug("Send message with key = " + key + " value = " + value  + " to topic: " + topic);
+            logger.debug("Send message with userId = " + userId + " to topic: " + topic);
         }
         setExchangeStatus(exchange, STATUS_ACCEPTED);
     }

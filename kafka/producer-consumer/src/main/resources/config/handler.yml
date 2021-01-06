@@ -72,10 +72,10 @@ chains:
     - metrics
     - traceability
     - correlation
-    - specification
-    - security
     - body
     - audit
+    - specification
+    - security
 #    - dump
     - sanitizer
     - validator
