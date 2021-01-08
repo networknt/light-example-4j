@@ -55,7 +55,12 @@
         </dependency>
         <dependency>
             <groupId>com.networknt</groupId>
-            <artifactId>request-handler</artifactId>
+            <artifactId>slf4j-logback</artifactId>
+            <version>${version.light-4j}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.networknt</groupId>
+            <artifactId>lambda-interceptor</artifactId>
             <version>${version.light-4j}</version>
         </dependency>
         <dependency>
