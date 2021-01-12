@@ -1,0 +1,26 @@
+---
+# Reverse Proxy Handler Configuration
+
+# If HTTP 2.0 protocol will be used to connect to target servers
+http2Enabled: true
+
+# If TLS is enabled when connecting to the target servers
+httpsEnabled: true
+
+# Target URIs
+hosts: https://freedom:8081,https://freedom:8082,https://freedom:8083
+
+# Connections per thread to the target servers
+connectionsPerThread: 20
+
+# Max request time in milliseconds before timeout
+maxRequestTime: 1000
+
+# Rewrite Host Header with the target host and port and write X_FORWARDED_HOST with original host
+rewriteHostHeader: true
+
+# Reuse XForwarded for the target XForwarded header
+reuseXForwarded: false
+
+# Max Connection Retries
+maxConnectionRetries: 3

@@ -19,6 +19,48 @@ This project contains source code and supporting files for a serverless applicat
 
 - events - Invocation events that you can use to invoke each function.
 - template.yaml - A template that defines the application's AWS resources.
+- public-vpc.yaml or private-vpc.yaml - VPC cluster template depending on launchType EC2 or Fargate and private or public subnet configuration.
+- public-proxy.yaml or private-proxy.yaml - Lambda Proxy service template depending on the public subnet or private subnet.
+
+## Deploy the VPC
+
+```
+aws cloudformation create-stack --stack-name {stack-name} --template-body file://public-vpc.yaml --capabilities CAPABILITY_IAM
+
+or
+
+aws cloudformation create-stack --stack-name {stack-name} --template-body file://private-vpc.yaml --capabilities CAPABILITY_IAM
+```
+
+## Describe stacks
+
+```
+aws cloudformation describe-stacks
+```
+
+## Delete stack
+
+```
+aws cloudformation delete-stack --stack-name {stack-name}
+```
+
+
+## Deploy the Proxy
+
+```
+aws cloudformation create-stack \
+  --stack-name petstore-service \
+  --template-body file://public-proxy.yaml \
+  --parameters \
+      ParameterKey=StackName,ParameterValue=petstore-vpc \
+      ParameterKey=ServiceName,ParameterValue=lambda-proxy \
+      ParameterKey=ImageUrl,ParameterValue=964637446810.dkr.ecr.us-east-2.amazonaws.com/lambda-proxy:latest \
+      ParameterKey=ContainerPort,ParameterValue=8080 \
+      ParameterKey=HealthCheckPath,ParameterValue=/health/com.networknt.petstore-3.0.1 \
+      ParameterKey=HealthCheckIntervalSeconds,ParameterValue=90
+```
+
+
 
 The application uses several AWS resources, including Lambda functions and an API Gateway API. These resources are defined in the `template.yaml` file in this project. You can update the template to add AWS resources through the same deployment process that updates your application code.
 
