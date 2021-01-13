@@ -22,14 +22,28 @@ This project contains source code and supporting files for a serverless applicat
 - public-vpc.yaml or private-vpc.yaml - VPC cluster template depending on launchType EC2 or Fargate and private or public subnet configuration.
 - public-proxy.yaml or private-proxy.yaml - Lambda Proxy service template depending on the public subnet or private subnet.
 
-## Deploy the VPC
+## Deploy the public VPC
 
 ```
 aws cloudformation create-stack --stack-name {stack-name} --template-body file://public-vpc.yaml --capabilities CAPABILITY_IAM
+```
 
-or
+Example
 
+```
+aws cloudformation create-stack --stack-name petstore-vpc --template-body file://public-vpc.yaml --capabilities CAPABILITY_IAM
+```
+
+## Deploy the private VPC
+
+```
 aws cloudformation create-stack --stack-name {stack-name} --template-body file://private-vpc.yaml --capabilities CAPABILITY_IAM
+```
+
+Example
+
+```
+aws cloudformation create-stack --stack-name petstore-vpc --template-body file://private-vpc.yaml --capabilities CAPABILITY_IAM
 ```
 
 ## Describe stacks
@@ -49,7 +63,7 @@ aws cloudformation delete-stack --stack-name {stack-name}
 
 ```
 aws cloudformation create-stack \
-  --stack-name petstore-service \
+  --stack-name petstore-proxy \
   --template-body file://public-proxy.yaml \
   --parameters \
       ParameterKey=StackName,ParameterValue=petstore-vpc \
@@ -57,7 +71,9 @@ aws cloudformation create-stack \
       ParameterKey=ImageUrl,ParameterValue=964637446810.dkr.ecr.us-east-2.amazonaws.com/lambda-proxy:latest \
       ParameterKey=ContainerPort,ParameterValue=8080 \
       ParameterKey=HealthCheckPath,ParameterValue=/health/com.networknt.petstore-3.0.1 \
-      ParameterKey=HealthCheckIntervalSeconds,ParameterValue=90
+      ParameterKey=HealthCheckIntervalSeconds,ParameterValue=90 \
+      ParameterKey=AccessKeyId,ParameterValue=AKIA6BGG7KKNEZY2XFNS \
+      ParameterKey=SecretAccessKey,ParameterValue=
 ```
 
 
