@@ -19,7 +19,7 @@
         <version.junit>4.12</version.junit>
         <version.undertow>2.1.3.Final</version.undertow>
         <version.json-schema-validator>1.0.29</version.json-schema-validator>
-        
+        <version.ksqldb>0.14.0</version.ksqldb>
         
         
         
@@ -218,7 +218,11 @@
             <artifactId>undertow-core</artifactId>
             <version>${version.undertow}</version>
         </dependency>
-        
+        <dependency>
+            <groupId>io.confluent.ksql</groupId>
+            <artifactId>ksqldb-api-client</artifactId>
+            <version>${version.ksqldb}</version>
+        </dependency>
         
         
         
@@ -331,7 +335,16 @@
 
 
     <repositories>
-        
+        <repository>
+            <id>ksqlDB</id>
+            <name>ksqlDB</name>
+            <url>https://ksqldb-maven.s3.amazonaws.com/maven/</url>
+        </repository>
+        <repository>
+            <id>confluent</id>
+            <name>Confluent</name>
+            <url>https://jenkins-confluent-packages-beta-maven.s3.amazonaws.com/6.1.0-beta201006024150/1/maven/</url>
+        </repository>
         <repository>
             <id>sonatype-snapshots</id>
             <url>https://oss.sonatype.org/content/repositories/snapshots</url>
@@ -340,6 +353,16 @@
             </snapshots>
         </repository>
     </repositories>
+    <pluginRepositories>
+        <pluginRepository>
+            <id>ksqlDB</id>
+            <url>https://ksqldb-maven.s3.amazonaws.com/maven/</url>
+        </pluginRepository>
+        <pluginRepository>
+            <id>confluent</id>
+            <url>https://jenkins-confluent-packages-beta-maven.s3.amazonaws.com/6.1.0-beta201006024150/1/maven/</url>
+        </pluginRepository>
+    </pluginRepositories>
 
     <profiles>
         <profile>
