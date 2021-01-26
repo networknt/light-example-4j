@@ -20,7 +20,7 @@ Resources:
       
       CodeUri: PetsGetFunction
       Handler: com.networknt.petstore.handler.App::handleRequest
-      Runtime: java11
+      Runtime: provided
       MemorySize: 512
       FunctionName: PetsGetFunction
       Environment: # More info about Env Vars: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#environment-object
@@ -42,7 +42,7 @@ Resources:
       
       CodeUri: PetsPostFunction
       Handler: com.networknt.petstore.handler.App::handleRequest
-      Runtime: java11
+      Runtime: provided
       MemorySize: 512
       FunctionName: PetsPostFunction
       Environment: # More info about Env Vars: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#environment-object
@@ -64,7 +64,7 @@ Resources:
       
       CodeUri: PetsPetIdGetFunction
       Handler: com.networknt.petstore.handler.App::handleRequest
-      Runtime: java11
+      Runtime: provided
       MemorySize: 512
       FunctionName: PetsPetIdGetFunction
       Environment: # More info about Env Vars: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#environment-object
@@ -86,7 +86,7 @@ Resources:
       
       CodeUri: PetsPetIdDeleteFunction
       Handler: com.networknt.petstore.handler.App::handleRequest
-      Runtime: java11
+      Runtime: provided
       MemorySize: 512
       FunctionName: PetsPetIdDeleteFunction
       Environment: # More info about Env Vars: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#environment-object

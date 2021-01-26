@@ -4,7 +4,7 @@
 # loaded for backward compatibility.
 ---
 # Enable JWT verification flag.
-enableVerifyJwt: ${openapi-security.enableVerifyJwt:true}
+enableVerifyJwt: ${openapi-security.enableVerifyJwt:false}
 
 # Extract JWT scope token from the X-Scope-Token header and validate the JWT token
 enableExtractScopeToken: ${openapi-security.enableExtractScopeToken:true}
