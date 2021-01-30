@@ -1,0 +1,18 @@
+---
+acks: all
+retries: 3
+batchSize: 16384
+lingerMs: 1
+bufferMemory: 33554432
+keySerializer: org.apache.kafka.common.serialization.ByteArraySerializer
+valueSerializer: org.apache.kafka.common.serialization.ByteArraySerializer
+keyDeSerializer: org.apache.kafka.common.serialization.ByteArraySerializer
+valueDeSerializer: org.apache.kafka.common.serialization.ByteArrayDeserializer
+sessionTimeout: 30000
+autoOffsetreset: earliest
+enableAutoCommit: false
+bootstrapServers: localhost:9092
+# every server instance will have a unique transactionId
+transactionId: T1000
+transactionTimeoutMs: 900000
+transactionalIdExpirationMs: 2073600000

@@ -1,0 +1,75 @@
+openapi: 3.0.0
+
+info:
+  title: Kafka Streams User Report microservice
+  version: 1.0.0
+  description: |-
+    # Kafka Streams User Report Service
+servers:
+  - url: https://kafka.networknt.com
+
+paths:
+  /report:
+    get:
+      operationId: reportUsers
+      summary: Generate a report based on user contry 
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema: 
+                type: array
+                items: 
+                  $ref: '#/components/schemas/CountryUserCount'
+        '400':
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Status"
+      security:
+        - user_auth:
+            - user:r  
+components:
+  securitySchemes:
+    user_auth:
+      type: oauth2
+      description: This API uses OAuth 2.0 with the client credential grant flow.
+      flows:
+        clientCredentials:
+          tokenUrl: 'https://localhost:6882/token'
+          scopes:
+            user:w: user write
+            user:r: user read
+  schemas:
+    Status:
+      type: object
+      properties:
+        statusCode: 
+          description: HTTP response code
+          type: integer
+        code:
+          description: Code is the machine-readable error code
+          type: string
+        message:
+          description: Error messsage
+          type: string
+        description: 
+          description: The detailed description of the error status  
+          type: string
+      required:
+      - statusCode
+      - code
+    CountryUserCount:
+      type: object
+      properties:
+        country: 
+          description: User Country
+          type: string
+        count:
+          description: Number of Users
+          type: integer
+      required:
+      - country
+      - count
