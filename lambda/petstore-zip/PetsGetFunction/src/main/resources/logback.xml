@@ -38,7 +38,7 @@
         <appender-ref ref="stdout"/>
     </logger>
 
-    <logger name="com.networknt.petstore" level="debug" additivity="false">
+    <logger name="com.networknt.petstore" level="trace" additivity="false">
         <appender-ref ref="stdout"/>
     </logger>
 

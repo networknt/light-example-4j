@@ -1,0 +1,45 @@
+
+plugins {
+    id 'java'
+    id "com.github.johnrengelman.shadow" version "5.2.0"
+}
+
+repositories {
+    mavenCentral()
+    mavenLocal()
+    maven {
+        url 'https://oss.sonatype.org/content/repositories/snapshots/'
+    }
+}
+
+dependencies {
+    implementation 'com.networknt:utility:2.0.23-SNAPSHOT'
+    implementation 'com.networknt:slf4j-logback:2.0.23-SNAPSHOT'
+    implementation 'com.networknt:custom-runtime:2.0.23-SNAPSHOT'
+    implementation 'com.networknt:request-handler:2.0.23-SNAPSHOT'
+    implementation 'com.amazonaws:aws-lambda-java-core:1.2.1'
+    implementation 'com.amazonaws:aws-lambda-java-events:3.6.0'
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.0'
+    testImplementation 'org.junit.jupiter:junit-jupiter-engine:5.7.0'
+}
+
+jar {
+  manifest {
+    attributes 'Main-Class': 'com.networknt.aws.lambda.Runtime'
+  }
+}
+
+task buildGraalvmImage {
+ inputs.files("${project.projectDir}/src/main", configurations.compileClasspath)
+ outputs.upToDateWhen {file("${buildDir}/graalvm/server").exists()}
+ outputs.file file("${buildDir}/graalvm/server")
+
+ doLast {
+    exec {
+      commandLine "bash", "-c", "chmod +x build_graalvm.sh; chmod +x bootstrap; ./build_graalvm.sh"
+    }
+  }
+}
+
+buildGraalvmImage.dependsOn shadowJar, test
+build.dependsOn buildGraalvmImage

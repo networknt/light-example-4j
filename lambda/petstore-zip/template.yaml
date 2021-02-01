@@ -12,6 +12,7 @@ Globals:
     Timeout: 20
 
 Resources:
+  
   ApiGateway:
     Type: AWS::Serverless::Api
     Properties:
@@ -83,14 +84,16 @@ Resources:
             
           
   
+  
   PetsGetFunction:
     Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
     Properties:
       
       CodeUri: PetsGetFunction
       Handler: com.networknt.petstore.handler.App::handleRequest
-      Runtime: java11
+      Runtime: provided
       MemorySize: 512
+      FunctionName: PetsGetFunction
       Environment: # More info about Env Vars: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#environment-object
         Variables:
           PARAM1: VALUE
@@ -101,8 +104,10 @@ Resources:
           Properties:
             Path: /v1/pets
             Method: GET
+            
             RestApiId:
               Ref: ApiGateway
+            
     
   
   PetsPostFunction:
@@ -111,8 +116,9 @@ Resources:
       
       CodeUri: PetsPostFunction
       Handler: com.networknt.petstore.handler.App::handleRequest
-      Runtime: java11
+      Runtime: provided
       MemorySize: 512
+      FunctionName: PetsPostFunction
       Environment: # More info about Env Vars: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#environment-object
         Variables:
           PARAM1: VALUE
@@ -123,8 +129,10 @@ Resources:
           Properties:
             Path: /v1/pets
             Method: POST
+            
             RestApiId:
               Ref: ApiGateway
+            
     
   
   PetsPetIdGetFunction:
@@ -133,8 +141,9 @@ Resources:
       
       CodeUri: PetsPetIdGetFunction
       Handler: com.networknt.petstore.handler.App::handleRequest
-      Runtime: java11
+      Runtime: provided
       MemorySize: 512
+      FunctionName: PetsPetIdGetFunction
       Environment: # More info about Env Vars: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#environment-object
         Variables:
           PARAM1: VALUE
@@ -145,8 +154,10 @@ Resources:
           Properties:
             Path: /v1/pets/{petId}
             Method: GET
+            
             RestApiId:
               Ref: ApiGateway
+            
     
   
   PetsPetIdDeleteFunction:
@@ -155,8 +166,9 @@ Resources:
       
       CodeUri: PetsPetIdDeleteFunction
       Handler: com.networknt.petstore.handler.App::handleRequest
-      Runtime: java11
+      Runtime: provided
       MemorySize: 512
+      FunctionName: PetsPetIdDeleteFunction
       Environment: # More info about Env Vars: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#environment-object
         Variables:
           PARAM1: VALUE
@@ -167,9 +179,12 @@ Resources:
           Properties:
             Path: /v1/pets/{petId}
             Method: DELETE
+            
             RestApiId:
               Ref: ApiGateway
+            
     
+  
   
   AuthorizerPerm:
     Type: AWS::Lambda::Permission
@@ -181,3 +196,4 @@ Resources:
       Principal: apigateway.amazonaws.com
       SourceArn:
         'Fn::Sub': 'arn:aws:execute-api:${AWS::Region}:${AWS::AccountId}:*/*/*/*'
+  

@@ -2,11 +2,13 @@ target/
 bower_components/
 node_modules/
 dist/
+build/
 .idea/
 .tmp/
 .settings
 .metadata/
 .aws-sam/
+.gradle/
 
 *.iml
 *.log

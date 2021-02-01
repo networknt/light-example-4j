@@ -23,7 +23,7 @@ paths:
             format: int32
       security:
         - petstore_auth:
-            - 'filenet.document.read'
+            - 'read:pets'
       responses:
         '200':
           description: An paged array of pets
@@ -65,8 +65,8 @@ paths:
         - pets
       security:
         - petstore_auth:
-            - 'filenet.document.read'
-            - 'filenet.document.write'
+            - 'read:pets'
+            - 'write:pets'
       responses:
         '201':
           description: Null response
@@ -91,7 +91,7 @@ paths:
             type: string
       security:
         - petstore_auth:
-            - 'filenet.document.read'
+            - 'read:pets'
       responses:
         '200':
           description: Expected response to a valid request
@@ -129,7 +129,7 @@ paths:
             type: string
       security:
         - petstore_auth:
-            - 'filenet.document.write'
+            - 'write:pets'
       responses:
         '200':
           description: Expected response to a valid request
@@ -158,8 +158,8 @@ components:
         clientCredentials:
           tokenUrl: 'https://localhost:6882/token'
           scopes:
-            'filenet.document.write': modify pets in your account
-            'filenet.document.read': read your pets
+            'write:pets': modify pets in your account
+            'read:pets': read your pets
   schemas:
     Pet:
       type: object
