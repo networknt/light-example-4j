@@ -1,0 +1,4 @@
+# Light Chaos Monkey Latency Assault Handler Configuration.
+
+# Enable the handler if set to true. Otherwise, the request will pass through.
+enabled: true

@@ -1,0 +1,8 @@
+# Light Chaos Monkey Kill App Assault Handler Configuration.
+
+# Enable the handler if set to true. Otherwise, the request will pass through.
+enabled: false
+# How many requests are to be attacked. 1 each request, 5 each 5th request is attacked
+level: 5
+
+
