@@ -1,4 +1,4 @@
-# Light Chaos Monkey Excpetion Assault Handler Configuration.
+# Light Chaos Monkey Exception Assault Handler Configuration.
 
 # Enable the handler if set to true. Otherwise, the request will passthrough.
 enabled: false

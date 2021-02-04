@@ -1,4 +1,4 @@
-# Light Chaos Monkey Latency Assault Handler Configuration.
+# Light Chaos Monkey API Handlers Configuration.
 
-# Enable the handler if set to true. Otherwise, the request will pass through.
+# Enable the handler if set to true so that user can get or post configuration for the assault handlers
 enabled: true
