@@ -13,14 +13,14 @@ repositories {
 }
 
 dependencies {
-    implementation 'com.networknt:utility:2.0.23-SNAPSHOT'
-    implementation 'com.networknt:slf4j-logback:2.0.23-SNAPSHOT'
-    implementation 'com.networknt:custom-runtime:2.0.23-SNAPSHOT'
-    implementation 'com.networknt:lambda-interceptor:2.0.23-SNAPSHOT'
-    implementation 'com.amazonaws:aws-lambda-java-core:1.2.1'
-    implementation 'com.amazonaws:aws-lambda-java-events:3.6.0'
-    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.0'
-    testImplementation 'org.junit.jupiter:junit-jupiter-engine:5.7.0'
+    implementation "com.networknt:utility:$light4jVersion"
+    implementation "com.networknt:slf4j-logback:$light4jVersion"
+    implementation "com.networknt:custom-runtime:$light4jVersion"
+    implementation "com.networknt:lambda-interceptor:$light4jVersion"
+    implementation "com.amazonaws:aws-lambda-java-core:$lambdaCoreVersion"
+    implementation "com.amazonaws:aws-lambda-java-events:$lambdaEventsVersion"
+    testImplementation "org.junit.jupiter:junit-jupiter-api:$junitVersion"
+    testImplementation "org.junit.jupiter:junit-jupiter-engine:$junitVersion"
 }
 
 jar {
