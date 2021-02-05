@@ -2,6 +2,8 @@ target/
 bower_components/
 node_modules/
 dist/
+build/
+.gradle/
 .idea/
 .tmp/
 .project
