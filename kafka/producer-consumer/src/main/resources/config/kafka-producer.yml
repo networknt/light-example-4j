@@ -16,3 +16,4 @@ bootstrapServers: localhost:9092
 transactionId: T1000
 transactionTimeoutMs: 900000
 transactionalIdExpirationMs: 2073600000
+enableIdempotence: ${kafka-producer.enableIdempotence:true}
