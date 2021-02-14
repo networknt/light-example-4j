@@ -8,6 +8,8 @@ public class ConsumerShutdownHook implements ShutdownHookProvider {
     @Override
     public void onShutdown() {
         LightConsumer consumer = SingletonServiceFactory.getBean(LightConsumer.class);
-        try { if(consumer != null) consumer.close(); } catch(Exception e) {e.printStackTrace();}
+        try {
+            if(consumer != null) consumer.close();
+        } catch(Exception e) {e.printStackTrace();}
     }
 }
