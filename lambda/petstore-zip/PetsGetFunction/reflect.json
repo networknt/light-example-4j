@@ -8,6 +8,13 @@
     "allPublicMethods" : true
   },
   {
+    "name": "com.amazonaws.services.lambda.runtime.events.APIGatewayProxyResponseEvent",
+    "methods": [
+      { "name": "<init>", "parameterTypes": [] }
+    ],
+    "allPublicMethods": true
+  },
+  {
     "name": "com.amazonaws.services.lambda.runtime.events.APIGatewayProxyRequestEvent$ProxyRequestContext",
     "methods": [
       { "name": "<init>", "parameterTypes": [] }
@@ -19,10 +26,6 @@
     "methods": [
       { "name": "<init>", "parameterTypes": [] }
     ],
-    "allPublicMethods" : true
-  },
-  {
-    "name": "com.networknt.aws.lambda.AuthPolicy",
     "allPublicMethods" : true
   },
   {
