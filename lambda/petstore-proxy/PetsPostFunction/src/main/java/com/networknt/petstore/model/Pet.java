@@ -7,20 +7,11 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class Pet  {
 
-    private String name;
     private java.lang.Long id;
+    private String name;
     private String tag;
 
     public Pet () {
-    }
-
-    @JsonProperty("name")
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     @JsonProperty("id")
@@ -30,6 +21,15 @@ public class Pet  {
 
     public void setId(java.lang.Long id) {
         this.id = id;
+    }
+
+    @JsonProperty("name")
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     @JsonProperty("tag")
@@ -53,21 +53,21 @@ public class Pet  {
 
         Pet Pet = (Pet) o;
 
-        return Objects.equals(name, Pet.name) &&
-               Objects.equals(id, Pet.id) &&
+        return Objects.equals(id, Pet.id) &&
+               Objects.equals(name, Pet.name) &&
                Objects.equals(tag, Pet.tag);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, id, tag);
+        return Objects.hash(id, name, tag);
     }
 
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("class Pet {\n");
-        sb.append("    name: ").append(toIndentedString(name)).append("\n");        sb.append("    id: ").append(toIndentedString(id)).append("\n");        sb.append("    tag: ").append(toIndentedString(tag)).append("\n");
+        sb.append("    id: ").append(toIndentedString(id)).append("\n");        sb.append("    name: ").append(toIndentedString(name)).append("\n");        sb.append("    tag: ").append(toIndentedString(tag)).append("\n");
         sb.append("}");
         return sb.toString();
     }
