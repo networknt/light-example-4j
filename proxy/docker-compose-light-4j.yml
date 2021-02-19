@@ -5,13 +5,9 @@ services:
     image: networknt/com.networknt.petstore-3.0.1
     volumes:
     - ./petstore/http:/config
-    ports:
-    - 8080:8080
     network_mode: host
   proxy:
     image: networknt/light-proxy
     volumes:
     - ./config/http:/config
-    ports:
-    - 8000:8000
     network_mode: host
