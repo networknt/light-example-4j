@@ -50,26 +50,19 @@ public class PetsApiController implements PetsApi {
     }
 
     public ResponseEntity<Void> createPets(@Parameter(in = ParameterIn.DEFAULT, description = "Pet to add to the store", required=true, schema=@Schema()) @Valid @RequestBody Pet body) {
-        String accept = request.getHeader("Accept");
-        return new ResponseEntity<Void>(HttpStatus.NOT_IMPLEMENTED);
+        return new ResponseEntity<Void>(HttpStatus.CREATED);
     }
 
     public ResponseEntity<Pet> deletePetById(@Parameter(in = ParameterIn.PATH, description = "The id of the pet to delete", required=true, schema=@Schema()) @PathVariable("petId") String petId,@Parameter(in = ParameterIn.HEADER, description = "The key header" ,required=true,schema=@Schema()) @RequestHeader(value="key", required=true) String key) {
-        String accept = request.getHeader("Accept");
-        if (accept != null && accept.contains("application/json")) {
-            try {
-                return new ResponseEntity<Pet>(objectMapper.readValue("{\n  \"name\" : \"name\",\n  \"id\" : 0,\n  \"tag\" : \"tag\"\n}", Pet.class), HttpStatus.NOT_IMPLEMENTED);
-            } catch (IOException e) {
-                log.error("Couldn't serialize response for content type application/json", e);
-                return new ResponseEntity<Pet>(HttpStatus.INTERNAL_SERVER_ERROR);
-            }
+        try {
+            return new ResponseEntity<Pet>(objectMapper.readValue("{\"id\":1,\"name\":\"Jessica Right\",\"tag\":\"pet\"}", Pet.class), HttpStatus.OK);
+        } catch (IOException e) {
+            log.error("Couldn't serialize response for content type application/json", e);
+            return new ResponseEntity<Pet>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
-
-        return new ResponseEntity<Pet>(HttpStatus.NOT_IMPLEMENTED);
     }
 
     public ResponseEntity<List<Pet>> listPets(@Parameter(in = ParameterIn.QUERY, description = "How many items to return at one time (max 100)" ,schema=@Schema()) @Valid @RequestParam(value = "limit", required = false) Integer limit) {
-        String accept = request.getHeader("Accept");
         try {
             return new ResponseEntity<List<Pet>>(objectMapper.readValue("[{\"id\":1,\"name\":\"catten\",\"tag\":\"cat\"},{\"id\":2,\"name\":\"doggy\",\"tag\":\"dog\"}]", List.class), HttpStatus.OK);
         } catch (IOException e) {
@@ -79,17 +72,12 @@ public class PetsApiController implements PetsApi {
     }
 
     public ResponseEntity<Pet> showPetById(@Parameter(in = ParameterIn.PATH, description = "The id of the pet to retrieve", required=true, schema=@Schema()) @PathVariable("petId") String petId) {
-        String accept = request.getHeader("Accept");
-        if (accept != null && accept.contains("application/json")) {
-            try {
-                return new ResponseEntity<Pet>(objectMapper.readValue("{\n  \"name\" : \"name\",\n  \"id\" : 0,\n  \"tag\" : \"tag\"\n}", Pet.class), HttpStatus.NOT_IMPLEMENTED);
-            } catch (IOException e) {
-                log.error("Couldn't serialize response for content type application/json", e);
-                return new ResponseEntity<Pet>(HttpStatus.INTERNAL_SERVER_ERROR);
-            }
+        try {
+            return new ResponseEntity<Pet>(objectMapper.readValue("{\"id\":1,\"name\":\"Jessica Right\",\"tag\":\"pet\"}", Pet.class), HttpStatus.OK);
+        } catch (IOException e) {
+            log.error("Couldn't serialize response for content type application/json", e);
+            return new ResponseEntity<Pet>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
-
-        return new ResponseEntity<Pet>(HttpStatus.NOT_IMPLEMENTED);
     }
 
 }
