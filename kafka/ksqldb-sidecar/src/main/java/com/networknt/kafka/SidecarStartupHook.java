@@ -10,7 +10,8 @@ import java.util.Map;
 
 public class SidecarStartupHook implements StartupHookProvider {
     private static final Logger logger = LoggerFactory.getLogger(SidecarStartupHook.class);
-    private static final String QUERY = "SELECT * from USER_TABLE EMIT CHANGES;";
+    private static final String QUERY = "SELECT * from TEST EMIT CHANGES;";
+    //private static final String QUERY = "SELECT * from USER_TABLE EMIT CHANGES;";
     private static String KSQLDB_SERVER_HOST = "localhost";
     private static int KSQLDB_SERVER_HOST_PORT = 8088;
     public static Client client = null;
