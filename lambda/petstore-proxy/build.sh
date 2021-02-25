@@ -19,9 +19,8 @@ showHelp() {
 
 build() {
     echo "Copying ..."
-    cp ~/networknt/light-proxy/target/light-proxy.jar .
-    # download from github for official build
-    # wget https://github.com/networknt/light-proxy/releases/download/2.0.22/light-proxy.jar
+    # download from github release page
+    wget https://github.com/networknt/light-proxy/releases/download/2.0.23/light-proxy.jar
     echo "Successfully copied!"
 }
 

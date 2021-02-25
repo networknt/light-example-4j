@@ -1,0 +1,43 @@
+---
+openapi: "3.0.0"
+info:
+  version: "1.0.0"
+  title: "KsqlDB Backend"
+  license:
+    name: "MIT"
+servers:
+- url: "http://backend.ksqldb.io/v1"
+paths:
+  /ksqldb:
+    post:
+      summary: "Create a user row"
+      operationId: "createUserRow"
+      requestBody:
+        description: "An array that represent a user row"
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UserRow"
+      security:
+      - ksqldb_auth:
+        - "write:ksqldb"
+      responses:
+        "201":
+          description: "Null response"
+components:
+  securitySchemes:
+    ksqldb_auth:
+      type: "oauth2"
+      description: "This API uses OAuth 2 with the client credential grant flow."
+      flows:
+        clientCredentials:
+          tokenUrl: "https://localhost:6882/token"
+          scopes:
+            write:ksqldb: "modify user row"
+  schemas:
+    UserRow:
+      type: "array"
+      items:
+        description: "user row data"
+        type: "string"

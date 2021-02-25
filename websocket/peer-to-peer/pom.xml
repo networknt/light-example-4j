@@ -13,8 +13,8 @@
         <java.version>11</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.main.class>com.networknt.server.Server</project.main.class>
-        <version.light-4j>2.0.23</version.light-4j>
-        <version.jackson>2.10.4</version.jackson>
+        <version.light-4j>2.0.24</version.light-4j>
+        <version.jackson>2.12.1</version.jackson>
         <version.slf4j>1.7.25</version.slf4j>
         <version.jose4j>0.6.3</version.jose4j>
         <version.antlr4>4.5.3</version.antlr4>
@@ -25,7 +25,7 @@
         <version.logback>1.2.3</version.logback>
         <version.junit>4.12</version.junit>
         <version.mockito>2.1.0-beta.124</version.mockito>
-        <version.undertow>2.1.3.Final</version.undertow>
+        <version.undertow>2.2.4.Final</version.undertow>
         <versions.maven-version>2.4</versions.maven-version>
         <version.javadoc-packagelist-plugin>1.0.0</version.javadoc-packagelist-plugin>
         <version.maven-javadoc>3.1.0</version.maven-javadoc>

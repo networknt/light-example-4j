@@ -1,0 +1,12 @@
+# Light Chaos Monkey Latency Assault Handler Configuration.
+
+# Enable the handler if set to true so that it will be wired in the handler chain during the startup
+enabled: true
+# Bypass the current chaos monkey middleware handler so that attacks won't be triggered.
+bypass: true
+# How many requests are to be attacked. 1 each request, 5 each 5th request is attacked
+level: 3
+# Dynamic Latency range start in milliseconds. When start and end are equal, then fixed latency.
+latencyRangeStart: 10000
+# Dynamic latency range end in milliseconds
+latencyRangeEnd: 10000

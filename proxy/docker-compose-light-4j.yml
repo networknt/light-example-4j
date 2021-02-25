@@ -1,0 +1,13 @@
+version: "3"
+
+services:
+  petstore:
+    image: networknt/com.networknt.petstore-3.0.1
+    volumes:
+    - ./petstore/http:/config
+    network_mode: host
+  proxy:
+    image: networknt/light-proxy
+    volumes:
+    - ./config/http:/config
+    network_mode: host

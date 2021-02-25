@@ -36,7 +36,7 @@ public class BusinessHandlerTest extends AppTest {
         request.setRequestContext(context);
         Map<String, Object> authorizerMap = new HashMap<>();
         // Simulate the authorizer to manually inject the primary token scopes for the scope verifier.
-        authorizerMap.put(Constants.PRIMARY_SCOPES, "filenet.document.read");
+        authorizerMap.put(Constants.PRIMARY_SCOPES, "read:pets");
         context.setAuthorizer(authorizerMap);
         APIGatewayProxyResponseEvent result = app.handleRequest(request, null);
         System.out.println(result.getBody());
@@ -69,7 +69,7 @@ public class BusinessHandlerTest extends AppTest {
         request.setRequestContext(context);
         Map<String, Object> authorizerMap = new HashMap<>();
         // Simulate the authorizer to manually inject the primary token scopes for the scope verifier.
-        authorizerMap.put(Constants.PRIMARY_SCOPES, "filenet.document.read");
+        authorizerMap.put(Constants.PRIMARY_SCOPES, "read:pets");
         context.setAuthorizer(authorizerMap);
         APIGatewayProxyResponseEvent result = app.handleRequest(request, null);
         System.out.println(result.getBody());
