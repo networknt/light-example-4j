@@ -27,5 +27,7 @@ ENV JAVA_MINIMAL=/opt/jre
 ENV PATH="$PATH:$JAVA_MINIMAL/bin"
 
 COPY --from=packager "$JAVA_MINIMAL" "$JAVA_MINIMAL"
-COPY /target/petstore-3.0.1.jar server.jar
+
+COPY /build/libs/petstore.jar server.jar
+
 CMD ["/bin/sh","-c","java -Dlight-4j-config-dir=/config -Dlogback.configurationFile=/config/logback.xml -jar /server.jar"]

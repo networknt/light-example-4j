@@ -4,7 +4,7 @@
 set -ex
 
 VERSION=$1
-IMAGE_NAME="networknt/com.networknt.petstore-3.0.1"
+IMAGE_NAME="networknt/com.networknt.example.petstore-3.0.1"
 
 showHelp() {
     echo " "
@@ -20,7 +20,9 @@ showHelp() {
 
 build() {
     echo "Building ..."
-    mvn clean install -Prelease
+    
+    ./gradlew clean build
+    
     echo "Successfully built!"
 }
 
@@ -35,6 +37,7 @@ cleanup() {
 publish() {
     echo "Building Docker image with version $VERSION"
     docker build -t $IMAGE_NAME:$VERSION -t $IMAGE_NAME:latest -f ./docker/Dockerfile . --no-cache=true
+    docker build -t $IMAGE_NAME:$VERSION-slim -f ./docker/Dockerfile-Slim . --no-cache=true
     echo "Images built with version $VERSION"
     echo "Pushing image to DockerHub"
     docker push $IMAGE_NAME

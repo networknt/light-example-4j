@@ -19,7 +19,7 @@ spec:
     spec:
       containers:
         - name: petstore
-          image: networknt/com.networknt.petstore-3.0.1:3.0.1
+          image: networknt/com.networknt.example.petstore-3.0.1:3.0.1
           ports:
             - containerPort: 8443
           resources:
