@@ -1,0 +1,274 @@
+
+
+# Handler middleware chain configuration
+#----------------------------------------
+enabled: true
+
+# Configuration for the LightHttpHandler. The handler is the base class  for all middleware, server and health handlers
+# set the Status Object in the AUDIT_INFO, for auditing purposes
+# default, if not set:false
+auditOnError: ${handler.auditOnError:false}
+
+# set the StackTrace in the AUDIT_INFO, for auditing purposes
+# default, if not set:false
+auditStackTrace: ${handler.auditStackTrace:false}
+
+#------------------------------------------------------------------------------
+# Support individual handler chains for each separate endpoint. It allows framework
+# handlers like health check, server info to bypass majority of the middleware handlers
+# and allows mixing multiple frameworks like OpenAPI and GraphQL in the same instance.
+#
+# handlers  --  list of handlers to be used across chains in this microservice
+#               including the routing handlers for ALL endpoints
+#           --  format: fully qualified handler class name@optional:given name
+# chains    --  allows forming of [1..N] chains, which could be wholly or
+#               used to form handler chains for each endpoint
+#               ex.: default chain below, reused partially across multiple endpoints
+# paths     --  list all the paths to be used for routing within the microservice
+#           ----  path: the URI for the endpoint (ex.: path: '/v1/pets')
+#           ----  method: the operation in use (ex.: 'post')
+#           ----  exec: handlers to be executed -- this element forms the list and
+#                       the order of execution for the handlers
+#
+# IMPORTANT NOTES:
+# - to avoid executing a handler, it has to be removed/commented out in the chain
+#   or change the enabled:boolean to false for a middleware handler configuration.
+# - all handlers, routing handler included, are to be listed in the execution chain
+# - for consistency, give a name to each handler; it is easier to refer to a name
+#   vs a fully qualified class name and is more elegant
+# - you can list in chains the fully qualified handler class names, and avoid using the
+#   handlers element altogether
+#------------------------------------------------------------------------------
+handlers:
+  # Light-framework cross-cutting concerns implemented in the microservice
+  - com.networknt.exception.ExceptionHandler@exception
+  - com.networknt.metrics.MetricsHandler@metrics
+  - com.networknt.traceability.TraceabilityHandler@traceability
+  - com.networknt.correlation.CorrelationHandler@correlation
+  - com.networknt.openapi.OpenApiHandler@specification
+  - com.networknt.openapi.JwtVerifyHandler@security
+  - com.networknt.body.BodyHandler@body 
+  - com.networknt.audit.AuditHandler@audit
+  # DumpHandler is to dump detail request/response info to log, useful for troubleshooting but not suggested to use in production due to it may lower the performance
+  # - com.networknt.dump.DumpHandler@dump 
+  - com.networknt.sanitizer.SanitizerHandler@sanitizer
+  - com.networknt.openapi.ValidatorHandler@validator
+  # Customer business domain specific cross-cutting concerns handlers
+  # - com.example.validator.CustomizedValidator@custvalidator
+  # Framework endpoint handlers
+  - com.networknt.health.HealthGetHandler@health
+  - com.networknt.info.ServerInfoGetHandler@info
+  - com.networknt.logging.handler.LoggerGetHandler@getLogger
+  - com.networknt.logging.handler.LoggerPostHandler@postLogger
+  - com.networknt.specification.SpecDisplayHandler@spec
+  - com.networknt.specification.SpecSwaggerUIHandler@swaggerui
+  # - com.networknt.metrics.prometheus.PrometheusGetHandler@getprometheus
+  # Business Handlers
+  - ca.interac.etransfer.handler.OauthAccessTokensGetHandler
+  - ca.interac.etransfer.handler.UserRegistrationsPostHandler
+  - ca.interac.etransfer.handler.UserRegistrationsApiRegistartionIdGetHandler
+  - ca.interac.etransfer.handler.UserRegistrationsApiRegistartionIdDeleteHandler
+  - ca.interac.etransfer.handler.UserRegistrationsApiRegistartionIdPatchHandler
+  - ca.interac.etransfer.handler.ContactsGetHandler
+  - ca.interac.etransfer.handler.ContactsPostHandler
+  - ca.interac.etransfer.handler.ContactsContactIdPutHandler
+  - ca.interac.etransfer.handler.ContactsContactIdDeleteHandler
+  - ca.interac.etransfer.handler.ContactsContactIdGetHandler
+  - ca.interac.etransfer.handler.TransfersGetHandler
+  - ca.interac.etransfer.handler.TransfersSendPostHandler
+  - ca.interac.etransfer.handler.TransfersSendReferenceNumberNoticePatchHandler
+  - ca.interac.etransfer.handler.TransfersSendReferenceNumberUpdateTransferAuthenticationPatchHandler
+  - ca.interac.etransfer.handler.TransfersSendReferenceNumberCancelPatchHandler
+  - ca.interac.etransfer.handler.TransfersReceiveReferenceNumberGetHandler
+  - ca.interac.etransfer.handler.TransfersReceiveReferenceNumberAuthenticatePatchHandler
+  - ca.interac.etransfer.handler.TransfersReceiveReferenceNumberCompletePatchHandler
+  - ca.interac.etransfer.handler.TransfersReceiveReferenceNumberDeclinePatchHandler
+  - ca.interac.etransfer.handler.MoneyRequestsSendGetHandler
+  - ca.interac.etransfer.handler.MoneyRequestsSendPostHandler
+  - ca.interac.etransfer.handler.MoneyRequestsSendReferenceNumberPutHandler
+  - ca.interac.etransfer.handler.MoneyRequestsSendReferenceNumberNoticePatchHandler
+  - ca.interac.etransfer.handler.MoneyRequestsSendReferenceNumberCancelPatchHandler
+  - ca.interac.etransfer.handler.MoneyRequestsReceiveReferenceNumberGetHandler
+  - ca.interac.etransfer.handler.MoneyRequestsReceiveReferenceNumberDeclinePatchHandler
+
+
+chains:
+  default:
+    - exception
+    - metrics
+    - traceability
+    - correlation 
+    - specification
+    - security
+    - body 
+    - audit
+#    - dump 
+    - sanitizer
+    - validator
+
+paths:
+  - path: '/publicapi/api/v2/oauth/access-tokens'
+    method: 'GET'
+    exec:
+      - default
+      - ca.interac.etransfer.handler.OauthAccessTokensGetHandler
+  - path: '/publicapi/api/v2/user-registrations'
+    method: 'POST'
+    exec:
+      - default
+      - ca.interac.etransfer.handler.UserRegistrationsPostHandler
+  - path: '/publicapi/api/v2/user-registrations/{apiRegistartionId}'
+    method: 'GET'
+    exec:
+      - default
+      - ca.interac.etransfer.handler.UserRegistrationsApiRegistartionIdGetHandler
+  - path: '/publicapi/api/v2/user-registrations/{apiRegistartionId}'
+    method: 'DELETE'
+    exec:
+      - default
+      - ca.interac.etransfer.handler.UserRegistrationsApiRegistartionIdDeleteHandler
+  - path: '/publicapi/api/v2/user-registrations/{apiRegistartionId}'
+    method: 'PATCH'
+    exec:
+      - default
+      - ca.interac.etransfer.handler.UserRegistrationsApiRegistartionIdPatchHandler
+  - path: '/publicapi/api/v2/contacts'
+    method: 'GET'
+    exec:
+      - default
+      - ca.interac.etransfer.handler.ContactsGetHandler
+  - path: '/publicapi/api/v2/contacts'
+    method: 'POST'
+    exec:
+      - default
+      - ca.interac.etransfer.handler.ContactsPostHandler
+  - path: '/publicapi/api/v2/contacts/{contactId}'
+    method: 'PUT'
+    exec:
+      - default
+      - ca.interac.etransfer.handler.ContactsContactIdPutHandler
+  - path: '/publicapi/api/v2/contacts/{contactId}'
+    method: 'DELETE'
+    exec:
+      - default
+      - ca.interac.etransfer.handler.ContactsContactIdDeleteHandler
+  - path: '/publicapi/api/v2/contacts/{contactId}'
+    method: 'GET'
+    exec:
+      - default
+      - ca.interac.etransfer.handler.ContactsContactIdGetHandler
+  - path: '/publicapi/api/v2/transfers'
+    method: 'GET'
+    exec:
+      - default
+      - ca.interac.etransfer.handler.TransfersGetHandler
+  - path: '/publicapi/api/v2/transfers/send'
+    method: 'POST'
+    exec:
+      - default
+      - ca.interac.etransfer.handler.TransfersSendPostHandler
+  - path: '/publicapi/api/v2/transfers/send/{referenceNumber}/notice'
+    method: 'PATCH'
+    exec:
+      - default
+      - ca.interac.etransfer.handler.TransfersSendReferenceNumberNoticePatchHandler
+  - path: '/publicapi/api/v2/transfers/send/{referenceNumber}/updateTransferAuthentication'
+    method: 'PATCH'
+    exec:
+      - default
+      - ca.interac.etransfer.handler.TransfersSendReferenceNumberUpdateTransferAuthenticationPatchHandler
+  - path: '/publicapi/api/v2/transfers/send/{referenceNumber}/cancel'
+    method: 'PATCH'
+    exec:
+      - default
+      - ca.interac.etransfer.handler.TransfersSendReferenceNumberCancelPatchHandler
+  - path: '/publicapi/api/v2/transfers/receive/{referenceNumber}'
+    method: 'GET'
+    exec:
+      - default
+      - ca.interac.etransfer.handler.TransfersReceiveReferenceNumberGetHandler
+  - path: '/publicapi/api/v2/transfers/receive/{referenceNumber}/authenticate'
+    method: 'PATCH'
+    exec:
+      - default
+      - ca.interac.etransfer.handler.TransfersReceiveReferenceNumberAuthenticatePatchHandler
+  - path: '/publicapi/api/v2/transfers/receive/{referenceNumber}/complete'
+    method: 'PATCH'
+    exec:
+      - default
+      - ca.interac.etransfer.handler.TransfersReceiveReferenceNumberCompletePatchHandler
+  - path: '/publicapi/api/v2/transfers/receive/{referenceNumber}/decline'
+    method: 'PATCH'
+    exec:
+      - default
+      - ca.interac.etransfer.handler.TransfersReceiveReferenceNumberDeclinePatchHandler
+  - path: '/publicapi/api/v2/money-requests/send'
+    method: 'GET'
+    exec:
+      - default
+      - ca.interac.etransfer.handler.MoneyRequestsSendGetHandler
+  - path: '/publicapi/api/v2/money-requests/send'
+    method: 'POST'
+    exec:
+      - default
+      - ca.interac.etransfer.handler.MoneyRequestsSendPostHandler
+  - path: '/publicapi/api/v2/money-requests/send/{referenceNumber}'
+    method: 'PUT'
+    exec:
+      - default
+      - ca.interac.etransfer.handler.MoneyRequestsSendReferenceNumberPutHandler
+  - path: '/publicapi/api/v2/money-requests/send/{referenceNumber}/notice'
+    method: 'PATCH'
+    exec:
+      - default
+      - ca.interac.etransfer.handler.MoneyRequestsSendReferenceNumberNoticePatchHandler
+  - path: '/publicapi/api/v2/money-requests/send/{referenceNumber}/cancel'
+    method: 'PATCH'
+    exec:
+      - default
+      - ca.interac.etransfer.handler.MoneyRequestsSendReferenceNumberCancelPatchHandler
+  - path: '/publicapi/api/v2/money-requests/receive/{referenceNumber}'
+    method: 'GET'
+    exec:
+      - default
+      - ca.interac.etransfer.handler.MoneyRequestsReceiveReferenceNumberGetHandler
+  - path: '/publicapi/api/v2/money-requests/receive/{referenceNumber}/decline'
+    method: 'PATCH'
+    exec:
+      - default
+      - ca.interac.etransfer.handler.MoneyRequestsReceiveReferenceNumberDeclinePatchHandler
+
+  - path: '/health/${server.serviceId:ca.interac.etransfer-2.0.0}'
+    method: 'get'
+    exec:
+      - security
+      - health
+
+  - path: '/server/info'
+    method: 'get'
+    exec:
+      - security
+      - info
+
+  - path: '/logger'
+    method: 'get'
+    exec:
+      - security
+      - getLogger
+
+  - path: '/logger'
+    method: 'post'
+    exec:
+      - security
+      - body
+      - postLogger
+
+
+  - path: '/spec.yaml'
+    method: 'get'
+    exec:
+      - spec
+  - path: '/specui.html'
+    method: 'get'
+    exec:
+      - swaggerui
