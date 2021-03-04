@@ -58,13 +58,13 @@ public class PetsPetIdDeleteHandlerTest {
             throw new ClientException(e);
         }
         final AtomicReference<ClientResponse> reference = new AtomicReference<>();
-        String requestUri = "/v1/pets/PoXCmfWZzNYRYV";
+        String requestUri = "/v1/pets/JNXtq";
         String httpMethod = "delete";
         try {
             ClientRequest request = new ClientRequest().setPath(requestUri).setMethod(Methods.DELETE);
             
             //customized header parameters 
-            request.getRequestHeaders().put(new HttpString("key"), "XbGYxIyGlJnRUTYpqEAqReA");
+            request.getRequestHeaders().put(new HttpString("key"), "gurBQYfSkgsAvMnrbfBaQFzuKulwm");
             request.getRequestHeaders().put(new HttpString("host"), "localhost");
             connection.sendRequest(request, client.createClientCallback(reference, latch));
             

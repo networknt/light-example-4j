@@ -1,10 +1,11 @@
 package com.networknt.petstore.handler;
 
+import com.networknt.body.BodyHandler;
+import com.networknt.config.Config;
 import com.networknt.handler.LightHttpHandler;
 import com.networknt.http.HttpMethod;
 import com.networknt.http.RequestEntity;
 import com.networknt.http.ResponseEntity;
-import com.networknt.service.SingletonServiceFactory;
 import io.undertow.server.HttpServerExchange;
 import io.undertow.util.HeaderMap;
 
