@@ -1,0 +1,57 @@
+---
+openapi: "3.0.0"
+info:
+  version: "1.0.0"
+  title: "Sidecar Backend"
+  license:
+    name: "MIT"
+servers:
+- url: "http://backend.sidecar.networknt.com"
+paths:
+  /kafka/records:
+    post:
+      summary: "Post a list of Kafka records"
+      operationId: "postRecords"
+      requestBody:
+        description: "An array of consumer records"
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Records"
+      security:
+      - sidecar_auth:
+        - "write:sidecar"
+      responses:
+        "201":
+          description: "Null response"
+components:
+  securitySchemes:
+    sidecar_auth:
+      type: "oauth2"
+      description: "This API uses OAuth 2 with the client credential grant flow."
+      flows:
+        clientCredentials:
+          tokenUrl: "https://localhost:6882/token"
+          scopes:
+            write:sidecar: "Add records"
+  schemas:
+    Records:
+      type: "array"
+      items:
+        $ref: "#/components/schemas/Record"
+    Record:
+      type: "object"
+      properties:
+        key:
+          type: "string"
+        value:
+          type: "string"
+        header:
+          type: "object"
+        partition:
+          type: "integer"
+          minimum: 0
+        offset:
+          type: "number"
+          minimum: 0
