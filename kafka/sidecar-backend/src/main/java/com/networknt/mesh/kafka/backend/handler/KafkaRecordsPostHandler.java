@@ -1,13 +1,8 @@
 package com.networknt.mesh.kafka.backend.handler;
 
 import com.networknt.body.BodyHandler;
-import com.networknt.config.JsonMapper;
 import com.networknt.handler.LightHttpHandler;
 import io.undertow.server.HttpServerExchange;
-import io.undertow.websockets.core.protocol.version07.UTF8Checker;
-
-import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.Map;
 
@@ -22,6 +17,7 @@ public class KafkaRecordsPostHandler implements LightHttpHandler {
         List<Map<String, Object>> records = (List<Map<String, Object>>)exchange.getAttachment(BodyHandler.REQUEST_BODY);
         for(int i = 0; i < records.size(); i++) {
             Map<String, Object> record = records.get(i);
+            logger.debug("topic = " + record.get("topic"));
             logger.debug("partition = " + record.get("partition"));
             logger.debug("offset = " + record.get("offset"));
             logger.debug("key = " + record.get("key"));
