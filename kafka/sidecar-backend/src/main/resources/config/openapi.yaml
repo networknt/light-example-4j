@@ -43,6 +43,8 @@ components:
     Record:
       type: "object"
       properties:
+        topic:
+          type: "string"
         key:
           type: "string"
         value:
