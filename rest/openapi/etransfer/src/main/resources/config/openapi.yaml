@@ -1,0 +1,3215 @@
+---
+openapi: "3.0.0"
+servers:
+- url: "https://api.interac.ca/publicapi/api/v2"
+info:
+  version: "2.0.0"
+  title: "e-Transfer Public API"
+paths:
+  /oauth/access-tokens:
+    parameters:
+    - $ref: "#/components/parameters/thirdPartyAccessId"
+    - $ref: "#/components/parameters/requestId"
+    get:
+      description: "Get the access token\n"
+      parameters:
+      - name: "grantType"
+        in: "header"
+        required: true
+        description: "token grant type; 'client_credentials' or 'request_token'\n"
+        schema:
+          type: "string"
+      - name: "grantRequest"
+        in: "header"
+        required: true
+        description: "for 'client_credentials' use the secret key generated during\
+          \ the partner registration; for 'request_token' use the JWT request token\
+          \ built according to the Public API Integration Guide"
+        schema:
+          type: "string"
+      tags:
+      - "Authentication"
+      security:
+      - etransfer_auth:
+        - "etransfer.r"
+        - "etransfer.w"
+      responses:
+        "200":
+          description: "Successful response"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AccessToken"
+              examples:
+                response:
+                  value:
+                    accessToken: "4863dc7c-2a00-11e8-b467-0ed5f89f718b"
+                    tokenType: "bearer"
+                    expiresIn: 600
+                    scope: "etransfer.r etransfer.w"
+        "400":
+          description: "Validation Errors"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/errorModel"
+              examples:
+                response:
+                  value:
+                  - code: 1000
+                    message: "Invalid request"
+        "401":
+          description: "Unauthorized"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/errorModel"
+              examples:
+                response:
+                  value:
+                  - code: 1001
+                    message: "Invalid access"
+        default:
+          description: "unexpected error"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/errorModel"
+              examples:
+                response:
+                  value:
+                  - code: 9999
+                    message: "Unknown application error"
+  /user-registrations:
+    parameters:
+    - $ref: "#/components/parameters/accessToken"
+    - $ref: "#/components/parameters/thirdPartyAccessId"
+    - $ref: "#/components/parameters/requestId"
+    - $ref: "#/components/parameters/deviceId"
+    - $ref: "#/components/parameters/applicationId"
+    - $ref: "#/components/parameters/participantAccessToken"
+    post:
+      description: "creates a public api user registration for an e-Transfer customer;\
+        \ the operation is asynchronous, a notification will be sent to the third\
+        \ party partner when the registration is created"
+      operationId: "addUserRegistration"
+      tags:
+      - "User Registration management"
+      responses:
+        "202":
+          description: "Successful response"
+          headers:
+            location:
+              description: "URL for accessing the newly created user registration"
+              schema:
+                type: "string"
+          content:
+            application/json:
+              schema:
+                required:
+                - "apiRegistrationId"
+                properties:
+                  apiRegistrationId:
+                    description: "id of the newly created user registration"
+                    type: "string"
+        "400":
+          description: "Validation Errors"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/errorModel"
+              examples:
+                response:
+                  value:
+                  - code: 1000
+                    message: "Invalid request"
+                  - code: 1004
+                    message: "Duplicate User registration - Participant UserId"
+                  - code: 1008
+                    message: "Duplicate ThirdPartyUserId"
+                  - code: 1009
+                    message: "Invalid ParticipantId"
+                  - code: 1010
+                    message: "Invalid IndirectConnectorId of participant"
+        "401":
+          description: "Unauthorized"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/errorModel"
+              examples:
+                response:
+                  value:
+                  - code: 1001
+                    message: "Invalid access"
+        "403":
+          description: "Forbidden - The server understood the request, but is refusing\
+            \ to fulfill it."
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/errorModel"
+              examples:
+                response:
+                  value:
+                  - code: 1002
+                    message: "Allowed feature list not supported for user"
+        "404":
+          description: "Resource not found"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/errorModel"
+              examples:
+                response:
+                  value:
+                  - code: 1003
+                    message: "Customer doesn't exist - ParticipantUserId doesn't exist"
+        default:
+          description: "unexpected error"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/errorModel"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UserRegistration"
+        required: true
+  /user-registrations/{apiRegistartionId}:
+    parameters:
+    - $ref: "#/components/parameters/accessToken"
+    - $ref: "#/components/parameters/thirdPartyAccessId"
+    - $ref: "#/components/parameters/requestId"
+    - $ref: "#/components/parameters/deviceId"
+    - $ref: "#/components/parameters/applicationId"
+    - $ref: "#/components/parameters/participantAccessToken"
+    get:
+      description: "retrieves a public api user registration for an e-Transfer customer"
+      operationId: "getUserRegistration"
+      parameters:
+      - name: "apiRegistartionId"
+        in: "path"
+        required: true
+        schema:
+          type: "string"
+          maximum: 50
+      tags:
+      - "User Registration management"
+      responses:
+        "200":
+          description: "Successful response"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserRegistration"
+        "400":
+          description: "Validation Errors"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/errorModel"
+              examples:
+                response:
+                  value:
+                  - code: 1000
+                    message: "Invalid request"
+        "401":
+          description: "Unauthorized / invalid credentials"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/errorModel"
+              examples:
+                response:
+                  value:
+                  - code: 1001
+                    message: "Invalid access"
+        "404":
+          description: "Resource not found"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/errorModel"
+              examples:
+                response:
+                  value:
+                  - code: 1005
+                    message: "ApiRegistartionId doesn't exist"
+        default:
+          description: "unexpected error"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/errorModel"
+    delete:
+      description: "deletes a public api user registration for an e-Transfer customer"
+      operationId: "deleteUserRegistration"
+      parameters:
+      - name: "apiRegistartionId"
+        in: "path"
+        required: true
+        schema:
+          type: "string"
+      tags:
+      - "User Registration management"
+      responses:
+        "204":
+          description: "Successful response"
+        "400":
+          description: "Validation Errors"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/errorModel"
+              examples:
+                response:
+                  value:
+                  - code: 1000
+                    message: "Invalid request"
+        "401":
+          description: "Unauthorized / invalid credentials"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/errorModel"
+              examples:
+                response:
+                  value:
+                  - code: 1001
+                    message: "Invalid access"
+        "404":
+          description: "Resource not found"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/errorModel"
+              examples:
+                response:
+                  value:
+                  - code: 1005
+                    message: "ApiRegistartionId doesn't exist"
+        default:
+          description: "unexpected error"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/errorModel"
+    patch:
+      description: "updates a public api user registration for an e-Transfer customer"
+      operationId: "updateUserRegistration"
+      parameters:
+      - name: "apiRegistartionId"
+        in: "path"
+        required: true
+        schema:
+          type: "string"
+      tags:
+      - "User Registration management"
+      responses:
+        "202":
+          description: "Successful response"
+        "400":
+          description: "Validation Errors"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/errorModel"
+              examples:
+                response:
+                  value:
+                  - code: 1000
+                    message: "Invalid request"
+        "401":
+          description: "Unauthorized"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/errorModel"
+              examples:
+                response:
+                  value:
+                  - code: 1001
+                    message: "Invalid access"
+        "403":
+          description: "Forbidden - The server understood the request, but is refusing\
+            \ to fulfill it."
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/errorModel"
+              examples:
+                response:
+                  value:
+                  - code: 1002
+                    message: "Allowed feature list not supported for user"
+        "404":
+          description: "Resource not found"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/errorModel"
+              examples:
+                response:
+                  value:
+                  - code: 1005
+                    message: "ApiRegistartionId doesn't exist"
+        default:
+          description: "unexpected error"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/errorModel"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UserRegistrationUpdate"
+        required: true
+  /contacts:
+    parameters:
+    - $ref: "#/components/parameters/accessToken"
+    - $ref: "#/components/parameters/thirdPartyAccessId"
+    - $ref: "#/components/parameters/requestId"
+    - $ref: "#/components/parameters/deviceId"
+    - $ref: "#/components/parameters/applicationId"
+    - $ref: "#/components/parameters/apiRegistrationId"
+    get:
+      operationId: "getContacts"
+      description: "Retrieves all the contacts"
+      parameters:
+      - name: "maxResponseItems"
+        in: "query"
+        required: false
+        schema:
+          type: "integer"
+      - name: "fromLastUpdatedDate"
+        in: "query"
+        required: false
+        description: "UTC datatime of contact used to retrieve only contacts updated\
+          \ from the specified dateTime; format is yyyy-MM-dd'T'HH:mm:ss.SSS'Z', e.g.\
+          \ '2016-09-11T16:12:12.000'"
+        schema:
+          type: "string"
+          format: "datetime"
+      - name: "offset"
+        in: "query"
+        required: false
+        description: "offset is starting point of contacts filter; if offset is not\
+          \ provided it would be defaulted to zero;"
+        schema:
+          type: "integer"
+      - name: "sortBy"
+        in: "query"
+        required: false
+        description: "contacts will be sorted based on sortBy column, \n - sortBy\
+          \ will be set to contactUpdatedDate if fromLastUpdatedDate.\n - sortBy will\
+          \ be defaulted to contactName if no filters are specified."
+        schema:
+          type: "string"
+          enum:
+          - "contactName"
+          - "contactUpdatedDate"
+      - name: "orderBy"
+        in: "query"
+        required: false
+        description: "order by is required if sort by is specified."
+        schema:
+          type: "string"
+          enum:
+          - "desc"
+          - "asc"
+      tags:
+      - "Contact management"
+      responses:
+        "200":
+          description: "Successful response"
+          content:
+            application/json:
+              schema:
+                type: "array"
+                description: "List of contacts returned for customer"
+                items:
+                  $ref: "#/components/schemas/Contact"
+        "206":
+          description: "Partial content returned, use pagination filters"
+          headers:
+            x-limit:
+              description: "contact range returned"
+              schema:
+                type: "string"
+            x-total-count:
+              description: "total number of contacts for provided filter."
+              schema:
+                type: "integer"
+          content:
+            application/json:
+              schema:
+                type: "array"
+                description: "List of partial contacts returned based on max item"
+                items:
+                  $ref: "#/components/schemas/Contact"
+        "400":
+          description: "Validation Errors"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/errorModel"
+              examples:
+                response:
+                  value:
+                  - code: 1000
+                    message: "Invalid request."
+                  - code: 1011
+                    message: "Invalid apiRegistartionId."
+                  - code: 1048
+                    message: "Hard contact already exist for sender."
+                  - code: 1053
+                    message: "orderBy field is missing."
+        "401":
+          description: "Unauthorized"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/errorModel"
+              examples:
+                response:
+                  value:
+                  - code: 1001
+                    message: "Invalid access"
+        "403":
+          description: "Forbidden - The server understood the request, but is refusing\
+            \ to fulfill it."
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/errorModel"
+              examples:
+                response:
+                  value:
+                  - code: 1037
+                    message: "Feature is not supported for current user"
+        "404":
+          description: "Resource not found"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/errorModel"
+              examples:
+                response:
+                  value:
+                  - code: 1005
+                    message: "ApiRegistartionId doesn't exist."
+        default:
+          description: "unexpected error"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/errorModel"
+    post:
+      description: "creates a public api user registration for an e-Transfer customer"
+      operationId: "addContact"
+      tags:
+      - "Contact management"
+      responses:
+        "201":
+          description: "Successful response"
+          headers:
+            location:
+              description: "URL for accessing the newly created contact"
+              schema:
+                type: "string"
+          content:
+            application/json:
+              schema:
+                required:
+                - "contactId"
+                - "contactHash"
+                properties:
+                  contactId:
+                    description: "Id of the newly created Contact."
+                    type: "string"
+                  contactHash:
+                    description: "unique hash value of newly created Contact."
+                    type: "string"
+        "400":
+          description: "Validation Errors"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/errorModel"
+              examples:
+                response:
+                  value:
+                  - code: 1000
+                    message: "Invalid request."
+                  - code: 1011
+                    message: "Invalid apiRegistartionId."
+                  - code: 1043
+                    message: "Duplicate contact name."
+        "401":
+          description: "Unauthorized"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/errorModel"
+              examples:
+                response:
+                  value:
+                  - code: 1001
+                    message: "Invalid access"
+        "403":
+          description: "Forbidden - The server understood the request, but is refusing\
+            \ to fulfill it."
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/errorModel"
+              examples:
+                response:
+                  value:
+                  - code: 1037
+                    message: "Feature is not supported for current user."
+        "404":
+          description: "Resource not found"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/errorModel"
+              examples:
+                response:
+                  value:
+                  - code: 1005
+                    message: "ApiRegistartionId doesn't exist"
+                  - code: 1006
+                    message: "Hard contact doesn't exist."
+        default:
+          description: "unexpected error"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/errorModel"
+      requestBody:
+        $ref: "#/components/requestBodies/Contact"
+  /contacts/{contactId}:
+    parameters:
+    - $ref: "#/components/parameters/accessToken"
+    - $ref: "#/components/parameters/thirdPartyAccessId"
+    - $ref: "#/components/parameters/requestId"
+    - $ref: "#/components/parameters/deviceId"
+    - $ref: "#/components/parameters/applicationId"
+    - $ref: "#/components/parameters/apiRegistrationId"
+    put:
+      description: "updates a contact for an e-Transfer customer"
+      operationId: "updateContact"
+      parameters:
+      - name: "contactId"
+        in: "path"
+        required: true
+        schema:
+          type: "string"
+      tags:
+      - "Contact management"
+      responses:
+        "200":
+          description: "Successful response"
+          content:
+            application/json:
+              schema:
+                required:
+                - "contactHash"
+                properties:
+                  contactHash:
+                    description: "unique hash value of newly created Contact."
+                    type: "string"
+        "400":
+          description: "Validation Errors"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/errorModel"
+              examples:
+                response:
+                  value:
+                  - code: 1000
+                    message: "Invalid request"
+                  - code: 1012
+                    message: "Invalid contact hash, get last updated contact details"
+        "401":
+          description: "Unauthorized"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/errorModel"
+              examples:
+                response:
+                  value:
+                  - code: 1001
+                    message: "Invalid access"
+        "403":
+          description: "Forbidden - The server understood the request, but is refusing\
+            \ to fulfill it."
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/errorModel"
+              examples:
+                response:
+                  value:
+                  - code: 1037
+                    message: "Feature is not supported for current user."
+        "404":
+          description: "Resource not found"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/errorModel"
+              examples:
+                response:
+                  value:
+                  - code: 1005
+                    message: "ApiRegistartionId doesn't exist."
+                  - code: 1006
+                    message: "Hard contact doesn't exist."
+                  - code: 1007
+                    message: "contact doesn't exist."
+        default:
+          description: "unexpected error"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/errorModel"
+      requestBody:
+        $ref: "#/components/requestBodies/Contact"
+    delete:
+      description: "deletes a contact for an e-Transfer customer"
+      operationId: "deleteContact"
+      parameters:
+      - name: "contactId"
+        in: "path"
+        required: true
+        schema:
+          type: "string"
+      tags:
+      - "Contact management"
+      responses:
+        "204":
+          description: "Successful response"
+        "400":
+          description: "Validation Errors"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/errorModel"
+              examples:
+                response:
+                  value:
+                  - code: 1000
+                    message: "Invalid request"
+                  - code: 1011
+                    message: "Invalid apiRegistartionId"
+                  - code: 1044
+                    message: "Contact can't be deleted; if in flight transfers exist."
+        "401":
+          description: "Unauthorized"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/errorModel"
+              examples:
+                response:
+                  value:
+                  - code: 1001
+                    message: "Invalid access"
+        "403":
+          description: "Forbidden - The server understood the request, but is refusing\
+            \ to fulfill it."
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/errorModel"
+              examples:
+                response:
+                  value:
+                  - code: 1037
+                    message: "Feature is not supported for current user."
+        "404":
+          description: "Resource not found"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/errorModel"
+              examples:
+                response:
+                  value:
+                  - code: 1005
+                    message: "ApiRegistartionId doesn't exist."
+                  - code: 1006
+                    message: "Hard contact doesn't exist."
+                  - code: 1007
+                    message: "contact doesn't exist."
+        default:
+          description: "unexpected error"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/errorModel"
+    get:
+      description: "retrieves a contact of an e-Transfer customer that has a public\
+        \ api registartion and the associated auto-deposit registration details if\
+        \ the registration exists and is associated with one of contact's notification\
+        \ handles"
+      operationId: "getContact"
+      parameters:
+      - name: "contactId"
+        in: "path"
+        required: true
+        schema:
+          type: "string"
+          minLength: 16
+          maxLength: 16
+      tags:
+      - "Contact management"
+      responses:
+        "200":
+          description: "Successful response"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Contact"
+        "400":
+          description: "Validation Errors"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/errorModel"
+              examples:
+                response:
+                  value:
+                  - code: 1000
+                    message: "Invalid request"
+                  - code: 1011
+                    message: "Invalid apiRegistartionId"
+        "401":
+          description: "Unauthorized"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/errorModel"
+              examples:
+                response:
+                  value:
+                  - code: 1001
+                    message: "Invalid access"
+        "403":
+          description: "Forbidden - The server understood the request, but is refusing\
+            \ to fulfill it."
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/errorModel"
+              examples:
+                response:
+                  value:
+                  - code: 1037
+                    message: "Feature is not supported for current user."
+        "404":
+          description: "Resource not found"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/errorModel"
+              examples:
+                response:
+                  value:
+                  - code: 1005
+                    message: "ApiRegistartionId doesn't exist."
+                  - code: 1007
+                    message: "contact doesn't exist."
+        default:
+          description: "unexpected error"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/errorModel"
+  /transfers:
+    parameters:
+    - $ref: "#/components/parameters/accessToken"
+    - $ref: "#/components/parameters/thirdPartyAccessId"
+    - $ref: "#/components/parameters/requestId"
+    - $ref: "#/components/parameters/deviceId"
+    - $ref: "#/components/parameters/applicationId"
+    - $ref: "#/components/parameters/apiRegistrationId"
+    get:
+      operationId: "getTransfers"
+      description: "retrieves all transfers sent/received ( Bulk transfers are exluded\
+        \ )"
+      parameters:
+      - name: "fromDate"
+        in: "query"
+        required: false
+        description: "UTC datatime format is yyyy-MM-dd'T'HH:mm:ss.SSS'Z', e.g. '2016-09-11T16:12:12.000';\
+          \ this parameter is mandatory if sourceTransferId or referenceNumber is\
+          \ not given."
+        schema:
+          type: "string"
+          format: "dateTime"
+      - name: "toDate"
+        in: "query"
+        required: false
+        description: "UTC datatime format is yyyy-MM-dd'T'HH:mm:ss.SSS'Z', e.g. '2016-09-11T16:12:12.000';\
+          \ this parameter is mandatory if sourceTransferId or referenceNumber is\
+          \ not given."
+        schema:
+          type: "string"
+          format: "dateTime"
+      - name: "maxResponseItems"
+        in: "query"
+        required: false
+        description: "if offset is provided then maxResponse items is required; all\
+          \ items are returned if this field is absent"
+        schema:
+          type: "integer"
+      - name: "offset"
+        in: "query"
+        required: false
+        description: "offset is starting point of transfers filter; if offset is not\
+          \ provided it would be defaulted to zero;"
+        schema:
+          type: "integer"
+      - name: "sortBy"
+        in: "query"
+        required: false
+        description: "transfers will be sorted based on sortBy column."
+        schema:
+          type: "string"
+          enum:
+          - "creationDate"
+      - name: "orderBy"
+        in: "query"
+        required: false
+        description: "order by is required if sort by is specified."
+        schema:
+          type: "string"
+          enum:
+          - "desc"
+          - "asc"
+      - name: "sourceTransferId"
+        in: "query"
+        required: false
+        description: "transferId generated by originating system, either source transfer\
+          \ id or reference number can be specified."
+        schema:
+          type: "string"
+          minLength: 1
+          maxLength: 64
+      - name: "referenceNumber"
+        in: "query"
+        required: false
+        description: "unique identifier of the transfer, either source transfer id\
+          \ or reference number can be specified."
+        schema:
+          type: "string"
+          maxLength: 14
+      tags:
+      - "Send Transfer"
+      responses:
+        "200":
+          description: "Successful response"
+          content:
+            application/json:
+              schema:
+                type: "array"
+                items:
+                  $ref: "#/components/schemas/Transfer"
+        "206":
+          description: "Partial content returned, use pagination filters"
+          headers:
+            x-limit:
+              description: "range of transfers"
+              schema:
+                type: "string"
+            x-total-count:
+              description: "total number of transfers."
+              schema:
+                type: "integer"
+          content:
+            application/json:
+              schema:
+                type: "array"
+                items:
+                  $ref: "#/components/schemas/Transfer"
+        "400":
+          description: "Validation Errors"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/errorModel"
+              examples:
+                response:
+                  value:
+                  - code: 1000
+                    message: "Invalid request."
+                  - code: 1011
+                    message: "Invalid apiRegistartionId."
+                  - code: 1030
+                    message: "Invalid date range."
+                  - code: 1031
+                    message: "Mutually exclusive options are specified."
+                  - code: 1053
+                    message: "orderBy field is missing."
+        "401":
+          description: "Unauthorized"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/errorModel"
+              examples:
+                response:
+                  value:
+                  - code: 1001
+                    message: "Invalid access"
+        "404":
+          description: "Resource not found"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/errorModel"
+              examples:
+                response:
+                  value:
+                  - code: 1005
+                    message: "ApiRegistartionId doesn't exist."
+                  - code: 1007
+                    message: "Contact doesn't exist."
+                  - code: 1029
+                    message: "Transfer doesn't exist."
+        default:
+          description: "unexpected error"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/errorModel"
+  /transfers/send:
+    parameters:
+    - $ref: "#/components/parameters/accessToken"
+    - $ref: "#/components/parameters/thirdPartyAccessId"
+    - $ref: "#/components/parameters/requestId"
+    - $ref: "#/components/parameters/deviceId"
+    - $ref: "#/components/parameters/applicationId"
+    - $ref: "#/components/parameters/apiRegistrationId"
+    - $ref: "#/components/parameters/participantAccessToken"
+    post:
+      description: "creates a transfer for an e-Transfer customer; the operation is\
+        \ asynchronous, a notification will be sent to the third party partner when\
+        \ the transfer is created"
+      operationId: "sendTransfer"
+      tags:
+      - "Send Transfer"
+      responses:
+        "202":
+          description: "Successful response"
+          headers:
+            location:
+              description: "URL for accessing the newly created transfer"
+              schema:
+                type: "string"
+          content:
+            application/json:
+              schema:
+                required:
+                - "referenceNumber"
+                properties:
+                  referenceNumber:
+                    description: "reference Number of the newly created transfer"
+                    type: "string"
+        "400":
+          description: "Validation Errors"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/errorModel"
+              examples:
+                response:
+                  value:
+                  - code: 1000
+                    message: "Invalid request"
+                  - code: 1011
+                    message: "Invalid apiRegistartionId"
+                  - code: 1012
+                    message: "Invalid contact hash, get last updated contact details"
+                  - code: 1013
+                    message: "Contact has notification handle registered for direct\
+                      \ deposit, regular transfer cannot be sent"
+                  - code: 1014
+                    message: "Sender and Recipient cannot be same customer"
+                  - code: 1015
+                    message: "Sender is disabled"
+                  - code: 1016
+                    message: "Transfer amount exceeds the individual outgoing transfer\
+                      \ threshold"
+                  - code: 1017
+                    message: "Total cumulative transfers exceeds the daily outgoing\
+                      \ transfer amount threshold"
+                  - code: 1018
+                    message: "Total cumulative transfers exceeds the first rolling\
+                      \ limit outgoing transfer amount threshold"
+                  - code: 1019
+                    message: "Total cumulative transfers exceeds the second rolling\
+                      \ limit outgoing transfer amount threshold"
+                  - code: 1020
+                    message: "Duplicate source system id"
+                  - code: 1021
+                    message: "Expiry Date is less than Creation Date"
+                  - code: 1022
+                    message: "Transfer creation date is too early or too late"
+                  - code: 1023
+                    message: "Expiry Date exceeds threshold limit"
+                  - code: 1024
+                    message: "Invalid Transfer authentication for the Transfer type."
+                  - code: 1027
+                    message: "Hash algorithm not supported by the system."
+                  - code: 1028
+                    message: "Fullfill amount should be same as requested amount."
+                  - code: 1045
+                    message: "Transfer can't be created, due to intrruption in previous\
+                      \ transfer."
+                  - code: 1046
+                    message: "Currency code or product type is not supported."
+                  - code: 1047
+                    message: "Invalid Transfer type."
+        "401":
+          description: "Unauthorized"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/errorModel"
+              examples:
+                response:
+                  value:
+                  - code: 1001
+                    message: "Invalid access"
+        "404":
+          description: "Resource not found"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/errorModel"
+              examples:
+                response:
+                  value:
+                  - code: 1005
+                    message: "ApiRegistartionId doesn't exist"
+                  - code: 1007
+                    message: "contact doesn't exist"
+                  - code: 1025
+                    message: "moneyRequestReferenceNumber doesn't exist."
+                  - code: 1026
+                    message: "directDepositRegistrationId doesn't exist."
+        default:
+          description: "unexpected error"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/errorModel"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Transfer"
+        required: true
+  /transfers/send/{referenceNumber}/notice:
+    parameters:
+    - $ref: "#/components/parameters/accessToken"
+    - $ref: "#/components/parameters/thirdPartyAccessId"
+    - $ref: "#/components/parameters/requestId"
+    - $ref: "#/components/parameters/deviceId"
+    - $ref: "#/components/parameters/applicationId"
+    - $ref: "#/components/parameters/apiRegistrationId"
+    patch:
+      description: "the sender re-sends a transfer notice"
+      operationId: "sendtransferNotice"
+      parameters:
+      - name: "referenceNumber"
+        in: "path"
+        required: true
+        schema:
+          type: "string"
+          maxLength: 14
+      tags:
+      - "Send Transfer"
+      responses:
+        "204":
+          description: "Successful response"
+        "400":
+          description: "Validation Errors"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/errorModel"
+              examples:
+                response:
+                  value:
+                  - code: 1000
+                    message: "Invalid request."
+                  - code: 1011
+                    message: "Invalid apiRegistartionId."
+        "401":
+          description: "Unauthorized"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/errorModel"
+              examples:
+                response:
+                  value:
+                  - code: 1001
+                    message: "Invalid access"
+        "404":
+          description: "Resource not found"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/errorModel"
+              examples:
+                response:
+                  value:
+                  - code: 1005
+                    message: "ApiRegistartionId doesn't exist."
+                  - code: 1029
+                    message: "Transfer doesn't exist."
+        default:
+          description: "unexpected error"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/errorModel"
+  /transfers/send/{referenceNumber}/updateTransferAuthentication:
+    parameters:
+    - $ref: "#/components/parameters/accessToken"
+    - $ref: "#/components/parameters/thirdPartyAccessId"
+    - $ref: "#/components/parameters/requestId"
+    - $ref: "#/components/parameters/deviceId"
+    - $ref: "#/components/parameters/applicationId"
+    - $ref: "#/components/parameters/apiRegistrationId"
+    patch:
+      description: "the sender updates the transfer authentication"
+      operationId: "updateTransferAuthentication"
+      parameters:
+      - name: "referenceNumber"
+        in: "path"
+        required: true
+        schema:
+          type: "string"
+          maxLength: 14
+      tags:
+      - "Send Transfer"
+      responses:
+        "204":
+          description: "Successful response"
+        "400":
+          description: "Validation Errors"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/errorModel"
+              examples:
+                response:
+                  value:
+                  - code: 1000
+                    message: "Invalid request."
+                  - code: 1011
+                    message: "Invalid apiRegistartionId."
+                  - code: 1032
+                    message: "Hash Salt is required if hashtype is not MD5."
+                  - code: 1033
+                    message: "Request cannot be processed due to current status."
+        "401":
+          description: "Unauthorized"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/errorModel"
+              examples:
+                response:
+                  value:
+                  - code: 1001
+                    message: "Invalid access"
+        "404":
+          description: "Resource not found"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/errorModel"
+              examples:
+                response:
+                  value:
+                  - code: 1005
+                    message: "ApiRegistartionId doesn't exist."
+                  - code: 1029
+                    message: "Transfer doesn't exist."
+        default:
+          description: "unexpected error"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/errorModel"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/TransferAuthentication"
+        required: true
+  /transfers/send/{referenceNumber}/cancel:
+    parameters:
+    - $ref: "#/components/parameters/accessToken"
+    - $ref: "#/components/parameters/thirdPartyAccessId"
+    - $ref: "#/components/parameters/requestId"
+    - $ref: "#/components/parameters/deviceId"
+    - $ref: "#/components/parameters/applicationId"
+    - $ref: "#/components/parameters/apiRegistrationId"
+    - $ref: "#/components/parameters/participantAccessToken"
+    patch:
+      description: "the sender cancels a transfer; the operation is asynchronous,\
+        \ a notification will be sent to the third party partner when the transfer\
+        \ is cancelled"
+      operationId: "cancelTransfer"
+      parameters:
+      - name: "referenceNumber"
+        in: "path"
+        required: true
+        schema:
+          type: "string"
+          maxLength: 14
+      tags:
+      - "Send Transfer"
+      responses:
+        "202":
+          description: "Successful response"
+          headers:
+            location:
+              description: "URL for accessing the newly created transfer"
+              schema:
+                type: "string"
+        "400":
+          description: "Validation Errors"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/errorModel"
+              examples:
+                response:
+                  value:
+                  - code: 1000
+                    message: "Invalid request."
+                  - code: 1011
+                    message: "Invalid apiRegistartionId."
+                  - code: 1033
+                    message: "Request cannot be processed due to current status."
+        "401":
+          description: "Unauthorized"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/errorModel"
+              examples:
+                response:
+                  value:
+                  - code: 1001
+                    message: "Invalid access"
+        "404":
+          description: "Resource not found"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/errorModel"
+              examples:
+                response:
+                  value:
+                  - code: 1005
+                    message: "ApiRegistartionId doesn't exist."
+                  - code: 1029
+                    message: "Transfer doesn't exist."
+        default:
+          description: "unexpected error"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/errorModel"
+      requestBody:
+        $ref: "#/components/requestBodies/CancellationReason"
+  /transfers/receive/{referenceNumber}:
+    parameters:
+    - $ref: "#/components/parameters/accessToken"
+    - $ref: "#/components/parameters/thirdPartyAccessId"
+    - $ref: "#/components/parameters/requestId"
+    - $ref: "#/components/parameters/deviceId"
+    - $ref: "#/components/parameters/applicationId"
+    - $ref: "#/components/parameters/apiRegistrationId"
+    get:
+      description: "the recipient retrieves an incoming transfer; details about sender\
+        \ are part of the response"
+      operationId: "getIncomingTransfer"
+      parameters:
+      - name: "referenceNumber"
+        in: "path"
+        required: true
+        schema:
+          type: "string"
+          maxLength: 14
+      tags:
+      - "Receive Transfer"
+      responses:
+        "200":
+          description: "Successful response"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/IncomingTransfer"
+        "400":
+          description: "Validation Errors"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/errorModel"
+              examples:
+                response:
+                  value:
+                  - code: 1000
+                    message: "Invalid request."
+                  - code: 1011
+                    message: "Invalid apiRegistartionId."
+        "401":
+          description: "Unauthorized"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/errorModel"
+              examples:
+                response:
+                  value:
+                  - code: 1001
+                    message: "Invalid access"
+        "404":
+          description: "Resource not found"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/errorModel"
+              examples:
+                response:
+                  value:
+                  - code: 1005
+                    message: "ApiRegistartionId doesn't exist."
+                  - code: 1029
+                    message: "Transfer doesn't exist."
+        default:
+          description: "unexpected error"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/errorModel"
+  /transfers/receive/{referenceNumber}/authenticate:
+    parameters:
+    - $ref: "#/components/parameters/accessToken"
+    - $ref: "#/components/parameters/thirdPartyAccessId"
+    - $ref: "#/components/parameters/requestId"
+    - $ref: "#/components/parameters/deviceId"
+    - $ref: "#/components/parameters/applicationId"
+    - $ref: "#/components/parameters/apiRegistrationId"
+    patch:
+      description: "the recipient authenticates a transfer by providing the answer\
+        \ to the security question"
+      operationId: "authenticateTransfer"
+      parameters:
+      - name: "referenceNumber"
+        in: "path"
+        required: true
+        schema:
+          type: "string"
+          maxLength: 14
+      tags:
+      - "Receive Transfer"
+      responses:
+        "204":
+          description: "Successful response"
+        "400":
+          description: "Validation Errors"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/errorModel"
+              examples:
+                response:
+                  value:
+                  - code: 1000
+                    message: "Invalid request."
+                  - code: 1011
+                    message: "Invalid apiRegistartionId."
+                  - code: 1033
+                    message: "Request cannot be processed due to current status."
+                  - code: 1034
+                    message: "Authentication failed, try again later."
+                  - code: 1035
+                    message: "Authentication failed, can't try again."
+        "401":
+          description: "Unauthorized"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/errorModel"
+              examples:
+                response:
+                  value:
+                  - code: 1001
+                    message: "Invalid access"
+        "404":
+          description: "Resource not found"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/errorModel"
+              examples:
+                response:
+                  value:
+                  - code: 1005
+                    message: "ApiRegistartionId doesn't exist."
+                  - code: 1029
+                    message: "Transfer doesn't exist."
+        default:
+          description: "unexpected error"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/errorModel"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SecurityAnswer"
+        required: true
+  /transfers/receive/{referenceNumber}/complete:
+    parameters:
+    - $ref: "#/components/parameters/accessToken"
+    - $ref: "#/components/parameters/thirdPartyAccessId"
+    - $ref: "#/components/parameters/requestId"
+    - $ref: "#/components/parameters/deviceId"
+    - $ref: "#/components/parameters/applicationId"
+    - $ref: "#/components/parameters/apiRegistrationId"
+    - $ref: "#/components/parameters/participantAccessToken"
+    patch:
+      description: "the recipient completes the receive of a transfer; the operation\
+        \ is asynchronous, a notification will be sent to the third party partner\
+        \ when the transfer is completed"
+      operationId: "completeTransfer"
+      parameters:
+      - name: "referenceNumber"
+        in: "path"
+        required: true
+        schema:
+          type: "string"
+          maxLength: 14
+      tags:
+      - "Receive Transfer"
+      responses:
+        "202":
+          description: "Successful response"
+        "400":
+          description: "Validation Errors"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/errorModel"
+              examples:
+                response:
+                  value:
+                  - code: 1000
+                    message: "Invalid request."
+                  - code: 1011
+                    message: "Invalid apiRegistartionId."
+                  - code: 1033
+                    message: "Request cannot be processed due to current status."
+                  - code: 1036
+                    message: "Transfer was authenticated by a different customer."
+        "401":
+          description: "Unauthorized"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/errorModel"
+              examples:
+                response:
+                  value:
+                  - code: 1001
+                    message: "Invalid access"
+        "404":
+          description: "Resource not found"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/errorModel"
+              examples:
+                response:
+                  value:
+                  - code: 1005
+                    message: "ApiRegistartionId doesn't exist."
+                  - code: 1029
+                    message: "Transfer doesn't exist."
+        default:
+          description: "unexpected error"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/errorModel"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/RecipientMemo"
+  /transfers/receive/{referenceNumber}/decline:
+    parameters:
+    - $ref: "#/components/parameters/accessToken"
+    - $ref: "#/components/parameters/thirdPartyAccessId"
+    - $ref: "#/components/parameters/requestId"
+    - $ref: "#/components/parameters/deviceId"
+    - $ref: "#/components/parameters/applicationId"
+    - $ref: "#/components/parameters/apiRegistrationId"
+    patch:
+      description: "the recipient declines a transfer"
+      operationId: "declineTransfer"
+      parameters:
+      - name: "referenceNumber"
+        in: "path"
+        required: true
+        schema:
+          type: "string"
+          maxLength: 14
+      tags:
+      - "Receive Transfer"
+      responses:
+        "204":
+          description: "Successful response"
+        "400":
+          description: "Validation Errors"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/errorModel"
+              examples:
+                response:
+                  value:
+                  - code: 1000
+                    message: "Invalid request."
+                  - code: 1011
+                    message: "Invalid apiRegistartionId."
+                  - code: 1033
+                    message: "Request cannot be processed due to current status."
+        "401":
+          description: "Unauthorized"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/errorModel"
+              examples:
+                response:
+                  value:
+                  - code: 1001
+                    message: "Invalid access"
+        "404":
+          description: "Resource not found"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/errorModel"
+              examples:
+                response:
+                  value:
+                  - code: 1005
+                    message: "ApiRegistartionId doesn't exist."
+                  - code: 1029
+                    message: "Transfer doesn't exist."
+        default:
+          description: "unexpected error"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/errorModel"
+      requestBody:
+        $ref: "#/components/requestBodies/DeclineReason"
+  /money-requests/send:
+    parameters:
+    - $ref: "#/components/parameters/accessToken"
+    - $ref: "#/components/parameters/thirdPartyAccessId"
+    - $ref: "#/components/parameters/requestId"
+    - $ref: "#/components/parameters/deviceId"
+    - $ref: "#/components/parameters/applicationId"
+    - $ref: "#/components/parameters/apiRegistrationId"
+    get:
+      operationId: "getMoneyRequests"
+      description: "retrieves all money requests"
+      parameters:
+      - name: "fromDate"
+        in: "query"
+        required: false
+        description: "UTC datatime format is yyyy-MM-dd'T'HH:mm:ss.SSS'Z', e.g. '2016-09-11T16:12:12.000';\
+          \ this parameter is mandatory if sourceMoneyRequestId or referenceNumber\
+          \ is not given."
+        schema:
+          type: "string"
+          format: "dateTime"
+      - name: "toDate"
+        in: "query"
+        required: false
+        description: "UTC datatime format is yyyy-MM-dd'T'HH:mm:ss.SSS'Z', e.g. '2016-09-11T16:12:12.000';\
+          \ this parameter is mandatory if sourceMoneyRequestId or referenceNumber\
+          \ is not given."
+        schema:
+          type: "string"
+          format: "dateTime"
+      - name: "maxResponseItems"
+        in: "query"
+        required: false
+        description: "if offset is provided then maxResponse items is required; all\
+          \ ( OR maximum set by interac system ) items are returned if this field\
+          \ is absent"
+        schema:
+          type: "integer"
+      - name: "offset"
+        in: "query"
+        required: false
+        description: "offset is starting point of money-requests filter; if offset\
+          \ is not provided it would be defaulted  to zero;"
+        schema:
+          type: "integer"
+      - name: "sortBy"
+        in: "query"
+        required: false
+        description: "money-requests will be sorted based on sortBy column. "
+        schema:
+          type: "string"
+          enum:
+          - "creationDate"
+      - name: "orderBy"
+        in: "query"
+        required: false
+        description: "order by is required if sort by is specified."
+        schema:
+          type: "string"
+          enum:
+          - "desc"
+          - "asc"
+      - name: "sourceMoneyRequestId"
+        in: "query"
+        required: false
+        description: "id created at originating system"
+        schema:
+          type: "string"
+          minLength: 1
+          maxLength: 64
+      - name: "referenceNumber"
+        in: "query"
+        required: false
+        description: "unique money request reference Number  "
+        schema:
+          type: "string"
+          maxLength: 16
+      tags:
+      - "Send Money Request"
+      responses:
+        "200":
+          description: "Successful response"
+          content:
+            application/json:
+              schema:
+                type: "array"
+                items:
+                  $ref: "#/components/schemas/MoneyRequest"
+        "206":
+          description: "Partial content returned"
+          headers:
+            x-limit:
+              description: "range of money request"
+              schema:
+                type: "string"
+          content:
+            application/json:
+              schema:
+                type: "array"
+                items:
+                  $ref: "#/components/schemas/MoneyRequest"
+        "400":
+          description: "Validation Errors"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/errorModel"
+              examples:
+                response:
+                  value:
+                  - code: 1000
+                    message: "Invalid request."
+                  - code: 1011
+                    message: "Invalid apiRegistartionId."
+                  - code: 1030
+                    message: "Invalid date range."
+                  - code: 1031
+                    message: "Mutually exclusive options are specified."
+        "401":
+          description: "Unauthorized"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/errorModel"
+              examples:
+                response:
+                  value:
+                  - code: 1001
+                    message: "Invalid access"
+        "404":
+          description: "Resource not found"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/errorModel"
+              examples:
+                response:
+                  value:
+                  - code: 1005
+                    message: "ApiRegistartionId doesn't exist."
+                  - code: 1007
+                    message: "Contact doesn't exist."
+                  - code: 1025
+                    message: "Money request doesn't exist."
+                  - code: 1053
+                    message: "orderBy field is missing."
+        default:
+          description: "unexpected error"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/errorModel"
+    post:
+      description: "creates a money request for an e-Transfer customer"
+      operationId: "sendMoneyRequest"
+      tags:
+      - "Send Money Request"
+      responses:
+        "201":
+          description: "Successful response"
+          headers:
+            location:
+              description: "URL for accessing the newly created money request"
+              schema:
+                type: "string"
+          content:
+            application/json:
+              schema:
+                required:
+                - "referenceNumber"
+                properties:
+                  referenceNumber:
+                    description: "reference Number of the newly created money request"
+                    type: "string"
+                  paymentGatewayUrl:
+                    description: "the payment gateway url for money request fullfilment"
+                    type: "string"
+        "400":
+          description: "Validation Errors"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/errorModel"
+              examples:
+                response:
+                  value:
+                  - code: 1000
+                    message: "Invalid request."
+                  - code: 1011
+                    message: "Invalid apiRegistartionId."
+                  - code: 1012
+                    message: "Invalid contact hash, get last updated contact details."
+                  - code: 1020
+                    message: "Duplicate source system id."
+                  - code: 1021
+                    message: "Expiry Date is less than Creation Date."
+                  - code: 1023
+                    message: "Expiry Date exceeds threshold limit."
+                  - code: 1038
+                    message: "Outgoing money request amount threshold exceeded."
+                  - code: 1039
+                    message: "Maximum number of outgoing money requests threshold\
+                      \ exceeded."
+                  - code: 1040
+                    message: "Customer can't send money request to Recipient/Contact."
+                  - code: 1041
+                    message: "Invoice due date exceeds the money request expiry date."
+                  - code: 1049
+                    message: "Customer blocked to send money request notifications\
+                      \ to Recipient/Contact."
+                  - code: 1050
+                    message: "Editable fulfill amount is not supported for requesting\
+                      \ customer."
+                  - code: 1052
+                    message: "Notice cannot be sent. Notifications are supressed for\
+                      \ this Money Request."
+                  - code: 1053
+                    message: "Invalid Direct deposit registration handle."
+                  - code: 1054
+                    message: "1054 supressResponderNotifications has to be true when\
+                      \ RequestedFrom is not specified."
+        "401":
+          description: "Unauthorized"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/errorModel"
+              examples:
+                response:
+                  value:
+                  - code: 1001
+                    message: "Invalid access"
+        "403":
+          description: "Forbidden - The server understood the request, but is refusing\
+            \ to fulfill it."
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/errorModel"
+              examples:
+                response:
+                  value:
+                  - code: 1037
+                    message: "Feature is not supported for current user"
+        "404":
+          description: "Resource not found"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/errorModel"
+              examples:
+                response:
+                  value:
+                  - code: 1005
+                    message: "ApiRegistartionId doesn't exist."
+                  - code: 1006
+                    message: "Hard contact doesn't exist."
+                  - code: 1007
+                    message: "contact doesn't exist."
+        default:
+          description: "unexpected error"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/errorModel"
+      requestBody:
+        $ref: "#/components/requestBodies/MoneyRequest"
+  /money-requests/send/{referenceNumber}:
+    parameters:
+    - $ref: "#/components/parameters/accessToken"
+    - $ref: "#/components/parameters/thirdPartyAccessId"
+    - $ref: "#/components/parameters/requestId"
+    - $ref: "#/components/parameters/deviceId"
+    - $ref: "#/components/parameters/applicationId"
+    - $ref: "#/components/parameters/apiRegistrationId"
+    put:
+      description: "updates a money request for an e-Transfer customer"
+      operationId: "updateMoneyRequest"
+      parameters:
+      - name: "referenceNumber"
+        in: "path"
+        required: true
+        schema:
+          type: "string"
+          maxLength: 16
+      tags:
+      - "Send Money Request"
+      responses:
+        "204":
+          description: "Successful response"
+        "400":
+          description: "Validation Errors"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/errorModel"
+              examples:
+                response:
+                  value:
+                  - code: 1000
+                    message: "Invalid request."
+                  - code: 1011
+                    message: "Invalid apiRegistartionId."
+                  - code: 1012
+                    message: "Invalid contact hash, get last updated contact details."
+                  - code: 1020
+                    message: "Duplicate source system id."
+                  - code: 1021
+                    message: "Expiry Date is less than Creation Date."
+                  - code: 1023
+                    message: "Expiry Date exceeds threshold limit."
+                  - code: 1038
+                    message: "Outgoing money request amount threshold exceeded."
+                  - code: 1039
+                    message: "Maximum number of outgoing money requests threshold\
+                      \ exceeded."
+                  - code: 1040
+                    message: "Customer can't send money request to Recipient/Contact."
+                  - code: 1041
+                    message: "Invoice due date exceeds the money request expiry date."
+        "401":
+          description: "Unauthorized"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/errorModel"
+              examples:
+                response:
+                  value:
+                  - code: 1001
+                    message: "Invalid access"
+        "403":
+          description: "Forbidden - The server understood the request, but is refusing\
+            \ to fulfill it."
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/errorModel"
+              examples:
+                response:
+                  value:
+                  - code: 1037
+                    message: "Feature is not supported for current user"
+        "404":
+          description: "Resource not found"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/errorModel"
+              examples:
+                response:
+                  value:
+                  - code: 1005
+                    message: "ApiRegistartionId doesn't exist."
+                  - code: 1006
+                    message: "Hard contact doesn't exist."
+                  - code: 1007
+                    message: "contact doesn't exist."
+                  - code: 1025
+                    message: "Money request doesn't exist."
+        default:
+          description: "unexpected error"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/errorModel"
+      requestBody:
+        $ref: "#/components/requestBodies/MoneyRequest"
+  /money-requests/send/{referenceNumber}/notice:
+    parameters:
+    - $ref: "#/components/parameters/accessToken"
+    - $ref: "#/components/parameters/thirdPartyAccessId"
+    - $ref: "#/components/parameters/requestId"
+    - $ref: "#/components/parameters/deviceId"
+    - $ref: "#/components/parameters/applicationId"
+    - $ref: "#/components/parameters/apiRegistrationId"
+    patch:
+      description: "re-send a money request notice"
+      operationId: "sendMoneyRequestNotice"
+      parameters:
+      - name: "referenceNumber"
+        in: "path"
+        required: true
+        schema:
+          type: "string"
+          maxLength: 16
+      tags:
+      - "Send Money Request"
+      responses:
+        "204":
+          description: "Successful response"
+        "400":
+          description: "Validation Errors"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/errorModel"
+              examples:
+                response:
+                  value:
+                  - code: 1000
+                    message: "Invalid request."
+                  - code: 1011
+                    message: "Invalid apiRegistartionId."
+                  - code: 1033
+                    message: "Request cannot be processed due to current status."
+                  - code: 1042
+                    message: "Exceeded max number of notifications for the Money Request."
+        "401":
+          description: "Unauthorized"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/errorModel"
+              examples:
+                response:
+                  value:
+                  - code: 1001
+                    message: "Invalid access"
+        "404":
+          description: "Resource not found"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/errorModel"
+              examples:
+                response:
+                  value:
+                  - code: 1005
+                    message: "ApiRegistartionId doesn't exist."
+                  - code: 1025
+                    message: "Money request doesn't exist."
+        default:
+          description: "unexpected error"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/errorModel"
+  /money-requests/send/{referenceNumber}/cancel:
+    parameters:
+    - $ref: "#/components/parameters/accessToken"
+    - $ref: "#/components/parameters/thirdPartyAccessId"
+    - $ref: "#/components/parameters/requestId"
+    - $ref: "#/components/parameters/deviceId"
+    - $ref: "#/components/parameters/applicationId"
+    - $ref: "#/components/parameters/apiRegistrationId"
+    patch:
+      description: "cancels a money request"
+      operationId: "cancelMoneyRequest"
+      parameters:
+      - name: "referenceNumber"
+        in: "path"
+        required: true
+        schema:
+          type: "string"
+          maxLength: 16
+      tags:
+      - "Send Money Request"
+      responses:
+        "204":
+          description: "Successful response"
+        "400":
+          description: "Validation Errors"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/errorModel"
+              examples:
+                response:
+                  value:
+                  - code: 1000
+                    message: "Invalid request."
+                  - code: 1011
+                    message: "Invalid apiRegistartionId."
+                  - code: 1033
+                    message: "Request cannot be processed due to current status."
+        "401":
+          description: "Unauthorized"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/errorModel"
+              examples:
+                response:
+                  value:
+                  - code: 1001
+                    message: "Invalid access"
+        "404":
+          description: "Resource not found"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/errorModel"
+              examples:
+                response:
+                  value:
+                  - code: 1005
+                    message: "ApiRegistartionId doesn't exist."
+                  - code: 1025
+                    message: "Money request doesn't exist."
+        default:
+          description: "unexpected error"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/errorModel"
+      requestBody:
+        $ref: "#/components/requestBodies/CancellationReason"
+  /money-requests/receive/{referenceNumber}:
+    parameters:
+    - $ref: "#/components/parameters/accessToken"
+    - $ref: "#/components/parameters/thirdPartyAccessId"
+    - $ref: "#/components/parameters/requestId"
+    - $ref: "#/components/parameters/deviceId"
+    - $ref: "#/components/parameters/applicationId"
+    - $ref: "#/components/parameters/apiRegistrationId"
+    get:
+      description: "retrieves an incoming money request; details about requester are\
+        \ part of the response"
+      operationId: "getMoneyRequest"
+      parameters:
+      - name: "referenceNumber"
+        in: "path"
+        required: true
+        schema:
+          type: "string"
+      tags:
+      - "Fulfill Money Request"
+      responses:
+        "200":
+          description: "Successful response"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/IncomingMoneyRequest"
+        "400":
+          description: "Validation Errors"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/errorModel"
+              examples:
+                response:
+                  value:
+                  - code: 1000
+                    message: "Invalid request."
+                  - code: 1011
+                    message: "Invalid apiRegistartionId."
+                  - code: 1014
+                    message: "Sender and Recipient cannot be same customer."
+                  - code: 1033
+                    message: "Request cannot be processed due to current status."
+        "401":
+          description: "Unauthorized"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/errorModel"
+              examples:
+                response:
+                  value:
+                  - code: 1001
+                    message: "Invalid access"
+        "404":
+          description: "Resource not found"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/errorModel"
+              examples:
+                response:
+                  value:
+                  - code: 1005
+                    message: "ApiRegistartionId doesn't exist."
+                  - code: 1007
+                    message: "Contact doesn't exist."
+                  - code: 1025
+                    message: "Money request doesn't exist."
+        default:
+          description: "unexpected error"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/errorModel"
+  /money-requests/receive/{referenceNumber}/decline:
+    parameters:
+    - $ref: "#/components/parameters/accessToken"
+    - $ref: "#/components/parameters/thirdPartyAccessId"
+    - $ref: "#/components/parameters/requestId"
+    - $ref: "#/components/parameters/deviceId"
+    - $ref: "#/components/parameters/applicationId"
+    - $ref: "#/components/parameters/apiRegistrationId"
+    patch:
+      description: "decline a money request"
+      operationId: "declineMoneyRequest"
+      parameters:
+      - name: "referenceNumber"
+        in: "path"
+        required: true
+        schema:
+          type: "string"
+          maxLength: 16
+      tags:
+      - "Fulfill Money Request"
+      responses:
+        "204":
+          description: "Successful response"
+        "400":
+          description: "Validation Errors"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/errorModel"
+              examples:
+                response:
+                  value:
+                  - code: 1000
+                    message: "Invalid request."
+                  - code: 1011
+                    message: "Invalid apiRegistartionId."
+                  - code: 1014
+                    message: "Sender and Recipient cannot be same customer."
+                  - code: 1033
+                    message: "Request cannot be processed due to current status."
+        "401":
+          description: "Unauthorized"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/errorModel"
+              examples:
+                response:
+                  value:
+                  - code: 1001
+                    message: "Invalid access"
+        "404":
+          description: "Resource not found"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/errorModel"
+              examples:
+                response:
+                  value:
+                  - code: 1005
+                    message: "ApiRegistartionId doesn't exist."
+                  - code: 1007
+                    message: "Contact doesn't exist."
+                  - code: 1025
+                    message: "Money request doesn't exist."
+        default:
+          description: "unexpected error"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/errorModel"
+      requestBody:
+        $ref: "#/components/requestBodies/DeclineReason"
+components:
+  parameters:
+    thirdPartyAccessId:
+      name: "thirdPartyAccessId"
+      in: "header"
+      description: "unique id that identifies a third party partner"
+      required: true
+      schema:
+        type: "string"
+        maximum: 50
+    requestId:
+      name: "requestId"
+      in: "header"
+      description: "partner generated unique id for each request used for message\
+        \ tracking purposes"
+      required: true
+      schema:
+        type: "string"
+        minimum: 1
+        maximum: 64
+    deviceId:
+      name: "deviceId"
+      in: "header"
+      description: "user device unique identifier"
+      required: true
+      schema:
+        type: "string"
+        minimum: 1
+        maximum: 64
+    applicationId:
+      name: "applicationId"
+      in: "header"
+      description: "user application unique identifier"
+      required: false
+      schema:
+        type: "string"
+        minimum: 1
+        maximum: 64
+    accessToken:
+      name: "accessToken"
+      in: "header"
+      required: true
+      description: "OAuth2 access token, the format is 'Bearer AccessToken'.\n"
+      schema:
+        type: "string"
+        maximum: 64
+    apiRegistrationId:
+      name: "apiRegistrationId"
+      in: "header"
+      description: "unique identifier for the user api registration"
+      required: true
+      schema:
+        type: "string"
+        maximum: 50
+    participantAccessToken:
+      name: "participantAccessToken"
+      in: "header"
+      description: "access token provided by participant."
+      required: false
+      schema:
+        type: "string"
+        maximum: 64
+  requestBodies:
+    Contact:
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Contact"
+      required: true
+    DeclineReason:
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/DeclineReason"
+    MoneyRequest:
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/MoneyRequest"
+      required: true
+    CancellationReason:
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/CancellationReason"
+  securitySchemes:
+    etransfer_auth:
+      type: "oauth2"
+      description: "This API uses OAuth 2 with the client credential grant flow."
+      flows:
+        clientCredentials:
+          tokenUrl: "https://localhost:6882/token"
+          scopes:
+            etransfer.w: "write permission"
+            etransfer.r: "read permission"
+  schemas:
+    AccessToken:
+      type: "object"
+      required:
+      - "accessToken"
+      - "expiresIn"
+      properties:
+        accessToken:
+          type: "string"
+        tokenType:
+          type: "string"
+          description: "example value is 'bearer'"
+        expiresIn:
+          type: "integer"
+          description: "how many seconds the token will expire"
+        scope:
+          type: "string"
+          description: "example value is 'read trust write'"
+    UserRegistration:
+      type: "object"
+      required:
+      - "thirdPartyUserId"
+      - "allowedFeatures"
+      properties:
+        apiRegistrationId:
+          type: "string"
+          maxLength: 50
+          description: "unique identifier for the user api registration; not required\
+            \ in POST request"
+        participantId:
+          type: "string"
+          minLength: 8
+          maxLength: 8
+          description: "participant id in e-Transfer system; required if api registration\
+            \ is created through the public api and directDepositRegistration is not\
+            \ specified."
+        indirectConnectorId:
+          type: "string"
+          minLength: 9
+          maxLength: 9
+          description: "indirect connector id in e-Transfer system"
+        participantUserId:
+          type: "string"
+          minLength: 1
+          maxLength: 32
+          description: "participant defined user id in e-Transfer system; required\
+            \ if api registration is created through the public api and directDepositRegistration\
+            \ is not specified."
+        participantApiRegistrationId:
+          type: "string"
+          minLength: 1
+          maxLength: 32
+          description: "participant defined identifier for this Api registration;\
+            \ required if api registration is created through the public api"
+        fiAccountId:
+          type: "string"
+          minLength: 1
+          maxLength: 50
+          description: "unique identifier set by financial institution corresponding\
+            \ to the user's bank account; required if api registration is created\
+            \ through the public api and directDepositRegistration is not specified."
+        registrationStatus:
+          type: "string"
+          enum:
+          - "pending"
+          - "active"
+          - "inactive"
+          - "failed"
+          - "in-review"
+          description: "status of the user registration request 'pending','active','inactive','failed','in-review'"
+        allowedFeatures:
+          type: "array"
+          items:
+            type: "string"
+            enum:
+            - "contact_mgmnt"
+            - "money_request_mgmt"
+            - "transfer_mgmt"
+            - "send_money_requests"
+            - "fulfill_money_requests"
+            - "send_transfers"
+            - "receive_transfers"
+            - "user_registration_mgmnt"
+            - "contact_mgmnt_ext_api"
+            - "money_request_mgmt_ext_api"
+            - "transfer_mgmt_ext_api"
+            description: "functionality allowed to be used through this API; 'contact_mgmnt',\
+              \ 'send_money_requests', 'fulfill_money_requests', 'send_transfers',\
+              \ 'receive_transfers', 'user_registration_mgmnt' The below feature's\
+              \ are only for external app's, which doesn't need to be synchronized\
+              \ with online banking transfers, contacts and money requests  'contact_mgmnt_ext_api',\
+              \ 'money_request_mgmt_ext_api,'transfer_mgmt_ext_api'"
+        thirdPartyUserId:
+          type: "string"
+          minLength: 1
+          maxLength: 50
+          description: "unique third party partner defined user id in e-Transfer system"
+        directDepositRegistration:
+          $ref: "#/components/schemas/DirectDepositRegistration"
+        customerDetails:
+          $ref: "#/components/schemas/CustomerDetails"
+        name:
+          type: "string"
+          minLength: 1
+          maxLength: 64
+        logoUrl:
+          type: "string"
+          minLength: 1
+          maxLength: 200
+        websiteUrl:
+          type: "string"
+          minLength: 1
+          maxLength: 64
+    UserRegistrationUpdate:
+      type: "object"
+      properties:
+        allowedFeatures:
+          type: "array"
+          items:
+            type: "string"
+            enum:
+            - "contact_mgmnt"
+            - "money_request_mgmt"
+            - "transfer_mgmt"
+            - "send_money_requests"
+            - "fulfill_money_requests"
+            - "send_transfers"
+            - "receive_transfers"
+            - "user_registration_mgmnt"
+            - "contact_mgmnt_ext_api"
+            - "money_request_mgmt_ext_api"
+            - "transfer_mgmt_ext_api"
+          description: "functionality allowed to be used through this API; 'contact_mgmnt',\n\
+            \ 'send_money_requests', 'fulfill_money_requests', 'send_transfers',\n\
+            \ 'receive_transfers', 'user_registration_mgmnt'\n The below feature's\
+            \ are only for external app's, which doesn't need to be synchronized with\
+            \ online banking transfers, contacts and money requests \n 'contact_mgmnt_ext_api',\
+            \ 'money_request_mgmt_ext_api,'transfer_mgmt_ext_api'"
+        fiAccountId:
+          type: "string"
+          minLength: 1
+          maxLength: 50
+          description: "updated fi account id; unique identifier set by financial\
+            \ institution corresponding to the user's bank account"
+        directDepositRegistration:
+          $ref: "#/components/schemas/DirectDepositRegistration"
+        name:
+          type: "string"
+          minLength: 1
+          maxLength: 64
+        logoUrl:
+          type: "string"
+          minLength: 1
+          maxLength: 200
+        websiteUrl:
+          type: "string"
+          minLength: 1
+          maxLength: 64
+    CustomerDetails:
+      description: "auto deposit registration details associated with a notification\
+        \ handle or hard contact customer details."
+      type: "object"
+      required:
+      - "customerType"
+      - "registrationName"
+      - "legalName"
+      properties:
+        customerType:
+          type: "string"
+          enum:
+          - "retail"
+          - "small_business"
+          - "corporate"
+        registrationName:
+          type: "string"
+          minLength: 1
+          maxLength: 80
+          description: "name used by the customer to register in e-Transfer system"
+        legalName:
+          type: "object"
+          properties:
+            retailName:
+              type: "object"
+              required:
+              - "firstName"
+              - "lastName"
+              properties:
+                firstName:
+                  type: "string"
+                  minLength: 1
+                  maxLength: 100
+                  description: "customer's first name"
+                middleName:
+                  type: "string"
+                  minLength: 1
+                  maxLength: 100
+                  description: "customer's middle name"
+                lastName:
+                  type: "string"
+                  minLength: 1
+                  maxLength: 100
+                  description: "customer's last name"
+            businessName:
+              type: "object"
+              required:
+              - "companyName"
+              properties:
+                companyName:
+                  type: "string"
+                  minLength: 1
+                  maxLength: 100
+                  description: "customer's corporate name"
+                tradeName:
+                  type: "string"
+                  minLength: 1
+                  maxLength: 100
+                  description: "customer's trade name"
+    DirectDepositRegistration:
+      description: "auto deposit registration details associated with a notification\
+        \ handle"
+      type: "object"
+      required:
+      - "directDepositHandle"
+      properties:
+        directDepositRegistrationId:
+          type: "string"
+          minLength: 1
+          maxLength: 16
+          description: "unique identifier of the direct depost registration in e-Transfer\
+            \ system"
+        directDepositHandle:
+          type: "string"
+          minLength: 1
+          maxLength: 240
+          description: "email address, phone number or unique user identifier"
+        directDepositHandleType:
+          type: "string"
+          enum:
+          - "email"
+          - "uuid"
+          - "sms"
+    NotificationPreference:
+      type: "object"
+      required:
+      - "handle"
+      - "handleType"
+      - "active"
+      properties:
+        handle:
+          type: "string"
+          minLength: 6
+          maxLength: 64
+          description: "Email address (format a@b.ca) or mobile phone number ( format\
+            \ 123-222-7777 )"
+        handleType:
+          type: "string"
+          enum:
+          - "email"
+          - "sms"
+        active:
+          type: "boolean"
+          description: "specifies if notifications will not be sent"
+    Contact:
+      type: "object"
+      required:
+      - "contactName"
+      - "language"
+      properties:
+        contactId:
+          type: "string"
+          minLength: 16
+          maxLength: 16
+          description: "unique identifier for the contact; not required in POST request"
+        contactName:
+          type: "string"
+          minLength: 1
+          maxLength: 80
+          description: "unique contact name to be provided for each contacts."
+        contactHash:
+          type: "string"
+          description: "unique hash value to identify version of contact, not required\
+            \ in POST request"
+        language:
+          type: "string"
+          minLength: 2
+          maxLength: 2
+          enum:
+          - "en"
+          - "fr"
+          description: "language used to notify this contact"
+        notificationPreferences:
+          type: "array"
+          description: "notification preferences for the contact"
+          items:
+            $ref: "#/components/schemas/NotificationPreference"
+        hardContactUser:
+          type: "object"
+          required:
+          - "thirdPartyUserId"
+          properties:
+            thirdPartyUserId:
+              type: "string"
+              minLength: 1
+              maxLength: 50
+              description: "unique third party partner defined user id in e-Transfer\
+                \ system"
+            hardContactStatus:
+              type: "string"
+              enum:
+              - "active"
+              - "not active"
+              description: "status of hard contact, if customer is disabled or de\
+                \ reg"
+        directDepositRegistration:
+          $ref: "#/components/schemas/DirectDepositRegistration"
+          description: "direct deposit registration associated with a contact notification\
+            \ handle"
+        customerDetails:
+          $ref: "#/components/schemas/CustomerDetails"
+          description: "customer details associated the hard contract or the auto\
+            \ deposit registration associated with one of the contact notification\
+            \ handles"
+        onUs:
+          type: "boolean"
+          description: "the registered user and the coustomer associated with the\
+            \ direct deposit registration have the same financial institution"
+    TransferAuthentication:
+      type: "object"
+      required:
+      - "securityQuestion"
+      - "securityAnswer"
+      properties:
+        securityQuestion:
+          type: "string"
+          minLength: 1
+          maxLength: 40
+          description: "the security question"
+        securityAnswer:
+          type: "string"
+          description: "answer to the security question (as provided by the customer)\
+            \ with leading and trailing whitespace trimmed, uppercased, postfixed\
+            \ with hashSalt if present, hashed using the alghoritm identified by hashType\
+            \ and then Base64 encoded. ISO-8859-1 encoding to be used when the hash\
+            \ is generated, values not returned in GET requests for security reasons."
+        hashType:
+          type: "string"
+          enum:
+          - "MD5"
+          - "SHA2"
+          description: "alghorithm used to hash the security answer; it has to be\
+            \ one of values supported by the system"
+        hashSalt:
+          type: "string"
+          minLength: 1
+          maxLength: 44
+          description: "required if hashType is not MD5, values not returned in GET\
+            \ requests for security reasons."
+    CancellationReason:
+      type: "object"
+      required:
+      - "cancellationReason"
+      properties:
+        cancellationReason:
+          type: "string"
+          minLength: 1
+          maxLength: 400
+          description: "cancellation reason"
+    SecurityAnswer:
+      type: "object"
+      required:
+      - "securityAnswer"
+      properties:
+        securityAnswer:
+          type: "string"
+          description: "answer to the security question (as provided by the customer)\
+            \ with leading and trailing whitespace trimmed, uppercased, postfixed\
+            \ with hashSalt if present, hashed using the alghoritm identified by hashType\
+            \ and then Base64 encoded. ISO-8859-1 encoding to be used when the hash\
+            \ is generated"
+    DeclineReason:
+      type: "object"
+      required:
+      - "declineReason"
+      properties:
+        declineReason:
+          type: "string"
+          minLength: 1
+          maxLength: 400
+          description: "decline reason"
+    RecipientMemo:
+      type: "object"
+      minLength: 1
+      maxLength: 400
+      required:
+      - "recipientMemo"
+      properties:
+        recipientMemo:
+          type: "string"
+          description: "recipient memo"
+    Invoice:
+      type: "object"
+      properties:
+        invoiceNumber:
+          type: "string"
+          minLength: 1
+          maxLength: 120
+          description: "number of the invoice to be paid"
+        dueDate:
+          type: "string"
+          format: "dateTime"
+          description: "UTC date  of  the invoice is to be paid by; format is yyyy-MM-dd'T'HH:mm:ss.SSS'Z',\
+            \ e.g. '2016-09-11T16:12:12.000'"
+    MoneyRequest:
+      type: "object"
+      required:
+      - "sourceMoneyRequestId"
+      - "requestedFrom"
+      - "amount"
+      - "currency"
+      - "editableFulfillAmount"
+      - "expiryDate"
+      - "supressResponderNotifications"
+      properties:
+        referenceNumber:
+          type: "string"
+          maxLength: 16
+          description: "unique identifier for the money request; this field should\
+            \ not be specified in the POST request"
+        sourceMoneyRequestId:
+          type: "string"
+          minLength: 1
+          maxLength: 64
+          description: "unique identifier of the money request in the originating\
+            \ system"
+        requestedFrom:
+          type: "object"
+          description: "Responder details of the money request, required for get money\
+            \ request."
+          properties:
+            contactId:
+              type: "string"
+              description: "Unique identifier for the contact; required for permanent\
+                \ contact."
+            contactHash:
+              type: "string"
+              description: "unique hash value to identify version of contact;required\
+                \ for permanent contact."
+            contactName:
+              type: "string"
+              description: "contact name, required for onetime contact."
+            language:
+              type: "string"
+              enum:
+              - "en"
+              - "fr"
+              description: "language used to notify this contact, required for onetime\
+                \ contact."
+            notificationPreferences:
+              type: "array"
+              description: "notification preferences for the contact, required for\
+                \ onetime contact."
+              items:
+                $ref: "#/components/schemas/NotificationPreference"
+        amount:
+          type: "number"
+          format: "double"
+          description: "the requested amount"
+        currency:
+          type: "string"
+          description: "the currency of the requested amount; only CAD is supported\
+            \ for now"
+        editableFulfillAmount:
+          type: "boolean"
+          description: "flag indicating if the transfer amount can be different from\
+            \ the requested amount"
+        requesterMessage:
+          type: "string"
+          minLength: 1
+          maxLength: 400
+          description: "message from the requester"
+        invoice:
+          $ref: "#/components/schemas/Invoice"
+        expiryDate:
+          type: "string"
+          format: "datetime"
+          description: "UTC datatime this money request is valid until; format is\
+            \ yyyy-MM-dd'T'HH:mm:ss.SSS'Z', e.g. '2016-09-11T16:12:12.000'"
+        supressResponderNotifications:
+          type: "boolean"
+          description: "if flag is on, Interac will not send notifications to the\
+            \ intended responder; the requester is expected to handle the notification\
+            \ part themselves. If requestedFrom is not specified, supressResponderNotifications\
+            \ has to be true."
+        returnURL:
+          type: "string"
+          description: "return URL to redirect the Responder after the Money Request\
+            \ fulfillment"
+        creationDate:
+          type: "string"
+          format: "datetime"
+          description: "UTC datatime of creation for this request; this field should\
+            \ not be specified in POST or PUT requests; format is yyyy-MM-dd'T'HH:mm:ss.SSS'Z',\
+            \ e.g. '2016-09-11T16:12:12.000'"
+        status:
+          type: "integer"
+          description: "Does not need to be provided at request creation time; this\
+            \ field should not be specified in POST or PUT requests | - REQUEST_INITIATED(1)\
+            \ - AVAILABLE_TO_BE_FULFILLED(2) - REQUEST_FULFILLED(3) - DECLINED(4)\
+            \ - CANCELLED(5) - EXPIRED(6) - DEPOSIT_FAILED(7) - REQUEST_COMPLETED(8)"
+        fulfillAmount:
+          type: "number"
+          format: "double"
+          description: "the fulfilled amount; to not be specified in POST or PUT requests;\
+            \ present if status is completed"
+        responderMessage:
+          type: "string"
+          description: "message from the responder; this field should not be specified\
+            \ in POST or PUT requests"
+        notificationStatus:
+          type: "integer"
+          description: "indicates the status of the notifications sent to the recipient;\
+            \ this field should not be specified in POST or PUT requests | SENT(0)\
+            \ PENDING(1) PENDING_SEND_FAILURE(2) DELIVERY_FAILURE(3)"
+    IncomingMoneyRequest:
+      type: "object"
+      required:
+      - "moneyRequest"
+      - "requesterDetails"
+      properties:
+        moneyRequest:
+          $ref: "#/components/schemas/MoneyRequest"
+          description: "base money request data"
+        requesterDetails:
+          $ref: "#/components/schemas/CustomerDetails"
+          description: "customer details associated with the requester of the money\
+            \ request"
+        requesterNotifications:
+          type: "array"
+          description: "notifications associated with the requester"
+          items:
+            type: "object"
+            required:
+            - "handle"
+            - "handleType"
+            properties:
+              handle:
+                type: "string"
+                minLength: 6
+                maxLength: 64
+                description: "Email address or mobile phone number"
+              handleType:
+                type: "string"
+                enum:
+                - "email"
+                - "sms"
+    Transfer:
+      type: "object"
+      required:
+      - "transferType"
+      - "sourceTransferId"
+      - "amount"
+      - "currency"
+      - "expiryDate"
+      - "supplementaryInfo"
+      properties:
+        referenceNumber:
+          type: "string"
+          maxLength: 14
+          description: "unique identifier for the transfer; this field should not\
+            \ be specified in the POST request"
+        transferType:
+          type: "string"
+          enum:
+          - "REGULAR_TRANSFER"
+          - "MONEY_REQUEST_FULFILLMENT"
+          - "DIRECT_DEPOSIT"
+        sourceTransferId:
+          type: "string"
+          minLength: 1
+          maxLength: 64
+          description: "unique identifier of the transfer in the originating system"
+        sentTo:
+          type: "object"
+          description: "Receipient details of the transfers, required for outgoing\
+            \ or get transfers"
+          properties:
+            contactId:
+              type: "string"
+              description: "Unique identifier for the contact; required for permanent\
+                \ contact transfers."
+            contactHash:
+              type: "string"
+              description: "unique hash value to identify version of contact;required\
+                \ for permanent contact transfers."
+            contactName:
+              type: "string"
+              description: "contact name, required for onetime contact."
+            language:
+              type: "string"
+              enum:
+              - "en"
+              - "fr"
+              description: "language used to notify this contact, required for onetime\
+                \ contact."
+            notificationPreferences:
+              type: "array"
+              description: "notification preferences for the contact, required for\
+                \ onetime contact."
+              items:
+                $ref: "#/components/schemas/NotificationPreference"
+        amount:
+          type: "number"
+          format: "double"
+          description: "the sent amount"
+        currency:
+          type: "string"
+          description: "the currency of the sent amount; only CAD is supported for\
+            \ now"
+        transferAuthentication:
+          $ref: "#/components/schemas/TransferAuthentication"
+          description: "transfer authentication required for regular transfers"
+        senderMessage:
+          type: "string"
+          minLength: 1
+          maxLength: 400
+          description: "message from the sender"
+        requestReferenceNumber:
+          type: "string"
+          maxLength: 16
+          description: "reference number of the money request to be fufilled; required\
+            \ for money request fulfillment"
+        expiryDate:
+          type: "string"
+          format: "datetime"
+          description: "UTC datatime this transfer is valid until; format is yyyy-MM-dd'T'HH:mm:ss.SSS'Z',\
+            \ e.g. '2016-09-11T16:12:12.000'"
+        supplementaryInfo:
+          type: "object"
+          description: "supplementaryInfo is required for POST request, as we have\
+            \ to capture where the request came from."
+          required:
+          - "ipAddress"
+          properties:
+            ipAddress:
+              type: "string"
+              description: "IP address used by the user"
+            deviceFingerprint:
+              type: "string"
+              description: "device fingerprint"
+        creationDate:
+          type: "string"
+          format: "datetime"
+          description: "UTC datatime of creation for this transfer; this field should\
+            \ not be specified in POST or PUT requests; format is yyyy-MM-dd'T'HH:mm:ss.SSS'Z',\
+            \ e.g. '2016-09-11T16:12:12.000'"
+        senderRegistrationName:
+          type: "string"
+          minLength: 1
+          maxLength: 80
+          description: "name used by the sender to register in e-Transfer system;\
+            \ this field should not be specified in POST, PUT  or PATCH requests"
+        receivedDate:
+          type: "string"
+          format: "datetime"
+          description: "UTC datatime when this transfer was completed/received; this\
+            \ field should not be specified in POST or PUT requests; format is yyyy-MM-dd'T'HH:mm:ss.SSS'Z',\
+            \ e.g. '2016-09-11T16:12:12.000'"
+        status:
+          type: "integer"
+          description: "Does not need to be provided at request creation time; this\
+            \ field should not be specified in POST or PUT requests | - TRANSFER_CREATION_INITIATED(21)\
+            \ - TRANSFER_CREATION_IN_PROCESS(22) - TRANSFER_CREATION_FAILED(23) -\
+            \ TRANSFER_CREATED(1) - TRANSFER_AVAILABLE(3) - AUTHENTICATION_FAILURE(5)\
+            \ - AUTHENTICATION_SUCCESSFUL(6) - DECLINED(7) - CANCELLED(8) - EXPIRED(9)\
+            \ - DIRECT_DEPOSIT_PENDING(17) - DIRECT_DEPOSIT_FAILED(18) - COMPLETED(10)"
+        recipientMessage:
+          type: "string"
+          minLength: 1
+          maxLength: 400
+          description: "message from the recipient; this field should not be specified\
+            \ in POST or PUT requests"
+        transactionType:
+          type: "string"
+          enum:
+          - "incoming"
+          - "outgoing"
+          description: "type of the transactions sent or received."
+        notificationStatus:
+          type: "integer"
+          description: "indicates the status of the notifications sent to the recipient;\
+            \ this field should not be specified in POST or PUT requests | SENT(0)\
+            \ PENDING(1) PENDING_SEND_FAILURE(2) DELIVERY_FAILURE(3)"
+    IncomingTransfer:
+      type: "object"
+      required:
+      - "referenceNumber"
+      - "transferType"
+      - "amount"
+      - "currency"
+      - "expiryDate"
+      - "senderRegistrationName"
+      - "status"
+      - "recipientLanguage"
+      - "authenticationRequired"
+      properties:
+        referenceNumber:
+          type: "string"
+          maxLength: 16
+          description: "unique identifier for the transfer"
+        transferType:
+          type: "string"
+          enum:
+          - "REGULAR_TRANSFER"
+          - "MONEY_REQUEST_FULFILLMENT"
+          - "DIRECT_DEPOSIT"
+        amount:
+          type: "number"
+          format: "double"
+          description: "the sent amount"
+        currency:
+          type: "string"
+          description: "the currency of the sent amount; only CAD is supported for\
+            \ now"
+        senderMessage:
+          type: "string"
+          minLength: 1
+          maxLength: 400
+          description: "message from the sender"
+        expiryDate:
+          type: "string"
+          format: "datetime"
+          description: "UTC datatime this transfer is valid until; format is yyyy-MM-dd'T'HH:mm:ss.SSS'Z',\
+            \ e.g. '2016-09-11T16:12:12.000'"
+        senderRegistrationName:
+          type: "string"
+          minLength: 1
+          maxLength: 80
+          description: "name used by the sender to register in e-Transfer system;\
+            \ this field should not be specified in POST or PUT requests"
+        recipientLanguage:
+          type: "string"
+          enum:
+          - "en"
+          - "fr"
+          description: "recipient's preferred language as defined by the sender"
+        status:
+          type: "integer"
+          description: "Incoming Transfer statuses | TRANSFER_AVAILABLE(3) AUTHENTICATION_FAILURE(5)\
+            \ AUTHENTICATION_SUCCESSFUL(6) DECLINED(7) CANCELLED(8) EXPIRED(9) DIRECT_DEPOSIT_PENDING(17)\
+            \ DIRECT_DEPOSIT_FAILED(18) COMPLETED(10)"
+        authenticationRequired:
+          type: "boolean"
+          description: "true if recipient authentication is required"
+        securityQuestion:
+          type: "string"
+          minLength: 1
+          maxLength: 40
+          description: "the security question"
+        hashType:
+          type: "string"
+          enum:
+          - "MD5"
+          - "SHA2"
+          description: "alghorithm used to hash the security answer by the sending\
+            \ party"
+        hashSalt:
+          type: "string"
+          maxLength: 44
+          description: "salt used to hash the security answer by the sending party"
+    errorModel:
+      type: "object"
+      required:
+      - "code"
+      - "message"
+      properties:
+        code:
+          type: "integer"
+          description: "Error list for all the API's, please refer example tag for\
+            \ api specific error code.\n1000 Invalid request.\n1001 Invalid access.\n\
+            1002 Allowed feature list not supported for user.\n1003 Customer doesn't\
+            \ exist - ParticipantUserId doesn't exist.\n1004 Duplicate User registration.\n\
+            1005 ApiRegistartionId doesn't exist.\n1006 Hard contact doesn't exist.\n\
+            1007 Contact doesn't exist.\n1008 Duplicate ThirdPartyUserId.\n1009 Invalid\
+            \ ParticipantId.\n1010 Invalid IndirectConnectorId of participant.\n1011\
+            \ Invalid apiRegistartionId.\n1012 Retrive last updated contact details,\
+            \ contact hash invalid.\n1013 Contact has notification handle registered\
+            \ for direct deposit, regular transfer cannot be sent.\n1014 Sender and\
+            \ Recipient cannot be same customer.\n1015 Sender is disabled.\n1016 Transfer\
+            \ amount exceeds the individual outgoing transfer threshold.\n1017 Total\
+            \ cumulative transfers exceeds the daily outgoing transfer amount threshold.\n\
+            1018 Total cumulative transfers exceeds the first rolling limit outgoing\
+            \ transfer amount threshold.\n1019 Total cumulative transfers exceeds\
+            \ the second rolling limit outgoing transfer amount threshold.\n1020 Duplicate\
+            \ source system id.\n1021 Expiry Date is less than Creation Date.\n1022\
+            \ Contact is not registered for direct deposit, direct deposit cannot\
+            \ be sent.\n1023 Expiry Date exceeds threshold limit.\n1024 Invalid Transfer\
+            \ authentication for the Transfer type.\n1025 Money request doesn't exist.\n\
+            1026 Direct deposit registration doesn't exist.\n1027 Hash algorithm not\
+            \ supported by the system.\n1028 Fullfill amount should be same as requested\
+            \ amount.\n1029 Transfer doesn't exist.\n1030 Invalid date range.\n1031\
+            \ Mutually exclusive options are specified.\n1032 Hash Salt is required\
+            \ if hashtype is not MD5.\n1033 Request cannot be processed due to current\
+            \ status.\n1034 Authentication failed, try again later.\n1035 Authentication\
+            \ failed, can't try later.\n1036 Transfer was authenticated by a different\
+            \ customer.\n1037 Feature is not supported for current user.\n1038 Outgoing\
+            \ money request amount threshold exceeded.\n1039 Maximum number of outgoing\
+            \ money requests threshold exceeded.\n1040 Customer can't send money request\
+            \ to Recipient/Contact.\n1041 Invoice due date exceeds the money request\
+            \ expiry date.\n1042 Exceeded max number of notifications for the Money\
+            \ Request.\n1043 Duplicate contact name.\n1044 Contact can't be deleted\
+            \ if there are in flight transfers.\n1045 Transfer can't be created, due\
+            \ to intrruption in previous transfer.\n1046 Currency code or product\
+            \ type is not supported.\n1047 Invalid Transfer type.\n1048 Hard contact\
+            \ already exist for sender.\n1049 Customer blocked to send money request\
+            \ notifications to Recipient/Contact\n1050 Editable fulfill amount is\
+            \ not supported for requesting customer.\n1051 Recipient  / Responder\
+            \ is disabled.\n1052 Notice cannot be sent. Notifications are supressed\
+            \ for this Money Request.\n1053 Invalid Direct deposit registration handle.\n\
+            1054 supressResponderNotifications has to be true when RequestedFrom is\
+            \ not specified."
+          format: "int32"
+        message:
+          type: "string"
