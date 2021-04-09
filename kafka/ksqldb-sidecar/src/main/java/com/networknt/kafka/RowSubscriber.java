@@ -52,7 +52,7 @@ public class RowSubscriber implements Subscriber<Row> {
         final CountDownLatch latch = new CountDownLatch(1);
         final AtomicReference<ClientResponse> reference = new AtomicReference<>();
         try {
-            ClientRequest request = new ClientRequest().setMethod(Methods.POST).setPath("/v1/ksqldb");
+            ClientRequest request = new ClientRequest().setMethod(Methods.POST).setPath("/kafka/ksqldb");
             request.getRequestHeaders().put(Headers.CONTENT_TYPE, "application/json");
             request.getRequestHeaders().put(Headers.TRANSFER_ENCODING, "chunked");
             connection.sendRequest(request, client.createClientCallback(reference, latch, row.values().toString()));

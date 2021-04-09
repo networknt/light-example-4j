@@ -8,9 +8,7 @@ import io.undertow.util.HttpString;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
 For more information on how to write business handlers, please check the link below.
@@ -24,7 +22,7 @@ public class KsqldbPostHandler implements LightHttpHandler {
         exchange.getResponseHeaders().add(new HttpString("Content-Type"), "application/json");
         List<String> body = (List<String>)exchange.getAttachment(BodyHandler.REQUEST_BODY);
         logger.info("received call from the sidecar: " + JsonMapper.toJson(body));
-        exchange.setStatusCode(201);
+        exchange.setStatusCode(204);
         exchange.endExchange();
     }
 }

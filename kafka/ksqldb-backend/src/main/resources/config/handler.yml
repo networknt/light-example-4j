@@ -82,7 +82,7 @@ chains:
     - validator
 
 paths:
-  - path: '/v1/ksqldb'
+  - path: '/kafka/ksqldb'
     method: 'POST'
     exec:
       - default
