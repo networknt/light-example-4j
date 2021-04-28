@@ -23,9 +23,11 @@ public class KafkaRecordsPostHandler implements LightHttpHandler {
             logger.debug("key = " + record.get("key"));
             logger.debug("value = " + record.get("value"));
             Map<String, String> headerMap = (Map<String, String>)record.get("headers");
-            headerMap.entrySet().forEach(entry -> {
-                logger.debug("header key = " + entry.getKey() + " header value = " + entry.getValue());
-            });
+            if(headerMap != null && headerMap.size() > 0) {
+                headerMap.entrySet().forEach(entry -> {
+                    logger.debug("header key = " + entry.getKey() + " header value = " + entry.getValue());
+                });
+            }
         }
         exchange.setStatusCode(201);
         exchange.endExchange();
