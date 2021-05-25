@@ -26,15 +26,15 @@ public class KafkaRecordsPostHandler implements LightHttpHandler {
         List<Map<String, Object>> records = (List<Map<String, Object>>)exchange.getAttachment(BodyHandler.REQUEST_BODY);
         for(int i = 0; i < records.size(); i++) {
             ConsumerRecord record = Config.getInstance().getMapper().convertValue(records.get(i), ConsumerRecord.class);
-            logger.debug("topic = " + record.getTopic());
-            logger.debug("partition = " + record.getPartition());
-            logger.debug("offset = " + record.getOffset());
-            logger.debug("key = " + record.getKey());
-            logger.debug("value = " + record.getValue());
+            logger.info("topic = " + record.getTopic());
+            logger.info("partition = " + record.getPartition());
+            logger.info("offset = " + record.getOffset());
+            logger.info("key = " + record.getKey());
+            logger.info("value = " + record.getValue());
             Map<String, String> headerMap = record.getHeaders();
             if(headerMap != null && headerMap.size() > 0) {
                 headerMap.entrySet().forEach(entry -> {
-                    logger.debug("header key = " + entry.getKey() + " header value = " + entry.getValue());
+                    logger.info("header key = " + entry.getKey() + " header value = " + entry.getValue());
                 });
             }
 
