@@ -2,6 +2,7 @@ package com.networknt.petstore.handler;
 
 import com.networknt.body.BodyHandler;
 import com.networknt.config.Config;
+import com.networknt.petstore.service.PetsGetService;
 import com.networknt.handler.LightHttpHandler;
 import com.networknt.http.HttpMethod;
 import com.networknt.http.RequestEntity;
