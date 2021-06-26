@@ -58,7 +58,7 @@ public class PetsPetIdGetHandlerTest {
             throw new ClientException(e);
         }
         final AtomicReference<ClientResponse> reference = new AtomicReference<>();
-        String requestUri = "/v1/pets/juBucwNiVmtuAcSjHGOuMMP";
+        String requestUri = "/v1/pets/SHODXyfZADiDDVmkUMHRh";
         String httpMethod = "get";
         try {
             ClientRequest request = new ClientRequest().setPath(requestUri).setMethod(Methods.GET);

@@ -40,10 +40,10 @@ public class TestServer extends ExternalResource {
         finally {
             refCount.getAndIncrement();
         }
+        Runtime.getRuntime().addShutdownHook(new Thread(() -> clean()));
     }
 
-    @Override
-    protected void after() {
+    protected void clean() {
         refCount.getAndDecrement();
         if (refCount.get() == 0) {
             Server.stop();
