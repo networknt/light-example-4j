@@ -39,7 +39,7 @@ public class PetsGetHandlerTest {
     static final boolean enableHttps = server.getServerConfig().isEnableHttps();
     static final int httpPort = server.getServerConfig().getHttpPort();
     static final int httpsPort = server.getServerConfig().getHttpsPort();
-    static final String url = enableHttp2 || enableHttps ? "https://localhost:" + httpsPort : "http://localhost:" + httpPort;
+    static final String url = enableHttps ? "https://localhost:" + httpsPort : "http://localhost:" + httpPort;
     static final String JSON_MEDIA_TYPE = "application/json";
 
     @Test
@@ -58,7 +58,7 @@ public class PetsGetHandlerTest {
             throw new ClientException(e);
         }
         final AtomicReference<ClientResponse> reference = new AtomicReference<>();
-        String requestUri = "/v1/pets?limit=78";
+        String requestUri = "/v1/pets?limit=6";
         String httpMethod = "get";
         try {
             ClientRequest request = new ClientRequest().setPath(requestUri).setMethod(Methods.GET);

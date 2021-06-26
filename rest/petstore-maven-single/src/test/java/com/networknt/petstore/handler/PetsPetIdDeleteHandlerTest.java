@@ -39,7 +39,7 @@ public class PetsPetIdDeleteHandlerTest {
     static final boolean enableHttps = server.getServerConfig().isEnableHttps();
     static final int httpPort = server.getServerConfig().getHttpPort();
     static final int httpsPort = server.getServerConfig().getHttpsPort();
-    static final String url = enableHttp2 || enableHttps ? "https://localhost:" + httpsPort : "http://localhost:" + httpPort;
+    static final String url = enableHttps ? "https://localhost:" + httpsPort : "http://localhost:" + httpPort;
     static final String JSON_MEDIA_TYPE = "application/json";
 
     @Test
@@ -58,13 +58,13 @@ public class PetsPetIdDeleteHandlerTest {
             throw new ClientException(e);
         }
         final AtomicReference<ClientResponse> reference = new AtomicReference<>();
-        String requestUri = "/v1/pets/ypSSEFhQHKBTIHK";
+        String requestUri = "/v1/pets/RzYmHHGliuygzitWENOWynOjAIl";
         String httpMethod = "delete";
         try {
             ClientRequest request = new ClientRequest().setPath(requestUri).setMethod(Methods.DELETE);
             
             //customized header parameters 
-            request.getRequestHeaders().put(new HttpString("key"), "yYHrawUKWIm");
+            request.getRequestHeaders().put(new HttpString("key"), "lwokfgWxJQUALjIXJGUoujjIoNcV");
             request.getRequestHeaders().put(new HttpString("host"), "localhost");
             connection.sendRequest(request, client.createClientCallback(reference, latch));
             
