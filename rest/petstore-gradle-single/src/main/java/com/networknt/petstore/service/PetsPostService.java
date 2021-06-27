@@ -1,4 +1,4 @@
-package com.networknt.petstore.handler;
+package com.networknt.petstore.service;
 
 import com.networknt.http.HttpStatus;
 import com.networknt.http.MediaType;

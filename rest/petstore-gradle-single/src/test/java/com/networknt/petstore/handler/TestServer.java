@@ -1,7 +1,6 @@
 
 package com.networknt.petstore.handler;
 
-import com.networknt.server.Server;
 import org.junit.rules.ExternalResource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,12 +13,11 @@ public class TestServer extends ExternalResource {
     static final Logger logger = LoggerFactory.getLogger(TestServer.class);
 
     private static final AtomicInteger refCount = new AtomicInteger(0);
-    private static Server server;
 
     private static final TestServer instance  = new TestServer();
 
     private TestServer() {
-
+        logger.info("TestServer is constructed!");
     }
 
     public static TestServer getInstance () {
@@ -28,7 +26,7 @@ public class TestServer extends ExternalResource {
 
 
     public ServerConfig getServerConfig() {
-        return Server.config;
+        return Server.getServerConfig();
     }
 
     @Override
@@ -36,18 +34,20 @@ public class TestServer extends ExternalResource {
         try {
             if (refCount.get() == 0) {
                 Server.init();
+                logger.info("TestServer is initialized!");
             }
         }
         finally {
             refCount.getAndIncrement();
         }
+        Runtime.getRuntime().addShutdownHook(new Thread(() -> clean()));
     }
 
-    @Override
-    protected void after() {
+    protected void clean() {
         refCount.getAndDecrement();
         if (refCount.get() == 0) {
             Server.stop();
+            logger.info("TestServer is stopped!");
         }
     }
 }
