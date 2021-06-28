@@ -11,7 +11,7 @@ public class UserReportStartup implements StartupHookProvider {
     public static UserReportStreams streams = null;
     @Override
     public void onStartup() {
-        int port = Server.config.getHttpsPort();
+        int port = Server.getServerConfig().getHttpsPort();
         String ip = NetUtils.getLocalAddressByDatagram();
         logger.info("ip = " + ip + " port = " + port);
         streams = new UserReportStreams();

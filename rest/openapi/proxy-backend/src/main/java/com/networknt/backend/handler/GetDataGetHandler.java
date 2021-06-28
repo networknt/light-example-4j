@@ -10,10 +10,10 @@ import java.util.Map;
 
 public class GetDataGetHandler implements LightHttpHandler {
 
-    static final boolean enableHttp2 = Server.config.isEnableHttp2();
-    static final boolean enableHttps = Server.config.isEnableHttps();
-    static final int httpPort = Server.config.getHttpPort();
-    static final int httpsPort = Server.config.getHttpsPort();
+    static final boolean enableHttp2 = Server.getServerConfig().isEnableHttp2();
+    static final boolean enableHttps = Server.getServerConfig().isEnableHttps();
+    static final int httpPort = Server.getServerConfig().getHttpPort();
+    static final int httpsPort = Server.getServerConfig().getHttpsPort();
 
     @Override
     public void handleRequest(HttpServerExchange exchange) throws Exception {
