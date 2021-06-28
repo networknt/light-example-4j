@@ -50,6 +50,12 @@
         </dependency>
         <dependency>
             <groupId>com.networknt</groupId>
+            <artifactId>http-entity</artifactId>
+            <version>${version.light-4j}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.networknt</groupId>
             <artifactId>security</artifactId>
             <version>${version.light-4j}</version>
         </dependency>
