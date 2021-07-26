@@ -78,20 +78,12 @@
         </triggeringPolicy>
     </appender>
 
-    <root level="error">
+    <root level="debug">
         <appender-ref ref="stdout"/>
     </root>
 
-    <logger name="com.networknt" level="error" additivity="false">
-        <appender-ref ref="log"/>
-    </logger>
-
     <logger name="Audit" level="error" additivity="false">
         <appender-ref ref="audit"/>
-    </logger>
-
-    <logger name="com.networknt.dump" level="info" additivity="false">
-        <appender-ref ref="dump"/>
     </logger>
 
     <logger name="com.networknt.petstore" level="debug" additivity="false">
