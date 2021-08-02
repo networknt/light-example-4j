@@ -121,11 +121,6 @@
 		</dependency>
 		<dependency>
 			<groupId>com.networknt</groupId>
-			<artifactId>light-consumer-4j</artifactId>
-			<version>${version.light-4j}</version>
-		</dependency>
-		<dependency>
-			<groupId>com.networknt</groupId>
 			<artifactId>handler</artifactId>
 			<version>${version.light-4j}</version>
 		</dependency>
@@ -325,6 +320,7 @@
 					</archive>
 				</configuration>
 			</plugin>
+			<!--
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>exec-maven-plugin</artifactId>
@@ -355,7 +351,7 @@
 					</execution>
 				</executions>
 			</plugin>
-
+-->
 		</plugins>
 
 		<pluginManagement>
@@ -514,4 +510,5 @@
 			</build>
 		</profile>
 	</profiles>
+
 </project>
