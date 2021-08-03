@@ -2,10 +2,9 @@ package com.networknt.market.service;
 
 
 import com.networknt.client.ClientConfig;
+import com.networknt.client.http.Http2ServiceRequest;
 import com.networknt.client.model.HttpVerb;
 import com.networknt.client.model.ServiceDef;
-import com.networknt.client.orchestration.Http2ServiceRequest;
-import com.networknt.client.rest.LightRestClient;
 import com.networknt.config.Config;
 import com.networknt.exception.ApiException;
 import com.networknt.market.model.Market;
