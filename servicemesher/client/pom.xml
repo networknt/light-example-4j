@@ -14,7 +14,7 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.main.class>com.networknt.server.Server</project.main.class>
 		<version.jackson>2.12.1</version.jackson>
-		<version.light-4j>2.0.29</version.light-4j>
+		<version.light-4j>2.0.30</version.light-4j>
 		<version.slf4j>1.7.25</version.slf4j>
 		<version.jose4j>0.6.3</version.jose4j>
 		<version.logback>1.2.3</version.logback>
@@ -118,11 +118,6 @@
 			<groupId>com.fasterxml.jackson.datatype</groupId>
 			<artifactId>jackson-datatype-jdk8</artifactId>
 			<version>${version.jackson}</version>
-		</dependency>
-		<dependency>
-			<groupId>com.networknt</groupId>
-			<artifactId>light-consumer-4j</artifactId>
-			<version>${version.light-4j}</version>
 		</dependency>
 		<dependency>
 			<groupId>com.networknt</groupId>
@@ -325,6 +320,7 @@
 					</archive>
 				</configuration>
 			</plugin>
+			<!--
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>exec-maven-plugin</artifactId>
@@ -355,7 +351,7 @@
 					</execution>
 				</executions>
 			</plugin>
-
+-->
 		</plugins>
 
 		<pluginManagement>
@@ -514,4 +510,5 @@
 			</build>
 		</profile>
 	</profiles>
+
 </project>
