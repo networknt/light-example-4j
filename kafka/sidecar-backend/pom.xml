@@ -246,7 +246,7 @@
     <build>
         <defaultGoal>install</defaultGoal>
         <directory>target</directory>
-        <finalName>${project.artifactId}-${project.version}</finalName>
+        <finalName>server</finalName>
         <plugins>
             <plugin>
                 <groupId>com.networknt</groupId>
