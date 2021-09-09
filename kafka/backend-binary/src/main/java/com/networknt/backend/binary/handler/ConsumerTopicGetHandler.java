@@ -21,6 +21,7 @@ public class ConsumerTopicGetHandler implements LightHttpHandler {
     ConsumerTopicGetService service;
 
     public ConsumerTopicGetHandler () {
+
         this.service = new ConsumerTopicGetService ();
     }
 
