@@ -47,12 +47,12 @@ public class KafkaRecordsPostHandler implements LightHttpHandler {
                     StringWriter sw = new StringWriter();
                     PrintWriter pw = new PrintWriter(sw);
                     e.printStackTrace(pw);
-                    RecordProcessedResult rpr = new RecordProcessedResult(record, false, sw.toString());
+                    RecordProcessedResult rpr = new RecordProcessedResult(record, false, sw.toString(), null, null, record.getKey().toString());
                     results.add(rpr);
                 }
             } else {
                 // simulate processed successfully.
-                RecordProcessedResult rpr = new RecordProcessedResult(record, true, null);
+                RecordProcessedResult rpr = new RecordProcessedResult(record, true, null, null, null, null);
                 results.add(rpr);
             }
         }
