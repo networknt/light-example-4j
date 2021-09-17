@@ -105,4 +105,4 @@ api-config.apiServiceRef:
   ksqlActiveAPI:
     { serviceUrl: "http://localhost:8442", serviceId: null, protocol: "http", path: "/ksqldb/active", method: "POST", environment: "", requestKey: "" }
 api-config.apiQuery:
-  userQuery: select * from QUERYUSER1
+  userQuery: select * from QUERYUSER

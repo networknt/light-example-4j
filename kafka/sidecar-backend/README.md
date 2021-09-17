@@ -31,7 +31,7 @@ Queries are defined in the values.yml:
 
 ```text
 api-config.apiQuery:
-  userQuery: select * from QUERYUSER1
+  userQuery: select * from QUERYUSER1\
 
 ```
 
