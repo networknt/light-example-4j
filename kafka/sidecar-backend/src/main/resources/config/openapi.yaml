@@ -6,7 +6,7 @@ info:
   license:
     name: "MIT"
 servers:
-- url: "http://backend.sidecar.networknt.com"
+  - url: "http://backend.sidecar.networknt.com"
 paths:
   /kafka/records:
     post:
@@ -20,11 +20,66 @@ paths:
             schema:
               $ref: "#/components/schemas/Records"
       security:
-      - sidecar_auth:
-        - "write:sidecar"
+        - sidecar_auth:
+            - "write:sidecar"
       responses:
         "201":
           description: "Null response"
+  /kafka/ksqldb:
+    post:
+      summary: "Process the ksqlDB record"
+      operationId: "ksqlDBProcess"
+      requestBody:
+        description: "process a ksqlDB row"
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+      security:
+        - sidecar_auth:
+            - "write:sidecar"
+      responses:
+        "201":
+          description: "Null response"
+    get:
+      summary: "get the ksqlDB record"
+      operationId: "ksqlDBget"
+      parameters:
+        - name: id
+          in: query
+          required: false
+          description: The user id
+          schema:
+            type: string
+        - name: type
+          in: query
+          required: false
+          description: The query type
+          schema:
+            type: string
+        - name: queryname
+          in: query
+          required: true
+          description: The query name to run
+          schema:
+            type: string
+      security:
+        - sidecar_auth:
+            - "write:sidecar"
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+        '404':
+          description: Consumer instance not found
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Status"
 components:
   securitySchemes:
     sidecar_auth:
@@ -69,3 +124,22 @@ components:
       type: "string"
     ObjectValue:
       type: "object"
+
+    Status:
+      type: object
+      properties:
+        statusCode:
+          description: HTTP response code
+          type: integer
+        code:
+          description: Code is the machine-readable error code
+          type: string
+        message:
+          description: Error messsage
+          type: string
+        description:
+          description: The detailed description of the error status
+          type: string
+      required:
+        - statusCode
+        - code
