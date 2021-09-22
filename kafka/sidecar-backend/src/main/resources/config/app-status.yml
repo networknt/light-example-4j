@@ -16,3 +16,8 @@ ERR30000:
   code: ERR30000
   message: FIRST_ERROR_IN_APP
   description: This is is the first error in this example application.
+ERR30001:
+  statusCode: 500
+  code: ERR30001
+  message: KAFKA_SIDECAR_CALL_ERROR
+  description: Sidecar service error.
