@@ -65,7 +65,8 @@ handlers:
   # - com.networknt.metrics.prometheus.PrometheusGetHandler@getprometheus
   # Business Handlers
   - com.networknt.mesh.kafka.backend.handler.KafkaRecordsPostHandler
-
+  - com.networknt.mesh.kafka.backend.handler.KsqlDBRowsPostHandler
+  - com.networknt.mesh.kafka.backend.handler.KsqlDBRowsGetHandler
 
 chains:
   default:
@@ -87,6 +88,16 @@ paths:
     exec:
       - default
       - com.networknt.mesh.kafka.backend.handler.KafkaRecordsPostHandler
+  - path: '/kafka/ksqldb'
+    method: 'POST'
+    exec:
+      - default
+      - com.networknt.mesh.kafka.backend.handler.KsqlDBRowsPostHandler
+  - path: '/kafka/ksqldb'
+    method: 'GET'
+    exec:
+      - default
+      - com.networknt.mesh.kafka.backend.handler.KsqlDBRowsGetHandler
 
   - path: '/health/${server.serviceId:com.networknt.sidecar-backend-1.0.0}'
     method: 'get'
