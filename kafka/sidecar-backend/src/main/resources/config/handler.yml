@@ -67,6 +67,7 @@ handlers:
   - com.networknt.mesh.kafka.backend.handler.KafkaRecordsPostHandler
   - com.networknt.mesh.kafka.backend.handler.KsqlDBRowsPostHandler
   - com.networknt.mesh.kafka.backend.handler.KsqlDBRowsGetHandler
+  - com.networknt.mesh.kafka.backend.handler.DeadLetterQueueActivePostHandler
 
 chains:
   default:
@@ -98,6 +99,11 @@ paths:
     exec:
       - default
       - com.networknt.mesh.kafka.backend.handler.KsqlDBRowsGetHandler
+  - path: '/kafka/dlq/active/producer'
+    method: 'POST'
+    exec:
+      - default
+      - com.networknt.mesh.kafka.backend.handler.DeadLetterQueueActivePostHandler
 
   - path: '/health/${server.serviceId:com.networknt.sidecar-backend-1.0.0}'
     method: 'get'
