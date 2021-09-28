@@ -7,6 +7,6 @@ service.singletons:
       - com.networknt.balance.RoundRobinLoadBalance
   - com.networknt.cluster.Cluster:
       - com.networknt.cluster.LightCluster
-  - com.cibc.dgp.api.parties.data.PartiesStore:
-      - com.cibc.dgp.api.parties.data.RAMPartiesStore
+  - com.networknt.dgp.api.parties.data.PartiesStore:
+      - com.networknt.dgp.api.parties.data.RAMPartiesStore
 
