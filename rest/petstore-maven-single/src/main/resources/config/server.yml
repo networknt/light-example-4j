@@ -53,12 +53,12 @@ serviceId: ${server.serviceId:com.networknt.petstore-3.0.1}
 
 # Flag to enable self service registration. This should be turned on on official test and production. And
 # dyanmicPort should be enabled if any orchestration tool is used like Kubernetes.
-enableRegistry: ${server.enableRegistry:false}
+enableRegistry: ${server.enableRegistry:true}
 
 # When enableRegistry is true and the registry/discovery service is not reachable. Stop the server or continue
 # starting the server. When your global registry is not setup as high availability and only for monitoring, you
 # can set it true. If you are using it for global service discovery, leave it with false.
-startOnRegistryFailure: ${server.startOnRegistryFailure:false}
+startOnRegistryFailure: ${server.startOnRegistryFailure:true}
 
 # Dynamic port is used in situation that multiple services will be deployed on the same host and normally
 # you will have enableRegistry set to true so that other services can find the dynamic port service. When
@@ -77,7 +77,7 @@ maxPort: ${server.maxPort:2500}
 # environment tag that will be registered on consul to support multiple instances per env for testing.
 # https://github.com/networknt/light-doc/blob/master/docs/content/design/env-segregation.md
 # This tag should only be set for testing env, not production. The production certification process will enforce it.
-# environment: ${server.environment:test1}
+environment: ${server.environment:test1}
 
 # Build Number, to be set by teams for auditing or tracing purposes. 
 # Allows teams to audit the value and set it according to their release management process
