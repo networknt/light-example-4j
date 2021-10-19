@@ -80,6 +80,34 @@ paths:
             application/json:
               schema:
                 "$ref": "#/components/schemas/Status"
+  /kafka/dlq/active/producer:
+    post:
+      summary: "Post a list of Kafka records"
+      operationId: "postRecordsToDlq"
+      requestBody:
+        description: "An array of consumer records"
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/RecordProcessedResults"
+      security:
+        - sidecar_auth:
+            - "write:sidecar"
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          description: Consumer instance not found
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Status"
+
 components:
   securitySchemes:
     sidecar_auth:
@@ -124,6 +152,25 @@ components:
       type: "string"
     ObjectValue:
       type: "object"
+    RecordProcessedResults:
+      type: "array"
+      items:
+        $ref: "#/components/schemas/RecordProcessedResult"
+    RecordProcessedResult:
+      type: "object"
+      properties:
+        record:
+          $ref: "#/components/schemas/Record"
+        key:
+          type: string
+        correlationId:
+          type: string
+        traceabilityId:
+          type: string
+        stacktrace:
+          type: string
+        processed:
+          type: boolean
 
     Status:
       type: object

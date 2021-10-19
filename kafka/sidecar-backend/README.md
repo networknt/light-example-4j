@@ -50,3 +50,49 @@ Sample request curl command:
 curl --location --request GET 'https://localhost:8444/kafka/ksqldb?queryname=userQuery&id=1' \
 --data-raw '';
 ```
+
+--------
+
+- path: '/kafka/dlq/active/producer'
+
+  method: 'GET'
+
+Procedure the error message to dead letter queue actively.
+
+Request sample:
+
+```json
+curl --location --request POST 'https://localhost:8444/kafka/dlq/active/producer' \
+--header 'X-Traceability-Id: 111111' \
+--header 'Content-Type: application/json' \
+--data-raw '[
+    {
+        "record": {
+            "topic": "test6",
+            "key": "YWxleA==",
+            "value": "xyz",
+            "partition": 0,
+            "offset": 0
+        },
+        "processed": false,
+        "stacktrace": "error happened",
+        "correlationId": "cccc-1111111",
+        "traceabilityId": "tttt-1111111",
+        "key": "YWxleA=="
+    },
+        {
+        "record": {
+            "topic": "test7",
+            "key": "YWxleA==",
+            "value": "xyz",
+            "partition": 0,
+            "offset": 0
+        },
+        "processed": false,
+        "stacktrace": "error happened",
+        "correlationId": "cccc-1111111",
+        "traceabilityId": "tttt-1111111",
+        "key": "YWxleA=="
+    }
+]'
+```
