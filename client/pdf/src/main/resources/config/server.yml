@@ -70,3 +70,5 @@ maxPort: ${server.maxPort:2500}
 # Build Number
 # Allows teams to audit the value and set it according to their release management processes
 buildNumber: ${server.buildNumber:1.00}
+
+maxTransferFileSize: ${server.maxTransferFileSize:10000000}
