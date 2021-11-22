@@ -2,6 +2,7 @@ package com.networknt.example.pdf.handler;
 
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.networknt.body.BodyHandler;
 import com.networknt.config.Config;
 import com.networknt.handler.LightHttpHandler;
 import io.undertow.server.HttpServerExchange;
@@ -11,18 +12,15 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.InputStream;
-import java.nio.ByteBuffer;
-import java.util.HashMap;
 import java.util.Map;
 
 public class PdfReportPostHandler implements LightHttpHandler {
     Logger logger = LoggerFactory.getLogger(PdfReportPostHandler.class);
-    static ObjectMapper objectMapper = Config.getInstance().getMapper();
+
     @Override
     public void handleRequest(HttpServerExchange exchange) throws Exception {
         InputStream result = (InputStream)exchange.getAttachment(BodyHandler.REQUEST_BODY);
         Map<String, Object> jsonMap = SerializationUtils.deserialize(result);
-     //   Map<String, Object> jsonMap = objectMapper.readValue(result, Map.class);
 
         String fileName = (String)jsonMap.get("name");
         byte[] fileBody = (byte[])jsonMap.get("profileFile");
