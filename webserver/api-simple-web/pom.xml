@@ -17,9 +17,9 @@
         <version.slf4j>1.7.25</version.slf4j>
         <version.jose4j>0.6.3</version.jose4j>
         <version.encoder>1.2.1</version.encoder>
-        <version.logback>1.2.3</version.logback>
+        <version.logback>1.2.7</version.logback>
         <version.junit>4.12</version.junit>
-        <version.undertow>2.2.4.Final</version.undertow>
+        <version.undertow>2.2.14.Final</version.undertow>
         <nexus.server>http://nexus.com:8080</nexus.server>
         <argLine>-Xmx512m -XX:MaxPermSize=256m</argLine>
     </properties>

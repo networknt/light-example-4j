@@ -24,12 +24,12 @@
         <version.antlr4>4.7</version.antlr4>
         <version.commons-lang>2.6</version.commons-lang>
         <version.commons.io>2.5</version.commons.io>
-        <version.commons.codec>1.11</version.commons.codec>
+        <version.commons.codec>1.13</version.commons.codec>
         <version.encoder>1.2.1</version.encoder>
-        <version.logback>1.2.3</version.logback>
+        <version.logback>1.2.7</version.logback>
         <version.junit>4.12</version.junit>
         <version.mockito>2.1.0-RC.1</version.mockito>
-        <version.undertow>2.2.4.Final</version.undertow>
+        <version.undertow>2.2.14.Final</version.undertow>
         <version.json-schema-validator>1.0.63</version.json-schema-validator>
         <version.fastscanner>2.18.1</version.fastscanner>
         <version.hikaricp>3.1.0</version.hikaricp>
