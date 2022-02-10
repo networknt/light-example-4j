@@ -3,7 +3,7 @@
   ~ Copyright (c) 2016 Network New Technologies Inc.
   ~
   ~ Licensed under the Apache License, Version 2.0 (the "License");
-  ~ You may not use this file except in compliance with the License.
+  ~ you may not use this file except in compliance with the License.
   ~ You may obtain a copy of the License at
   ~
   ~      http://www.apache.org/licenses/LICENSE-2.0
@@ -16,40 +16,71 @@
   -->
 
 <configuration>
-    TODO create logger for audit only.
-    http://stackoverflow.com/questions/2488558/logback-to-log-different-messages-to-two-files
+    <!-- TODO create logger for audit only.
+    http://stackoverflow.com/questions/2488558/logback-to-log-different-messages-to-two-files -->
     <turboFilter class="ch.qos.logback.classic.turbo.MarkerFilter">
         <Marker>PROFILER</Marker>
         <!--<OnMatch>DENY</OnMatch>-->
         <OnMatch>NEUTRAL</OnMatch>
     </turboFilter>
 
+    <!--stdout log-->
     <appender name="stdout" class="ch.qos.logback.core.ConsoleAppender">
         <!-- encoders are assigned the type
              ch.qos.logback.classic.encoder.PatternLayoutEncoder by default -->
         <encoder>
-            <pattern>%d{HH:mm:ss.SSS} [%thread] %X{sId} %X{cId} %-5level %class{36}:%L %M - %msg%n</pattern>
+            <pattern>%d{yyyy-MM-dd'T'HH:mm:ss.SSS} [%thread] %X{sId} %X{cId} %-5level %class{36}:%L %M - %msg%n</pattern>
         </encoder>
     </appender>
 
-    <appender name="log" class="ch.qos.logback.core.FileAppender">
-        <File>log/test.log</File>
-        <Append>false</Append>
-        <layout class="ch.qos.logback.classic.PatternLayout">
-            <Pattern>%d{HH:mm:ss.SSS} [%thread] %X{sId} %X{cId} %-5level %class{36}:%L %M - %msg%n</Pattern>
-        </layout>
+    <!--stdout-file log-->
+    <appender name="stdout-file" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>log/stdout.log.json</file>
+        <encoder class="net.logstash.logback.encoder.LoggingEventCompositeJsonEncoder">
+            <providers>
+                <timestamp>
+                    <fieldName>timestamp</fieldName>
+                    <pattern>yyyy-MM-dd'T'HH:mm:ss.SSSZ</pattern>
+                </timestamp>
+                <pattern>
+                    <pattern>
+                        {
+                            "thread": "%thread",
+                            "level": "%-5level",
+                            "logger": "%logger{64}",
+                            "correlationId": "%X{cId}",
+                            "serviceId": "%X{sId}",
+                            "class": "%F",
+                            "lineNumber": "%class{64}:%L",
+                            "method": "%M",
+                            "logMessage": "#tryJson{%message}"
+                        }
+                    </pattern>
+                </pattern>
+                <rootStackTraceElement/>
+                <stackTrace/>
+            </providers>
+        </encoder>
+        <rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
+            <fileNamePattern>log/stdout.log.json.%i.zip</fileNamePattern>
+            <minIndex>1</minIndex>
+            <maxIndex>5</maxIndex> <!-- max number of archived logs that are kept -->
+        </rollingPolicy>
+        <triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+            <maxFileSize>200MB
+            </maxFileSize> <!-- The size of the logfile that triggers a switch to a new logfile, and the current one archived -->
+        </triggeringPolicy>
     </appender>
 
-    <!--audit log-->
+    <!-- audit log-->
     <appender name="audit" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <file>log/audit.log</file> <!-- logfile location -->
+        <file>log/audit.json</file> <!-- logfile location -->
         <encoder>
-            <pattern>%-5level [%thread] %date{ISO8601} %X{sId} %X{cId} %F:%L - %msg%n
-            </pattern> <!-- the layout pattern used to format log entries -->
+            <pattern>%date{ISO8601} %msg%n</pattern> <!-- the layout pattern used to format log entries -->
             <immediateFlush>true</immediateFlush>
         </encoder>
         <rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
-            <fileNamePattern>log/audit.log.%i.zip</fileNamePattern>
+            <fileNamePattern>log/audit.json.%i.zip</fileNamePattern>
             <minIndex>1</minIndex>
             <maxIndex>5</maxIndex> <!-- max number of archived logs that are kept -->
         </rollingPolicy>
@@ -59,43 +90,24 @@
         </triggeringPolicy>
     </appender>
 
-    <!--dump log-->
-    <appender name="dump" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <file>log/dump.log</file> <!-- logfile location -->
-        <encoder>
-            <pattern>%-5level [%thread] %date{ISO8601} %X{sId} %X{cId} %F:%L - %msg%n
-            </pattern> <!-- the layout pattern used to format log entries -->
-            <immediateFlush>true</immediateFlush>
-        </encoder>
-        <rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
-            <fileNamePattern>log/audit.log.%i.zip</fileNamePattern>
-            <minIndex>1</minIndex>
-            <maxIndex>5</maxIndex> <!-- max number of archived logs that are kept -->
-        </rollingPolicy>
-        <triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
-            <maxFileSize>200MB
-            </maxFileSize> <!-- The size of the logfile that triggers a switch to a new logfile, and the current one archived -->
-        </triggeringPolicy>
-    </appender>
 
     <root level="error">
         <appender-ref ref="stdout"/>
+        <appender-ref ref="stdout-file"/>
     </root>
 
     <logger name="com.networknt" level="debug" additivity="false">
         <appender-ref ref="stdout"/>
+        <appender-ref ref="stdout-file"/>
     </logger>
 
-    <logger name="Audit" level="error" additivity="false">
+    <logger name="Audit" level="info" additivity="false">
         <appender-ref ref="audit"/>
-    </logger>
-
-    <logger name="com.networknt.dump" level="info" additivity="false">
-        <appender-ref ref="dump"/>
     </logger>
 
     <logger name="com.networknt.petstore" level="debug" additivity="false">
         <appender-ref ref="stdout"/>
+        <appender-ref ref="stdout-file"/>
     </logger>
 
 </configuration>

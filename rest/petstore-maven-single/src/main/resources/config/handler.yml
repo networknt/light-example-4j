@@ -60,6 +60,7 @@ handlers:
   - com.networknt.info.ServerInfoGetHandler@info
   - com.networknt.logging.handler.LoggerGetHandler@getLogger
   - com.networknt.logging.handler.LoggerPostHandler@postLogger
+  - com.networknt.logging.handler.LoggerGetLogContentsHandler@getLogContents
   - com.networknt.specification.SpecDisplayHandler@spec
   - com.networknt.specification.SpecSwaggerUIHandler@swaggerui
   # - com.networknt.metrics.prometheus.PrometheusGetHandler@getprometheus
@@ -131,6 +132,11 @@ paths:
       - body
       - postLogger
 
+  - path: '/logger/content'
+    method: 'GET'
+    exec:
+      - security
+      - getLogContents
 
   - path: '/spec.yaml'
     method: 'get'
