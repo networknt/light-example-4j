@@ -1,0 +1,9 @@
+# application configuration
+# key schema version for producer in order to leverage the schema cache on the Kafka sidecar
+keySchemaVersion: ${application.keySchemaVersion:1}
+# value schema version for producer in order to leverage the schema cache on the Kafka sidecar
+valueSchemaVersion: ${application.valueSchemaVersion:1}
+# the target topic name that the transformed records should be produced to
+targetTopicName: ${application.targetTopicName:transformed.account}
+# the kafka sidecar producer url to produce the transformed message
+sidecarProducerUrl: ${application.sidecarUrl:https://localhost:9443/producers/}
