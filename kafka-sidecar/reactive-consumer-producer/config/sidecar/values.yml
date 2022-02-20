@@ -1,0 +1,48 @@
+# server configuration
+server.httpPort: 9443
+
+# producer format configuration
+kafka-producer.keyFormat: string
+kafka-producer.valueFormat: jsonschema
+kafka-producer.auditTarget: topic
+kafka-producer.auditTopic: sidecar-audit
+kafka-producer.bootstrap.servers: broker:29092
+kafka-producer.schema.registry.url: http://schema-registry:8081
+
+# consumer format configuration
+kafka-consumer.topic: original.account
+kafka-consumer.group.id:  group001
+kafka-consumer.keyFormat: string
+kafka-consumer.valueFormat: jsonschema
+kafka-consumer.auditTarget: topic
+kafka-consumer.backendApiHost: http://backend:8444
+kafka-consumer.bootstrap.servers: broker:29092
+kafka-consumer.schema.registry.url: http://schema-registry:8081
+# kafka-consumer.max.poll.records: 10
+# kafka-consumer.max.partition.fetch.bytes: 1000
+# kafka-consumer.fetch.max.bytes: 1000
+# kafka-consumer.requestMaxBytes: 1000
+
+kafka-ksqldb.backendUrl: https://backend:8444
+kafka-ksqldb.backendPath: /kafka/ksqldb
+kafka-ksqldb.ksqldbHost: backend
+kafka-ksqldb.ksqldbPort: 8088
+
+# Service Startup and Shutdown Hooks
+service.com.networknt.server.StartupHookProvider:
+  - com.networknt.mesh.kafka.ProducerStartupHook
+  # - com.networknt.mesh.kafka.ActiveConsumerStartupHook
+  # - com.networknt.mesh.kafka.KsqldbReactiveConsumerStartupHook
+  # - com.networknt.mesh.kafka.KsqldbActiveConsumerStartupHook
+  - com.networknt.mesh.kafka.ReactiveConsumerStartupHook
+  # - com.networknt.mesh.kafka.AdminClientStartupHook
+  - com.networknt.mesh.kafka.AuditProducerStartupHook
+
+service.com.networknt.server.ShutdownHookProvider:
+  - com.networknt.mesh.kafka.ProducerShutdownHook
+  # - com.networknt.mesh.kafka.ActiveConsumerShutdownHook
+  # - com.networknt.mesh.kafka.KsqldbReactiveConsumerShutdownHook
+  - com.networknt.mesh.kafka.ReactiveConsumerShutdownHook
+  # - com.networknt.mesh.kafka.AdminClientShutdownHook
+  # - com.networknt.mesh.kafka.KsqldbActiveConsumerShutdownHook
+  - com.networknt.mesh.kafka.AuditProducerShutdownHook

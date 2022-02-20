@@ -1,0 +1,28 @@
+---
+version: '2'
+services:
+  kafka-sidecar:
+    image: networknt/kafka-sidecar:2.0.32
+    volumes:
+      - ./config/sidecar:/config
+    ports:
+      - 9443:9443
+    hostname: sidecar
+    container_name: sidecar
+    networks:
+      - localnet
+
+  reactive-consumer-producer:
+    image: networknt/com.networknt.sidecar-backend-1.0.0:1.0.0
+    volumes:
+      - ./config/backend:/config
+    ports:
+      - 8444:8444
+    hostname: backend
+    container_name: backend
+    networks:
+      - localnet
+
+networks:
+  localnet:
+    external: true

@@ -1,0 +1,20 @@
+---
+# Generic configuration for Kafka Admin Client.
+properties:
+  # The sidecar does the serialization to byte array for both key and value
+  key.serializer: org.apache.kafka.common.serialization.ByteArraySerializer
+  value.serializer: org.apache.kafka.common.serialization.ByteArraySerializer
+  bootstrap.servers: ${kafka-admin.bootstrap.servers:localhost:9092}
+  # The default value is 180s and we need to reduce it to 5s for health check accuracy
+  metadata.max.age.ms: ${kafka-admin.metadata.max.age.ms:5000}
+  # Request timeout in milliseconds. It must be set to a short duration for health check
+  request.timeout.ms: ${kafka-admin.request.timeout.ms:200}
+  # security configuration for enterprise deployment
+  # security.protocol: ${kafka-admin.security.protocol:SASL_SSL}
+  # sasl.mechanism: ${kafka-admin.sasl.mechanism:PLAIN}
+  # sasl.jaas.config: "org.apache.kafka.common.security.plain.PlainLoginModule required username=\"${kafka-admin.username:username}\" password=\"${kafka-admin.password:password}\";"
+  # ssl.endpoint.identification.algorithm: ${kafka-admin.ssl.endpoint.identification.algorithm:algo-name}
+  # client.rack: ${kafka-admin.client.rack:rack-name}
+  # basic authentication user:pass for the schema registry
+  # basic.auth.user.info: ${kafka-admin.username:username}:${kafka-admin.password:password}
+  # basic.auth.credentials.source: ${kafka-admin.basic.auth.credentials.source:USER_INFO}
