@@ -12,17 +12,17 @@ httpPort: ${server.httpPort:8444}
 # When enableHttp, you must set enableHttps to false, otherwise, this flag will be ignored. There is
 # only one protocol will be used for the server at anytime. If both http and https are true, only
 # https listener will be created and the server will bind to https port only.
-enableHttp: ${server.enableHttp:false}
+enableHttp: ${server.enableHttp:true}
 
 # Https port if enableHttps is true. It will be ignored if dynamicPort is true.
 httpsPort: ${server.httpsPort:8444}
 
 # Enable HTTPS should be true on official environment and most dev environments.
-enableHttps: ${server.enableHttps:true}
+enableHttps: ${server.enableHttps:false}
 
 # Http/2 is enabled by default for better performance and it works with the client module
 # Please note that HTTP/2 only works with HTTPS.
-enableHttp2: ${server.enableHttp2:true}
+enableHttp2: ${server.enableHttp2:false}
 
 # Keystore file name in config folder.
 keystoreName: ${server.keystoreName:server.keystore}

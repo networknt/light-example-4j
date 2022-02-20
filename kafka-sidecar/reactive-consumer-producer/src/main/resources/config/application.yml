@@ -6,4 +6,4 @@ valueSchemaVersion: ${application.valueSchemaVersion:1}
 # the target topic name that the transformed records should be produced to
 targetTopicName: ${application.targetTopicName:transformed.account}
 # the kafka sidecar producer url to produce the transformed message
-sidecarProducerUrl: ${application.sidecarUrl:https://localhost:9443/producers/}
+sidecarProducerUrl: ${application.sidecarUrl:http://localhost:9443/producers/}

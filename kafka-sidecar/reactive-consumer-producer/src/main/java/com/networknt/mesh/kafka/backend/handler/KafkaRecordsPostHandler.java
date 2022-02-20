@@ -1,5 +1,6 @@
 package com.networknt.mesh.kafka.backend.handler;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.networknt.body.BodyHandler;
 import com.networknt.config.Config;
@@ -91,10 +92,14 @@ public class KafkaRecordsPostHandler implements LightHttpHandler {
                 String traceabilityId = getTraceabilityId(headers, (Map<String, Object>)record.getValue());
 
                 try {
-                    rawJson = Config.getInstance().getMapper().writeValueAsString(record.getValue());
-                    // transform the key and value here.
+                    // transform the key and value here. Let's combine the first and last name into a full name.
+                    // we know the value is a map object so let's manipulate it directly.
+                    Map<String, String> valueMap = (Map<String, String>)value;
+                    String firstName = valueMap.get("firstName");
+                    String lastName = valueMap.get("lastName");
+                    String fullName = firstName + " " + lastName;
+                    valueMap.put("fullName", fullName);
 
-                    String transformedValue = rawJson;
                     MDC.put(Constants.CORRELATION_ID_STRING, correlationId);
                     MDC.put(Constants.TRACEABILITY_ID_STRING, traceabilityId);
                     if(logger.isDebugEnabled()) logger.debug("Start processing of message with key = " + key + " value = " + rawJson);
@@ -104,7 +109,9 @@ public class KafkaRecordsPostHandler implements LightHttpHandler {
                         ProduceRecord produceRecord = new ProduceRecord();
                         ProduceRequest produceRequest = new ProduceRequest();
                         produceRecord.setKey(Optional.of(objectMapper.readTree(objectMapper.writeValueAsString(key))));
-                        produceRecord.setValue(Optional.of(objectMapper.readTree(transformedValue)));
+                        // send the transformed valueMap with fullName to the transformed.account topic.
+                        produceRecord.setValue(Optional.of(objectMapper.convertValue(valueMap, JsonNode.class)));
+                        // need to pass the traceabilityId and correlationId from the original record to the new transformed record for tracing.
                         produceRecord.setTraceabilityId(Optional.of(traceabilityId));
                         produceRecord.setCorrelationId(Optional.of(correlationId));
                         produceRequest.setRecords(Arrays.asList(produceRecord));
@@ -112,18 +119,16 @@ public class KafkaRecordsPostHandler implements LightHttpHandler {
                         produceRequest.setKeySchemaVersion(Optional.of(config.getKeySchemaVersion()));
                         produceRequest.setValueSchemaVersion(Optional.of(config.getValueSchemaVersion()));
                         CompletableFuture<HttpResponse<String>> produceResponse = produceToSidecar(produceRequest, config.getTargetTopicName());
-                        String rprTraceabilityId = traceabilityId;
-                        String rprCorrelationId = correlationId;
                         CompletableFuture<HttpResponse<String>> completedProduce = produceResponse.whenComplete((response, ex) -> {
-                            MDC.put(Constants.TRACEABILITY_ID_STRING, rprTraceabilityId);
-                            MDC.put(Constants.CORRELATION_ID_STRING, rprCorrelationId);
+                            MDC.put(Constants.TRACEABILITY_ID_STRING, traceabilityId);
+                            MDC.put(Constants.CORRELATION_ID_STRING, correlationId);
                             if(response.statusCode() == 200) {
                                 if(logger.isDebugEnabled()) logger.debug("Producing successfully completed for " + key);
-                                RecordProcessedResult rpr = new RecordProcessedResult(record, true, null, rprCorrelationId, rprTraceabilityId, key != null ? key.toString() : null, System.currentTimeMillis());
+                                RecordProcessedResult rpr = new RecordProcessedResult(record, true, null, correlationId, traceabilityId, key != null ? key.toString() : null, System.currentTimeMillis());
                                 results.add(rpr);
                             } else {
                                 if(logger.isDebugEnabled()) logger.debug("Error producing message for key = " + key + " with response = " + response.body());
-                                RecordProcessedResult rpr = new RecordProcessedResult(record, false, response.body(), rprCorrelationId, rprTraceabilityId, key != null ? key.toString() : null, System.currentTimeMillis());
+                                RecordProcessedResult rpr = new RecordProcessedResult(record, false, response.body(), correlationId, traceabilityId, key != null ? key.toString() : null, System.currentTimeMillis());
                                 results.add(rpr);
                             }
                             MDC.clear();
@@ -166,7 +171,7 @@ public class KafkaRecordsPostHandler implements LightHttpHandler {
             // here we expect the value is a JSON object that is presented as a map and there is
             // a field in the value. You should use any identifier in the business as traceabilityId.
             // For example, accountNo, userId, email etc.
-            traceabilityId = (String)value.get(Constants.TRACEABILITY_ID_STRING);
+            traceabilityId = (String)value.get("accountNo");
         }
         if(traceabilityId == null) {
             throw new RuntimeException("TraceabilityId cannot be found in headers and value.");
