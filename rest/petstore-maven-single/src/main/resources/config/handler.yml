@@ -61,6 +61,8 @@ handlers:
   - com.networknt.logging.handler.LoggerGetHandler@getLogger
   - com.networknt.logging.handler.LoggerPostHandler@postLogger
   - com.networknt.logging.handler.LoggerGetLogContentsHandler@getLogContents
+  - com.networknt.config.reload.handler.ModuleRegistryGetHandler@modules
+  - com.networknt.config.reload.handler.ConfigReloadHandler@configReload
   - com.networknt.specification.SpecDisplayHandler@spec
   - com.networknt.specification.SpecSwaggerUIHandler@swaggerui
   # - com.networknt.metrics.prometheus.PrometheusGetHandler@getprometheus
@@ -137,6 +139,17 @@ paths:
     exec:
       - security
       - getLogContents
+
+  - path: '/getmodules'
+    method: 'get'
+    exec:
+      - modules
+
+  - path: '/config/reload'
+    method: 'post'
+    exec:
+      - body
+      - configReload
 
   - path: '/spec.yaml'
     method: 'get'
