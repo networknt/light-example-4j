@@ -140,12 +140,12 @@ paths:
       - security
       - getLogContents
 
-  - path: '/getmodules'
+  - path: '/modules'
     method: 'get'
     exec:
       - modules
 
-  - path: '/config/reload'
+  - path: '/modules'
     method: 'post'
     exec:
       - body

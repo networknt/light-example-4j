@@ -49,7 +49,7 @@ paths:
             - admin
             # for each business to access their own admin endpoints
             - ${server.serviceId}/admin
-  /config/reload:
+  /modules:
     post:
       description: config value reload from config server
       requestBody:
@@ -68,7 +68,6 @@ paths:
             - admin
             # for each business to access their own admin endpoints
             - ${server.serviceId}/admin
-  /getmodules:
     get:
       description: to get the registered module, include middleware handlers, server, client...
       security:
