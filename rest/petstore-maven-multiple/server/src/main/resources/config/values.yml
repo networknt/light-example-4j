@@ -95,6 +95,9 @@ server.buildNumber: latest
 # Database Section
 # secret.mysqlDatabasePassword: set-real-value-here
 # secret.oracleDatabasePassword: set-real-value-here
-
+sanitizer.bodyAttributesToEncode:
+sanitizer.bodyAttributesToIgnore:
+sanitizer.headerAttributesToEncode:
+sanitizer.headerAttributesToIgnore:
 # Service Singletons
 service.singletons:
