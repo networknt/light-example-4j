@@ -1,0 +1,119 @@
+openapi: 3.0.0
+paths:
+  /health/${server.serviceId}:
+    get:
+      description: pass through to the liveness endpoint that belongs to backend api
+      security:
+        - admin-scope:
+            # okta doesn't support either for now
+            # for control pane to access all businesses' admin endpoints
+            - admin
+            # for each business to access their own admin endpoints
+            - ${server.serviceId}/admin
+  /server/info:
+    get:
+      description: get the proxy server info and corresponding backend service info
+      security:
+        - admin-scope:
+            # okta doesn't support either for now
+            # for control pane to access all businesses' admin endpoints
+            - admin
+            # for each business to access their own admin endpoints
+            - ${server.serviceId}/admin
+
+  /chaosmonkey:
+    get:
+      description: to get the current chaosmonkey settings
+      security:
+        - admin-scope:
+            # okta doesn't support either for now
+            # for control pane to access all businesses' admin endpoints
+            - admin
+            # for each business to access their own admin endpoints
+            - ${server.serviceId}/admin
+  /chaosmonkey/{assault}:
+    post:
+      description: to update chaosmonkey settings
+      requestBody:
+        description: to update chaosmonkey settings
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: true
+      security:
+        - admin-scope:
+            # okta doesn't support either for now
+            # for control pane to access all businesses' admin endpoints
+            - admin
+            # for each business to access their own admin endpoints
+            - ${server.serviceId}/admin
+  /modules:
+    post:
+      description: config value reload from config server
+      requestBody:
+        description: the modules for config re-loads
+        required: true
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                type: string
+      security:
+        - admin-scope:
+            # okta doesn't support either for now
+            # for control pane to access all businesses' admin endpoints
+            - admin
+            # for each business to access their own admin endpoints
+            - ${server.serviceId}/admin
+    get:
+      description: to get the registered module, include middleware handlers, server, client...
+      security:
+        - admin-scope:
+            # okta doesn't support either for now
+            # for control pane to access all businesses' admin endpoints
+            - admin
+            # for each business to access their own admin endpoints
+            - ${server.serviceId}/admin
+  /logger:
+    get:
+      description: to get the current logging settings
+      security:
+        - admin-scope:
+            # okta doesn't support either for now
+            # for control pane to access all businesses' admin endpoints
+            - admin
+            # for each business to access their own admin endpoints
+            - ${server.serviceId}/admin
+    post:
+      description: to modify the logging settings
+      requestBody:
+        description: to update logging settings
+        required: true
+      security:
+        - admin-scope:
+            # okta doesn't support either for now
+            # for control pane to access all businesses' admin endpoints
+            - admin
+            # for each business to access their own admin endpoints
+            - ${server.serviceId}/admin
+
+  /logger/content:
+    get:
+      description: to get the content of the logs from this service.
+      security:
+        - admin-scope:
+            - admin
+            - ${server.serviceId}/admin
+
+components:
+  securitySchemes:
+    admin-scope:
+      type: oauth2
+      description: This API uses OAuth 2 with the client credential grant flow.
+      flows:
+        clientCredentials:
+          scopes:
+            admin: admin scope to access admin endpoints
