@@ -4,6 +4,7 @@ node_modules/
 dist/
 .idea/
 .tmp/
+log/
 .settings
 .metadata/
 *.iml

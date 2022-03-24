@@ -1,7 +1,11 @@
-
 # Portal URL for accessing controller API. Default to lightapi.net public portal and it can be point to a standalone
 # light-controller instance for testing in the same Kubernetes cluster or docker-compose.
 portalUrl: ${portalRegistry.portalUrl:https://localhost:8438}
+# Bootstrap jwt token to access the light-controller. In most case, the pipeline will get the token from OAuth 2.0
+# provider during the deployment. And then pass the token to the container with an environment variable. The other
+# option is to use the light-4j encyptor to encrypt token and put it into the values.yml in the config server. In
+# that case, you can use portalRegistry.portalToken as the key instead of the environment variable.
+portalToken: ${PORTAL_REGISTRY_TOKEN:eyJraWQiOiIxMDAiLCJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJ1cm46Y29tOm5ldHdvcmtudDpvYXV0aDI6djEiLCJhdWQiOiJ1cm46Y29tLm5ldHdvcmtudCIsImV4cCI6MTk2MDMxNjE2OCwianRpIjoibUEyTFhGbWdfRjBlaTlKWHZTMlUwUSIsImlhdCI6MTY0NDk1NjE2OCwibmJmIjoxNjQ0OTU2MDQ4LCJ2ZXJzaW9uIjoiMS4wIiwiY2xpZW50X2lkIjoiZjdkNDIzNDgtYzY0Ny00ZWZiLWE1MmQtNGM1Nzg3NDIxZTcyIiwic2NvcGUiOiJwb3J0YWwuciBwb3J0YWwudyIsInNpZCI6ImNvbS5uZXR3b3JrbnQucGV0c3RvcmUtMy4wLjEifQ.qJ2J6KlWN0BKy2Wufg3zuFrDnFPRURFWvPrqiD8klZ39idVk97tWdCM2dN9a9ajv6M1BE9YokiqQ91Liq18QISjkcBL0NSfkDAcep1zUrVnwXFRGGMlcH8jairHrW4SIKYykuWsYRRyYdXXq8S1Azj0QEJUy081kQenAHEXgklt1Cj5nn1uwUl8b_7fU3_H-MMfuG6H3BNiCuRyfLbOlnC5XLEu5hXGEemQ6AeeM5nqO2qfS9xMUQe0wzmIPugcjZPbgnZvNJsCwmH8KxzH-7rL4ffZJqMXEpuiBbOhr57GAYwy_IWmZ1onDbxJmGdl8sF1FuD7HPXimG45c-xJ1ww}
 # number of requests before resetting the shared connection to work around HTTP/2 limitation
 maxReqPerConn: ${portalRegistry.maxReqPerConn:1000000}
 # De-register the service after the amount of time with health check failed. Once a health check is failed, the
