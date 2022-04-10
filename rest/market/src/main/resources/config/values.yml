@@ -1,6 +1,6 @@
 # server.yml
 server.serviceId: com.networknt.market-1.0.0
-server.httpsPort: 7443
+server.httpsPort: 6443
 
 # service.yml
 service.singletons:

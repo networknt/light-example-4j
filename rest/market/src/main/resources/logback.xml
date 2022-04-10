@@ -94,7 +94,7 @@
         <appender-ref ref="dump"/>
     </logger>
 
-    <logger name="com.networknt.market" level="debug" additivity="false">
+    <logger name="com.networknt" level="debug" additivity="false">
         <appender-ref ref="stdout"/>
     </logger>
 
