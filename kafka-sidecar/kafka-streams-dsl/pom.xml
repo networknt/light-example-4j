@@ -2,9 +2,9 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.networknt</groupId>
-    <artifactId>stream-query</artifactId>
+    <artifactId>word-count</artifactId>
     <packaging>jar</packaging>
-    <name>stream-query</name>
+    <name>word-count</name>
     <version>1.0.0</version>
 
     <properties>
@@ -19,7 +19,6 @@
         <version.junit>4.12</version.junit>
         <version.undertow>2.2.14.Final</version.undertow>
         <version.json-schema-validator>1.0.65</version.json-schema-validator>
-        <version.kafka>2.5.0</version.kafka>
         <versions.maven-version>2.4</versions.maven-version>
         <version.javadoc-packagelist-plugin>1.0.0</version.javadoc-packagelist-plugin>
         <version.maven-javadoc>3.1.0</version.maven-javadoc>
@@ -195,11 +194,6 @@
             <version>${version.light-4j}</version>
         </dependency>
         <dependency>
-            <groupId>org.apache.kafka</groupId>
-            <artifactId>kafka-streams</artifactId>
-            <version>${version.kafka}</version>
-        </dependency>
-        <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
             <version>${version.jackson}</version>
@@ -224,9 +218,7 @@
             <artifactId>undertow-core</artifactId>
             <version>${version.undertow}</version>
         </dependency>
-        
-        
-        
+
         
         <!-- Test Dependencies -->
         <dependency>
