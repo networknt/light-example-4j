@@ -47,6 +47,7 @@ public class WordCountStreams implements LightStreams {
             wordCountStreams.cleanUp();
         }
         wordCountStreams.start();
+        if(logger.isDebugEnabled()) logger.debug("WordCountStreams is started.");
     }
 
     @Override
