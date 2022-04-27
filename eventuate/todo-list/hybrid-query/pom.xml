@@ -23,7 +23,7 @@
         <version.jose4j>0.6.3</version.jose4j>
         <version.antlr4>4.7</version.antlr4>
         <version.commons-lang>2.6</version.commons-lang>
-        <version.commons.io>2.5</version.commons.io>
+        <version.commons.io>2.11.0</version.commons.io>
         <version.commons.codec>1.11</version.commons.codec>
         <version.encoder>1.2.1</version.encoder>
         <version.logback>1.2.3</version.logback>

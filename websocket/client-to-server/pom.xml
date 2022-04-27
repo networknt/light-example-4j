@@ -18,7 +18,7 @@
         <version.jose4j>0.6.3</version.jose4j>
         <version.antlr4>4.5.3</version.antlr4>
         <version.commons-lang>2.6</version.commons-lang>
-        <version.commons.io>2.5</version.commons.io>
+        <version.commons.io>2.11.0</version.commons.io>
         <version.commons.codec>1.11</version.commons.codec>
         <version.encoder>1.2</version.encoder>
         <version.logback>1.1.7</version.logback>
