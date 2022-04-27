@@ -1,0 +1,58 @@
+
+#change the image tag before you deploy, if using minikube, please use any tag other than "latest"
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: market-deployment
+  labels:
+    app: market
+    environment: dev
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: market
+  template:
+    metadata:
+      labels:
+        app: market
+    spec:
+      containers:
+        - name: market
+          image: networknt/com.networknt.market-1.0.0:1.0.0
+          ports:
+            - containerPort: 8443
+          resources:
+            requests:
+              memory: "64Mi"
+              #0.25 cpu
+              cpu: "250m"
+            limits:
+              #0.5 cpu
+              memory: "128Mi"
+              cpu: "500m"
+          #cannot use httpcheck due to the server can be https
+          readinessProbe:
+            tcpSocket:
+              port: 8443
+            initialDelaySeconds: 3
+            periodSeconds: 3
+          livenessProbe:
+            tcpSocket:
+              port: 8443
+            initialDelaySeconds: 5
+            periodSeconds: 20
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: market-service
+  labels:
+    app: market
+spec:
+  selector:
+    app: market
+  type: NodePort
+  ports:
+    - protocol: TCP
+      port: 8443

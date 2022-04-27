@@ -5,14 +5,14 @@
 ip: 0.0.0.0
 
 # Http port if enableHttp is true. It will be ignored if dynamicPort is true.
-httpPort: ${server.httpPort:9055}
+httpPort: ${server.httpPort:9080}
 
 # Enable HTTP should be false by default. It should be only used for testing with clients or tools
 # that don't support https or very hard to import the certificate. Otherwise, https should be used.
 # When enableHttp, you must set enableHttps to false, otherwise, this flag will be ignored. There is
 # only one protocol will be used for the server at anytime. If both http and https are true, only
 # https listener will be created and the server will bind to https port only.
-enableHttp: ${server.enableHttp:false}
+enableHttp: ${server.enableHttp:true}
 
 # Https port if enableHttps is true. It will be ignored if dynamicPort is true.
 httpsPort: ${server.httpsPort:8449}
@@ -70,3 +70,5 @@ maxPort: ${server.maxPort:2500}
 # Build Number
 # Allows teams to audit the value and set it according to their release management processes
 buildNumber: ${server.buildNumber:1.00}
+
+maxTransferFileSize: ${server.maxTransferFileSize:10000000}

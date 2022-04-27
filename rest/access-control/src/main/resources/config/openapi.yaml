@@ -1,0 +1,104 @@
+---
+openapi: "3.0.0"
+info:
+  version: "1.0.0"
+  title: "OpenAPI Account"
+  license:
+    name: "MIT"
+servers:
+- url: "http://account.lightapi.net"
+paths:
+  /accounts:
+    get:
+      summary: "List all accounts"
+      operationId: "listAccounts"
+      x-request-access:
+        rule: "account-cc-group-role-auth"
+        roles: "manager teller customer"
+      security:
+      - account_auth:
+        - "account.r"
+      responses:
+        "200":
+          description: "An paged array of accounts"
+          content:
+            application/json:
+              schema:
+                type: "array"
+                items:
+                  $ref: "#/components/schemas/Account"
+              example:
+              - num: 521112392
+                owner: "stevehu"
+                type: "checking"
+                firstName: "Steve"
+                lastName: "Hu"
+                sinNumber: 123456789
+                status: "open"
+              - num: 521112321
+                owner: "stevehu"
+                type: "investment"
+                firstName: "Steve"
+                lastName: "Hu"
+                sinNumber: 123456789
+                status: "open"
+              - num: 521999128
+                owner: "stevehu"
+                type: "saving"
+                firstName: "Steve"
+                lastName: "Hu"
+                sinNumber: 123456789
+                status: "closed"
+    post:
+      summary: "Create an account"
+      operationId: "createAccount"
+      requestBody:
+        description: "Open a new account"
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Account"
+      security:
+      - account_auth:
+        - "account.w"
+      responses:
+        "201":
+          description: "Null response"
+components:
+  securitySchemes:
+    account_auth:
+      type: "oauth2"
+      description: "This API uses OAuth 2 with the client credential grant flow."
+      flows:
+        clientCredentials:
+          tokenUrl: "https://localhost:6882/token"
+          scopes:
+            account.w: "update"
+            account.r: "query"
+  schemas:
+    Account:
+      type: "object"
+      required:
+      - "num"
+      - "name"
+      - "type"
+      - "firstName"
+      - "lastName"
+      - "sinNumber"
+      - "status"
+      properties:
+        num:
+          type: "string"
+        name:
+          type: "string"
+        type:
+          type: "string"
+        firstName:
+          type: "string"
+        lastName:
+          type: "string"
+        sinNumber:
+          type: "string"
+        status:
+          type: "string"

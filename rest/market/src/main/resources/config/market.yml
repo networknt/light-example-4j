@@ -1,0 +1,2 @@
+apiServiceRef: ${market.apiServiceRef:}
+proxyUrl: ${market.proxyUrl:http://localhost:9080}

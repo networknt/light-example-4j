@@ -1,0 +1,34 @@
+# Generic Kafka Streams Configuration
+properties:
+  bootstrap.servers: ${kafka-streams.bootstrap.servers:localhost:9092}
+  # Kafka Streams will use the schema for deserialization from byte array
+  key.deserializer: ${kafka-streams.key.deserializer:org.apache.kafka.common.serialization.ByteArrayDeserializer}
+  value.deserializer: ${kafka-streams.value.deserializer:org.apache.kafka.common.serialization.ByteArrayDeserializer}
+  auto.offset.reset: ${kafka-streams.auto.offset.reset:earliest}
+  # A unique application id for the Kafka streams app. You need to replace it or overwrite it in your code.
+  application.id: ${kafka-streams.application.id:placeholder}
+  # Schema registry url
+  schema.registry.url: ${kafka-streams.schema.registry.url:http://localhost:8081}
+  # Schema registry auto register schema indicator for streams application. If true, the first request will register the schema auto automatically.
+  schema.registry.auto.register.schemas: ${kafka-streams.schema.registry.auto.register.schemas:true}
+  # Schema registry client truststore location, use the following two properties only if schema registry url is https.
+  # schema.registry.ssl.truststore.location: ${kafka-streams.schema.registry.ssl.truststore.location:/config/client.truststore}
+  # Schema registry client truststore password
+  # schema.registry.ssl.truststore.password: ${kafka-streams.schema.registry.ssl.truststore.password:password}
+  # security configuration for enterprise deployment
+  # security.protocol: ${kafka-streams.security.protocol:SASL_SSL}
+  # sasl.mechanism: ${kafka-streams.sasl.mechanism:PLAIN}
+  # sasl.jaas.config: "org.apache.kafka.common.security.plain.PlainLoginModule required username=\"${kafka-streams.username:username}\" password=\"${KAFKA_STREAMS_PASSWORD:password}\";"
+  # ssl.endpoint.identification.algorithm: ${kafka-streams.ssl.endpoint.identification.algorithm:algo-name}
+
+  # ssl.truststore.location: ${kafka-streams.ssl.truststore.location:/config/client.truststore}
+  # ssl.truststore.password: ${kafka-streams.ssl.truststore.password:password}
+
+  # Apache Kafka 2.3 clients or later will then read from followers that have matching broker.rack as the specified client.rack ID.
+  # client.rack: ${kafka-streams.client.rack:rack-name}
+  # basic authentication user:pass for the schema registry
+  # basic.auth.user.info: ${kafka-streams.username:username}:${KAFKA_STREAMS_PASSWORD:password}
+  # basic.auth.credentials.source: ${kafka-streams.basic.auth.credentials.source:USER_INFO}
+
+# Only set to true right after the streams reset and start the server. Once the server is up, shutdown and change this to false and restart.
+cleanUp: ${kafka-streams.cleanUp:false}

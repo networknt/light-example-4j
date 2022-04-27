@@ -1,0 +1,129 @@
+---
+openapi: "3.0.0"
+info:
+  version: "1.0.0"
+  title: "Reactive Consumer"
+  license:
+    name: "MIT"
+servers:
+- url: "http://reactive-consumer.networknt.com"
+paths:
+  /kafka/records:
+    post:
+      summary: "Post a list of Kafka records"
+      operationId: "postRecords"
+      requestBody:
+        description: "An array of consumer records"
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Records"
+      security:
+      - sidecar_auth:
+        - "write:sidecar"
+      responses:
+        "200":
+          description: "A list of RecordProcessedResult"
+          content:
+            application/json:
+              schema:
+                type: "array"
+                items:
+                  $ref: "#/components/schemas/RecordProcessedResult"
+        "400":
+          description: "Error processing the record. Need sidecar to rollback and\
+            \ retry after waiting period"
+components:
+  securitySchemes:
+    sidecar_auth:
+      type: "oauth2"
+      description: "This API uses OAuth 2 with the client credential grant flow."
+      flows:
+        clientCredentials:
+          tokenUrl: "https://localhost:6882/token"
+          scopes:
+            write:sidecar: "Add records"
+  schemas:
+    Records:
+      type: "array"
+      items:
+        $ref: "#/components/schemas/Record"
+    Record:
+      type: "object"
+      properties:
+        topic:
+          type: "string"
+        key:
+          oneOf:
+          - $ref: "#/components/schemas/StringKey"
+          - $ref: "#/components/schemas/ObjectKey"
+        value:
+          oneOf:
+          - $ref: "#/components/schemas/StringValue"
+          - $ref: "#/components/schemas/ObjectValue"
+        header:
+          type: "object"
+        partition:
+          type: "integer"
+          minimum: 0
+        offset:
+          type: "number"
+          minimum: 0
+    StringKey:
+      type: "string"
+    ObjectKey:
+      type: "object"
+    StringValue:
+      type: "string"
+    ObjectValue:
+      type: "object"
+    ConsumerRecord:
+      type: "object"
+      properties:
+        topic:
+          type: "string"
+        key:
+          oneOf:
+          - $ref: "#/components/schemas/StringKey"
+          - $ref: "#/components/schemas/ObjectKey"
+        value:
+          oneOf:
+          - $ref: "#/components/schemas/StringValue"
+          - $ref: "#/components/schemas/ObjectValue"
+        partition:
+          type: "integer"
+          minimum: 0
+        offset:
+          type: "number"
+          minimum: 0
+        headers:
+          type: "object"
+          description: "Key-Value pairs of the headers in a free key map"
+          additionalProperties: true
+      required:
+      - "topic"
+      - "value"
+      - "partition"
+      - "offset"
+    RecordProcessedResult:
+      type: "object"
+      properties:
+        consumerRecord:
+          $ref: "#/components/schemas/ConsumerRecord"
+        processed:
+          type: "boolean"
+        stacktrace:
+          type: "string"
+        correlationId:
+          type: "string"
+        traceabilityId:
+          type: "string"
+        key:
+          type: "string"
+        timestamp:
+          type: "integer"
+          format: "int64"
+      required:
+      - "consumerRecord"
+      - "processed"

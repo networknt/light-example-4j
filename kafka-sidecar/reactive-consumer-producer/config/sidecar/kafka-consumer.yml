@@ -1,0 +1,83 @@
+# Generic Kafka Consumer Configuration
+properties:
+  bootstrap.servers: ${kafka-consumer.bootstrap.servers:localhost:9092}
+  # Consumer will use the schema for deserialization from byte array
+  key.deserializer: org.apache.kafka.common.serialization.ByteArrayDeserializer
+  value.deserializer: org.apache.kafka.common.serialization.ByteArrayDeserializer
+  # As the control pane or API to access admin endpoint for commit, this value should be false.
+  enable.auto.commit: false
+  auto.offset.reset: ${kafka-consumer.auto.offset.reset:earliest}
+  group.id: ${kafka-consumer.group.id:group1}
+  # Schema registry url
+  schema.registry.url: ${kafka-consumer.schema.registry.url:http://localhost:8081}
+  # Schema registry auto register schema indicator for streams application. If true, the first request will register the schema auto automatically.
+  schema.registry.auto.register.schemas: ${kafka-consumer.schema.registry.auto.register.schemas:true}
+  # Schema registry client truststore location, use the following two properties only if schema registry url is https.
+  # schema.registry.ssl.truststore.location: ${kafka-consumer.schema.registry.ssl.truststore.location:/config/client.truststore}
+  # Schema registry client truststore password
+  # schema.registry.ssl.truststore.password: ${kafka-consumer.schema.registry.ssl.truststore.password:password}
+  # security configuration for enterprise deployment
+  # security.protocol: ${kafka-consumer.security.protocol:SASL_SSL}
+  # sasl.mechanism: ${kafka-consumer.sasl.mechanism:PLAIN}
+  # sasl.jaas.config: "org.apache.kafka.common.security.plain.PlainLoginModule required username=\"${kafka-consumer.username:username}\" password=\"${kafka-consumer.password:password}\";"
+  # ssl.endpoint.identification.algorithm: ${kafka-consumer.ssl.endpoint.identification.algorithm:algo-name}
+  # Apache Kafka 2.3 clients or later will then read from followers that have matching broker.rack as the specified client.rack ID.
+  # client.rack: ${kafka-consumer.client.rack:rack-name}
+  # basic authentication user:pass for the schema registry
+  # basic.auth.user.info: ${kafka-consumer.username:username}:${kafka-consumer.password:password}
+  # basic.auth.credentials.source: ${kafka-consumer.basic.auth.credentials.source:USER_INFO}
+  # max fetch size from Kafka cluster. Default 50mb is too big for cache consumption on the sidecar
+  fetch.max.bytes: ${kafka-consumer.fetch.max.bytes:102400}
+  # max poll records default is 500. Adjust it based on the size of the records to make sure each poll
+  # is similar to requestMaxBytes down below.
+  max.poll.records: ${kafka-consumer.max.poll.records:100}
+  # The maximum amount of data per-partition the server will return. Records are fetched in batches by the consumer.
+  # If the first record batch in the first non-empty partition of the fetch is larger than this limit, the batch will still be returned to ensure that the consumer can make progress.
+  max.partition.fetch.bytes: ${kafka-consumer.max.partition.fetch.bytes:102400}
+
+# common configuration properties between active and reactive consumers
+# Indicator if the dead letter topic is enabled.
+deadLetterEnabled: ${kafka-consumer.deadLetterEnabled:true}
+# The extension of the dead letter queue(topic) that is added to the original topic to form the dead letter topic
+deadLetterTopicExt: ${kafka-consumer.deadLetterTopicExt:.dlq}
+
+# Indicator if the audit is enabled.
+auditEnabled: ${kafka-consumer.auditEnabled:true}
+# Audit log destination topic or logfile. Default to topic
+auditTarget: ${kafka-consumer.auditTarget:logfile}
+# The consumer audit topic name if the auditTarget is topic
+auditTopic: ${kafka-consumer.auditTopic:sidecar-audit}
+# Indicate if the NoWrapping Avro converter is used. This should be used for avro schema with data type in JSON.
+useNoWrappingAvro: ${kafka-consumer.useNoWrappingAvro:false}
+
+# Reactive Consumer Specific Configuration
+# The topic that is going to be consumed. For reactive consumer only in the kafka-sidecar.
+# If two or more topics are going to be subscribed, concat them with comma without space.
+# topic: sidecar-test
+topic: ${kafka-consumer.topic:test1}
+# the format of the key optional
+keyFormat: ${kafka-consumer.keyFormat:jsonschema}
+# the format of the value optional
+valueFormat: ${kafka-consumer.valueFormat:jsonschema}
+# Waiting period in millisecond to poll another batch
+waitPeriod: ${kafka-consumer.waitPeriod:100}
+# Backend API host
+backendApiHost: ${kafka-consumer.backendApiHost:https://localhost:8444}
+# Backend API path
+backendApiPath: ${kafka-consumer.backendApiPath:/kafka/records}
+
+# Active Consumer Specific Configuration and the reactive consumer also depends on these properties
+# default max consumer threads to 50.
+maxConsumerThreads: ${kafka-consumer.maxConsumerThreads:50}
+# a unique id for the server instance, if running in a Kubernetes cluster, use the container id environment variable
+serverId: ${kafka-consumer.serverId:id}
+# maximum number of bytes message keys and values returned. Default to 100*1024
+requestMaxBytes: ${kafka-consumer.requestMaxBytes:102400}
+# The maximum total time to wait for messages for a request if the maximum number of messages hs not yet been reached.
+requestTimeoutMs: ${kafka-consumer.requestTimeoutMs:1000}
+# Minimum bytes of records to accumulate before returning a response to a consumer request. Default 10MB
+fetchMinBytes: ${kafka-consumer.fetchMinBytes:-1}
+# amount of idle time before a consumer instance is automatically destroyed.
+instanceTimeoutMs: ${kafka-consumer.instanceTimeoutMs:300000}
+# Amount of time to backoff when an iterator runs out of date.
+iteratorBackoffMs: ${kafka-consumer.iteratorBackoffMs:50}
