@@ -77,6 +77,18 @@ paths:
             - admin
             # for each business to access their own admin endpoints
             - ${server.serviceId}/admin
+  /shutdown:
+    delete:
+      summary: "Shutdown the service instance to force a restart."
+      description: "Returns a JSON body of shutdown time"
+      operationId: "serviceShutdown"
+      security:
+      - admin-scope:
+            # okta doesn't support either for now
+            # for control pane to access all businesses' admin endpoints
+            - admin
+            # for each business to access their own admin endpoints
+            - ${server.serviceId}/admin
   /logger:
     get:
       description: to get the current logging settings

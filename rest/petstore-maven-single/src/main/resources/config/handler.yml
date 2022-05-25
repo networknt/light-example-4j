@@ -66,6 +66,7 @@ handlers:
   - com.networknt.specification.SpecDisplayHandler@spec
   - com.networknt.specification.SpecSwaggerUIHandler@swaggerui
   # - com.networknt.metrics.prometheus.PrometheusGetHandler@getprometheus
+  - com.networknt.server.handler.ServerShutdownHandler@shutdown
   # Business Handlers
   - com.networknt.petstore.handler.PetsGetHandler
   - com.networknt.petstore.handler.PetsPostHandler
@@ -150,6 +151,11 @@ paths:
     exec:
       - body
       - configReload
+      
+  - path: '/shutdown'
+    method: 'delete'
+    exec:
+      - shutdown
 
   - path: '/spec.yaml'
     method: 'get'
