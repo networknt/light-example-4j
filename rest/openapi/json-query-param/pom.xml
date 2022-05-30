@@ -14,7 +14,7 @@
         <project.main.class>com.networknt.server.Server</project.main.class>
         <version.light-4j>1.6.2-SNAPSHOT</version.light-4j>
         <version.jackson>2.13.3</version.jackson>
-        <version.slf4j>1.7.32</version.slf4j>
+        <version.slf4j>1.7.36</version.slf4j>
         <version.jose4j>0.6.3</version.jose4j>
         <version.logback>1.2.11</version.logback>
         <version.junit>4.12</version.junit>

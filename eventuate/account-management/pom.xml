@@ -70,7 +70,7 @@
         <version.kafka-clients>2.0.0</version.kafka-clients>
         <version.rxjava>1.2.2</version.rxjava>
         <version.jackson>2.13.3</version.jackson>
-        <version.slf4j>1.7.32</version.slf4j>
+        <version.slf4j>1.7.36</version.slf4j>
         <version.jose4j>0.6.3</version.jose4j>
         <version.commons-lang>2.6</version.commons-lang>
         <version.commons.io>2.5</version.commons.io>
