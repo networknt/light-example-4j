@@ -2,7 +2,7 @@ package com.networknt.petstore.handler;
 
 import com.networknt.body.BodyHandler;
 import com.networknt.config.Config;
-import com.networknt.petstore.service.PetsGetService;
+import com.networknt.petstore.service.FlowersGetService;
 import com.networknt.handler.LightHttpHandler;
 import com.networknt.http.HttpMethod;
 import com.networknt.http.RequestEntity;
@@ -17,11 +17,11 @@ import java.util.Map;
 For more information on how to write business handlers, please check the link below.
 https://doc.networknt.com/development/business-handler/rest/
 */
-public class PetsGetHandler implements LightHttpHandler {
-    PetsGetService service;
+public class FlowersGetHandler implements LightHttpHandler {
+    FlowersGetService service;
 
-    public PetsGetHandler () {
-        this.service = new PetsGetService ();
+    public FlowersGetHandler () {
+        this.service = new FlowersGetService ();
     }
 
     

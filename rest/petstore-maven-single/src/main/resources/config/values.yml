@@ -13,24 +13,10 @@
 
 #--------------------------------------------------------------------------------
 # server.yml
-#--------------------------------------------------------------------------------
-# Https port if enableHttps is true. It will be ignored if dynamicPort is true
-# server.httpsPort: 8443
-
-# Enable HTTPS should be true on official environment and most dev environments.
-# server.enableHttps: true
-
-# Http/2 is enabled by default for better performance and it works with the client module.
-# server.enableHttp2: true
-
-# Minimum port range. This define a range for the dynamic allocated ports so that it is easier to setup
-# firewall rule to enable this range. Default 2400 to 2500 block has 100 port numbers and should be
-# enough for most cases unless you are using a big bare metal box as Kubernetes node that can run 1000s pods
-server.minPort: 2400
-
-# Maximum port rang. The range can be customized to adopt your network security policy and can be increased or
-# reduced to ease firewall rules.
-server.maxPort: 2500
+server.httpsPort: 9443
+server.enableHttps: true
+server.enableHttp2: true
+server.serviceId: com.networknt.petstore-3.0.1
 
 # environment tag that will be registered on consul to support multiple instances per env for testing.
 # https://github.com/networknt/light-doc/blob/master/docs/content/design/env-segregation.md
@@ -95,6 +81,6 @@ server.buildNumber: latest
 # Database Section
 # secret.mysqlDatabasePassword: set-real-value-here
 # secret.oracleDatabasePassword: set-real-value-here
-server.serviceId: com.networknt.petstore-3.0.1
+
 # Service Singletons
 service.singletons:

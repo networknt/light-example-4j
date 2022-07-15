@@ -15,7 +15,7 @@ httpPort: ${server.httpPort:8080}
 enableHttp: ${server.enableHttp:false}
 
 # Https port if enableHttps is true. It will be ignored if dynamicPort is true.
-httpsPort: ${server.httpsPort:9443}
+httpsPort: ${server.httpsPort:8443}
 
 # Enable HTTPS should be true on official environment and most dev environments.
 enableHttps: ${server.enableHttps:true}
@@ -53,12 +53,12 @@ serviceId: ${server.serviceId:com.networknt.petstore-3.0.1}
 
 # Flag to enable self service registration. This should be turned on on official test and production. And
 # dyanmicPort should be enabled if any orchestration tool is used like Kubernetes.
-enableRegistry: ${server.enableRegistry:true}
+enableRegistry: ${server.enableRegistry:false}
 
 # When enableRegistry is true and the registry/discovery service is not reachable. Stop the server or continue
 # starting the server. When your global registry is not setup as high availability and only for monitoring, you
 # can set it true. If you are using it for global service discovery, leave it with false.
-startOnRegistryFailure: ${server.startOnRegistryFailure:true}
+startOnRegistryFailure: ${server.startOnRegistryFailure:false}
 
 # Dynamic port is used in situation that multiple services will be deployed on the same host and normally
 # you will have enableRegistry set to true so that other services can find the dynamic port service. When
@@ -77,11 +77,16 @@ maxPort: ${server.maxPort:2500}
 # environment tag that will be registered on consul to support multiple instances per env for testing.
 # https://github.com/networknt/light-doc/blob/master/docs/content/design/env-segregation.md
 # This tag should only be set for testing env, not production. The production certification process will enforce it.
-environment: ${server.environment:test1}
+# environment: ${server.environment:test1}
 
 # Build Number, to be set by teams for auditing or tracing purposes. 
 # Allows teams to audit the value and set it according to their release management process
 buildNumber: ${server.buildNumber:3.0.1}
+
+# Shutdown gracefully wait period in milliseconds
+# In this period, it allows the in-flight requests to complete but new requests are not allowed. It needs to be set
+# based on the slowest request possible.
+shutdownGracefulPeriod: ${server.shutdownGracefulPeriod:2000}
 
 # -----------------------------------------------------------------------------------------------------------
 # The following parameters are for advanced users to fine tune the service in a container environment. Please leave

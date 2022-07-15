@@ -15,10 +15,10 @@ import io.undertow.util.HeaderValues;
 import io.undertow.util.HttpString;
 import io.undertow.util.Headers;
 import io.undertow.util.Methods;
-import org.junit.Assert;
-import org.junit.ClassRule;
-import org.junit.Test;
-import org.junit.Ignore;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import static org.junit.jupiter.api.Assertions.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.xnio.IoUtils;
@@ -29,9 +29,10 @@ import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.atomic.AtomicReference;
 
 
-@Ignore
+@Disabled
+@ExtendWith(TestServer.class)
 public class PetsPetIdDeleteHandlerTest {
-    @ClassRule
+
     public static TestServer server = TestServer.getInstance();
 
     static final Logger logger = LoggerFactory.getLogger(PetsPetIdDeleteHandlerTest.class);
@@ -58,13 +59,13 @@ public class PetsPetIdDeleteHandlerTest {
             throw new ClientException(e);
         }
         final AtomicReference<ClientResponse> reference = new AtomicReference<>();
-        String requestUri = "/v1/pets/iozBqHjhnFeKeKaFWAWn";
+        String requestUri = "/v1/pets/qQpedclCpxFSPxN";
         String httpMethod = "delete";
         try {
             ClientRequest request = new ClientRequest().setPath(requestUri).setMethod(Methods.DELETE);
             
             //customized header parameters 
-            request.getRequestHeaders().put(new HttpString("key"), "VCTcpcmyHWOLW");
+            request.getRequestHeaders().put(new HttpString("key"), "mTgfhh");
             request.getRequestHeaders().put(new HttpString("host"), "localhost");
             connection.sendRequest(request, client.createClientCallback(reference, latch));
             
@@ -86,7 +87,7 @@ public class PetsPetIdDeleteHandlerTest {
         } else {
             status = responseValidator.validateResponseContent(body, requestUri, httpMethod, String.valueOf(statusCode), JSON_MEDIA_TYPE);
         }
-        Assert.assertNull(status);
+        assertNotNull(status);
     }
 }
 

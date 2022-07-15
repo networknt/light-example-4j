@@ -1,3 +1,4 @@
+
 # Portal URL for accessing controller API. Default to lightapi.net public portal and it can be point to a standalone
 # light-controller instance for testing in the same Kubernetes cluster or docker-compose.
 portalUrl: ${portalRegistry.portalUrl:https://localhost:8438}

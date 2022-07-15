@@ -72,6 +72,8 @@ handlers:
   - com.networknt.petstore.handler.PetsPostHandler
   - com.networknt.petstore.handler.PetsPetIdGetHandler
   - com.networknt.petstore.handler.PetsPetIdDeleteHandler
+  - com.networknt.petstore.handler.NotificationsGetHandler
+  - com.networknt.petstore.handler.FlowersGetHandler
 
 
 chains:
@@ -109,6 +111,16 @@ paths:
     exec:
       - default
       - com.networknt.petstore.handler.PetsPetIdDeleteHandler
+  - path: '/v1/notifications'
+    method: 'GET'
+    exec:
+      - default
+      - com.networknt.petstore.handler.NotificationsGetHandler
+  - path: '/v1/flowers'
+    method: 'GET'
+    exec:
+      - default
+      - com.networknt.petstore.handler.FlowersGetHandler
 
   - path: '/health/${server.serviceId:com.networknt.petstore-3.0.1}'
     method: 'get'
@@ -134,7 +146,6 @@ paths:
       - security
       - body
       - postLogger
-
   - path: '/logger/content'
     method: 'GET'
     exec:
@@ -151,11 +162,12 @@ paths:
     exec:
       - body
       - configReload
-      
+
   - path: '/shutdown'
     method: 'delete'
     exec:
       - shutdown
+
 
   - path: '/spec.yaml'
     method: 'get'

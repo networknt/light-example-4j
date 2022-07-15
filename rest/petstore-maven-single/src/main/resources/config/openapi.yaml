@@ -150,6 +150,31 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Error"
+  /notifications:
+    get:
+      summary: "Get Notifications"
+      operationId: "listNotifications"
+      tags:
+      - "notifications"
+      security:
+      - petstore_auth:
+        - "read:pets"
+      responses:
+        "200":
+          description: "A standard notification response in JSON for response interceptor\
+            \ test"
+  /flowers:
+    get:
+      summary: "The API accept XML and the consumer is using JSON"
+      operationId: "flowers"
+      tags:
+      - "flowers"
+      security:
+      - petstore_auth:
+        - "read:pets"
+      responses:
+        "200":
+          description: "Return an flowers XML as the demo soap service"
 components:
   securitySchemes:
     petstore_auth:
