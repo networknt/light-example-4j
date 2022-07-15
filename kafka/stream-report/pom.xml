@@ -13,13 +13,13 @@
         <project.main.class>com.networknt.server.Server</project.main.class>
         <version.light-4j>2.1.2-SNAPSHOT</version.light-4j>
         <version.jackson>2.13.3</version.jackson>
-        <version.slf4j>1.7.32</version.slf4j>
+        <version.slf4j>1.7.36</version.slf4j>
         <version.jose4j>0.6.3</version.jose4j>
-        <version.logback>1.2.7</version.logback>
+        <version.logback>1.2.11</version.logback>
         <version.junit>4.12</version.junit>
         <version.undertow>2.2.14.Final</version.undertow>
         <version.json-schema-validator>1.0.65</version.json-schema-validator>
-        <version.kafka>2.5.0</version.kafka>
+        <version.kafka>3.2.0</version.kafka>
         <versions.maven-version>2.4</versions.maven-version>
         <version.javadoc-packagelist-plugin>1.0.0</version.javadoc-packagelist-plugin>
         <version.maven-javadoc>3.1.0</version.maven-javadoc>
