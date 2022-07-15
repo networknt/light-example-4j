@@ -1,0 +1,2 @@
+This folder contains all the projets that implement the rule action interface as the plugin for the light-gateway or http-sidecar as request/response interceptors. All the modules will be compiled as a jar file and drop into a folder in the light-gateway/http-sidecar deployment. 
+
