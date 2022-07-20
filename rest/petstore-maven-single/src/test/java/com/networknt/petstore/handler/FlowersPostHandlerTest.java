@@ -31,11 +31,11 @@ import java.util.concurrent.atomic.AtomicReference;
 
 @Disabled
 @ExtendWith(TestServer.class)
-public class FlowersGetHandlerTest {
+public class FlowersPostHandlerTest {
 
     public static TestServer server = TestServer.getInstance();
 
-    static final Logger logger = LoggerFactory.getLogger(FlowersGetHandlerTest.class);
+    static final Logger logger = LoggerFactory.getLogger(FlowersPostHandlerTest.class);
     static final boolean enableHttp2 = server.getServerConfig().isEnableHttp2();
     static final boolean enableHttps = server.getServerConfig().isEnableHttps();
     static final int httpPort = server.getServerConfig().getHttpPort();
@@ -44,7 +44,7 @@ public class FlowersGetHandlerTest {
     static final String JSON_MEDIA_TYPE = "application/json";
 
     @Test
-    public void testFlowersGetHandlerTest() throws ClientException {
+    public void testFlowersPostHandlerTest() throws ClientException {
 
         final Http2Client client = Http2Client.getInstance();
         final CountDownLatch latch = new CountDownLatch(1);
@@ -60,13 +60,15 @@ public class FlowersGetHandlerTest {
         }
         final AtomicReference<ClientResponse> reference = new AtomicReference<>();
         String requestUri = "/v1/flowers";
-        String httpMethod = "get";
+        String httpMethod = "post";
         try {
-            ClientRequest request = new ClientRequest().setPath(requestUri).setMethod(Methods.GET);
+            ClientRequest request = new ClientRequest().setPath(requestUri).setMethod(Methods.POST);
             
+            request.getRequestHeaders().put(Headers.CONTENT_TYPE, JSON_MEDIA_TYPE);
+            request.getRequestHeaders().put(Headers.TRANSFER_ENCODING, "chunked");
             //customized header parameters 
             request.getRequestHeaders().put(new HttpString("host"), "localhost");
-            connection.sendRequest(request, client.createClientCallback(reference, latch));
+            connection.sendRequest(request, client.createClientCallback(reference, latch, "{\"content\": \"request body to be replaced\"}"));
             
             latch.await();
         } catch (Exception e) {

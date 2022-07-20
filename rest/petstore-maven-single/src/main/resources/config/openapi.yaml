@@ -164,7 +164,7 @@ paths:
           description: "A standard notification response in JSON for response interceptor\
             \ test"
   /flowers:
-    get:
+    post:
       summary: "The API accept XML and the consumer is using JSON"
       operationId: "flowers"
       tags:
