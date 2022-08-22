@@ -19,7 +19,7 @@
         <version.encoder>1.2.1</version.encoder>
         <version.logback>1.2.11</version.logback>
         <version.junit>4.12</version.junit>
-        <version.undertow>2.2.18.Final</version.undertow>
+        <version.undertow>2.2.19.Final</version.undertow>
         <nexus.server>http://nexus.com:8080</nexus.server>
         <argLine>-Xmx512m -XX:MaxPermSize=256m</argLine>
     </properties>
