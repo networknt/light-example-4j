@@ -9,6 +9,7 @@ import com.networknt.http.RequestEntity;
 import com.networknt.http.ResponseEntity;
 import io.undertow.server.HttpServerExchange;
 import io.undertow.util.HeaderMap;
+import io.undertow.util.HttpString;
 
 import java.util.Deque;
 import java.util.Map;
@@ -37,6 +38,8 @@ public class PetsGetHandler implements LightHttpHandler {
             exchange.getResponseHeaders().add(values.getHeaderName(), values.getFirst());
         });
         exchange.setStatusCode(responseEntity.getStatusCodeValue());
+        exchange.getResponseHeaders().put(new HttpString("My-Header"), "test");
+        exchange.getResponseHeaders().put(new HttpString("X-Test-1"), "test1");
         exchange.getResponseSender().send(responseEntity.getBody());
     }
 }
