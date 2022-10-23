@@ -15,10 +15,10 @@ import io.undertow.util.HeaderValues;
 import io.undertow.util.HttpString;
 import io.undertow.util.Headers;
 import io.undertow.util.Methods;
-import org.junit.Assert;
-import org.junit.ClassRule;
-import org.junit.Test;
-import org.junit.Ignore;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import static org.junit.jupiter.api.Assertions.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.xnio.IoUtils;
@@ -29,9 +29,10 @@ import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.atomic.AtomicReference;
 
 
-@Ignore
+@Disabled
+@ExtendWith(TestServer.class)
 public class PetsGetHandlerTest {
-    @ClassRule
+
     public static TestServer server = TestServer.getInstance();
 
     static final Logger logger = LoggerFactory.getLogger(PetsGetHandlerTest.class);
@@ -58,7 +59,7 @@ public class PetsGetHandlerTest {
             throw new ClientException(e);
         }
         final AtomicReference<ClientResponse> reference = new AtomicReference<>();
-        String requestUri = "/v1/pets?limit=21";
+        String requestUri = "/v1/pets?limit=93";
         String httpMethod = "get";
         try {
             ClientRequest request = new ClientRequest().setPath(requestUri).setMethod(Methods.GET);
@@ -85,7 +86,7 @@ public class PetsGetHandlerTest {
         } else {
             status = responseValidator.validateResponseContent(body, requestUri, httpMethod, String.valueOf(statusCode), JSON_MEDIA_TYPE);
         }
-        Assert.assertNull(status);
+        assertNotNull(status);
     }
 }
 

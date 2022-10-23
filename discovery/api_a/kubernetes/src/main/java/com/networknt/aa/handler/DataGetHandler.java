@@ -7,6 +7,7 @@ import com.networknt.config.Config;
 import com.networknt.exception.ClientException;
 import com.networknt.handler.LightHttpHandler;
 import com.networknt.security.JwtVerifier;
+import com.networknt.security.SecurityConfig;
 import com.networknt.server.Server;
 import com.networknt.service.SingletonServiceFactory;
 import io.undertow.UndertowOptions;
@@ -34,15 +35,14 @@ public class DataGetHandler implements LightHttpHandler {
     static String apibHost;
     static String apicHost;
     static String path = "/v1/data";
-    static Map<String, Object> securityConfig = (Map)Config.getInstance().getJsonMapConfig(JwtVerifier.SECURITY_CONFIG);
-    static boolean securityEnabled = (Boolean)securityConfig.get(JwtVerifier.ENABLE_VERIFY_JWT);
     static String tag = Server.getServerConfig().getEnvironment();
-
     static Http2Client client = Http2Client.getInstance();
     static ClientConnection connectionB;
     static ClientConnection connectionC;
 
+    private SecurityConfig securityConfig;
     public DataGetHandler() {
+        securityConfig = SecurityConfig.load("openapi-security");
         try {
             apibHost = cluster.serviceToUrl("https", "com.networknt.ab-1.0.0", tag, null);
             apicHost = cluster.serviceToUrl("https", "com.networknt.ac-1.0.0", tag, null);
@@ -79,11 +79,11 @@ public class DataGetHandler implements LightHttpHandler {
         final AtomicReference<ClientResponse> referenceC = new AtomicReference<>();
         try {
             ClientRequest requestB = new ClientRequest().setMethod(Methods.GET).setPath(path);
-            if(securityEnabled) client.propagateHeaders(requestB, exchange);
+            if(securityConfig.isEnableVerifyJwt()) client.propagateHeaders(requestB, exchange);
             connectionB.sendRequest(requestB, client.createClientCallback(referenceB, latch));
 
             ClientRequest requestC = new ClientRequest().setMethod(Methods.GET).setPath(path);
-            if(securityEnabled) client.propagateHeaders(requestC, exchange);
+            if(securityConfig.isEnableVerifyJwt()) client.propagateHeaders(requestC, exchange);
             connectionC.sendRequest(requestB, client.createClientCallback(referenceC, latch));
 
             latch.await();

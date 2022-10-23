@@ -9,8 +9,7 @@ import com.networknt.http.RequestEntity;
 import com.networknt.http.ResponseEntity;
 import io.undertow.server.HttpServerExchange;
 import io.undertow.util.HeaderMap;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import io.undertow.util.HttpString;
 
 import java.util.Deque;
 import java.util.Map;
@@ -20,7 +19,6 @@ For more information on how to write business handlers, please check the link be
 https://doc.networknt.com/development/business-handler/rest/
 */
 public class PetsGetHandler implements LightHttpHandler {
-    private static final Logger logger = LoggerFactory.getLogger(PetsGetHandler.class);
     PetsGetService service;
 
     public PetsGetHandler () {
@@ -30,7 +28,6 @@ public class PetsGetHandler implements LightHttpHandler {
     
     @Override
     public void handleRequest(HttpServerExchange exchange) throws Exception {
-        if(logger.isDebugEnabled()) logger.debug("handleRequest is called");
         HeaderMap requestHeaders = exchange.getRequestHeaders();
         Map<String, Deque<String>> queryParameters = exchange.getQueryParameters();
         Map<String, Deque<String>> pathParameters = exchange.getPathParameters();
@@ -41,6 +38,8 @@ public class PetsGetHandler implements LightHttpHandler {
             exchange.getResponseHeaders().add(values.getHeaderName(), values.getFirst());
         });
         exchange.setStatusCode(responseEntity.getStatusCodeValue());
+        exchange.getResponseHeaders().put(new HttpString("My-Header"), "test");
+        exchange.getResponseHeaders().put(new HttpString("X-Test-1"), "test1");
         exchange.getResponseSender().send(responseEntity.getBody());
     }
 }
