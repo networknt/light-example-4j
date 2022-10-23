@@ -7,6 +7,7 @@ import com.networknt.config.Config;
 import com.networknt.exception.ClientException;
 import com.networknt.handler.LightHttpHandler;
 import com.networknt.security.JwtVerifier;
+import com.networknt.security.SecurityConfig;
 import com.networknt.server.Server;
 import com.networknt.service.SingletonServiceFactory;
 import io.undertow.UndertowOptions;
@@ -33,13 +34,13 @@ public class DataGetHandler implements LightHttpHandler {
     static Cluster cluster = SingletonServiceFactory.getBean(Cluster.class);
     static String apidHost;
     static String path = "/v1/data";
-    static Map<String, Object> securityConfig = (Map)Config.getInstance().getJsonMapConfig(JwtVerifier.SECURITY_CONFIG);
-    static boolean securityEnabled = (Boolean)securityConfig.get(JwtVerifier.ENABLE_VERIFY_JWT);
     static String tag = Server.getServerConfig().getEnvironment();
 
     static Http2Client client = Http2Client.getInstance();
+    private SecurityConfig securityConfig;
 
     public DataGetHandler() {
+        securityConfig = SecurityConfig.load("openapi-security");
     }
 
     @Override
@@ -59,7 +60,7 @@ public class DataGetHandler implements LightHttpHandler {
             ClientRequest request = new ClientRequest().setMethod(Methods.GET).setPath(path);
             // this is to ask client module to pass through correlationId and traceabilityId as well as
             // getting access token from oauth2 server automatically and attatch authorization headers.
-            if(securityEnabled) client.propagateHeaders(request, exchange);
+            if(securityConfig.isEnableVerifyJwt()) client.propagateHeaders(request, exchange);
             connection.sendRequest(request, client.createClientCallback(reference, latch));
             latch.await();
             int statusCode = reference.get().getResponseCode();
