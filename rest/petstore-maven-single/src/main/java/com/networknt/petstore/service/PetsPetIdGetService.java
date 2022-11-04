@@ -18,7 +18,7 @@ public class PetsPetIdGetService implements HttpService<Void, String> {
     public ResponseEntity invoke(RequestEntity<Void> requestEntity) {
         HeaderMap responseHeaders = new HeaderMap();
         responseHeaders.add(Headers.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE);
-        String body = "{\"id\":1,\"name\":\"Jessica Right\",\"tag\":\"pet\"}";
+        String body = "";
         ResponseEntity<String> responseEntity = new ResponseEntity<>(body, responseHeaders, HttpStatus.OK);
         return responseEntity;
     }
