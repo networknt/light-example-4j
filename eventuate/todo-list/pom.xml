@@ -88,7 +88,7 @@
         <version.h2>1.4.196</version.h2>
         <version.mysql>6.0.4</version.mysql>
         <version.undertow>2.3.0.Final</version.undertow>
-        <version.commons.codec>1.13</version.commons.codec>
+        <version.commons.codec>1.15</version.commons.codec>
         <argLine>-Xmx512m -XX:MaxPermSize=256m</argLine>
     </properties>
 

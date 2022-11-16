@@ -20,7 +20,7 @@
         <version.antlr4>4.7</version.antlr4>
         <version.commons-lang>2.6</version.commons-lang>
         <version.commons.io>2.5</version.commons.io>
-        <version.commons.codec>1.13</version.commons.codec>
+        <version.commons.codec>1.15</version.commons.codec>
         <version.encoder>1.2.1</version.encoder>
         <version.logback>1.2.11</version.logback>
         <version.junit>4.12</version.junit>
