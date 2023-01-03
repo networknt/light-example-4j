@@ -32,11 +32,11 @@ import java.util.concurrent.atomic.AtomicReference;
 
 @Disabled
 @ExtendWith(TestServer.class)
-public class NotificationsGetHandlerTest {
+public class DocumentsGetHandlerTest {
 
     public static TestServer server = TestServer.getInstance();
 
-    static final Logger logger = LoggerFactory.getLogger(NotificationsGetHandlerTest.class);
+    static final Logger logger = LoggerFactory.getLogger(DocumentsGetHandlerTest.class);
     static final boolean enableHttp2 = server.getServerConfig().isEnableHttp2();
     static final boolean enableHttps = server.getServerConfig().isEnableHttps();
     static final int httpPort = server.getServerConfig().getHttpPort();
@@ -45,7 +45,7 @@ public class NotificationsGetHandlerTest {
     static final String JSON_MEDIA_TYPE = "application/json";
 
     @Test
-    public void testNotificationsGetHandlerTest() throws ClientException {
+    public void testDocumentsGetHandlerTest() throws ClientException {
 
         final Http2Client client = Http2Client.getInstance();
         final CountDownLatch latch = new CountDownLatch(1);
@@ -60,7 +60,7 @@ public class NotificationsGetHandlerTest {
             throw new ClientException(e);
         }
         final AtomicReference<ClientResponse> reference = new AtomicReference<>();
-        String requestUri = "/v1/notifications";
+        String requestUri = "/v1/documents";
         String httpMethod = "get";
         try {
             ClientRequest request = new ClientRequest().setPath(requestUri).setMethod(Methods.GET);

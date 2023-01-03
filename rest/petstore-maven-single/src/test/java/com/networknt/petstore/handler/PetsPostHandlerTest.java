@@ -3,8 +3,9 @@ package com.networknt.petstore.handler;
 
 import com.networknt.client.Http2Client;
 import com.networknt.exception.ClientException;
+import com.networknt.openapi.OpenApiHandler;
 import com.networknt.openapi.ResponseValidator;
-import com.networknt.schema.SchemaValidatorsConfig;
+import com.networknt.openapi.SchemaValidator;
 import com.networknt.status.Status;
 import com.networknt.utility.StringUtils;
 import io.undertow.UndertowOptions;
@@ -79,8 +80,8 @@ public class PetsPostHandlerTest {
         }
         String body = reference.get().getAttachment(Http2Client.RESPONSE_BODY);
         Optional<HeaderValues> contentTypeName = Optional.ofNullable(reference.get().getResponseHeaders().get(Headers.CONTENT_TYPE));
-        SchemaValidatorsConfig config = new SchemaValidatorsConfig();
-        ResponseValidator responseValidator = new ResponseValidator(config);
+        SchemaValidator schemaValidator = new SchemaValidator(OpenApiHandler.helper.openApi3);
+        ResponseValidator responseValidator = new ResponseValidator(schemaValidator);
         int statusCode = reference.get().getResponseCode();
         Status status;
         if(contentTypeName.isPresent()) {

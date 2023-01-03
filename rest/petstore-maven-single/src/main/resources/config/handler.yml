@@ -74,6 +74,7 @@ handlers:
   - com.networknt.petstore.handler.PetsPetIdDeleteHandler
   - com.networknt.petstore.handler.NotificationsGetHandler
   - com.networknt.petstore.handler.FlowersPostHandler
+  - com.networknt.petstore.handler.DocumentsGetHandler
 
 
 chains:
@@ -121,6 +122,11 @@ paths:
     exec:
       - default
       - com.networknt.petstore.handler.FlowersPostHandler
+  - path: '/v1/documents'
+    method: 'GET'
+    exec:
+      - default
+      - com.networknt.petstore.handler.DocumentsGetHandler
 
   - path: '/health/${server.serviceId:com.networknt.petstore-3.0.1}'
     method: 'get'

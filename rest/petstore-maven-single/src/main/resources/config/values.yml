@@ -1,86 +1,55 @@
+
 #--------------------------------------------------------------------------------
 # values.yml : Set of values commonly overridden in microservices
 # 			   The file can be extended with other elements, as necessary 
 #--------------------------------------------------------------------------------
 
-#--------------------------------------------------------------------------------
 # client.yml
-#--------------------------------------------------------------------------------
-# key distribution server url
-# client.server_url: set-real-value-here
-# client_id used to access key distribution service. It can be the same client_id with token service or not.
-# client.client_id: set-real-value-here
+# https://github.com/networknt/light-4j/blob/master/client/src/main/resources/config/client.yml
+client.timeout: 3000
+client.verifyHostname: true
 
-#--------------------------------------------------------------------------------
 # server.yml
+# https://github.com/networknt/light-4j/blob/master/server/src/main/resources/config/server.yml
+server.httpPort: 8080
+server.enableHttp: false
 server.httpsPort: 9443
 server.enableHttps: true
 server.enableHttp2: true
+server.enableRegistry: false
 server.serviceId: com.networknt.petstore-3.0.1
+server.buildNumber: 3.0.1
 
-# environment tag that will be registered on consul to support multiple instances per env for testing.
-# https://github.com/networknt/light-doc/blob/master/docs/content/design/env-segregation.md
-# This tag should only be set for testing env, not production. The production certification process will enforce it.
-server.environment: dev
+# openapi-security.yml
+# https://github.com/networknt/light-rest-4j/blob/master/openapi-security/src/main/resources/config/openapi-security.yml
+openapi-security.enableVerifyJwt: false
 
-# Build number, to be set by teams for auditing purposes. 
-# Allows teams to audit the value and set it according to their release management processes
-server.buildNumber: latest
-
-#--------------------------------------------------------------------------------
-# security.yml
-#--------------------------------------------------------------------------------
-# Enable JWT verification flag.
-# security.enableVerifyJwt: true
-
-#--------------------------------------------------------------------------------
-# datasource.yml
-#--------------------------------------------------------------------------------
-# datasource.jdbcUrl: set-real-value-here
-# datasource.username: set-real-value-here
-
-# datasource.maximumPoolSize: set-real-value-here
-# datasource.prepStmtCacheSize: set-real-value-here
-# datasource.prepStmtCacheSqlLimit: set-real-value-here
-# datasource.conectionTimeout: set-real-value-here
-
-#--------------------------------------------------------------------------------
-# secret.yml
-#--------------------------------------------------------------------------------
-# Sever section
-# Key store password, the path of keystore is defined in server.yml
-# secret.serverKeystorePass: set-real-value-here
-# Key password, the key is in keystore
-# secret.serverKeyPass: set-real-value-here
-# Trust store password, the path of truststore is defined in server.yml
-# secret.serverTruststorePass: set-real-value-here
-
-# Client section
-# Key store password, the path of keystore is defined in server.yml
-# secret.clientKeystorePass: set-real-value-here
-# Key password, the key is in keystore
-# secret.clientKeyPass: set-real-value-here
-# Trust store password, the path of truststore is defined in server.yml
-# secret.clientTruststorePass: set-real-value-here
-# Authorization code client secret for OAuth2 server
-# secret.authorizationCodeClientSecret: set-real-value-here
-# Client credentials client secret for OAuth2 server
-# secret.clientCredentialsClientSecret: set-real-value-here
-# Fresh token client secret for OAuth2 server
-# secret.refreshTokenClientSecret: set-real-value-here
-# Key distribution client secret for OAuth2 server
-# secret.keyClientSecret: set-real-value-here
-
-# Consul section
-# Consul Token for service registry and discovery
-# secret.consulToken: set-real-value-here
-
-# EmailSender password
-# secret.emailPassword: set-real-value-here
-
-# Database Section
-# secret.mysqlDatabasePassword: set-real-value-here
-# secret.oracleDatabasePassword: set-real-value-here
-
-# Service Singletons
+# service.yml
 service.singletons:
+- com.networknt.registry.URL:
+  - com.networknt.registry.URLImpl:
+      protocol: light
+      host: localhost
+      port: 8080
+      path: portal
+      parameters:
+        registryRetryPeriod: '30000'
+- com.networknt.portal.registry.client.PortalRegistryClient:
+  - com.networknt.portal.registry.client.PortalRegistryClientImpl
+- com.networknt.registry.Registry:
+  - com.networknt.portal.registry.PortalRegistry
+- com.networknt.balance.LoadBalance:
+  - com.networknt.balance.RoundRobinLoadBalance
+- com.networknt.cluster.Cluster:
+  - com.networknt.cluster.LightCluster
+# StartupHookProvider implementations, there are one to many and they are called in the same sequence defined.
+- com.networknt.server.StartupHookProvider:
+  
+  
+# ShutdownHookProvider implementations, there are one to many and they are called in the same sequence defined.
+- com.networknt.server.ShutdownHookProvider:
+  
+  
+
+
+

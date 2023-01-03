@@ -175,6 +175,18 @@ paths:
       responses:
         "200":
           description: "Return an flowers XML as the demo soap service"
+  /documents:
+    get:
+      summary: "The API to get a document in a JSON with base64 content"
+      operationId: "documents"
+      tags:
+      - "documents"
+      security:
+      - petstore_auth:
+        - "read:pets"
+      responses:
+        "200":
+          description: "Return a document with base64 content in JSON format"
 components:
   securitySchemes:
     petstore_auth:
