@@ -34,7 +34,7 @@
         
         <versions.maven-version>2.4</versions.maven-version>
         <version.javadoc-packagelist-plugin>1.0.0</version.javadoc-packagelist-plugin>
-        <version.maven-javadoc>3.1.0</version.maven-javadoc>
+        <version.maven-javadoc>3.4.1</version.maven-javadoc>
         <version.maven-jar>3.1.2</version.maven-jar>
         <version.maven-shade>3.2.1</version.maven-shade>
         <version.maven-compiler>3.8.1</version.maven-compiler>
