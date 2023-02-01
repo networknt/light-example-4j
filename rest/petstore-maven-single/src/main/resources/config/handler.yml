@@ -75,6 +75,7 @@ handlers:
   - com.networknt.petstore.handler.NotificationsGetHandler
   - com.networknt.petstore.handler.FlowersPostHandler
   - com.networknt.petstore.handler.DocumentsGetHandler
+  - com.networknt.petstore.handler.StreamsGetHandler
 
 
 chains:
@@ -127,6 +128,11 @@ paths:
     exec:
       - default
       - com.networknt.petstore.handler.DocumentsGetHandler
+  - path: '/v1/streams'
+    method: 'GET'
+    exec:
+      - default
+      - com.networknt.petstore.handler.StreamsGetHandler
 
   - path: '/health/${server.serviceId:com.networknt.petstore-3.0.1}'
     method: 'get'
