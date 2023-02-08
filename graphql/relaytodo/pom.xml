@@ -23,7 +23,7 @@
         <version.encoder>1.2.1</version.encoder>
         <version.logback>1.2.11</version.logback>
         <version.junit>4.12</version.junit>
-        <version.undertow>2.3.0.Final</version.undertow>
+        <version.undertow>2.3.3.Final</version.undertow>
         <version.graphql>19.0</version.graphql>
         <version.rxjava>2.1.5</version.rxjava>
         
