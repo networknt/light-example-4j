@@ -13,7 +13,7 @@
         <java.version>11</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.main.class>com.networknt.server.Server</project.main.class>
-        <version.light-4j>2.1.7-SNAPSHOT</version.light-4j>
+        <version.light-4j>2.1.7</version.light-4j>
         <version.jackson>2.14.2</version.jackson>
         <version.slf4j>1.7.36</version.slf4j>
         <version.jose4j>0.6.3</version.jose4j>
