@@ -2,13 +2,11 @@ package com.networknt.petstore.handler;
 
 import com.networknt.body.BodyHandler;
 import com.networknt.config.Config;
-import com.networknt.petstore.service.NotificationsGetService;
 import com.networknt.handler.LightHttpHandler;
-import com.networknt.http.HttpMethod;
-import com.networknt.http.RequestEntity;
-import com.networknt.http.ResponseEntity;
+import com.networknt.http.*;
 import io.undertow.server.HttpServerExchange;
 import io.undertow.util.HeaderMap;
+import io.undertow.util.Headers;
 
 import java.util.Deque;
 import java.util.Map;
@@ -18,25 +16,16 @@ For more information on how to write business handlers, please check the link be
 https://doc.networknt.com/development/business-handler/rest/
 */
 public class NotificationsGetHandler implements LightHttpHandler {
-    NotificationsGetService service;
 
     public NotificationsGetHandler () {
-        this.service = new NotificationsGetService ();
     }
 
     
     @Override
     public void handleRequest(HttpServerExchange exchange) throws Exception {
-        HeaderMap requestHeaders = exchange.getRequestHeaders();
-        Map<String, Deque<String>> queryParameters = exchange.getQueryParameters();
-        Map<String, Deque<String>> pathParameters = exchange.getPathParameters();
-        HttpMethod httpMethod = HttpMethod.resolve(exchange.getRequestMethod().toString());
-        RequestEntity requestEntity = new RequestEntity<>(null, requestHeaders, httpMethod, null, null, queryParameters, pathParameters);
-        ResponseEntity<String> responseEntity = service.invoke(requestEntity);
-        responseEntity.getHeaders().forEach(values -> {
-            exchange.getResponseHeaders().add(values.getHeaderName(), values.getFirst());
-        });
-        exchange.setStatusCode(responseEntity.getStatusCodeValue());
-        exchange.getResponseSender().send(responseEntity.getBody());
+        exchange.getResponseHeaders().add(Headers.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE);
+        String body = "{\"data\":null,\"notifications\":[{\"code\":\"ERR00610000\",\"message\":\"Exception in getting service:Unable to create user info\",\"timestamp\":1655739885937,\"metadata\":null,\"description\":\"Internal Server Error\"}]}";
+        exchange.setStatusCode(HttpStatus.OK.value());
+        exchange.getResponseSender().send(body);
     }
 }
