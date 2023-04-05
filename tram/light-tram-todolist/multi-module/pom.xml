@@ -57,7 +57,7 @@
         <version.commons-lang>2.6</version.commons-lang>
         <version.commons.io>2.5</version.commons.io>
         <version.commons.codec>1.15</version.commons.codec>
-        <version.encoder>1.2.1</version.encoder>
+        <version.encoder>1.2.3</version.encoder>
         <version.logback>1.4.6</version.logback>
         <version.junit>4.12</version.junit>
         <version.mockito>2.7.21</version.mockito>
