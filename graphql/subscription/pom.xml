@@ -27,7 +27,7 @@
         <version.jsonpath>2.2.0</version.jsonpath>
         <version.httpclient>4.5.2</version.httpclient>
         <version.httpasyncclient>4.1.2</version.httpasyncclient>
-        <version.graphql>19.0</version.graphql>
+        <version.graphql>20.2</version.graphql>
         <version.rxjava>2.1.5</version.rxjava>
         <version.lombok>1.16.18</version.lombok>
         <versions.maven-version>2.4</versions.maven-version>
