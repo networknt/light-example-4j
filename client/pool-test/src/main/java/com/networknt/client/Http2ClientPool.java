@@ -13,15 +13,19 @@ import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicReference;
 
+import static io.undertow.client.http.HttpClientProvider.DISABLE_HTTPS_ENDPOINT_IDENTIFICATION_PROPERTY;
+
 /**
  * This is a client to call the petstore API constantly to ensure that connections in the pool is not growing.
  *
  * @author Steve Hu
  */
 public class Http2ClientPool {
-    static Http2Client client = Http2Client.getInstance();
+    static Http2Client client;
 
     public static void main(String[] args) throws Exception {
+        //System.setProperty(DISABLE_HTTPS_ENDPOINT_IDENTIFICATION_PROPERTY, "true");
+        client = Http2Client.getInstance();
         Http2ClientPool e = new Http2ClientPool();
         for(int i = 0; i < 10000; i++) {
             e.testHttp2Get();
@@ -41,7 +45,8 @@ public class Http2ClientPool {
         // Create one CountDownLatch that will be reset in the callback function
         final CountDownLatch latch = new CountDownLatch(1);
         // Create an HTTP 2.0 connection to the server
-        final ClientConnection connection = client.borrowConnection((new URI("https://localhost:9443")), Http2Client.WORKER, Http2Client.SSL, Http2Client.BUFFER_POOL, OptionMap.create(UndertowOptions.ENABLE_HTTP2, true)).get();
+        //final ClientConnection connection = client.borrowConnection((new URI("https://lucky:9443")), Http2Client.WORKER, Http2Client.SSL, Http2Client.BUFFER_POOL, OptionMap.create(UndertowOptions.ENABLE_HTTP2, true, UndertowOptions.ENDPOINT_IDENTIFICATION_ALGORITHM, "")).get();
+        final ClientConnection connection = client.borrowConnection((new URI("https://lucky:9443")), Http2Client.WORKER, Http2Client.SSL, Http2Client.BUFFER_POOL, OptionMap.create(UndertowOptions.ENABLE_HTTP2, true)).get();
         // Create an AtomicReference object to receive ClientResponse from callback function
         final AtomicReference<ClientResponse> reference = new AtomicReference<>();
         try {
