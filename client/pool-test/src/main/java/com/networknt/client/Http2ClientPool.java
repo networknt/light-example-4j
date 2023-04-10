@@ -56,7 +56,7 @@ public class Http2ClientPool {
             connection.sendRequest(request, client.createClientCallback(reference, latch));
             latch.await(100, TimeUnit.MILLISECONDS);
         } finally {
-            client.restore(uri, connectionToken);
+            client.restore(connectionToken);
         }
         int statusCode = reference.get().getResponseCode();
         String body = reference.get().getAttachment(Http2Client.RESPONSE_BODY);
