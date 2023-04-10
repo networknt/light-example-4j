@@ -1,5 +1,6 @@
 package com.networknt.client;
 
+import com.networknt.client.simplepool.SimpleConnectionHolder;
 import io.undertow.UndertowOptions;
 import io.undertow.client.ClientConnection;
 import io.undertow.client.ClientRequest;
@@ -44,18 +45,18 @@ public class Http2ClientPool {
     public void testHttp2Get() throws Exception {
         // Create one CountDownLatch that will be reset in the callback function
         final CountDownLatch latch = new CountDownLatch(1);
-        // Create an HTTP 2.0 connection to the server
-        //final ClientConnection connection = client.borrowConnection((new URI("https://lucky:9443")), Http2Client.WORKER, Http2Client.SSL, Http2Client.BUFFER_POOL, OptionMap.create(UndertowOptions.ENABLE_HTTP2, true, UndertowOptions.ENDPOINT_IDENTIFICATION_ALGORITHM, "")).get();
-        final ClientConnection connection = client.borrowConnection((new URI("https://lucky:9443")), Http2Client.WORKER, Http2Client.SSL, Http2Client.BUFFER_POOL, OptionMap.create(UndertowOptions.ENABLE_HTTP2, true)).get();
-        // Create an AtomicReference object to receive ClientResponse from callback function
+        SimpleConnectionHolder.ConnectionToken connectionToken = null;
+        URI uri = new URI("https://lucky:9443");
         final AtomicReference<ClientResponse> reference = new AtomicReference<>();
         try {
+            connectionToken = client.borrow(uri, Http2Client.WORKER, client.getDefaultXnioSsl(), Http2Client.BUFFER_POOL, OptionMap.create(UndertowOptions.ENABLE_HTTP2, true));
+            ClientConnection connection = (ClientConnection) connectionToken.getRawConnection();
             final ClientRequest request = new ClientRequest().setMethod(Methods.GET).setPath("/v1/pets");
             request.getRequestHeaders().put(Headers.HOST, "localhost");
             connection.sendRequest(request, client.createClientCallback(reference, latch));
-            latch.await(1000, TimeUnit.MILLISECONDS);
+            latch.await(100, TimeUnit.MILLISECONDS);
         } finally {
-            client.returnConnection(connection);
+            client.restore(uri, connectionToken);
         }
         int statusCode = reference.get().getResponseCode();
         String body = reference.get().getAttachment(Http2Client.RESPONSE_BODY);

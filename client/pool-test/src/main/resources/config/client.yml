@@ -217,7 +217,7 @@ request:
   connectionPoolSize: ${client.connectionPoolSize:1000}
   # Connection expire time when connection pool is used. By default, the cached connection will be closed after 30 minutes.
   # This is one way to force the connection to be closed so that the client-side discovery can be balanced.
-  connectionExpireTime: ${client.connectionExpireTime:1800000}
+  connectionExpireTime: ${client.connectionExpireTime:1000}
   # The maximum request limitation for each connection in the connection pool. By default, a connection will be closed after
   # sending 1 million requests. This is one way to force the client-side discovery to re-balance the connections.
   maxReqPerConn: ${client.maxReqPerConn:1000000}
