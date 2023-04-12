@@ -44,8 +44,8 @@ public class Http2ClientExample {
     public static void main(String[] args) throws Exception {
         Http2ClientExample e = new Http2ClientExample();
         e.testHttpTableauGoogleLocalhost();
-        // e.testHttpTableauGoogle();
-        // e.testHttpLocalhost();
+        e.testHttpTableauGoogle();
+        e.testHttpLocalhost();
         System.exit(0);
     }
 
@@ -59,14 +59,20 @@ public class Http2ClientExample {
     public void testHttpTableauGoogle() throws Exception {
         // Create one CountDownLatch that will be reset in the callback function
         final CountDownLatch latch = new CountDownLatch(2);
-        // Create an HTTP 1.1 connection to the server
-        final ClientConnection connectionTableau = client.connect(new URI("https://us-east-1.online.tableau.com"), Http2Client.WORKER, Http2Client.SSL, Http2Client.BUFFER_POOL, OptionMap.EMPTY).get();
-        final ClientConnection connectionGoogle = client.connect(new URI("https://google.com"), Http2Client.WORKER, Http2Client.SSL, Http2Client.BUFFER_POOL, OptionMap.EMPTY).get();
+
+        SimpleConnectionHolder.ConnectionToken connectionTokenTableau = null;
+        SimpleConnectionHolder.ConnectionToken connectionTokenGoogle = null;
+
 
         // Create an AtomicReference object to receive ClientResponse from callback function
         final AtomicReference<ClientResponse> referenceTableau = new AtomicReference<>();
         final AtomicReference<ClientResponse> referenceGoogle = new AtomicReference<>();
         try {
+            connectionTokenTableau = client.borrow(new URI("https://us-east-1.online.tableau.com"), Http2Client.WORKER, client.getDefaultXnioSsl(), Http2Client.BUFFER_POOL, OptionMap.EMPTY);
+            ClientConnection connectionTableau = (ClientConnection) connectionTokenTableau.getRawConnection();
+            connectionTokenGoogle = client.borrow(new URI("https://google.com"), Http2Client.WORKER, client.getDefaultXnioSsl(), Http2Client.BUFFER_POOL, OptionMap.EMPTY);
+            ClientConnection connectionGoogle = (ClientConnection) connectionTokenGoogle.getRawConnection();
+
             ClientRequest request = new ClientRequest().setMethod(Methods.GET).setPath("/");
             request.getRequestHeaders().put(Headers.HOST, "localhost");
             connectionTableau.sendRequest(request, client.createClientCallback(referenceTableau, latch));
@@ -77,10 +83,8 @@ public class Http2ClientExample {
             connectionGoogle.sendRequest(request, client.createClientCallback(referenceGoogle, latch));
             latch.await(1000, TimeUnit.MILLISECONDS);
         } finally {
-            // here the connection is closed after one request. It should be used for in frequent
-            // request as creating a new connection is costly with TLS handshake and ALPN.
-            IoUtils.safeClose(connectionTableau);
-            IoUtils.safeClose(connectionGoogle);
+            client.restore(connectionTokenTableau);
+            client.restore(connectionTokenGoogle);
         }
         int statusCode = referenceTableau.get().getResponseCode();
         System.out.println("Tableau  statusCode = " + statusCode);
