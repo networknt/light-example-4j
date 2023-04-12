@@ -1,6 +1,8 @@
 package com.networknt.client;
 
+import ch.qos.logback.core.net.server.Client;
 import com.networknt.client.oauth.TokenResponse;
+import com.networknt.client.simplepool.SimpleConnectionHolder;
 import com.networknt.cluster.Cluster;
 import com.networknt.config.Config;
 import com.networknt.exception.ClientException;
@@ -41,7 +43,9 @@ public class Http2ClientExample {
 
     public static void main(String[] args) throws Exception {
         Http2ClientExample e = new Http2ClientExample();
-        e.testHttpGet();
+        e.testHttpTableauGoogleLocalhost();
+        // e.testHttpTableauGoogle();
+        // e.testHttpLocalhost();
         System.exit(0);
     }
 
@@ -52,28 +56,129 @@ public class Http2ClientExample {
      *
      * @throws Exception
      */
-    public void testHttpGet() throws Exception {
+    public void testHttpTableauGoogle() throws Exception {
         // Create one CountDownLatch that will be reset in the callback function
-        final CountDownLatch latch = new CountDownLatch(1);
+        final CountDownLatch latch = new CountDownLatch(2);
         // Create an HTTP 1.1 connection to the server
-        final ClientConnection connection = client.connect(new URI("https://us-east-1.online.tableau.com"), Http2Client.WORKER, Http2Client.SSL, Http2Client.BUFFER_POOL, OptionMap.EMPTY).get();
+        final ClientConnection connectionTableau = client.connect(new URI("https://us-east-1.online.tableau.com"), Http2Client.WORKER, Http2Client.SSL, Http2Client.BUFFER_POOL, OptionMap.EMPTY).get();
+        final ClientConnection connectionGoogle = client.connect(new URI("https://google.com"), Http2Client.WORKER, Http2Client.SSL, Http2Client.BUFFER_POOL, OptionMap.EMPTY).get();
+
         // Create an AtomicReference object to receive ClientResponse from callback function
-        final AtomicReference<ClientResponse> reference = new AtomicReference<>();
+        final AtomicReference<ClientResponse> referenceTableau = new AtomicReference<>();
+        final AtomicReference<ClientResponse> referenceGoogle = new AtomicReference<>();
         try {
-            final ClientRequest request = new ClientRequest().setMethod(Methods.GET).setPath("/");
-            // send request to server with a callback function provided by Http2Client
+            ClientRequest request = new ClientRequest().setMethod(Methods.GET).setPath("/");
             request.getRequestHeaders().put(Headers.HOST, "localhost");
-            connection.sendRequest(request, client.createClientCallback(reference, latch));
-            // wait for 100 millisecond to timeout the request.
+            connectionTableau.sendRequest(request, client.createClientCallback(referenceTableau, latch));
+            latch.await(1000, TimeUnit.MILLISECONDS);
+
+            request = new ClientRequest().setMethod(Methods.GET).setPath("/");
+            request.getRequestHeaders().put(Headers.HOST, "localhost");
+            connectionGoogle.sendRequest(request, client.createClientCallback(referenceGoogle, latch));
             latch.await(1000, TimeUnit.MILLISECONDS);
         } finally {
             // here the connection is closed after one request. It should be used for in frequent
             // request as creating a new connection is costly with TLS handshake and ALPN.
-            IoUtils.safeClose(connection);
+            IoUtils.safeClose(connectionTableau);
+            IoUtils.safeClose(connectionGoogle);
+        }
+        int statusCode = referenceTableau.get().getResponseCode();
+        System.out.println("Tableau  statusCode = " + statusCode);
+        String body = referenceTableau.get().getAttachment(Http2Client.RESPONSE_BODY);
+        System.out.println("Tableau statusCode = " + statusCode + " body = " + body);
+
+        statusCode = referenceGoogle.get().getResponseCode();
+        System.out.println("Google  statusCode = " + statusCode);
+        body = referenceGoogle.get().getAttachment(Http2Client.RESPONSE_BODY);
+        System.out.println("Google statusCode = " + statusCode + " body = " + body);
+
+    }
+
+    public void testHttpLocalhost() throws Exception {
+        // Create one CountDownLatch that will be reset in the callback function
+        final CountDownLatch latch = new CountDownLatch(1);
+        // Create an HTTP 1.1 connection to the server
+        SimpleConnectionHolder.ConnectionToken connectionToken = null;;
+        // Create an AtomicReference object to receive ClientResponse from callback function
+        final AtomicReference<ClientResponse> reference = new AtomicReference<>();
+        try {
+            connectionToken = client.borrow(new URI("https://localhost:9443"), Http2Client.WORKER, client.getDefaultXnioSsl(), Http2Client.BUFFER_POOL, OptionMap.EMPTY);
+            ClientConnection connection = (ClientConnection) connectionToken.getRawConnection();
+            ClientRequest request = new ClientRequest().setMethod(Methods.GET).setPath("/v1/pets");
+            request.getRequestHeaders().put(Headers.HOST, "localhost");
+            connection.sendRequest(request, client.createClientCallback(reference, latch));
+            latch.await(1000, TimeUnit.MILLISECONDS);
+        } finally {
+            client.restore(connectionToken);
         }
         int statusCode = reference.get().getResponseCode();
-        System.out.println("statusCode = " + statusCode);
+        System.out.println("Localhost  statusCode = " + statusCode);
         String body = reference.get().getAttachment(Http2Client.RESPONSE_BODY);
-        System.out.println("testHttp2Get: statusCode = " + statusCode + " body = " + body);
+        System.out.println("Localhost statusCode = " + statusCode + " body = " + body);
+
     }
+
+    /**
+     * This is a simple example that create a new HTTP 2.0 connection for get request
+     * and close the connection after the call is done. As you can see that it is using
+     * a hard coded uri which points to an statically deployed service on fixed ip and port
+     *
+     * @throws Exception
+     */
+    public void testHttpTableauGoogleLocalhost() throws Exception {
+        // Create one CountDownLatch that will be reset in the callback function
+        final CountDownLatch latch = new CountDownLatch(3);
+        SimpleConnectionHolder.ConnectionToken connectionTokenTableau = null;
+        SimpleConnectionHolder.ConnectionToken connectionTokenGoogle = null;
+        SimpleConnectionHolder.ConnectionToken connectionTokenLocalhost = null;
+        // Create an AtomicReference object to receive ClientResponse from callback function
+        final AtomicReference<ClientResponse> referenceTableau = new AtomicReference<>();
+        final AtomicReference<ClientResponse> referenceGoogle = new AtomicReference<>();
+        final AtomicReference<ClientResponse> referenceLocalhost = new AtomicReference<>();
+        try {
+            // Create an HTTP 1.1 connection to the server
+            connectionTokenTableau = client.borrow(new URI("https://us-east-1.online.tableau.com"), Http2Client.WORKER, client.getDefaultXnioSsl(), Http2Client.BUFFER_POOL, OptionMap.EMPTY);
+            ClientConnection connectionTableau = (ClientConnection) connectionTokenTableau.getRawConnection();
+            connectionTokenGoogle = client.borrow(new URI("https://google.com"), Http2Client.WORKER, client.getDefaultXnioSsl(), Http2Client.BUFFER_POOL, OptionMap.EMPTY);
+            ClientConnection connectionGoogle = (ClientConnection) connectionTokenGoogle.getRawConnection();
+            connectionTokenLocalhost = client.borrow(new URI("https://localhost:9443"), Http2Client.WORKER, client.getDefaultXnioSsl(), Http2Client.BUFFER_POOL, OptionMap.EMPTY);
+            ClientConnection connectionLocalhost = (ClientConnection) connectionTokenLocalhost.getRawConnection();
+
+            ClientRequest request = new ClientRequest().setMethod(Methods.GET).setPath("/");
+            request.getRequestHeaders().put(Headers.HOST, "localhost");
+            connectionTableau.sendRequest(request, client.createClientCallback(referenceTableau, latch));
+            latch.await(1000, TimeUnit.MILLISECONDS);
+
+            request = new ClientRequest().setMethod(Methods.GET).setPath("/");
+            request.getRequestHeaders().put(Headers.HOST, "localhost");
+            connectionGoogle.sendRequest(request, client.createClientCallback(referenceGoogle, latch));
+            latch.await(1000, TimeUnit.MILLISECONDS);
+
+            request = new ClientRequest().setMethod(Methods.GET).setPath("/v1/pets");
+            request.getRequestHeaders().put(Headers.HOST, "localhost");
+            connectionLocalhost.sendRequest(request, client.createClientCallback(referenceLocalhost, latch));
+            latch.await(1000, TimeUnit.MILLISECONDS);
+
+        } finally {
+            client.restore(connectionTokenTableau);
+            client.restore(connectionTokenGoogle);
+            client.restore(connectionTokenLocalhost);
+        }
+        int statusCode = referenceTableau.get().getResponseCode();
+        System.out.println("Tableau  statusCode = " + statusCode);
+        String body = referenceTableau.get().getAttachment(Http2Client.RESPONSE_BODY);
+        System.out.println("Tableau statusCode = " + statusCode + " body = " + body);
+
+        statusCode = referenceGoogle.get().getResponseCode();
+        System.out.println("Google  statusCode = " + statusCode);
+        body = referenceGoogle.get().getAttachment(Http2Client.RESPONSE_BODY);
+        System.out.println("Google statusCode = " + statusCode + " body = " + body);
+
+        statusCode = referenceLocalhost.get().getResponseCode();
+        System.out.println("Localhost  statusCode = " + statusCode);
+        body = referenceLocalhost.get().getAttachment(Http2Client.RESPONSE_BODY);
+        System.out.println("Localhost statusCode = " + statusCode + " body = " + body);
+
+    }
+
 }
