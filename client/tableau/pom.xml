@@ -12,7 +12,7 @@
     <properties>
         <java.version>11</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <version.light-4j>2.1.16-SNAPSHOT</version.light-4j>
+        <version.light-4j>2.1.16</version.light-4j>
         <version.undertow>2.3.5.Final</version.undertow>
         <version.slf4j>2.0.7</version.slf4j>
         <version.assertj>2.1.0</version.assertj>
