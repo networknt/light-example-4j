@@ -24,6 +24,9 @@ server.buildNumber: 3.0.1
 # https://github.com/networknt/light-rest-4j/blob/master/openapi-security/src/main/resources/config/openapi-security.yml
 openapi-security.enableVerifyJwt: false
 
+# metrics.yml
+metrics.enabled: false
+
 # service.yml
 service.singletons:
 - com.networknt.registry.URL:
