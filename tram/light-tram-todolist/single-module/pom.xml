@@ -16,7 +16,7 @@
         <version.light-4j>1.6.18-SNAPSHOT</version.light-4j>
         <version.jackson>2.15.3</version.jackson>
         <version.slf4j>1.7.36</version.slf4j>
-        <version.jose4j>0.6.3</version.jose4j>
+        <version.jose4j>0.9.3</version.jose4j>
         <version.antlr4>4.7</version.antlr4>
         <version.commons-lang>2.6</version.commons-lang>
         <version.commons.io>2.11.0</version.commons.io>
