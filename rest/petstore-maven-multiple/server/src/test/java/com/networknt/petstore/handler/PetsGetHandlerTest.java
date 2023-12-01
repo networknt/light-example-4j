@@ -2,9 +2,12 @@
 package com.networknt.petstore.handler;
 
 import com.networknt.client.Http2Client;
+import com.networknt.client.simplepool.SimpleConnectionHolder;
 import com.networknt.exception.ClientException;
+import com.networknt.server.ServerConfig;
+import com.networknt.openapi.OpenApiHandler;
 import com.networknt.openapi.ResponseValidator;
-import com.networknt.schema.SchemaValidatorsConfig;
+import com.networknt.openapi.SchemaValidator;
 import com.networknt.status.Status;
 import com.networknt.utility.StringUtils;
 import io.undertow.UndertowOptions;
@@ -15,10 +18,10 @@ import io.undertow.util.HeaderValues;
 import io.undertow.util.HttpString;
 import io.undertow.util.Headers;
 import io.undertow.util.Methods;
-import org.junit.Assert;
-import org.junit.ClassRule;
-import org.junit.Test;
-import org.junit.Ignore;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import static org.junit.jupiter.api.Assertions.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.xnio.IoUtils;
@@ -29,38 +32,35 @@ import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.atomic.AtomicReference;
 
 
-@Ignore
+@Disabled
+@ExtendWith(TestServer.class)
 public class PetsGetHandlerTest {
-    @ClassRule
+
     public static TestServer server = TestServer.getInstance();
 
     static final Logger logger = LoggerFactory.getLogger(PetsGetHandlerTest.class);
-    static final boolean enableHttp2 = server.getServerConfig().isEnableHttp2();
-    static final boolean enableHttps = server.getServerConfig().isEnableHttps();
-    static final int httpPort = server.getServerConfig().getHttpPort();
-    static final int httpsPort = server.getServerConfig().getHttpsPort();
+    static final boolean enableHttp2 = ServerConfig.getInstance().isEnableHttp2();
+    static final boolean enableHttps = ServerConfig.getInstance().isEnableHttps();
+    static final int httpPort = ServerConfig.getInstance().getHttpPort();
+    static final int httpsPort = ServerConfig.getInstance().getHttpsPort();
     static final String url = enableHttps ? "https://localhost:" + httpsPort : "http://localhost:" + httpPort;
     static final String JSON_MEDIA_TYPE = "application/json";
+    final Http2Client client = Http2Client.getInstance();
 
     @Test
     public void testPetsGetHandlerTest() throws ClientException {
-
-        final Http2Client client = Http2Client.getInstance();
         final CountDownLatch latch = new CountDownLatch(1);
-        final ClientConnection connection;
-        try {
-            if(enableHttps) {
-                connection = client.borrowConnection(new URI(url), Http2Client.WORKER, Http2Client.SSL, Http2Client.BUFFER_POOL, enableHttp2 ? OptionMap.create(UndertowOptions.ENABLE_HTTP2, true): OptionMap.EMPTY).get();
-            } else {
-                connection = client.borrowConnection(new URI(url), Http2Client.WORKER, Http2Client.BUFFER_POOL, OptionMap.EMPTY).get();
-            }
-        } catch (Exception e) {
-            throw new ClientException(e);
-        }
+        SimpleConnectionHolder.ConnectionToken connectionToken = null;
         final AtomicReference<ClientResponse> reference = new AtomicReference<>();
-        String requestUri = "/v1/pets?limit=65";
+        String requestUri = "/v1/pets?limit=29";
         String httpMethod = "get";
         try {
+            if(enableHttps) {
+                connectionToken = client.borrow(new URI(url), Http2Client.WORKER, client.getDefaultXnioSsl(), Http2Client.BUFFER_POOL, enableHttp2 ? OptionMap.create(UndertowOptions.ENABLE_HTTP2, true): OptionMap.EMPTY);
+            } else {
+                connectionToken = client.borrow(new URI(url), Http2Client.WORKER, Http2Client.BUFFER_POOL, OptionMap.EMPTY);
+            }
+            ClientConnection connection = (ClientConnection) connectionToken.getRawConnection();
             ClientRequest request = new ClientRequest().setPath(requestUri).setMethod(Methods.GET);
             
             //customized header parameters 
@@ -72,12 +72,12 @@ public class PetsGetHandlerTest {
             logger.error("Exception: ", e);
             throw new ClientException(e);
         } finally {
-            client.returnConnection(connection);
+            client.restore(connectionToken);
         }
         String body = reference.get().getAttachment(Http2Client.RESPONSE_BODY);
         Optional<HeaderValues> contentTypeName = Optional.ofNullable(reference.get().getResponseHeaders().get(Headers.CONTENT_TYPE));
-        SchemaValidatorsConfig config = new SchemaValidatorsConfig();
-        ResponseValidator responseValidator = new ResponseValidator(config);
+        SchemaValidator schemaValidator = new SchemaValidator(OpenApiHandler.helper.openApi3);
+        ResponseValidator responseValidator = new ResponseValidator(schemaValidator);
         int statusCode = reference.get().getResponseCode();
         Status status;
         if(contentTypeName.isPresent()) {
@@ -85,7 +85,7 @@ public class PetsGetHandlerTest {
         } else {
             status = responseValidator.validateResponseContent(body, requestUri, httpMethod, String.valueOf(statusCode), JSON_MEDIA_TYPE);
         }
-        Assert.assertNull(status);
+        assertNotNull(status);
     }
 }
 

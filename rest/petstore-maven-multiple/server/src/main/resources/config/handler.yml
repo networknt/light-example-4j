@@ -60,14 +60,22 @@ handlers:
   - com.networknt.info.ServerInfoGetHandler@info
   - com.networknt.logging.handler.LoggerGetHandler@getLogger
   - com.networknt.logging.handler.LoggerPostHandler@postLogger
+  - com.networknt.logging.handler.LoggerGetLogContentsHandler@getLogContents
+  - com.networknt.config.reload.handler.ModuleRegistryGetHandler@modules
+  - com.networknt.config.reload.handler.ConfigReloadHandler@configReload
   - com.networknt.specification.SpecDisplayHandler@spec
   - com.networknt.specification.SpecSwaggerUIHandler@swaggerui
   # - com.networknt.metrics.prometheus.PrometheusGetHandler@getprometheus
+  - com.networknt.server.handler.ServerShutdownHandler@shutdown
   # Business Handlers
   - com.networknt.petstore.handler.PetsGetHandler
   - com.networknt.petstore.handler.PetsPostHandler
   - com.networknt.petstore.handler.PetsPetIdGetHandler
   - com.networknt.petstore.handler.PetsPetIdDeleteHandler
+  - com.networknt.petstore.handler.NotificationsGetHandler
+  - com.networknt.petstore.handler.FlowersPostHandler
+  - com.networknt.petstore.handler.DocumentsGetHandler
+  - com.networknt.petstore.handler.StreamsGetHandler
 
 
 chains:
@@ -105,6 +113,26 @@ paths:
     exec:
       - default
       - com.networknt.petstore.handler.PetsPetIdDeleteHandler
+  - path: '/v1/notifications'
+    method: 'GET'
+    exec:
+      - default
+      - com.networknt.petstore.handler.NotificationsGetHandler
+  - path: '/v1/flowers'
+    method: 'POST'
+    exec:
+      - default
+      - com.networknt.petstore.handler.FlowersPostHandler
+  - path: '/v1/documents'
+    method: 'GET'
+    exec:
+      - default
+      - com.networknt.petstore.handler.DocumentsGetHandler
+  - path: '/v1/streams'
+    method: 'GET'
+    exec:
+      - default
+      - com.networknt.petstore.handler.StreamsGetHandler
 
   - path: '/health/${server.serviceId:com.networknt.example.petstore-3.0.1}'
     method: 'get'
@@ -130,6 +158,27 @@ paths:
       - security
       - body
       - postLogger
+  - path: '/logger/content'
+    method: 'GET'
+    exec:
+      - security
+      - getLogContents
+
+  - path: '/modules'
+    method: 'get'
+    exec:
+      - modules
+
+  - path: '/modules'
+    method: 'post'
+    exec:
+      - body
+      - configReload
+
+  - path: '/shutdown'
+    method: 'delete'
+    exec:
+      - shutdown
 
 
   - path: '/spec.yaml'

@@ -11,9 +11,9 @@ client.verifyHostname: true
 
 # server.yml
 # https://github.com/networknt/light-4j/blob/master/server/src/main/resources/config/server.yml
-server.httpPort: 8080
+server.httpPort: 49587
 server.enableHttp: false
-server.httpsPort: 8443
+server.httpsPort: 49588
 server.enableHttps: true
 server.enableHttp2: true
 server.enableRegistry: false

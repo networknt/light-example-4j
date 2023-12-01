@@ -34,11 +34,11 @@ import java.util.concurrent.atomic.AtomicReference;
 
 @Disabled
 @ExtendWith(TestServer.class)
-public class PetsPetIdDeleteHandlerTest {
+public class FlowersPostHandlerTest {
 
     public static TestServer server = TestServer.getInstance();
 
-    static final Logger logger = LoggerFactory.getLogger(PetsPetIdDeleteHandlerTest.class);
+    static final Logger logger = LoggerFactory.getLogger(FlowersPostHandlerTest.class);
     static final boolean enableHttp2 = ServerConfig.getInstance().isEnableHttp2();
     static final boolean enableHttps = ServerConfig.getInstance().isEnableHttps();
     static final int httpPort = ServerConfig.getInstance().getHttpPort();
@@ -48,12 +48,12 @@ public class PetsPetIdDeleteHandlerTest {
     final Http2Client client = Http2Client.getInstance();
 
     @Test
-    public void testPetsPetIdDeleteHandlerTest() throws ClientException {
+    public void testFlowersPostHandlerTest() throws ClientException {
         final CountDownLatch latch = new CountDownLatch(1);
         SimpleConnectionHolder.ConnectionToken connectionToken = null;
         final AtomicReference<ClientResponse> reference = new AtomicReference<>();
-        String requestUri = "/v1/pets/CWXCjuEmQylSlpmIADtaNlQ";
-        String httpMethod = "delete";
+        String requestUri = "/v1/flowers";
+        String httpMethod = "post";
         try {
             if(enableHttps) {
                 connectionToken = client.borrow(new URI(url), Http2Client.WORKER, client.getDefaultXnioSsl(), Http2Client.BUFFER_POOL, enableHttp2 ? OptionMap.create(UndertowOptions.ENABLE_HTTP2, true): OptionMap.EMPTY);
@@ -61,12 +61,13 @@ public class PetsPetIdDeleteHandlerTest {
                 connectionToken = client.borrow(new URI(url), Http2Client.WORKER, Http2Client.BUFFER_POOL, OptionMap.EMPTY);
             }
             ClientConnection connection = (ClientConnection) connectionToken.getRawConnection();
-            ClientRequest request = new ClientRequest().setPath(requestUri).setMethod(Methods.DELETE);
+            ClientRequest request = new ClientRequest().setPath(requestUri).setMethod(Methods.POST);
             
+            request.getRequestHeaders().put(Headers.CONTENT_TYPE, JSON_MEDIA_TYPE);
+            request.getRequestHeaders().put(Headers.TRANSFER_ENCODING, "chunked");
             //customized header parameters 
-            request.getRequestHeaders().put(new HttpString("key"), "BvveSm");
             request.getRequestHeaders().put(new HttpString("host"), "localhost");
-            connection.sendRequest(request, client.createClientCallback(reference, latch));
+            connection.sendRequest(request, client.createClientCallback(reference, latch, "{\"content\": \"request body to be replaced\"}"));
             
             latch.await();
         } catch (Exception e) {
