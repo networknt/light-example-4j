@@ -26,7 +26,7 @@
         
         
         
-        <version.postgres>42.6.0</version.postgres>        
+        <version.postgres>42.7.2</version.postgres>        
         <version.h2>2.2.220</version.h2>
         
         <versions.maven-version>2.4</versions.maven-version>
