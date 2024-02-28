@@ -13,7 +13,7 @@
         <java.version>11</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <version.light-4j>2.1.11-SNAPSHOT</version.light-4j>
-        <version.undertow>2.3.10.Final</version.undertow>
+        <version.undertow>2.3.12.Final</version.undertow>
         <version.slf4j>2.0.9</version.slf4j>
         <version.logback>1.4.14</version.logback>
         <version.logstash>7.3</version.logstash>
