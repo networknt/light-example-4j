@@ -1,0 +1,7 @@
+applicationId: user-query
+bootstrapServers: localhost:9092
+processingGuarantee: exactly_once
+replicationFactor: 3
+# Only set to true right after the streams reset.
+# cleanUp: false
+cleanUp: true
