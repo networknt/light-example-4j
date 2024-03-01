@@ -62,11 +62,11 @@ public class PetsPetIdGetHandlerTest {
             }
             ClientConnection connection = (ClientConnection) connectionToken.getRawConnection();
             ClientRequest request = new ClientRequest().setPath(requestUri).setMethod(Methods.GET);
-            
-            //customized header parameters 
+
+            //customized header parameters
             request.getRequestHeaders().put(new HttpString("host"), "localhost");
             connection.sendRequest(request, client.createClientCallback(reference, latch));
-            
+
             latch.await();
         } catch (Exception e) {
             logger.error("Exception: ", e);
@@ -88,4 +88,3 @@ public class PetsPetIdGetHandlerTest {
         assertNotNull(status);
     }
 }
-

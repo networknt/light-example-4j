@@ -30,13 +30,13 @@
         <version.fastscanner>2.18.1</version.fastscanner>
         <version.mysql>8.0.32</version.mysql>
         <version.hikaricp>3.1.0</version.hikaricp>
-        
-        
-        
-        
-        
+
+
+
+
+
         <version.h2>2.2.220</version.h2>
-        
+
         <versions.maven-version>2.4</versions.maven-version>
     </properties>
 
@@ -257,7 +257,7 @@
             <artifactId>fast-classpath-scanner</artifactId>
             <version>${version.fastscanner}</version>
         </dependency>
-        
+
         <dependency>
             <groupId>com.zaxxer</groupId>
             <artifactId>HikariCP</artifactId>
@@ -268,9 +268,9 @@
             <artifactId>mysql-connector-java</artifactId>
             <version>${version.mysql}</version>
         </dependency>
-        
-        
-        
+
+
+
         <!-- Test Dependencies -->
         <dependency>
             <groupId>junit</groupId>
@@ -278,14 +278,14 @@
             <version>${version.junit}</version>
             <scope>test</scope>
         </dependency>
-        
+
         <dependency>
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
             <version>${version.h2}</version>
             <scope>test</scope>
         </dependency>
-        
+
     </dependencies>
 
 

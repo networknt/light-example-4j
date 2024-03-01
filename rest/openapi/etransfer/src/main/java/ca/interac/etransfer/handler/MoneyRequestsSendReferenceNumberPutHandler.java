@@ -23,7 +23,7 @@ public class MoneyRequestsSendReferenceNumberPutHandler implements LightHttpHand
         this.service = new MoneyRequestsSendReferenceNumberPutService ();
     }
 
-    
+
     @Override
     public void handleRequest(HttpServerExchange exchange) throws Exception {
         HeaderMap requestHeaders = exchange.getRequestHeaders();

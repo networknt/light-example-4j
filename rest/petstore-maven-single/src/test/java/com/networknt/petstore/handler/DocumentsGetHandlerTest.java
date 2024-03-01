@@ -64,11 +64,11 @@ public class DocumentsGetHandlerTest {
         String httpMethod = "get";
         try {
             ClientRequest request = new ClientRequest().setPath(requestUri).setMethod(Methods.GET);
-            
-            //customized header parameters 
+
+            //customized header parameters
             request.getRequestHeaders().put(new HttpString("host"), "localhost");
             connection.sendRequest(request, client.createClientCallback(reference, latch));
-            
+
             latch.await();
         } catch (Exception e) {
             logger.error("Exception: ", e);
@@ -90,4 +90,3 @@ public class DocumentsGetHandlerTest {
         assertNotNull(status);
     }
 }
-

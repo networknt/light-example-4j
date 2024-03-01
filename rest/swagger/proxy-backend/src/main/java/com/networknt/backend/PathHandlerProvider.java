@@ -15,15 +15,15 @@ public class PathHandlerProvider implements HandlerProvider {
     @Override
     public HttpHandler getHandler() {
         return Handlers.routing()
-        
+
             .add(Methods.POST, "/v1/postData", new PostDataPostHandler())
-        
+
             .add(Methods.GET, "/v1/health", new HealthGetHandler())
-        
+
             .add(Methods.GET, "/v1/getData", new GetDataGetHandler())
-        
+
             .add(Methods.GET, "/v1/server/info", new ServerInfoGetHandler())
-        
+
         ;
     }
 }

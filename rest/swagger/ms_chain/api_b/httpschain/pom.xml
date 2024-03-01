@@ -28,11 +28,11 @@
         <version.swagger-parser>1.0.34</version.swagger-parser>
         <version.json-schema-validator>1.0.65</version.json-schema-validator>
         <version.fastscanner>2.18.1</version.fastscanner>
-        
-        
-        
-        
-        
+
+
+
+
+
         <versions.maven-version>2.4</versions.maven-version>
     </properties>
 
@@ -208,10 +208,10 @@
             <artifactId>fast-classpath-scanner</artifactId>
             <version>${version.fastscanner}</version>
         </dependency>
-        
-        
-        
-        
+
+
+
+
         <!-- Test Dependencies -->
         <dependency>
             <groupId>junit</groupId>
@@ -219,7 +219,7 @@
             <version>${version.junit}</version>
             <scope>test</scope>
         </dependency>
-        
+
     </dependencies>
 
 

@@ -24,7 +24,7 @@ public class StoreProductsPostHandler implements LightHttpHandler {
         this.service = new StoreProductsPostService ();
     }
 
-    
+
     @Override
     public void handleRequest(HttpServerExchange exchange) throws Exception {
         HeaderMap requestHeaders = exchange.getRequestHeaders();

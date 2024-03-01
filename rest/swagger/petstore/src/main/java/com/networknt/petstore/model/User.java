@@ -5,29 +5,29 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class User {
 
-    
+
     private String firstName;
-    
+
     private String lastName;
-    
+
     private String password;
-    
+
     private Integer userStatus;
-    
+
     private String phone;
-    
+
     private java.lang.Long id;
-    
+
     private String email;
-    
+
     private String username;
-    
+
 
     public User () {
     }
 
-    
-    
+
+
     @JsonProperty("firstName")
     public String getFirstName() {
         return firstName;
@@ -36,9 +36,9 @@ public class User {
     public void setFirstName(String firstName) {
         this.firstName = firstName;
     }
-    
-    
-    
+
+
+
     @JsonProperty("lastName")
     public String getLastName() {
         return lastName;
@@ -47,9 +47,9 @@ public class User {
     public void setLastName(String lastName) {
         this.lastName = lastName;
     }
-    
-    
-    
+
+
+
     @JsonProperty("password")
     public String getPassword() {
         return password;
@@ -58,9 +58,9 @@ public class User {
     public void setPassword(String password) {
         this.password = password;
     }
-    
-    
-    
+
+
+
     @JsonProperty("userStatus")
     public Integer getUserStatus() {
         return userStatus;
@@ -69,9 +69,9 @@ public class User {
     public void setUserStatus(Integer userStatus) {
         this.userStatus = userStatus;
     }
-    
-    
-    
+
+
+
     @JsonProperty("phone")
     public String getPhone() {
         return phone;
@@ -80,9 +80,9 @@ public class User {
     public void setPhone(String phone) {
         this.phone = phone;
     }
-    
-    
-    
+
+
+
     @JsonProperty("id")
     public java.lang.Long getId() {
         return id;
@@ -91,9 +91,9 @@ public class User {
     public void setId(java.lang.Long id) {
         this.id = id;
     }
-    
-    
-    
+
+
+
     @JsonProperty("email")
     public String getEmail() {
         return email;
@@ -102,9 +102,9 @@ public class User {
     public void setEmail(String email) {
         this.email = email;
     }
-    
-    
-    
+
+
+
     @JsonProperty("username")
     public String getUsername() {
         return username;
@@ -113,8 +113,8 @@ public class User {
     public void setUsername(String username) {
         this.username = username;
     }
-    
-    
+
+
 
     @Override
     public boolean equals(Object o) {
@@ -133,7 +133,7 @@ public class User {
         Objects.equals(phone, User.phone) &&
         Objects.equals(id, User.id) &&
         Objects.equals(email, User.email) &&
-        
+
         Objects.equals(username, User.username);
     }
 
@@ -146,7 +146,7 @@ public class User {
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("class User {\n");
-        
+
         sb.append("    firstName: ").append(toIndentedString(firstName)).append("\n");
         sb.append("    lastName: ").append(toIndentedString(lastName)).append("\n");
         sb.append("    password: ").append(toIndentedString(password)).append("\n");

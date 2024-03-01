@@ -65,7 +65,7 @@
         <versions.maven-version>2.4</versions.maven-version>
         <argLine>-Xmx512m -XX:MaxPermSize=256m</argLine>
     </properties>
- 
+
     <dependencies>
         <dependency>
             <groupId>com.networknt</groupId>
@@ -143,7 +143,7 @@
             <version>${version.undertow}</version>
         </dependency>
 
-      
+
         <!-- Test Dependencies -->
         <dependency>
             <groupId>junit</groupId>

@@ -8,16 +8,16 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class Transfer  {
 
     private String referenceNumber;
-    
-    
+
+
     public enum TransferTypeEnum {
-        
-        REGULAR_TRANSFER ("REGULAR_TRANSFER"), 
-        
-        MONEY_REQUEST_FULFILLMENT ("MONEY_REQUEST_FULFILLMENT"), 
-        
-        DIRECT_DEPOSIT ("DIRECT_DEPOSIT"); 
-        
+
+        REGULAR_TRANSFER ("REGULAR_TRANSFER"),
+
+        MONEY_REQUEST_FULFILLMENT ("MONEY_REQUEST_FULFILLMENT"),
+
+        DIRECT_DEPOSIT ("DIRECT_DEPOSIT");
+
 
         private final String value;
 
@@ -42,7 +42,7 @@ public class Transfer  {
 
     private TransferTypeEnum transferType;
 
-    
+
     private String sourceTransferId;
     private Object sentTo;
     private java.lang.Double amount;
@@ -57,14 +57,14 @@ public class Transfer  {
     private String receivedDate;
     private Integer status;
     private String recipientMessage;
-    
-    
+
+
     public enum TransactionTypeEnum {
-        
-        INCOMING ("incoming"), 
-        
-        OUTGOING ("outgoing"); 
-        
+
+        INCOMING ("incoming"),
+
+        OUTGOING ("outgoing");
+
 
         private final String value;
 
@@ -89,7 +89,7 @@ public class Transfer  {
 
     private TransactionTypeEnum transactionType;
 
-    
+
     private Integer notificationStatus;
 
     public Transfer () {

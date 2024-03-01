@@ -6,5 +6,3 @@ enabled: true
 bypass: true
 # How many requests are to be attacked. 1 each request, 5 each 5th request is attacked
 level: 5
-
-

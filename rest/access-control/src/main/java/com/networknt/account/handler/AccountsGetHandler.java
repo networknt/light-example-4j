@@ -24,7 +24,7 @@ public class AccountsGetHandler implements LightHttpHandler {
         this.service = new AccountsGetService ();
     }
 
-    
+
     @Override
     public void handleRequest(HttpServerExchange exchange) throws Exception {
         HeaderMap requestHeaders = exchange.getRequestHeaders();

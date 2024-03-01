@@ -11,7 +11,7 @@ For more information on how to write business handlers, please check the link be
 https://doc.networknt.com/development/business-handler/rest/
 */
 public class ReportGetHandler implements LightHttpHandler {
-    
+
     @Override
     public void handleRequest(HttpServerExchange exchange) throws Exception {
         exchange.endExchange();

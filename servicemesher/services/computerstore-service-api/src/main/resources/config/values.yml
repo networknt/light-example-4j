@@ -9,4 +9,3 @@ service.singletons:
       - com.networknt.cluster.LightCluster
   - com.networknt.dgp.api.parties.data.PartiesStore:
       - com.networknt.dgp.api.parties.data.RAMPartiesStore
-

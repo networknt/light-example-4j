@@ -22,7 +22,7 @@ https://doc.networknt.com/development/business-handler/rest/
 */
 public class StreamsGetHandler implements LightHttpHandler {
 
-    
+
     @Override
     public void handleRequest(HttpServerExchange exchange) throws Exception {
         exchange.setStatusCode(200);
@@ -33,4 +33,3 @@ public class StreamsGetHandler implements LightHttpHandler {
         exchange.getResponseSender().send(text);
     }
 }
-

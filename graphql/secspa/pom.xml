@@ -205,22 +205,22 @@
             <artifactId>rxjava</artifactId>
             <version>${version.rxjava}</version>
         </dependency>
-        
+
         <dependency>
             <groupId>com.zaxxer</groupId>
             <artifactId>HikariCP</artifactId>
             <version>${version.hikaricp}</version>
         </dependency>
-        
-        
-        
+
+
+
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
             <version>${version.mysql}</version>
         </dependency>
-        
-        
+
+
         <!-- Test Dependencies -->
         <dependency>
             <groupId>junit</groupId>
@@ -228,7 +228,7 @@
             <version>${version.junit}</version>
             <scope>test</scope>
         </dependency>
-        
+
     </dependencies>
 
 

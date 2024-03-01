@@ -39,46 +39,45 @@ public interface PetsApi {
     @Operation(summary = "Create a pet", description = "", tags={ "pets" })
     @ApiResponses(value = {
         @ApiResponse(responseCode = "201", description = "Null response"),
-        
+
         @ApiResponse(responseCode = "200", description = "unexpected error", content = @Content(schema = @Schema(implementation = Error.class))) })
     @RequestMapping(value = "/pets",
-        produces = { "application/json" }, 
-        consumes = { "application/json" }, 
+        produces = { "application/json" },
+        consumes = { "application/json" },
         method = RequestMethod.POST)
     ResponseEntity<Void> createPets(@Parameter(in = ParameterIn.DEFAULT, description = "Pet to add to the store", required=true, schema=@Schema()) @Valid @RequestBody Pet body);
 
 
     @Operation(summary = "Delete a specific pet", description = "", tags={ "pets" })
-    @ApiResponses(value = { 
+    @ApiResponses(value = {
         @ApiResponse(responseCode = "200", description = "Expected response to a valid request", content = @Content(schema = @Schema(implementation = Pet.class))),
-        
+
         @ApiResponse(responseCode = "200", description = "unexpected error", content = @Content(schema = @Schema(implementation = Error.class))) })
     @RequestMapping(value = "/pets/{petId}",
-        produces = { "application/json" }, 
+        produces = { "application/json" },
         method = RequestMethod.DELETE)
     ResponseEntity<Pet> deletePetById(@Parameter(in = ParameterIn.PATH, description = "The id of the pet to delete", required=true, schema=@Schema()) @PathVariable("petId") String petId, @Parameter(in = ParameterIn.HEADER, description = "The key header" ,required=true,schema=@Schema()) @RequestHeader(value="key", required=true) String key);
 
 
     @Operation(summary = "List all pets", description = "", tags={ "pets" })
-    @ApiResponses(value = { 
+    @ApiResponses(value = {
         @ApiResponse(responseCode = "200", description = "An paged array of pets", content = @Content(array = @ArraySchema(schema = @Schema(implementation = Pet.class)))),
-        
+
         @ApiResponse(responseCode = "200", description = "unexpected error", content = @Content(schema = @Schema(implementation = Error.class))) })
     @RequestMapping(value = "/pets",
-        produces = { "application/json" }, 
+        produces = { "application/json" },
         method = RequestMethod.GET)
     ResponseEntity<List<Pet>> listPets(@Parameter(in = ParameterIn.QUERY, description = "How many items to return at one time (max 100)" ,schema=@Schema()) @Valid @RequestParam(value = "limit", required = false) Integer limit);
 
 
     @Operation(summary = "Info for a specific pet", description = "", tags={ "pets" })
-    @ApiResponses(value = { 
+    @ApiResponses(value = {
         @ApiResponse(responseCode = "200", description = "Expected response to a valid request", content = @Content(schema = @Schema(implementation = Pet.class))),
-        
+
         @ApiResponse(responseCode = "200", description = "unexpected error", content = @Content(schema = @Schema(implementation = Error.class))) })
     @RequestMapping(value = "/pets/{petId}",
-        produces = { "application/json" }, 
+        produces = { "application/json" },
         method = RequestMethod.GET)
     ResponseEntity<Pet> showPetById(@Parameter(in = ParameterIn.PATH, description = "The id of the pet to retrieve", required=true, schema=@Schema()) @PathVariable("petId") String petId);
 
 }
-

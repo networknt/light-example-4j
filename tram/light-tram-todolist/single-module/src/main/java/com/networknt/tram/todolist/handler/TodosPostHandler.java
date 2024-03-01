@@ -31,6 +31,6 @@ public class TodosPostHandler implements HttpHandler {
 
         exchange.getResponseHeaders().add(new HttpString("Content-Type"), "application/json");
         exchange.getResponseSender().send(Config.getInstance().getMapper().writeValueAsString(todo));
-        
+
     }
 }

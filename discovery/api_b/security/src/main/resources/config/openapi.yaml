@@ -44,4 +44,3 @@ components:
           scopes:
             ab.w: write access
             ab.r: read access
-            

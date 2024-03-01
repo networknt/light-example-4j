@@ -23,7 +23,7 @@ public class UserRegistrationsPostHandler implements LightHttpHandler {
         this.service = new UserRegistrationsPostService ();
     }
 
-    
+
     @Override
     public void handleRequest(HttpServerExchange exchange) throws Exception {
         HeaderMap requestHeaders = exchange.getRequestHeaders();

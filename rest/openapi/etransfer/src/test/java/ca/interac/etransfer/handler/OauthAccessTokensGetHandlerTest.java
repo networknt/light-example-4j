@@ -62,13 +62,13 @@ public class OauthAccessTokensGetHandlerTest {
         String httpMethod = "get";
         try {
             ClientRequest request = new ClientRequest().setPath(requestUri).setMethod(Methods.GET);
-            
-            //customized header parameters 
+
+            //customized header parameters
             request.getRequestHeaders().put(new HttpString("grantType"), "YefvxDXc");
             request.getRequestHeaders().put(new HttpString("grantRequest"), "XectQsJfwJy");
             request.getRequestHeaders().put(new HttpString("host"), "localhost");
             connection.sendRequest(request, client.createClientCallback(reference, latch));
-            
+
             latch.await();
         } catch (Exception e) {
             logger.error("Exception: ", e);
@@ -90,4 +90,3 @@ public class OauthAccessTokensGetHandlerTest {
         Assert.assertNull(status);
     }
 }
-

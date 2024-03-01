@@ -12,15 +12,15 @@ paths:
   /report:
     get:
       operationId: reportUsers
-      summary: Generate a report based on user contry 
+      summary: Generate a report based on user contry
       responses:
         '200':
           description: Successful response
           content:
             application/json:
-              schema: 
+              schema:
                 type: array
-                items: 
+                items:
                   $ref: '#/components/schemas/CountryUserCount'
         '400':
           description: Unexpected error
@@ -30,7 +30,7 @@ paths:
                 "$ref": "#/components/schemas/Status"
       security:
         - user_auth:
-            - user:r  
+            - user:r
 components:
   securitySchemes:
     user_auth:
@@ -46,7 +46,7 @@ components:
     Status:
       type: object
       properties:
-        statusCode: 
+        statusCode:
           description: HTTP response code
           type: integer
         code:
@@ -55,8 +55,8 @@ components:
         message:
           description: Error messsage
           type: string
-        description: 
-          description: The detailed description of the error status  
+        description:
+          description: The detailed description of the error status
           type: string
       required:
       - statusCode
@@ -64,7 +64,7 @@ components:
     CountryUserCount:
       type: object
       properties:
-        country: 
+        country:
           description: User Country
           type: string
         count:

@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Map;
 
 public class DataGetHandler implements LightHttpHandler {
-    
+
     @Override
     public void handleRequest(HttpServerExchange exchange) throws Exception {
         int port = Server.getServerConfig().getHttpsPort();

@@ -24,7 +24,7 @@ public class DocumentsGetHandler implements LightHttpHandler {
         this.service = new DocumentsGetService ();
     }
 
-    
+
     @Override
     public void handleRequest(HttpServerExchange exchange) throws Exception {
         HeaderMap requestHeaders = exchange.getRequestHeaders();

@@ -58,7 +58,7 @@ public class PdfReportPostHandlerBufferTest {
         String httpMethod = "post";
         try {
             ClientRequest request = new ClientRequest().setPath(requestUri).setMethod(Methods.POST);
-            
+
            // request.getRequestHeaders().put(Headers.CONTENT_TYPE, FORM_DATA_TYPE);
 
             request.getRequestHeaders().put(Headers.CONTENT_TYPE, FORM_DATA_TYPE);
@@ -68,9 +68,9 @@ public class PdfReportPostHandlerBufferTest {
             requestMap.put("name", "test_sample.pdf");
             requestMap.put("profileFile", IOUtils.toByteArray(resourceAsStream));
         //    String requestBody = Config.getInstance().getMapper().writeValueAsString(requestMap);
-            //customized header parameters 
+            //customized header parameters
             connection.sendRequest(request, createClientCallback(reference, latch, ByteBuffer.wrap(SerializationUtils.serialize(requestMap))));
-            
+
             latch.await();
         } catch (Exception e) {
             logger.error("Exception: ", e);
@@ -132,4 +132,3 @@ public class PdfReportPostHandlerBufferTest {
         };
     }
 }
-

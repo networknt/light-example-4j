@@ -8,4 +8,3 @@ Example APIs to demo all feature of the light-4j and frameworks built on top of 
 [Youtube Channel](https://www.youtube.com/channel/UCHCRMWJVXw8iB7zKxF55Byw) |
 [Documentation](https://doc.networknt.com) |
 [Contribution Guide](https://doc.networknt.com/contribute/) |
-

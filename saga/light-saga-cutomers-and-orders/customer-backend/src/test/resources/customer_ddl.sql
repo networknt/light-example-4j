@@ -16,4 +16,3 @@ CREATE  TABLE customer_order (
   order_id long,
   orderTotal numeric
 );
-

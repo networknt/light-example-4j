@@ -18,13 +18,13 @@
         <version.junit>5.8.1</version.junit>
         <version.undertow>2.3.12.Final</version.undertow>
         <version.json-schema-validator>1.0.65</version.json-schema-validator>
-        
-        
-        
-        
-        
-        
-        
+
+
+
+
+
+
+
         <versions.maven-version>2.4</versions.maven-version>
         <version.javadoc-packagelist-plugin>1.0.0</version.javadoc-packagelist-plugin>
         <version.maven-javadoc>3.4.1</version.maven-javadoc>
@@ -103,7 +103,7 @@
             <artifactId>metrics</artifactId>
             <version>${version.light-4j}</version>
         </dependency>
-        
+
         <dependency>
             <groupId>com.networknt</groupId>
             <artifactId>handler</artifactId>
@@ -199,9 +199,9 @@
             <artifactId>http-entity</artifactId>
             <version>${version.light-4j}</version>
         </dependency>
-        
-        
-        
+
+
+
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
@@ -227,10 +227,10 @@
             <artifactId>undertow-core</artifactId>
             <version>${version.undertow}</version>
         </dependency>
-        
-        
-        
-        
+
+
+
+
         <!-- Test Dependencies -->
         <dependency>
             <groupId>org.junit.jupiter</groupId>
@@ -238,8 +238,8 @@
             <version>${version.junit}</version>
             <scope>test</scope>
         </dependency>
-        
-        
+
+
     </dependencies>
 
     <build>
@@ -345,7 +345,7 @@
 
 
     <repositories>
-        
+
         <repository>
             <id>sonatype-snapshots</id>
             <url>https://oss.sonatype.org/content/repositories/snapshots</url>

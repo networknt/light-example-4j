@@ -20,9 +20,9 @@ showHelp() {
 
 build() {
     echo "Building ..."
-    
+
     ./gradlew clean build
-    
+
     echo "Successfully built!"
 }
 

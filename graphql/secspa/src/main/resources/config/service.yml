@@ -38,5 +38,3 @@ singletons:
 # GraphQL schema provider interface implementation
 - com.networknt.graphql.router.SchemaProvider:
   - com.networknt.example.graphql.secspa.MutationSchema
-
-

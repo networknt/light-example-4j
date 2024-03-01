@@ -24,7 +24,7 @@ public class PetsPetIdDeleteHandler implements LightHttpHandler {
         this.service = new PetsPetIdDeleteService ();
     }
 
-    
+
     @Override
     public void handleRequest(HttpServerExchange exchange) throws Exception {
         HeaderMap requestHeaders = exchange.getRequestHeaders();

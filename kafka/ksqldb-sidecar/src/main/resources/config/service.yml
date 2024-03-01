@@ -4,11 +4,7 @@ singletons:
 # StartupHookProvider implementations, there are one to many and they are called in the same sequence defined.
 - com.networknt.server.StartupHookProvider:
     - com.networknt.kafka.SidecarStartupHook
-  
+
 # ShutdownHookProvider implementations, there are one to many and they are called in the same sequence defined.
 - com.networknt.server.ShutdownHookProvider:
     - com.networknt.kafka.SidecarShutdownHook
-  
-
-
-

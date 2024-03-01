@@ -20,9 +20,9 @@ showHelp() {
 
 build() {
     echo "Building ..."
-    
+
     ./mvnw clean install -Prelease
-    
+
     echo "Successfully built!"
 }
 

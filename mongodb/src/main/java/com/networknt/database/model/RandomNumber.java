@@ -23,7 +23,7 @@ public class RandomNumber   {
     return this;
   }
 
-  
+
   @ApiModelProperty(example = "null", required = true, value = "a unique id as primary key")
   @JsonProperty("id")
   public Integer getId() {
@@ -41,7 +41,7 @@ public class RandomNumber   {
     return this;
   }
 
-  
+
   @ApiModelProperty(example = "null", required = true, value = "a random number")
   @JsonProperty("randomNumber")
   public Integer getRandomNumber() {
@@ -74,7 +74,7 @@ public class RandomNumber   {
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class RandomNumber {\n");
-    
+
     sb.append("    id: ").append(toIndentedString(id)).append("\n");
     sb.append("    randomNumber: ").append(toIndentedString(randomNumber)).append("\n");
     sb.append("}");
@@ -92,4 +92,3 @@ public class RandomNumber   {
     return o.toString().replace("\n", "\n    ");
   }
 }
-

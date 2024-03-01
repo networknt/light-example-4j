@@ -17,7 +17,7 @@ import java.util.Map;
  * @author Steve Hu
  */
 public class DataGetHandler implements LightHttpHandler {
-    
+
     @Override
     public void handleRequest(HttpServerExchange exchange) throws Exception {
         // get the current address and port from the Server. Cannot use the server.yml value as the dynamic port might be used.

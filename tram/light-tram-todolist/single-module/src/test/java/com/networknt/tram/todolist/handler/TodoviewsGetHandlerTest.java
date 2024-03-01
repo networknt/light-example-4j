@@ -53,7 +53,7 @@ public class TodoviewsGetHandlerTest {
 
 
             connection.sendRequest(request, client.createClientCallback(reference, latch));
-            
+
             latch.await();
         } catch (Exception e) {
             logger.error("Exception: ", e);

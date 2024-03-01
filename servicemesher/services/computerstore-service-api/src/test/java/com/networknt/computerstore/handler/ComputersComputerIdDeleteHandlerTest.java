@@ -58,11 +58,11 @@ public class ComputersComputerIdDeleteHandlerTest {
         String httpMethod = "delete";
         try {
             ClientRequest request = new ClientRequest().setPath(requestUri).setMethod(Methods.DELETE);
-            
-            //customized header parameters 
+
+            //customized header parameters
             request.getRequestHeaders().put(new HttpString("key"), "QgZslMzbWOtqlwX");
             connection.sendRequest(request, client.createClientCallback(reference, latch));
-            
+
             latch.await();
         } catch (Exception e) {
             logger.error("Exception: ", e);
@@ -84,4 +84,3 @@ public class ComputersComputerIdDeleteHandlerTest {
         Assert.assertNull(status);
     }
 }
-

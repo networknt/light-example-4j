@@ -9,14 +9,14 @@ public class TransferAuthentication  {
 
     private String securityQuestion;
     private String securityAnswer;
-    
-    
+
+
     public enum HashTypeEnum {
-        
-        SHA2 ("SHA2"), 
-        
-        MD5 ("MD5"); 
-        
+
+        SHA2 ("SHA2"),
+
+        MD5 ("MD5");
+
 
         private final String value;
 
@@ -41,7 +41,7 @@ public class TransferAuthentication  {
 
     private HashTypeEnum hashType;
 
-    
+
     private String hashSalt;
 
     public TransferAuthentication () {

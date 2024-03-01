@@ -12,7 +12,7 @@ returns {"message":"Hello World"}
 
 # Getting Started
 
-Build locally with JDK8 and Maven installed. 
+Build locally with JDK8 and Maven installed.
 
 ```
 git clone git@github.com:networknt/light-java-example.git
@@ -35,7 +35,7 @@ docker run -d -p 8080:8080 networknt/example-webserver
 
 # Test
 
-The two endpoints are protected by OAuth2 but it is disabled in the default 
+The two endpoints are protected by OAuth2 but it is disabled in the default
 configuration in security.json. In order to turn it on, you need to update
 /src/main/resources/config/security.json to set enableVerifyJwt to true.
 
@@ -63,4 +63,3 @@ Authorization with value as above token.
 GET localhost:8080/text
 
 GET localhost:8080/json
-

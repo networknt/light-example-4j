@@ -7,16 +7,16 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class CustomerDetails  {
 
-    
-    
+
+
     public enum CustomerTypeEnum {
-        
-        RETAIL ("retail"), 
-        
-        SMALL_BUSINESS ("small_business"), 
-        
-        CORPORATE ("corporate"); 
-        
+
+        RETAIL ("retail"),
+
+        SMALL_BUSINESS ("small_business"),
+
+        CORPORATE ("corporate");
+
 
         private final String value;
 
@@ -41,7 +41,7 @@ public class CustomerDetails  {
 
     private CustomerTypeEnum customerType;
 
-    
+
     private String registrationName;
     private Object legalName;
 

@@ -9,16 +9,16 @@ public class DirectDepositRegistration  {
 
     private String directDepositRegistrationId;
     private String directDepositHandle;
-    
-    
+
+
     public enum DirectDepositHandleTypeEnum {
-        
-        SMS ("sms"), 
-        
-        EMAIL ("email"), 
-        
-        UUID ("uuid"); 
-        
+
+        SMS ("sms"),
+
+        EMAIL ("email"),
+
+        UUID ("uuid");
+
 
         private final String value;
 
@@ -43,7 +43,7 @@ public class DirectDepositRegistration  {
 
     private DirectDepositHandleTypeEnum directDepositHandleType;
 
-    
+
 
     public DirectDepositRegistration () {
     }

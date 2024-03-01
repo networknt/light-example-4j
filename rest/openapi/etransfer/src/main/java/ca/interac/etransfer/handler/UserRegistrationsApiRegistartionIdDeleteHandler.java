@@ -23,7 +23,7 @@ public class UserRegistrationsApiRegistartionIdDeleteHandler implements LightHtt
         this.service = new UserRegistrationsApiRegistartionIdDeleteService ();
     }
 
-    
+
     @Override
     public void handleRequest(HttpServerExchange exchange) throws Exception {
         HeaderMap requestHeaders = exchange.getRequestHeaders();

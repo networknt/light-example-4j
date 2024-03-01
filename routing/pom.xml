@@ -19,7 +19,7 @@
         <version.junit>4.13.2</version.junit>
         <version.undertow>2.3.12.Final</version.undertow>
     </properties>
- 
+
     <dependencies>
         <dependency>
             <groupId>com.networknt</groupId>
@@ -41,7 +41,7 @@
             <artifactId>server</artifactId>
             <version>${version.light-4j}</version>
         </dependency>
-  
+
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
@@ -63,7 +63,7 @@
             <version>${version.undertow}</version>
         </dependency>
 
-      
+
         <!-- Test Dependencies -->
         <dependency>
             <groupId>junit</groupId>

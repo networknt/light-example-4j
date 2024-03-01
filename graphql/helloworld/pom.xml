@@ -22,13 +22,13 @@
         <version.rxjava>2.1.5</version.rxjava>
 
         <version.hikaricp>3.1.0</version.hikaricp>
-        
-        
-        
+
+
+
         <version.mysql>8.0.32</version.mysql>
-        
-        
-        
+
+
+
         <versions.maven-version>2.4</versions.maven-version>
         <version.javadoc-packagelist-plugin>1.0.0</version.javadoc-packagelist-plugin>
         <version.maven-javadoc>3.4.1</version.maven-javadoc>
@@ -219,22 +219,22 @@
             <artifactId>rxjava</artifactId>
             <version>${version.rxjava}</version>
         </dependency>
-        
+
         <dependency>
             <groupId>com.zaxxer</groupId>
             <artifactId>HikariCP</artifactId>
             <version>${version.hikaricp}</version>
         </dependency>
-        
-        
-        
+
+
+
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
             <version>${version.mysql}</version>
         </dependency>
-        
-        
+
+
         <!-- Test Dependencies -->
         <dependency>
             <groupId>junit</groupId>
@@ -242,7 +242,7 @@
             <version>${version.junit}</version>
             <scope>test</scope>
         </dependency>
-        
+
     </dependencies>
 
     <build>

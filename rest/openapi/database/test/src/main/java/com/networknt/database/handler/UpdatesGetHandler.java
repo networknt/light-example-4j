@@ -21,7 +21,7 @@ public class UpdatesGetHandler implements LightHttpHandler {
 
     private static final DataSource ds = SingletonServiceFactory.getBean(DataSource.class);
     private static final ObjectMapper mapper = Config.getInstance().getMapper();
-    
+
     @Override
     public void handleRequest(HttpServerExchange exchange) throws Exception {
         if (exchange.isInIoThread()) {

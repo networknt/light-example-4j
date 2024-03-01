@@ -9,6 +9,6 @@ function getPetsData(csrf) {
   const url = `${BASE_URL}/v1/pets`;
   // set this as header globally
   axios.defaults.headers.common['X-CSRF-TOKEN'] = csrf;
-  // withCredentials true means the browser will send the cookies. 
+  // withCredentials true means the browser will send the cookies.
   return axios.get(url, {withCredentials: true}).then(response => response.data);
 }

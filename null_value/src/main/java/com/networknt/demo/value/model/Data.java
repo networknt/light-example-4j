@@ -29,7 +29,7 @@ public class Data   {
     return this;
   }
 
-  
+
   @ApiModelProperty(example = "null", required = true, value = "")
   @JsonProperty("id")
   public Long getId() {
@@ -46,7 +46,7 @@ public class Data   {
     return this;
   }
 
-  
+
   @ApiModelProperty(example = "null", value = "")
   @JsonProperty("name")
   public String getName() {
@@ -63,7 +63,7 @@ public class Data   {
     return this;
   }
 
-  
+
   @ApiModelProperty(example = "null", value = "")
   @JsonProperty("weight")
   public Double getWeight() {
@@ -80,7 +80,7 @@ public class Data   {
     return this;
   }
 
-  
+
   @ApiModelProperty(example = "null", value = "")
   @JsonProperty("startDate")
   public Date getStartDate() {
@@ -97,7 +97,7 @@ public class Data   {
     return this;
   }
 
-  
+
   @ApiModelProperty(example = "null", value = "")
   @JsonProperty("endDate")
   public Date getEndDate() {
@@ -133,7 +133,7 @@ public class Data   {
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class Data {\n");
-    
+
     sb.append("    id: ").append(toIndentedString(id)).append("\n");
     sb.append("    name: ").append(toIndentedString(name)).append("\n");
     sb.append("    weight: ").append(toIndentedString(weight)).append("\n");
@@ -154,4 +154,3 @@ public class Data   {
     return o.toString().replace("\n", "\n    ");
   }
 }
-

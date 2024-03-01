@@ -23,7 +23,7 @@ public class TransfersSendReferenceNumberNoticePatchHandler implements LightHttp
         this.service = new TransfersSendReferenceNumberNoticePatchService ();
     }
 
-    
+
     @Override
     public void handleRequest(HttpServerExchange exchange) throws Exception {
         HeaderMap requestHeaders = exchange.getRequestHeaders();

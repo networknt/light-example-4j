@@ -20,11 +20,11 @@
         <version.swagger-parser>1.0.34</version.swagger-parser>
         <version.json-schema-validator>1.0.65</version.json-schema-validator>
         <version.fastscanner>2.18.1</version.fastscanner>
-        
-        
-        
-        
-        
+
+
+
+
+
         <versions.maven-version>2.4</versions.maven-version>
     </properties>
 
@@ -89,7 +89,7 @@
             <artifactId>metrics</artifactId>
             <version>${version.light-4j}</version>
         </dependency>
-        
+
         <dependency>
             <groupId>com.networknt</groupId>
             <artifactId>handler</artifactId>
@@ -196,10 +196,10 @@
             <artifactId>fast-classpath-scanner</artifactId>
             <version>${version.fastscanner}</version>
         </dependency>
-        
-        
-        
-        
+
+
+
+
         <!-- Test Dependencies -->
         <dependency>
             <groupId>junit</groupId>
@@ -207,7 +207,7 @@
             <version>${version.junit}</version>
             <scope>test</scope>
         </dependency>
-        
+
     </dependencies>
 
 
@@ -241,7 +241,7 @@
                                         <exclude>META-INF/*.RSA</exclude>
                                     </excludes>
                                 </filter>
-                            </filters>                            
+                            </filters>
                             <transformers>
                                 <transformer implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer"/>
                             </transformers>

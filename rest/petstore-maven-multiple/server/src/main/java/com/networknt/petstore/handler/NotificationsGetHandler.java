@@ -24,7 +24,7 @@ public class NotificationsGetHandler implements LightHttpHandler {
         this.service = new NotificationsGetService ();
     }
 
-    
+
     @Override
     public void handleRequest(HttpServerExchange exchange) throws Exception {
         HeaderMap requestHeaders = exchange.getRequestHeaders();

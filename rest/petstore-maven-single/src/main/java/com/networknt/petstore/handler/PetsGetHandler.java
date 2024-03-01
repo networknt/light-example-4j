@@ -20,7 +20,7 @@ public class PetsGetHandler implements LightHttpHandler {
     public PetsGetHandler () {
     }
 
-    
+
     @Override
     public void handleRequest(HttpServerExchange exchange) throws Exception {
         exchange.getResponseHeaders().add(Headers.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE);

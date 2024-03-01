@@ -27,13 +27,13 @@
         <version.undertow>2.3.12.Final</version.undertow>
         <version.json-schema-validator>1.0.65</version.json-schema-validator>
         <version.fastscanner>2.18.1</version.fastscanner>
-        
+
         <version.hikaricp>3.1.0</version.hikaricp>
-        
-        
-        
-        
-        
+
+
+
+
+
         <versions.maven-version>2.4</versions.maven-version>
     </properties>
 
@@ -98,7 +98,7 @@
             <artifactId>metrics</artifactId>
             <version>${version.light-4j}</version>
         </dependency>
-        
+
         <dependency>
             <groupId>com.networknt</groupId>
             <artifactId>handler</artifactId>
@@ -210,16 +210,16 @@
             <artifactId>fast-classpath-scanner</artifactId>
             <version>${version.fastscanner}</version>
         </dependency>
-        
+
         <dependency>
             <groupId>com.zaxxer</groupId>
             <artifactId>HikariCP</artifactId>
             <version>${version.hikaricp}</version>
         </dependency>
-        
-        
-        
-        
+
+
+
+
         <!-- Test Dependencies -->
         <dependency>
             <groupId>junit</groupId>
@@ -227,7 +227,7 @@
             <version>${version.junit}</version>
             <scope>test</scope>
         </dependency>
-        
+
     </dependencies>
 
 

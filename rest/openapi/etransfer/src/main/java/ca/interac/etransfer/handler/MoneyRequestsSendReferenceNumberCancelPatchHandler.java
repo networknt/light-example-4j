@@ -23,7 +23,7 @@ public class MoneyRequestsSendReferenceNumberCancelPatchHandler implements Light
         this.service = new MoneyRequestsSendReferenceNumberCancelPatchService ();
     }
 
-    
+
     @Override
     public void handleRequest(HttpServerExchange exchange) throws Exception {
         HeaderMap requestHeaders = exchange.getRequestHeaders();

@@ -11,7 +11,7 @@ import javax.sql.DataSource;
 public class QueriesGetHandler implements LightHttpHandler {
 
     private static final DataSource ds = SingletonServiceFactory.getBean(DataSource.class);
-    
+
     @Override
     public void handleRequest(HttpServerExchange exchange) throws Exception {
         exchange.getResponseHeaders().add(new HttpString("Content-Type"), "application/json");

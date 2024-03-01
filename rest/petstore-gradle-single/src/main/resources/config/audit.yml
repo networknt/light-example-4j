@@ -53,4 +53,3 @@ audit:
 
 # Response payload, this is optional and must be set by the service in its implementation
 - response
-

@@ -61,7 +61,7 @@ public class PdfReportPostHandlerTest {
         String httpMethod = "post";
         try {
             ClientRequest request = new ClientRequest().setPath(requestUri).setMethod(Methods.POST);
-            
+
            // request.getRequestHeaders().put(Headers.CONTENT_TYPE, FORM_DATA_TYPE);
 
             request.getRequestHeaders().put(Headers.CONTENT_TYPE, FORM_DATA_TYPE);
@@ -71,9 +71,9 @@ public class PdfReportPostHandlerTest {
             requestMap.put("profileFile", "WebKitFormBoundaryWfPNVh4wuWBlyEyQ");
 
             String requestBody = Config.getInstance().getMapper().writeValueAsString(requestMap);
-            //customized header parameters 
+            //customized header parameters
             connection.sendRequest(request, client.createClientCallback(reference, latch, requestBody));
-            
+
             latch.await();
         } catch (Exception e) {
             logger.error("Exception: ", e);
@@ -89,4 +89,3 @@ public class PdfReportPostHandlerTest {
         Assert.assertEquals(200, statusCode);
     }
 }
-

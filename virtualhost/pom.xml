@@ -32,7 +32,7 @@
         <nexus.server>http://nexus.com:8080</nexus.server>
         <argLine>-Xmx512m -XX:MaxPermSize=256m</argLine>
     </properties>
- 
+
     <dependencies>
         <dependency>
             <groupId>com.networknt</groupId>
@@ -54,7 +54,7 @@
             <artifactId>server</artifactId>
             <version>${version.framework}</version>
         </dependency>
-  
+
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
@@ -81,7 +81,7 @@
             <version>${version.undertow}</version>
         </dependency>
 
-      
+
         <!-- Test Dependencies -->
         <dependency>
             <groupId>junit</groupId>

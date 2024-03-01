@@ -1,4 +1,4 @@
-This is a demo of Http2Client connecting to Sprint Boot with embedded Tomcat. 
+This is a demo of Http2Client connecting to Sprint Boot with embedded Tomcat.
 
 To start the server, please do the following.
 

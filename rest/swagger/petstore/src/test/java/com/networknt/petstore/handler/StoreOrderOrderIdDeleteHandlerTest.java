@@ -49,9 +49,9 @@ public class StoreOrderOrderIdDeleteHandlerTest {
         final AtomicReference<ClientResponse> reference = new AtomicReference<>();
         try {
             ClientRequest request = new ClientRequest().setPath("/v2/store/order/orderId").setMethod(Methods.DELETE);
-            
+
             connection.sendRequest(request, client.createClientCallback(reference, latch));
-            
+
             latch.await();
         } catch (Exception e) {
             logger.error("Exception: ", e);

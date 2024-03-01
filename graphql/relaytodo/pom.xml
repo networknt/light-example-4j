@@ -26,15 +26,15 @@
         <version.undertow>2.3.12.Final</version.undertow>
         <version.graphql>20.2</version.graphql>
         <version.rxjava>2.1.5</version.rxjava>
-        
+
         <version.hikaricp>3.1.0</version.hikaricp>
-        
-        
-        
+
+
+
         <version.mysql>8.0.32</version.mysql>
-        
-        
-        
+
+
+
         <versions.maven-version>2.4</versions.maven-version>
     </properties>
 
@@ -201,22 +201,22 @@
             <artifactId>rxjava</artifactId>
             <version>${version.rxjava}</version>
         </dependency>
-        
+
         <dependency>
             <groupId>com.zaxxer</groupId>
             <artifactId>HikariCP</artifactId>
             <version>${version.hikaricp}</version>
         </dependency>
-        
-        
-        
+
+
+
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
             <version>${version.mysql}</version>
         </dependency>
-        
-        
+
+
         <!-- Test Dependencies -->
         <dependency>
             <groupId>junit</groupId>
@@ -224,7 +224,7 @@
             <version>${version.junit}</version>
             <scope>test</scope>
         </dependency>
-        
+
     </dependencies>
 
 

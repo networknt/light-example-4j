@@ -23,7 +23,7 @@ public class TransfersGetHandler implements LightHttpHandler {
         this.service = new TransfersGetService ();
     }
 
-    
+
     @Override
     public void handleRequest(HttpServerExchange exchange) throws Exception {
         HeaderMap requestHeaders = exchange.getRequestHeaders();

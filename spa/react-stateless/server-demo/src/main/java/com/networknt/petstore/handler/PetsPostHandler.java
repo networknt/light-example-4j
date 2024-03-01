@@ -10,8 +10,8 @@ import java.util.Map;
 public class PetsPostHandler implements HttpHandler {
     @Override
     public void handleRequest(HttpServerExchange exchange) throws Exception {
-        
+
             exchange.endExchange();
-        
+
     }
 }

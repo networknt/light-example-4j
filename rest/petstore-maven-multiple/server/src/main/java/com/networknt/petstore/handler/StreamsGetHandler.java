@@ -24,7 +24,7 @@ public class StreamsGetHandler implements LightHttpHandler {
         this.service = new StreamsGetService ();
     }
 
-    
+
     @Override
     public void handleRequest(HttpServerExchange exchange) throws Exception {
         HeaderMap requestHeaders = exchange.getRequestHeaders();

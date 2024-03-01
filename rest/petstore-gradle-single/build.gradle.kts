@@ -24,9 +24,9 @@ dependencies {
     compile("com.networknt", "body", light4jVersion)
     compile("com.networknt", "dump", light4jVersion)
     compile("com.networknt", "mask", light4jVersion)
-    
+
     compile("com.networknt", "metrics", light4jVersion)
-    
+
     compile("com.networknt", "handler", light4jVersion)
     compile("com.networknt", "sanitizer", light4jVersion)
     compile("com.networknt", "traceability", light4jVersion)
@@ -45,9 +45,9 @@ dependencies {
     compile("com.networknt", "openapi-validator", light4jVersion)
     compile("com.networknt", "specification", light4jVersion)
     compile("com.networknt", "http-entity", light4jVersion)
-    
-    
-    
+
+
+
     val jacksonVersion: String by project
     compile("com.fasterxml.jackson.core", "jackson-databind", jacksonVersion)
     val jsonSchemaValidatorVersion: String by project
@@ -56,14 +56,14 @@ dependencies {
     compile("ch.qos.logback", "logback-classic", logbackVersion)
     val undertowVersion: String by project
     compile("io.undertow", "undertow-core", undertowVersion)
-    
-    
-    
-    
-    
+
+
+
+
+
     val junitVersion: String by project
     testImplementation("junit", "junit", junitVersion)
-    
+
 }
 
 group = "com.networknt"
@@ -71,7 +71,7 @@ version = "3.0.1"
 repositories {
     mavenLocal() // mavenLocal must be added first.
     jcenter()
-    
+
 }
 
 
@@ -91,4 +91,3 @@ tasks {
         dependsOn(fatJar)
     }
 }
-

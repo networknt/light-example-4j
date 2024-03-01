@@ -6,8 +6,3 @@ singletons:
       jdbcUrl: jdbc:oracle:thin:@localhost:1522:XE
       username: SYSTEM
       password: oracle
-
-
-
-
-

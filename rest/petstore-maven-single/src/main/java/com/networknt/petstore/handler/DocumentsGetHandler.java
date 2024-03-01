@@ -22,7 +22,7 @@ https://doc.networknt.com/development/business-handler/rest/
 */
 public class DocumentsGetHandler implements LightHttpHandler {
 
-    
+
     @Override
     public void handleRequest(HttpServerExchange exchange) throws Exception {
         InputStream inputStream = Config.getInstance().getInputStreamFromFile("document.json");

@@ -23,5 +23,3 @@ Bearer eyJraWQiOiIxMDAiLCJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJ1cm46Y29tOm5ldHdvcmtudDpv
 Postman is the best tool to test REST APIs
 
 Add "Authorization" header with value as above token and a dummy message will return from the generated stub.
-
-

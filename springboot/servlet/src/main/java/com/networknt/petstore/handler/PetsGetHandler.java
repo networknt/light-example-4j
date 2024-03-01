@@ -7,7 +7,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class PetsGetHandler implements LightHttpHandler {
-    
+
     @Override
     public void handleRequest(HttpServerExchange exchange) throws Exception {
         exchange.getResponseHeaders().add(new HttpString("Content-Type"), "application/json");

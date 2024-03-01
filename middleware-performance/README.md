@@ -1,14 +1,14 @@
-With release 1.5.19, we have three different ways to configure middleware handlers. These options give us flexibility to configure multiple middleware chains for each HTTP endpoint. This allows us easily bypass the OAuth 2.0 security and enable IP whitelist for /health/{serviceId} from Consul and /server/info from light-portal, serve static content and SPA for the service instance, and also combine multiple frameworks into the same instance such as OpenAPI and GraphQL in the same JVM instance. 
+With release 1.5.19, we have three different ways to configure middleware handlers. These options give us flexibility to configure multiple middleware chains for each HTTP endpoint. This allows us easily bypass the OAuth 2.0 security and enable IP whitelist for /health/{serviceId} from Consul and /server/info from light-portal, serve static content and SPA for the service instance, and also combine multiple frameworks into the same instance such as OpenAPI and GraphQL in the same JVM instance.
 
-The following is the descriptions of each approach. 
+The following is the descriptions of each approach.
 
 ### HandlerProvider and MiddlewareHandler in service.yml
 
-This is the original approach to configure middleware handlers. We keeps it for backward compatibility for existing services. It is recommend to use the other two approaches when you start a new project. The light-codegen generates an implementation of HandlerProvider with all the endpoints and the handlers mapping. Also a list of middleware handlers which implements com.networknt.handler.MiddlewareHandler will be wired in sequence for the request/response chain. 
+This is the original approach to configure middleware handlers. We keeps it for backward compatibility for existing services. It is recommend to use the other two approaches when you start a new project. The light-codegen generates an implementation of HandlerProvider with all the endpoints and the handlers mapping. Also a list of middleware handlers which implements com.networknt.handler.MiddlewareHandler will be wired in sequence for the request/response chain.
 
-This approach is very easy to implement and easy to understand. When a request comes in, it goes through all the middleware handler and then to the HandlerProvider implementation to route to the correct business handler for the endpoint. 
+This approach is very easy to implement and easy to understand. When a request comes in, it goes through all the middleware handler and then to the HandlerProvider implementation to route to the correct business handler for the endpoint.
 
-The drawbacks of this approach is that the entire service can only share one middleware handler chain. There is no way that you can have different security handler for /health/{serviceId} and there is no way you can mix both OpenAPI and GraphQL together in the same instance. 
+The drawbacks of this approach is that the entire service can only share one middleware handler chain. There is no way that you can have different security handler for /health/{serviceId} and there is no way you can mix both OpenAPI and GraphQL together in the same instance.
 
 Here is an example of service.yml
 
@@ -44,11 +44,11 @@ singletons:
 
 ### Individual Chain per Endpoint
 
-In release 1.5.18, we have introduced multiple middleware handler chains. That means each endpoint can define its chain individually in handler.yml configuration file. 
+In release 1.5.18, we have introduced multiple middleware handler chains. That means each endpoint can define its chain individually in handler.yml configuration file.
 
-This gives us a lot of flexibility in defining chains. We can define a default chain with common middleware handlers and apply it to all the endpoint from the OpenAPI specification. Also, we can define other chains for /health/{serviceId} and /server/info. This allow us to refactor the light-codegen to remove the injection of common endpoints to the runtime specification and use the openapi.yaml directly in the runtime configuration from the model-config repository. 
+This gives us a lot of flexibility in defining chains. We can define a default chain with common middleware handlers and apply it to all the endpoint from the OpenAPI specification. Also, we can define other chains for /health/{serviceId} and /server/info. This allow us to refactor the light-codegen to remove the injection of common endpoints to the runtime specification and use the openapi.yaml directly in the runtime configuration from the model-config repository.
 
-Although the handler.yml is generated from the specification file, for big APIs, it looks very long as each endpoint has an entry. The good think is that we have the endpoint to handler mapping in the same place and there is no need to look into both Java source code and configuration to figure out the mapping. 
+Although the handler.yml is generated from the specification file, for big APIs, it looks very long as each endpoint has an entry. The good think is that we have the endpoint to handler mapping in the same place and there is no need to look into both Java source code and configuration to figure out the mapping.
 
 
 Here is an example of handler.yml
@@ -161,9 +161,9 @@ paths:
 ### Endpoint source from Specification
 
 
-In release 1.5.19, a new approach is contributed by @logi which uses the openapi.yaml to generate the endpoint source. This hides the mappings for the specification so that users won't even care about it. It simplify the handler.yml file a lot. 
+In release 1.5.19, a new approach is contributed by @logi which uses the openapi.yaml to generate the endpoint source. This hides the mappings for the specification so that users won't even care about it. It simplify the handler.yml file a lot.
 
-For this to work, we only need to change the handler.yml file and the binary jar file is the same. 
+For this to work, we only need to change the handler.yml file and the binary jar file is the same.
 
 Here is an example of handler.yml
 
@@ -235,7 +235,7 @@ chains:
 
 paths:
   - source: com.networknt.openapi.OpenApiEndpointSource
-    exec: 
+    exec:
       - default
       - openapi-handler
 
@@ -365,7 +365,4 @@ Transfer/sec:     11.65MB
 
 ### Summary
 
-Above we have described all three approaches for defining middleware handler chains. The default one in the generator is the endpoint-individual which is the fastest. However, the performance difference is almost negligible. In the future, we can add a switch in the light-codegen config.json to give user an option to generate endpoint-source handler.yml and a final handler class. 
-
-
-
+Above we have described all three approaches for defining middleware handler chains. The default one in the generator is the endpoint-individual which is the fastest. However, the performance difference is almost negligible. In the future, we can add a switch in the light-codegen config.json to give user an option to generate endpoint-source handler.yml and a final handler class.

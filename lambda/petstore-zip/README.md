@@ -153,31 +153,31 @@ The SAM CLI reads the application template to determine the API's routes and the
 
 ```yaml
       Events:
-        
+
         PetsGetFunction:
           Type: Api
           Properties:
             Path: //v1/pets
             Method: GET
-        
+
         PetsPostFunction:
           Type: Api
           Properties:
             Path: //v1/pets
             Method: POST
-        
+
         PetsPetIdGetFunction:
           Type: Api
           Properties:
             Path: //v1/pets/{petId}
             Method: GET
-        
+
         PetsPetIdDeleteFunction:
           Type: Api
           Properties:
             Path: //v1/pets/{petId}
             Method: DELETE
-        
+
 ```
 
 ## Add a resource to your application

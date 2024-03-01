@@ -81,4 +81,3 @@ paths:
     method: 'get'
     exec:
       - info
-

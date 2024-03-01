@@ -25,7 +25,7 @@ public class ConsumerTopicGetHandler implements LightHttpHandler {
         this.service = new ConsumerTopicGetService ();
     }
 
-    
+
     @Override
     public void handleRequest(HttpServerExchange exchange) throws Exception {
         HeaderMap requestHeaders = exchange.getRequestHeaders();

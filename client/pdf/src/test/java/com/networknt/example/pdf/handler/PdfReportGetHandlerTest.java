@@ -59,10 +59,10 @@ public class PdfReportGetHandlerTest {
         String httpMethod = "get";
         try {
             ClientRequest request = new ClientRequest().setPath(requestUri).setMethod(Methods.GET);
-            
-            //customized header parameters 
+
+            //customized header parameters
             connection.sendRequest(request, client.createClientCallback(reference, latch));
-            
+
             latch.await();
         } catch (Exception e) {
             logger.error("Exception: ", e);
@@ -77,4 +77,3 @@ public class PdfReportGetHandlerTest {
         Assert.assertEquals(200, statusCode);
     }
 }
-

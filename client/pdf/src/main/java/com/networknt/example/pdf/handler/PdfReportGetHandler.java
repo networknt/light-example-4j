@@ -15,7 +15,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class PdfReportGetHandler implements LightHttpHandler {
-    
+
     @Override
     public void handleRequest(HttpServerExchange exchange) throws Exception {
         byte[] response = null;

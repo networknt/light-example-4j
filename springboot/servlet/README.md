@@ -1,8 +1,8 @@
-This is an example to demo how to inject light-4j middleware handlers to address cross-cutting concerns in a Spring Boot application with embedded Undertow Servlet Web Server. It is based on the OpenAPI 3.0 petstore specification with some modifications to allow users to see two different implementations for the endpoints. 
+This is an example to demo how to inject light-4j middleware handlers to address cross-cutting concerns in a Spring Boot application with embedded Undertow Servlet Web Server. It is based on the OpenAPI 3.0 petstore specification with some modifications to allow users to see two different implementations for the endpoints.
 
 ### Specification
 
-Light-4j encourages design-driven approach and it can load the OpenAPI 3.0 specification during the runtime to validate the request and verify the JWT token scopes against the specification. For this example application, the specification can be found at [model-config](https://github.com/networknt/model-config/tree/master/rest/springboot/servlet) repo. 
+Light-4j encourages design-driven approach and it can load the OpenAPI 3.0 specification during the runtime to validate the request and verify the JWT token scopes against the specification. For this example application, the specification can be found at [model-config](https://github.com/networknt/model-config/tree/master/rest/springboot/servlet) repo.
 
 As you can see, for every funcation, we have both Spring Boot and Light-4j implementations with path prefix with `/spring` or `/light`.
 
@@ -16,7 +16,7 @@ cd light-example-4j/springboot/servlet
 
 ### Test
 
-We are using curl to test the restful services. 
+We are using curl to test the restful services.
 
 ##### To get a list of pets:
 
@@ -32,7 +32,7 @@ Spring Boot endpoint.
 curl http://localhost:8080/spring/pets
 ```
 
-Both commands will return the same result and the light-4j middleware handlers are all executed. 
+Both commands will return the same result and the light-4j middleware handlers are all executed.
 
 ```
 [{"id":1,"name":"catten","tag":"cat"},{"id":2,"name":"doggy","tag":"dog"}]
@@ -53,7 +53,7 @@ Spring Boot endpoint.
 curl http://localhost:8080/spring/pets?limit=10
 ```
 
-Both commands will return the same result and the light-4j middleware handlers are all executed. 
+Both commands will return the same result and the light-4j middleware handlers are all executed.
 
 ```
 [{"id":1,"name":"catten","tag":"cat"},{"id":2,"name":"doggy","tag":"dog"}]
@@ -94,7 +94,7 @@ Spring Boot endpoint.
 curl http://localhost:8080/spring/pets/111
 ```
 
-Both commands will return the same result and the light-4j middleware handlers are all executed. 
+Both commands will return the same result and the light-4j middleware handlers are all executed.
 
 ```
 {"id":1,"name":"Jessica Right","tag":"pet"}
@@ -114,13 +114,13 @@ Spring Boot endpoint.
 curl -X POST http://localhost:8080/spring/pets -H 'Content-Type: application/json' -d '{"id":1,"name":"Jessica Right","tag":"pet"}'
 ```
 
-Both commands will return the same result and the light-4j middleware handlers are all executed. 
+Both commands will return the same result and the light-4j middleware handlers are all executed.
 
 ```
 {"id":1,"name":"Jessica Right","tag":"pet"}
 ```
 
-Note that the body validation is disabled in the openapi-validator.yml as we have to pass the body stream to the Spring Boot. 
+Note that the body validation is disabled in the openapi-validator.yml as we have to pass the body stream to the Spring Boot.
 
 
 ##### To delete a pet
@@ -138,15 +138,14 @@ Spring Boot endpoint.
 curl -X DELETE http://localhost:8080/spring/pets/1 -H 'key: 1'
 ```
 
-Both commands will return the same result and the light-4j middleware handlers are all executed. 
+Both commands will return the same result and the light-4j middleware handlers are all executed.
 
 ```
 {"id":1,"name":"Jessica Right","tag":"pet"}
 ```
 
-Note that there is an extra header `key: 1` in the request as the specification for this endpoint require a key header. You can try to remove the key header and see the validation error as below. 
+Note that there is an extra header `key: 1` in the request as the specification for this endpoint require a key header. You can try to remove the key header and see the validation error as below.
 
 ```
 {"statusCode":400,"code":"ERR11017","message":"VALIDATOR_REQUEST_PARAMETER_HEADER_MISSING","description":"Header parameter key is required on path /light/pets/{petId} but not found in request.","severity":"ERROR"}
 ```
-

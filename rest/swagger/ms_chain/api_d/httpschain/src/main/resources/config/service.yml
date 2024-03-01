@@ -33,6 +33,3 @@ singletons:
   - com.networknt.sanitizer.SanitizerHandler
   # Validator Validate request based on swagger specification (depending on Swagger and Body)
   - com.networknt.validator.ValidatorHandler
-
-
-

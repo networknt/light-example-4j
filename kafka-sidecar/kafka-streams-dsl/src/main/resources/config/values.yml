@@ -6,7 +6,7 @@ service.singletons:
   # StartupHookProvider implementations, there are one to many and they are called in the same sequence defined.
   - com.networknt.server.StartupHookProvider:
     - com.networknt.kafka.WordCountStartupHook
-  
+
   # ShutdownHookProvider implementations, there are one to many and they are called in the same sequence defined.
   - com.networknt.server.ShutdownHookProvider:
     - com.networknt.kafka.WordCountShutdownHook

@@ -12,7 +12,7 @@ enableExtractScopeToken: ${openapi-security.enableExtractScopeToken:true}
 # Enable JWT scope verification. Only valid when enableVerifyJwt is true.
 enableVerifyScope: ${openapi-security.enableVerifyScope:true}
 
-# Enable JWT scope verification. 
+# Enable JWT scope verification.
 # Only valid when (enableVerifyJwt is true) AND (enableVerifyJWTScopeToken is true)
 enableVerifyJWTScopeToken: ${openapi-security.enableVerifyJWTScopeToken:true}
 

@@ -15,19 +15,19 @@ public class PathHandlerProvider implements HandlerProvider {
     @Override
     public HttpHandler getHandler() {
         return Handlers.routing()
-        
+
             .add(Methods.GET, "/v1/todoviews", new TodoviewsGetHandler())
-        
+
             .add(Methods.GET, "/v1/health", new HealthGetHandler())
-        
+
             .add(Methods.POST, "/v1/todos", new TodosPostHandler())
-        
+
             .add(Methods.GET, "/v1/server/info", new ServerInfoGetHandler())
-        
+
             .add(Methods.DELETE, "/v1/todos/{id}", new TodosIdDeleteHandler())
-        
+
             .add(Methods.PUT, "/v1/todos/{id}", new TodosIdPutHandler())
-        
+
         ;
     }
 }

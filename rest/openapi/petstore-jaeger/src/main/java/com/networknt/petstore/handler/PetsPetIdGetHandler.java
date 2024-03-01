@@ -10,7 +10,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class PetsPetIdGetHandler implements LightHttpHandler {
-    
+
     @Override
     public void handleRequest(HttpServerExchange exchange) throws Exception {
         Span span = JaegerStartupHookProvider.tracer.buildSpan("PetsPetIdGetHandler").asChildOf(exchange.getAttachment(JaegerHandler.ROOT_SPAN)).start();

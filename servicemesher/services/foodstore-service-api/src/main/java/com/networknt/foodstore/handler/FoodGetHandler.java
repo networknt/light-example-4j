@@ -7,7 +7,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class FoodGetHandler implements LightHttpHandler {
-    
+
     @Override
     public void handleRequest(HttpServerExchange exchange) throws Exception {
         exchange.getResponseHeaders().add(new HttpString("Content-Type"), "application/json");

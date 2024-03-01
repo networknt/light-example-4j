@@ -23,7 +23,7 @@ public class OauthAccessTokensGetHandler implements LightHttpHandler {
         this.service = new OauthAccessTokensGetService ();
     }
 
-    
+
     @Override
     public void handleRequest(HttpServerExchange exchange) throws Exception {
         HeaderMap requestHeaders = exchange.getRequestHeaders();

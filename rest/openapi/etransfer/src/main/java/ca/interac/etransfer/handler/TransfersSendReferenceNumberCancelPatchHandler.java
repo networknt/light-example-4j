@@ -23,7 +23,7 @@ public class TransfersSendReferenceNumberCancelPatchHandler implements LightHttp
         this.service = new TransfersSendReferenceNumberCancelPatchService ();
     }
 
-    
+
     @Override
     public void handleRequest(HttpServerExchange exchange) throws Exception {
         HeaderMap requestHeaders = exchange.getRequestHeaders();

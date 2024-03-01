@@ -19,6 +19,6 @@ public class TodosIdDeleteHandler implements HttpHandler {
         todoCommandService.delete(id);
         exchange.getResponseHeaders().add(new HttpString("Content-Type"), "application/json");
         exchange.getResponseSender().send("delete todo successfully!");
-        
+
     }
 }

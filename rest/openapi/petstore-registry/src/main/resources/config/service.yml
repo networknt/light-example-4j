@@ -19,12 +19,7 @@ singletons:
   - com.networknt.cluster.LightCluster
 # StartupHookProvider implementations, there are one to many and they are called in the same sequence defined.
 - com.networknt.server.StartupHookProvider:
-  
-  
+
+
 # ShutdownHookProvider implementations, there are one to many and they are called in the same sequence defined.
 - com.networknt.server.ShutdownHookProvider:
-  
-  
-
-
-

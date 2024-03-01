@@ -26,7 +26,7 @@ public class WelcomeWorldTest {
     @ClassRule
     public static TestServer server = TestServer.getInstance();
 
-    static final Logger logger = LoggerFactory.getLogger(WelcomeWorld.class); 
+    static final Logger logger = LoggerFactory.getLogger(WelcomeWorld.class);
     static final boolean enableHttp2 = server.getServerConfig().isEnableHttp2();
     static final boolean enableHttps = server.getServerConfig().isEnableHttps();
     static final int httpPort = server.getServerConfig().getHttpPort();

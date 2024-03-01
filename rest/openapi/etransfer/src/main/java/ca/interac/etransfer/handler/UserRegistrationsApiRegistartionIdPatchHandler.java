@@ -23,7 +23,7 @@ public class UserRegistrationsApiRegistartionIdPatchHandler implements LightHttp
         this.service = new UserRegistrationsApiRegistartionIdPatchService ();
     }
 
-    
+
     @Override
     public void handleRequest(HttpServerExchange exchange) throws Exception {
         HeaderMap requestHeaders = exchange.getRequestHeaders();

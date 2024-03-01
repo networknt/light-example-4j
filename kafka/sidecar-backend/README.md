@@ -9,9 +9,9 @@ https://github.com/networknt/kafka-sidecar
 ### Endpoint includes:
 
 - path: '/kafka/records'
-  
+
   method: 'POST'
-  
+
 Kafka sidecar Reactive consumer backend API. In the kafka sidecar kafka-consumer.yml config file, user can specify the backend API host url and API path:
 
 ```text
@@ -22,7 +22,7 @@ When the Reactive consumer consume the records from kafka, it will call backend 
 
 -----------
 - path: '/kafka/ksqldb'
-  
+
   method: 'GET'
 
 API endppoint to call kafka sidecar KsqlDB active consumer endpoint to run ksql pull/push query.

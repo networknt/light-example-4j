@@ -13,4 +13,3 @@ functions:
   /pets/{petId}@get: PetsPetIdGetFunction
 
   /pets/{petId}@delete: PetsPetIdDeleteFunction
-

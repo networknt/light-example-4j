@@ -8,14 +8,14 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class NotificationPreference  {
 
     private String handle;
-    
-    
+
+
     public enum HandleTypeEnum {
-        
-        SMS ("sms"), 
-        
-        EMAIL ("email"); 
-        
+
+        SMS ("sms"),
+
+        EMAIL ("email");
+
 
         private final String value;
 
@@ -40,7 +40,7 @@ public class NotificationPreference  {
 
     private HandleTypeEnum handleType;
 
-    
+
     private Boolean active;
 
     public NotificationPreference () {

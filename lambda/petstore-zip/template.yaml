@@ -12,7 +12,7 @@ Globals:
     Timeout: 20
 
 Resources:
-  
+
   ApiGateway:
     Type: AWS::Serverless::Api
     Properties:
@@ -36,9 +36,9 @@ Resources:
                   Fn::Sub: arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-2:964637446810:function:Authorizer/invocations
                 authorizerResultTtlInSeconds: 0
         paths:
-          
+
           /v1/pets:
-            
+
             get:
               x-amazon-apigateway-integration:
                 httpMethod: post
@@ -48,7 +48,7 @@ Resources:
               responses: {}
               security:
                 - jwt-authorizer: []
-            
+
             post:
               x-amazon-apigateway-integration:
                 httpMethod: post
@@ -58,10 +58,10 @@ Resources:
               responses: {}
               security:
                 - jwt-authorizer: []
-            
-          
+
+
           /v1/pets/{petId}:
-            
+
             get:
               x-amazon-apigateway-integration:
                 httpMethod: post
@@ -71,7 +71,7 @@ Resources:
               responses: {}
               security:
                 - jwt-authorizer: []
-            
+
             delete:
               x-amazon-apigateway-integration:
                 httpMethod: post
@@ -81,14 +81,14 @@ Resources:
               responses: {}
               security:
                 - jwt-authorizer: []
-            
-          
-  
-  
+
+
+
+
   PetsGetFunction:
     Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
     Properties:
-      
+
       CodeUri: PetsGetFunction
       Handler: com.networknt.petstore.handler.App::handleRequest
       Runtime: provided
@@ -97,23 +97,23 @@ Resources:
       Environment: # More info about Env Vars: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#environment-object
         Variables:
           PARAM1: VALUE
-      
+
       Events:
         PetsGet:
           Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
           Properties:
             Path: /v1/pets
             Method: GET
-            
+
             RestApiId:
               Ref: ApiGateway
-            
-    
-  
+
+
+
   PetsPostFunction:
     Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
     Properties:
-      
+
       CodeUri: PetsPostFunction
       Handler: com.networknt.petstore.handler.App::handleRequest
       Runtime: provided
@@ -122,23 +122,23 @@ Resources:
       Environment: # More info about Env Vars: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#environment-object
         Variables:
           PARAM1: VALUE
-      
+
       Events:
         PetsPost:
           Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
           Properties:
             Path: /v1/pets
             Method: POST
-            
+
             RestApiId:
               Ref: ApiGateway
-            
-    
-  
+
+
+
   PetsPetIdGetFunction:
     Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
     Properties:
-      
+
       CodeUri: PetsPetIdGetFunction
       Handler: com.networknt.petstore.handler.App::handleRequest
       Runtime: provided
@@ -147,23 +147,23 @@ Resources:
       Environment: # More info about Env Vars: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#environment-object
         Variables:
           PARAM1: VALUE
-      
+
       Events:
         PetsPetIdGet:
           Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
           Properties:
             Path: /v1/pets/{petId}
             Method: GET
-            
+
             RestApiId:
               Ref: ApiGateway
-            
-    
-  
+
+
+
   PetsPetIdDeleteFunction:
     Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
     Properties:
-      
+
       CodeUri: PetsPetIdDeleteFunction
       Handler: com.networknt.petstore.handler.App::handleRequest
       Runtime: provided
@@ -172,20 +172,20 @@ Resources:
       Environment: # More info about Env Vars: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#environment-object
         Variables:
           PARAM1: VALUE
-      
+
       Events:
         PetsPetIdDelete:
           Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
           Properties:
             Path: /v1/pets/{petId}
             Method: DELETE
-            
+
             RestApiId:
               Ref: ApiGateway
-            
-    
-  
-  
+
+
+
+
   AuthorizerPerm:
     Type: AWS::Lambda::Permission
     DependsOn:
@@ -196,4 +196,3 @@ Resources:
       Principal: apigateway.amazonaws.com
       SourceArn:
         'Fn::Sub': 'arn:aws:execute-api:${AWS::Region}:${AWS::AccountId}:*/*/*/*'
-  

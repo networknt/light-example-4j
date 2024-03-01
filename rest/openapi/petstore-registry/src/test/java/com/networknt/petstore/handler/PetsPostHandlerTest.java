@@ -58,12 +58,12 @@ public class PetsPostHandlerTest {
         String httpMethod = "post";
         try {
             ClientRequest request = new ClientRequest().setPath(requestUri).setMethod(Methods.POST);
-            
+
             request.getRequestHeaders().put(Headers.CONTENT_TYPE, JSON_MEDIA_TYPE);
             request.getRequestHeaders().put(Headers.TRANSFER_ENCODING, "chunked");
-            //customized header parameters 
+            //customized header parameters
             connection.sendRequest(request, client.createClientCallback(reference, latch, "{\"content\": \"request body to be replaced\"}"));
-            
+
             latch.await();
         } catch (Exception e) {
             logger.error("Exception: ", e);
@@ -85,4 +85,3 @@ public class PetsPostHandlerTest {
         Assert.assertNull(status);
     }
 }
-

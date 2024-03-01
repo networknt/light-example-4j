@@ -54,11 +54,11 @@ public class TodosIdPutHandlerTest {
         String json = JSonMapper.toJson(updateTodoRequest);
         try {
             ClientRequest request = new ClientRequest().setPath("/v1/todos/122").setMethod(Methods.PUT);
-            
+
             request.getRequestHeaders().put(Headers.CONTENT_TYPE, "application/json");
             request.getRequestHeaders().put(Headers.TRANSFER_ENCODING, "chunked");
             connection.sendRequest(request, client.createClientCallback(reference, latch, json));
-            
+
             latch.await();
         } catch (Exception e) {
             logger.error("Exception: ", e);

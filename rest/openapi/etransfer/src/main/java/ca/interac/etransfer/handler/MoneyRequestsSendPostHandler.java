@@ -23,7 +23,7 @@ public class MoneyRequestsSendPostHandler implements LightHttpHandler {
         this.service = new MoneyRequestsSendPostService ();
     }
 
-    
+
     @Override
     public void handleRequest(HttpServerExchange exchange) throws Exception {
         HeaderMap requestHeaders = exchange.getRequestHeaders();

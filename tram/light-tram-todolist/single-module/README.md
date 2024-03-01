@@ -19,7 +19,7 @@ It shows how use Eventuate Tram to:
   --reliably publish domain events as part of a database transaction that updates an aggregate.
 
   -- consume domain events to update a CQRS view
-  
+
 When a user creates or updates a todo, the application publishes a domain event. An event handler, subscribes to those events and updates an ElasticSearch-based CQRS view.
 
 ## Todo list architecture

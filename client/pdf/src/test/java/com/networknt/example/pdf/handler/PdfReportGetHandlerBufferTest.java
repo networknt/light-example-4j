@@ -53,10 +53,10 @@ public class PdfReportGetHandlerBufferTest {
         String httpMethod = "get";
         try {
             ClientRequest request = new ClientRequest().setPath(requestUri).setMethod(Methods.GET);
-            
-            //customized header parameters 
+
+            //customized header parameters
             connection.sendRequest(request, client.byteBufferClientCallback(reference, latch));
-            
+
             latch.await();
         } catch (Exception e) {
             logger.error("Exception: ", e);
@@ -119,4 +119,3 @@ public class PdfReportGetHandlerBufferTest {
 //    }
 
 }
-

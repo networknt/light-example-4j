@@ -14,9 +14,9 @@ public class PetsPetIdGetHandler implements LightHttpHandler {
 
     @Override
     public void handleRequest(HttpServerExchange exchange) throws Exception {
-        
+
             exchange.getResponseHeaders().add(new HttpString("Content-Type"), "application/json");
              exchange.getResponseSender().send("{\"id\":1,\"name\":\"Jessica Right\",\"tag\":\"pet\"}");
-        
+
     }
 }

@@ -16,19 +16,19 @@ public class PathHandlerProvider implements HandlerProvider {
     @Override
     public HttpHandler getHandler() {
         return Handlers.routing()
-        
+
             .add(Methods.GET, "/v1/health", new HealthGetHandler())
-        
+
             .add(Methods.GET, "/v1/server/info", new ServerInfoGetHandler())
-        
+
             .add(Methods.POST, "/v1/pets", new PetsPostHandler())
-        
+
             .add(Methods.GET, "/v1/pets", new PetsGetHandler())
-        
+
             .add(Methods.GET, "/v1/pets/{petId}", new PetsPetIdGetHandler())
-        
+
             .add(Methods.DELETE, "/v1/pets/{petId}", new PetsPetIdDeleteHandler())
-        
+
         ;
     }
 }

@@ -23,7 +23,7 @@ public class TransfersReceiveReferenceNumberAuthenticatePatchHandler implements 
         this.service = new TransfersReceiveReferenceNumberAuthenticatePatchService ();
     }
 
-    
+
     @Override
     public void handleRequest(HttpServerExchange exchange) throws Exception {
         HeaderMap requestHeaders = exchange.getRequestHeaders();

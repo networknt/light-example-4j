@@ -25,5 +25,3 @@ singletons:
       prepStmtCacheSize: 10
       prepStmtCacheSqlLimit: 2048
       connectionTimeout: 2000
-
-

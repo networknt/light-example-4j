@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Map;
 
 public class DataGetHandler implements LightHttpHandler {
-    
+
     @Override
     public void handleRequest(HttpServerExchange exchange) throws Exception {
         List<String> messages = new ArrayList<>();

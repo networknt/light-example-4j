@@ -6,7 +6,7 @@ import { channelsListQuery } from './ChannelsListWithData';
 const AddChannel = ({ mutate }) => {
   const handleKeyUp = (evt) => {
     if (evt.keyCode === 13) {
-      mutate({ 
+      mutate({
         variables: { name: evt.target.value },
         optimisticResponse: {
           addChannel: {

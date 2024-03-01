@@ -15,5 +15,3 @@ enableHttp2: true
 cookieDomain: com.networknt
 # Cookie path
 cookiePath: /auth
-
-

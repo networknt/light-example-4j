@@ -13,7 +13,7 @@ paths:
       parameters:
         - in: query
           name: TestObject
-          schema: 
+          schema:
             $ref: '#/components/schemas/TestObject'
       responses:
         '200':

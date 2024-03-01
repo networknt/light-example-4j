@@ -13,20 +13,20 @@ public class UserRegistration  {
     private String participantUserId;
     private String participantApiRegistrationId;
     private String fiAccountId;
-    
-    
+
+
     public enum RegistrationStatusEnum {
-        
-        IN_REVIEW ("in-review"), 
-        
-        ACTIVE ("active"), 
-        
-        FAILED ("failed"), 
-        
-        INACTIVE ("inactive"), 
-        
-        PENDING ("pending"); 
-        
+
+        IN_REVIEW ("in-review"),
+
+        ACTIVE ("active"),
+
+        FAILED ("failed"),
+
+        INACTIVE ("inactive"),
+
+        PENDING ("pending");
+
 
         private final String value;
 
@@ -51,7 +51,7 @@ public class UserRegistration  {
 
     private RegistrationStatusEnum registrationStatus;
 
-    
+
     private java.util.List<String> allowedFeatures;
     private String thirdPartyUserId;
     private DirectDepositRegistration directDepositRegistration;

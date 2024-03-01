@@ -10,14 +10,14 @@ public class Contact  {
     private String contactId;
     private String contactName;
     private String contactHash;
-    
-    
+
+
     public enum LanguageEnum {
-        
-        EN ("en"), 
-        
-        FR ("fr"); 
-        
+
+        EN ("en"),
+
+        FR ("fr");
+
 
         private final String value;
 
@@ -42,7 +42,7 @@ public class Contact  {
 
     private LanguageEnum language;
 
-    
+
     private java.util.List<NotificationPreference> notificationPreferences;
     private Object hardContactUser;
     private DirectDepositRegistration directDepositRegistration;

@@ -26,6 +26,6 @@ public class TodoviewsGetHandler implements HttpHandler {
 
         exchange.getResponseHeaders().add(new HttpString("Content-Type"), "application/json");
         exchange.getResponseSender().send(Config.getInstance().getMapper().writeValueAsString(todos));
-        
+
     }
 }

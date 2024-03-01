@@ -9,7 +9,7 @@
 
     <properties>
         <java.version>1.8</java.version>
-        
+
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.main.class>com.networknt.server.Server</project.main.class>
         <version.light-4j>2.1.33-SNAPSHOT</version.light-4j>
@@ -21,11 +21,11 @@
         <version.undertow>2.3.12.Final</version.undertow>
         <version.json-schema-validator>1.0.65</version.json-schema-validator>
         <version.fastscanner>2.18.1</version.fastscanner>
-        
-        
-        
-        
-        
+
+
+
+
+
         <versions.maven-version>2.4</versions.maven-version>
     </properties>
 
@@ -95,7 +95,7 @@
             <artifactId>metrics</artifactId>
             <version>${version.light-4j}</version>
         </dependency>
-        
+
         <dependency>
             <groupId>com.networknt</groupId>
             <artifactId>handler</artifactId>
@@ -216,10 +216,10 @@
             <artifactId>jaeger-tracing</artifactId>
             <version>${version.light-4j}</version>
         </dependency>
-       
-        
-        
-        
+
+
+
+
         <!-- Test Dependencies -->
         <dependency>
             <groupId>junit</groupId>
@@ -227,7 +227,7 @@
             <version>${version.junit}</version>
             <scope>test</scope>
         </dependency>
-        
+
     </dependencies>
 
     <build>
@@ -239,7 +239,7 @@
                 <configuration>
                     <source>8</source>
                     <target>8</target>
-                    
+
                 </configuration>
             </plugin>
             <plugin>
@@ -428,6 +428,6 @@
                 </plugins>
             </build>
         </profile>
-        
+
     </profiles>
 </project>

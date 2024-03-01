@@ -23,7 +23,7 @@ public class TransfersReceiveReferenceNumberDeclinePatchHandler implements Light
         this.service = new TransfersReceiveReferenceNumberDeclinePatchService ();
     }
 
-    
+
     @Override
     public void handleRequest(HttpServerExchange exchange) throws Exception {
         HeaderMap requestHeaders = exchange.getRequestHeaders();

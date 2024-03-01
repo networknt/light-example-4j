@@ -9,7 +9,7 @@ class Home extends Component {
       <div>
         <Nav />
         Everyone can access home page.
-      </div>  
+      </div>
     );
   }
 }

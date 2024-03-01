@@ -28,4 +28,3 @@ singletons:
   - com.networknt.rpc.security.JwtVerifyHandler
   # SimpleAudit Log important info about the request into audit log
   - com.networknt.audit.AuditHandler
-

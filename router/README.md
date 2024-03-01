@@ -1,12 +1,12 @@
-This folder is created to reproduce the issue reported by @logi. 
+This folder is created to reproduce the issue reported by @logi.
 
 https://github.com/networknt/light-router/issues/22
 
-Also, it serve as a demo for how to create a backend post-service, a frontend post-client and configuration for the light-router sitting in between. You can learn how to build a standalone client to interact with a server or a router. 
+Also, it serve as a demo for how to create a backend post-service, a frontend post-client and configuration for the light-router sitting in between. You can learn how to build a standalone client to interact with a server or a router.
 
 ### post-service
 
-The post-service is very simple with only one endpoint /v1/postData and you can switch between HTTP and HTTPS&HTTP2 in the server.yml in src/main/resources/config folder. 
+The post-service is very simple with only one endpoint /v1/postData and you can switch between HTTP and HTTPS&HTTP2 in the server.yml in src/main/resources/config folder.
 
 To start the server, go to the post-service folder
 
@@ -20,7 +20,7 @@ If you server is listening to HTTPS, then you can use the following curl command
 curl -k -X POST https://localhost:8443/v1/postData -H 'content-type: application/json' -H 'host: localhost' -d '[{"key": "key", "value": "value"}, {"key": "key", "value": "value"}]'
 ```
 
-The response should be the same like the request body. 
+The response should be the same like the request body.
 
 ```
 [{"key": "key", "value": "value"}, {"key": "key", "value": "value"}]
@@ -34,9 +34,9 @@ curl -X POST http://localhost:8080/v1/postData -H 'content-type: application/jso
 
 ### post-client
 
-So we have the backend post-service up and running and we can confirm it is working with one of the commands above. Now, let's create a standalone Java client to access the service with Http2Client. 
+So we have the backend post-service up and running and we can confirm it is working with one of the commands above. Now, let's create a standalone Java client to access the service with Http2Client.
 
-The client is very simple with a main method to call different combinations of tests. 
+The client is very simple with a main method to call different combinations of tests.
 
 ```
     public static void main(String[] args) throws Exception {
@@ -54,11 +54,11 @@ The client is very simple with a main method to call different combinations of t
 
 The issue we have with light-router reported by @logi is that if the post body is bigger than 24k, the post-service only receives partial of the body and it fails to parse it in the BodyHandler.
 
-So I have created several test and you can call them one by one in the main method. 
+So I have created several test and you can call them one by one in the main method.
 
-* Direct4k and Direct48k are using https/http2 to connect to the post-service directly. 
+* Direct4k and Direct48k are using https/http2 to connect to the post-service directly.
 * RouterHttps4k and RouterHttps48k are using light-router in between client and service.
-* Proxy4k and Proxy48k are using the default undertow reverse proxy with http only connection. 
+* Proxy4k and Proxy48k are using the default undertow reverse proxy with http only connection.
 
 Basically, it load a file from resources folder and send to the service as request body. Here is one example.
 
@@ -90,14 +90,14 @@ Basically, it load a file from resources folder and send to the service as reque
 
 ```
 
-You can see we are using the same connection to send 100 requests and then close it at the end. 
+You can see we are using the same connection to send 100 requests and then close it at the end.
 
 
 ### post-router
 
-To make things simple, we are not going to use service registry and discovery with Consul here in light-router. Instead, we are going to use direct registry for service lookup. 
+To make things simple, we are not going to use service registry and discovery with Consul here in light-router. Instead, we are going to use direct registry for service lookup.
 
-There is a docker-compose.yml in the root folder of post-router and there are two sub folders that contain https and http configurations. 
+There is a docker-compose.yml in the root folder of post-router and there are two sub folders that contain https and http configurations.
 
 ```
 version: '2'
@@ -124,9 +124,9 @@ networks:
 
 ```
 
-You can switch between https and http in the volumes in the docker-compose.yml file above. https config folder contains configuration to support both HTTPS and HTTP/2 for incoming and outgoing requests. 
+You can switch between https and http in the volumes in the docker-compose.yml file above. https config folder contains configuration to support both HTTPS and HTTP/2 for incoming and outgoing requests.
 
-In order to make it simple, I have plugged in the PathPrefixService middleware handler to map the path /v1/postData to the serviceId com.networknt.postservice-1.0.0 to assist service discovery. 
+In order to make it simple, I have plugged in the PathPrefixService middleware handler to map the path /v1/postData to the serviceId com.networknt.postservice-1.0.0 to assist service discovery.
 
 ```
 # indicate if PathPrefixServiceHandler is enabled or not
@@ -143,7 +143,7 @@ To call the router from command line with curl.
 curl -k -X POST https://localhost:8000/v1/postData -H 'content-type: application/json' -H 'host: localhost' -d '[{"key": "key", "value": "value"}, {"key": "key", "value": "value"}]'
 ```
 
-With all the preparation above, I have successfully reproduced the issue. By debugging with three IDEs on client, router and service, I found out that the issue was caused by the Http2Client BufferPool buffer size. It was default to 24K which should be OK for most of the applications. But when passing bigger requests, it is not enough. The solution is to make it configurable in the client.yml file in client module. 
+With all the preparation above, I have successfully reproduced the issue. By debugging with three IDEs on client, router and service, I found out that the issue was caused by the Http2Client BufferPool buffer size. It was default to 24K which should be OK for most of the applications. But when passing bigger requests, it is not enough. The solution is to make it configurable in the client.yml file in client module.
 
 
 ```
@@ -237,14 +237,14 @@ oauth:
     client_id: f7d42348-c647-4efb-a52d-4c5787421e72
 ```
 
-As you can see the above client.yml has bufferSize 80 which mean 80*1024. It should be bigger enough to handler 48K request body. If the bufferSize is not in the client.yml, then the default would be 24*1024. 
+As you can see the above client.yml has bufferSize 80 which mean 80*1024. It should be bigger enough to handler 48K request body. If the bufferSize is not in the client.yml, then the default would be 24*1024.
 
-There are two places that Http2Client is used in this setup. 
+There are two places that Http2Client is used in this setup.
 
-* The post-client has a client.yml that needs to be updated to set new bufferSize. 
+* The post-client has a client.yml that needs to be updated to set new bufferSize.
 * The post-router has a client.yml that needs to be updated to set new bufferSize.
 
-After the bufferSize is updated, we still see failure on the post-client when using 48K reqeust body. It was due to the wait time too short at 100ms. After increase it to 1000ms everything works perfect. 
+After the bufferSize is updated, we still see failure on the post-client when using 48K reqeust body. It was due to the wait time too short at 100ms. After increase it to 1000ms everything works perfect.
 
 ```
 latch.await(1000, TimeUnit.MILLISECONDS);
@@ -252,11 +252,8 @@ latch.await(1000, TimeUnit.MILLISECONDS);
 
 ### Summary
 
-When using the client module, you need to gauge the application and set the bufferSize for the buffer pool in client.yml config file. Also, if you are expecting too many request sent to the server, you need to adjust the latch.await timeout a little longer. 
+When using the client module, you need to gauge the application and set the bufferSize for the buffer pool in client.yml config file. Also, if you are expecting too many request sent to the server, you need to adjust the latch.await timeout a little longer.
 
-The entire execise to debug this issue is a good process and it would help other developers to learn how to debug the distributed application which involves several independent processes. I have recorded a video and the link is below. Hope this helps others. 
+The entire execise to debug this issue is a good process and it would help other developers to learn how to debug the distributed application which involves several independent processes. I have recorded a video and the link is below. Hope this helps others.
 
 https://youtu.be/qW0xIC_A_KI
-
-
-

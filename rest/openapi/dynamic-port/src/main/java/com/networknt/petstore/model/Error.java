@@ -38,7 +38,7 @@ public class Error {
         Error Error = (Error) o;
 
         return Objects.equals(message, Error.message) &&
-        
+
         Objects.equals(code, Error.code);
     }
 

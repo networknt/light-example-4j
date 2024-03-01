@@ -6,7 +6,7 @@ import { instanceOf } from 'prop-types';
 import { withCookies, Cookies } from 'react-cookie';
 
 class Pets extends Component {
-  
+
   static propTypes = {
     cookies: instanceOf(Cookies).isRequired
   };

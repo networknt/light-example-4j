@@ -21,7 +21,7 @@ public class HiWorldTest {
     @ClassRule
     public static TestServer server = TestServer.getInstance();
 
-    static final Logger logger = LoggerFactory.getLogger(HiWorld.class); 
+    static final Logger logger = LoggerFactory.getLogger(HiWorld.class);
 
     @Test
     public void testHiWorld() throws ClientException, ApiException {

@@ -48,7 +48,7 @@ public class Pet {
 
         return Objects.equals(name, Pet.name) &&
         Objects.equals(id, Pet.id) &&
-        
+
         Objects.equals(tag, Pet.tag);
     }
 

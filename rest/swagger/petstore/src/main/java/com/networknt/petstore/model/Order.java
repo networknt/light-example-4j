@@ -5,27 +5,27 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class Order {
 
-    
+
     private java.lang.Long id;
-    
+
     private java.lang.Long petId;
-    
+
     private Integer quantity;
-    
+
     private java.time.LocalDateTime shipDate;
-    
+
     private Boolean complete;
-    
-    
-    
+
+
+
     public enum StatusEnum {
-        
+
         PLACED ("placed"),
-        
+
         APPROVED ("approved"),
-        
+
         DELIVERED ("delivered");
-        
+
 
         private final String value;
 
@@ -50,14 +50,14 @@ public class Order {
 
     private StatusEnum status;
 
-    
-    
+
+
 
     public Order () {
     }
 
-    
-    
+
+
     @JsonProperty("id")
     public java.lang.Long getId() {
         return id;
@@ -66,9 +66,9 @@ public class Order {
     public void setId(java.lang.Long id) {
         this.id = id;
     }
-    
-    
-    
+
+
+
     @JsonProperty("petId")
     public java.lang.Long getPetId() {
         return petId;
@@ -77,9 +77,9 @@ public class Order {
     public void setPetId(java.lang.Long petId) {
         this.petId = petId;
     }
-    
-    
-    
+
+
+
     @JsonProperty("quantity")
     public Integer getQuantity() {
         return quantity;
@@ -88,9 +88,9 @@ public class Order {
     public void setQuantity(Integer quantity) {
         this.quantity = quantity;
     }
-    
-    
-    
+
+
+
     @JsonProperty("shipDate")
     public java.time.LocalDateTime getShipDate() {
         return shipDate;
@@ -99,9 +99,9 @@ public class Order {
     public void setShipDate(java.time.LocalDateTime shipDate) {
         this.shipDate = shipDate;
     }
-    
-    
-    
+
+
+
     @JsonProperty("complete")
     public Boolean getComplete() {
         return complete;
@@ -110,9 +110,9 @@ public class Order {
     public void setComplete(Boolean complete) {
         this.complete = complete;
     }
-    
-    
-    
+
+
+
     @JsonProperty("status")
     public StatusEnum getStatus() {
         return status;
@@ -121,8 +121,8 @@ public class Order {
     public void setStatus(StatusEnum status) {
         this.status = status;
     }
-    
-    
+
+
 
     @Override
     public boolean equals(Object o) {
@@ -139,7 +139,7 @@ public class Order {
         Objects.equals(quantity, Order.quantity) &&
         Objects.equals(shipDate, Order.shipDate) &&
         Objects.equals(complete, Order.complete) &&
-        
+
         Objects.equals(status, Order.status);
     }
 
@@ -152,7 +152,7 @@ public class Order {
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("class Order {\n");
-        
+
         sb.append("    id: ").append(toIndentedString(id)).append("\n");
         sb.append("    petId: ").append(toIndentedString(petId)).append("\n");
         sb.append("    quantity: ").append(toIndentedString(quantity)).append("\n");

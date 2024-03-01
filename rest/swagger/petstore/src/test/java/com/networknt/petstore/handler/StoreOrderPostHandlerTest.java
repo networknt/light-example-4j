@@ -49,11 +49,11 @@ public class StoreOrderPostHandlerTest {
         final AtomicReference<ClientResponse> reference = new AtomicReference<>();
         try {
             ClientRequest request = new ClientRequest().setPath("/v2/store/order").setMethod(Methods.POST);
-            
+
             request.getRequestHeaders().put(Headers.CONTENT_TYPE, "application/json");
             request.getRequestHeaders().put(Headers.TRANSFER_ENCODING, "chunked");
             connection.sendRequest(request, client.createClientCallback(reference, latch, "request body to be replaced"));
-            
+
             latch.await();
         } catch (Exception e) {
             logger.error("Exception: ", e);

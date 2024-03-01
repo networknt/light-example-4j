@@ -28,4 +28,3 @@ public class StarWarsSchema implements SchemaProvider {
                 .build();
     }
 }
-

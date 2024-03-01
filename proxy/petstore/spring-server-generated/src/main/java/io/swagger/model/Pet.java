@@ -75,7 +75,7 @@ public class Pet   {
    * @return tag
    **/
   @Schema(description = "")
-  
+
     public String getTag() {
     return tag;
   }
@@ -108,7 +108,7 @@ public class Pet   {
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class Pet {\n");
-    
+
     sb.append("    id: ").append(toIndentedString(id)).append("\n");
     sb.append("    name: ").append(toIndentedString(name)).append("\n");
     sb.append("    tag: ").append(toIndentedString(tag)).append("\n");

@@ -23,7 +23,7 @@ public class MoneyRequestsReceiveReferenceNumberDeclinePatchHandler implements L
         this.service = new MoneyRequestsReceiveReferenceNumberDeclinePatchService ();
     }
 
-    
+
     @Override
     public void handleRequest(HttpServerExchange exchange) throws Exception {
         HeaderMap requestHeaders = exchange.getRequestHeaders();

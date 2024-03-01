@@ -23,7 +23,7 @@
         <nexus.server>http://nexus.com:8080</nexus.server>
         <argLine>-Xmx512m -XX:MaxPermSize=256m</argLine>
     </properties>
- 
+
     <dependencies>
         <dependency>
             <groupId>com.networknt</groupId>
@@ -82,7 +82,7 @@
             <version>${version.undertow}</version>
         </dependency>
 
-      
+
         <!-- Test Dependencies -->
         <dependency>
             <groupId>junit</groupId>

@@ -25,9 +25,9 @@ paths:
         required: true
         content:
           application/json:
-            schema: 
+            schema:
               type: array
-              items: 
+              items:
                 $ref: '#/components/schemas/User'
       responses:
         '200':
@@ -58,9 +58,9 @@ paths:
           description: Successful response
           content:
             application/json:
-              schema: 
+              schema:
                 type: array
-                items: 
+                items:
                   $ref: '#/components/schemas/User'
         '400':
           description: Unexpected error
@@ -86,7 +86,7 @@ components:
     Status:
       type: object
       properties:
-        statusCode: 
+        statusCode:
           description: HTTP response code
           type: integer
         code:
@@ -95,8 +95,8 @@ components:
         message:
           description: Error messsage
           type: string
-        description: 
-          description: The detailed description of the error status  
+        description:
+          description: The detailed description of the error status
           type: string
       required:
       - statusCode
@@ -104,7 +104,7 @@ components:
     User:
       type: object
       properties:
-        userId: 
+        userId:
           description: User Id
           type: string
         firstName:
@@ -113,7 +113,7 @@ components:
         lastName:
           description: Last Name
           type: string
-        country: 
+        country:
           description: Country
           type: string
       required:

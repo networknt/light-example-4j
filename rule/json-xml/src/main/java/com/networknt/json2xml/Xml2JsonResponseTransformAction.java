@@ -17,7 +17,7 @@ import java.util.Map;
 
 /**
  * Transform a response body from XML to JSON in the response so that a REST client can access a backend SOAP
- * service. 
+ * service.
  *
  */
 

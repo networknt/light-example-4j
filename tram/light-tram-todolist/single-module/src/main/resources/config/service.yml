@@ -113,4 +113,3 @@ singletons:
   - com.networknt.sanitizer.SanitizerHandler
   # Validator Validate request based on OpenAPI 3.0 specification (depending on OpenApiHandler and BodyHandler)
   - com.networknt.openapi.ValidatorHandler
-

@@ -67,7 +67,7 @@ chains:
 
 paths:
   - source: com.networknt.openapi.OpenApiEndpointSource
-    exec: 
+    exec:
       - default
       - openapi-handler
 
@@ -80,4 +80,3 @@ paths:
     method: 'get'
     exec:
       - info
-

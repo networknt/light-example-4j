@@ -23,7 +23,7 @@
             <groupId>com.networknt.example</groupId>
             <artifactId>service</artifactId>
         </dependency>
-        
+
         <dependency>
             <groupId>com.networknt</groupId>
             <artifactId>config</artifactId>
@@ -76,7 +76,7 @@
             <groupId>com.networknt</groupId>
             <artifactId>metrics</artifactId>
         </dependency>
-        
+
         <dependency>
             <groupId>com.networknt</groupId>
             <artifactId>handler</artifactId>
@@ -158,9 +158,9 @@
             <groupId>com.networknt</groupId>
             <artifactId>http-entity</artifactId>
         </dependency>
-        
-        
-        
+
+
+
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
@@ -186,18 +186,18 @@
             <groupId>io.undertow</groupId>
             <artifactId>undertow-core</artifactId>
         </dependency>
-        
-        
-        
-        
-        
+
+
+
+
+
         <!-- Test Dependencies -->
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter</artifactId>
             <scope>test</scope>
         </dependency>
-        
+
     </dependencies>
 
 

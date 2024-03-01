@@ -24,7 +24,7 @@ public class FlowersPostHandler implements LightHttpHandler {
         this.service = new FlowersPostService ();
     }
 
-    
+
     @Override
     public void handleRequest(HttpServerExchange exchange) throws Exception {
         HeaderMap requestHeaders = exchange.getRequestHeaders();

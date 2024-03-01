@@ -5,19 +5,19 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class ApiResponse {
 
-    
+
     private String type;
-    
+
     private String message;
-    
+
     private Integer code;
-    
+
 
     public ApiResponse () {
     }
 
-    
-    
+
+
     @JsonProperty("type")
     public String getType() {
         return type;
@@ -26,9 +26,9 @@ public class ApiResponse {
     public void setType(String type) {
         this.type = type;
     }
-    
-    
-    
+
+
+
     @JsonProperty("message")
     public String getMessage() {
         return message;
@@ -37,9 +37,9 @@ public class ApiResponse {
     public void setMessage(String message) {
         this.message = message;
     }
-    
-    
-    
+
+
+
     @JsonProperty("code")
     public Integer getCode() {
         return code;
@@ -48,8 +48,8 @@ public class ApiResponse {
     public void setCode(Integer code) {
         this.code = code;
     }
-    
-    
+
+
 
     @Override
     public boolean equals(Object o) {
@@ -63,7 +63,7 @@ public class ApiResponse {
 
         return Objects.equals(type, ApiResponse.type) &&
         Objects.equals(message, ApiResponse.message) &&
-        
+
         Objects.equals(code, ApiResponse.code);
     }
 
@@ -76,7 +76,7 @@ public class ApiResponse {
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("class ApiResponse {\n");
-        
+
         sb.append("    type: ").append(toIndentedString(type)).append("\n");
         sb.append("    message: ").append(toIndentedString(message)).append("\n");
         sb.append("    code: ").append(toIndentedString(code)).append("\n");

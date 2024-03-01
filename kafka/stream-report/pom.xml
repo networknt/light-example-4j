@@ -98,7 +98,7 @@
             <artifactId>metrics</artifactId>
             <version>${version.light-4j}</version>
         </dependency>
-        
+
         <dependency>
             <groupId>com.networknt</groupId>
             <artifactId>handler</artifactId>
@@ -224,10 +224,10 @@
             <artifactId>undertow-core</artifactId>
             <version>${version.undertow}</version>
         </dependency>
-        
-        
-        
-        
+
+
+
+
         <!-- Test Dependencies -->
         <dependency>
             <groupId>junit</groupId>
@@ -235,8 +235,8 @@
             <version>${version.junit}</version>
             <scope>test</scope>
         </dependency>
-        
-        
+
+
     </dependencies>
 
     <build>
@@ -337,7 +337,7 @@
 
 
     <repositories>
-        
+
         <repository>
             <id>sonatype-snapshots</id>
             <url>https://oss.sonatype.org/content/repositories/snapshots</url>

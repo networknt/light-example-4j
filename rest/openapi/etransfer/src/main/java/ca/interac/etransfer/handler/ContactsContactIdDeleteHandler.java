@@ -23,7 +23,7 @@ public class ContactsContactIdDeleteHandler implements LightHttpHandler {
         this.service = new ContactsContactIdDeleteService ();
     }
 
-    
+
     @Override
     public void handleRequest(HttpServerExchange exchange) throws Exception {
         HeaderMap requestHeaders = exchange.getRequestHeaders();

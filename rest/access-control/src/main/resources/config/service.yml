@@ -20,11 +20,6 @@ singletons:
 # StartupHookProvider implementations, there are one to many and they are called in the same sequence defined.
 - com.networknt.server.StartupHookProvider:
   - com.networknt.rule.RuleLoaderStartupHook
-  
+
 # ShutdownHookProvider implementations, there are one to many and they are called in the same sequence defined.
 - com.networknt.server.ShutdownHookProvider:
-  
-  
-
-
-

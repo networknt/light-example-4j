@@ -1,6 +1,6 @@
 #--------------------------------------------------------------------------------
 # values.yml : Set of values commonly overridden in microservices
-# 			   The file can be extended with other elements, as necessary 
+# 			   The file can be extended with other elements, as necessary
 #--------------------------------------------------------------------------------
 
 #--------------------------------------------------------------------------------
@@ -37,7 +37,7 @@ server.maxPort: 2500
 # This tag should only be set for testing env, not production. The production certification process will enforce it.
 server.environment: dev
 
-# Build number, to be set by teams for auditing purposes. 
+# Build number, to be set by teams for auditing purposes.
 # Allows teams to audit the value and set it according to their release management processes
 server.buildNumber: latest
 

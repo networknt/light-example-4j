@@ -10,8 +10,8 @@ import java.util.Map;
 public class UserUsernameGetHandler implements LightHttpHandler {
     @Override
     public void handleRequest(HttpServerExchange exchange) throws Exception {
-        
+
             exchange.endExchange();
-        
+
     }
 }

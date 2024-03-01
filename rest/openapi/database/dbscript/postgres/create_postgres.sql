@@ -28,5 +28,3 @@ INSERT INTO fortune (id, message) VALUES (9, 'Feature: A bug with seniority.');
 INSERT INTO fortune (id, message) VALUES (10, 'Computers make very fast, very accurate mistakes.');
 INSERT INTO fortune (id, message) VALUES (11, '<script>alert("This should not be displayed in a browser alert box.");</script>');
 INSERT INTO fortune (id, message) VALUES (12, 'フレームワークのベンチマーク');
-
-

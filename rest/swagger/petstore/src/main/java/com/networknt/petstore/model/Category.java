@@ -5,17 +5,17 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class Category {
 
-    
+
     private String name;
-    
+
     private java.lang.Long id;
-    
+
 
     public Category () {
     }
 
-    
-    
+
+
     @JsonProperty("name")
     public String getName() {
         return name;
@@ -24,9 +24,9 @@ public class Category {
     public void setName(String name) {
         this.name = name;
     }
-    
-    
-    
+
+
+
     @JsonProperty("id")
     public java.lang.Long getId() {
         return id;
@@ -35,8 +35,8 @@ public class Category {
     public void setId(java.lang.Long id) {
         this.id = id;
     }
-    
-    
+
+
 
     @Override
     public boolean equals(Object o) {
@@ -49,7 +49,7 @@ public class Category {
         Category Category = (Category) o;
 
         return Objects.equals(name, Category.name) &&
-        
+
         Objects.equals(id, Category.id);
     }
 
@@ -62,7 +62,7 @@ public class Category {
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("class Category {\n");
-        
+
         sb.append("    name: ").append(toIndentedString(name)).append("\n");
         sb.append("    id: ").append(toIndentedString(id)).append("\n");
         sb.append("}");

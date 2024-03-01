@@ -23,7 +23,7 @@ public class ContactsContactIdGetHandler implements LightHttpHandler {
         this.service = new ContactsContactIdGetService ();
     }
 
-    
+
     @Override
     public void handleRequest(HttpServerExchange exchange) throws Exception {
         HeaderMap requestHeaders = exchange.getRequestHeaders();
