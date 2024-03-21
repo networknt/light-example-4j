@@ -120,7 +120,7 @@
         </dependency>
         <dependency>
             <groupId>com.networknt</groupId>
-            <artifactId>logger-config</artifactId>
+            <artifactId>logger-handler</artifactId>
         </dependency>
         <dependency>
             <groupId>com.networknt</groupId>
