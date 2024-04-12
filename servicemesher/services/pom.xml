@@ -28,7 +28,7 @@
 
         <version.jackson>2.15.3</version.jackson>
         <version.slf4j>2.0.9</version.slf4j>
-        <version.jose4j>0.9.3</version.jose4j>
+        <version.jose4j>0.9.6</version.jose4j>
         <version.logback>1.4.14</version.logback>
         <version.undertow>2.3.12.Final</version.undertow>
         <version.json-schema-validator>0.1.26</version.json-schema-validator>
