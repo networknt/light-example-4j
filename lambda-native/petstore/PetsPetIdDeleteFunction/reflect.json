@@ -1,0 +1,109 @@
+
+[
+  {
+    "name": "com.amazonaws.services.lambda.runtime.events.APIGatewayProxyRequestEvent",
+    "methods": [
+      { "name": "<init>", "parameterTypes": [] }
+    ],
+    "allPublicMethods" : true
+  },
+  {
+    "name": "com.amazonaws.services.lambda.runtime.events.APIGatewayProxyResponseEvent",
+    "methods": [
+      { "name": "<init>", "parameterTypes": [] }
+    ],
+    "allPublicMethods": true
+  },
+  {
+    "name": "com.amazonaws.services.lambda.runtime.events.APIGatewayProxyRequestEvent$ProxyRequestContext",
+    "methods": [
+      { "name": "<init>", "parameterTypes": [] }
+    ],
+    "allPublicMethods" : true
+  },
+  {
+    "name": "com.amazonaws.services.lambda.runtime.events.APIGatewayProxyRequestEvent$RequestIdentity",
+    "methods": [
+      { "name": "<init>", "parameterTypes": [] }
+    ],
+    "allPublicMethods" : true
+  },
+  {
+    "name": "com.networknt.aws.lambda.DefaultResponse",
+    "allPublicMethods" : true
+  },
+  {
+    "name": "com.networknt.aws.lambda.InvocationResponse",
+    "allPublicMethods" : true
+  },
+  {
+    "name": "com.networknt.aws.lambda.LambdaContext",
+    "allPublicMethods" : true
+  },
+  {
+    "name": "com.networknt.petstore.handler.App",
+    "allDeclaredConstructors": true,
+    "allPublicConstructors": true,
+    "allDeclaredMethods": true,
+    "allPublicMethods": true
+  },
+  {
+    "name": "ch.qos.logback.core.ConsoleAppender",
+    "allPublicMethods":true,
+    "methods":[{"name":"<init>","parameterTypes":[] }]
+  },
+  {
+    "name": "ch.qos.logback.core.FileAppender",
+    "allPublicMethods":true,
+    "methods":[{"name":"<init>","parameterTypes":[] }]
+  },
+  {
+    "name": "ch.qos.logback.classic.encoder.PatternLayoutEncoder",
+    "allPublicMethods":true,
+    "methods":[{"name":"<init>","parameterTypes":[] }]
+  },
+  {
+    "name": "ch.qos.logback.classic.pattern.LineOfCallerConverter",
+    "methods":[{"name":"<init>","parameterTypes":[] }]
+  },
+  {
+    "name": "ch.qos.logback.classic.pattern.DateConverter",
+    "methods":[{"name":"<init>","parameterTypes":[] }]
+  },
+  {
+    "name": "ch.qos.logback.classic.pattern.ExtendedThrowableProxyConverter",
+    "methods":[{"name":"<init>","parameterTypes":[] }]
+  },
+  {
+    "name": "ch.qos.logback.classic.pattern.LevelConverter",
+    "methods":[{"name":"<init>","parameterTypes":[] }]
+  },
+  {
+    "name": "ch.qos.logback.classic.pattern.LineSeparatorConverter",
+    "methods":[{"name":"<init>","parameterTypes":[] }]
+  },
+  {
+    "name": "ch.qos.logback.classic.pattern.LoggerConverter",
+    "methods":[{"name":"<init>","parameterTypes":[] }]
+  },
+  {
+    "name": "ch.qos.logback.classic.pattern.MessageConverter",
+    "methods":[{"name":"<init>","parameterTypes":[] }]
+  },
+  {
+    "name": "ch.qos.logback.classic.pattern.ThreadConverter",
+    "methods":[{"name":"<init>","parameterTypes":[] }]
+  },
+  {
+    "name": "ch.qos.logback.classic.pattern.MDCConverter",
+    "methods":[{"name":"<init>","parameterTypes":[] }]
+  },
+  {
+    "name": "ch.qos.logback.classic.pattern.ClassOfCallerConverter",
+    "methods":[{"name":"<init>","parameterTypes":[] }]
+  },
+  {
+    "name": "ch.qos.logback.classic.pattern.MethodOfCallerConverter",
+    "methods":[{"name":"<init>","parameterTypes":[] }]
+  }
+]

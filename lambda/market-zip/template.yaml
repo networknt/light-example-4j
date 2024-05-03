@@ -1,0 +1,125 @@
+
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: >
+  market
+
+  Sample SAM Template for market
+
+# More info about Globals: https://github.com/awslabs/serverless-application-model/blob/master/docs/globals.rst
+Globals:
+  Function:
+    Timeout: 20
+
+Resources:
+
+  ApiGateway:
+    Type: AWS::Serverless::Api
+    Properties:
+      StageName: Prod
+      DefinitionBody:
+        openapi: 3.0.1
+        info:
+          title:
+            Ref: AWS::StackName
+        components:
+          securitySchemes:
+            jwt-authorizer:
+              type: apiKey
+              name: Authorization
+              in: header
+              x-amazon-apigateway-authtype: custom
+              x-amazon-apigateway-authorizer:
+                identitySource: method.request.header.Authorization
+                type: request
+                authorizerUri:
+                  Fn::Sub: arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-2:964637446810:function:Authorizer/invocations
+                authorizerResultTtlInSeconds: 0
+        paths:
+
+          /{store}/products:
+
+            get:
+              x-amazon-apigateway-integration:
+                httpMethod: post
+                type: aws_proxy
+                uri:
+                  Fn::Sub: arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${StoreProductsGetFunction.Arn}/invocations
+              responses: {}
+              security:
+                - jwt-authorizer: []
+
+            post:
+              x-amazon-apigateway-integration:
+                httpMethod: post
+                type: aws_proxy
+                uri:
+                  Fn::Sub: arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${StoreProductsPostFunction.Arn}/invocations
+              responses: {}
+              security:
+                - jwt-authorizer: []
+
+
+
+
+  StoreProductsGetFunction:
+    Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
+    Properties:
+
+      CodeUri: StoreProductsGetFunction
+      Handler: com.networknt.market.handler.App::handleRequest
+      Runtime: provided
+      MemorySize: 512
+      FunctionName: StoreProductsGetFunction
+      Environment: # More info about Env Vars: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#environment-object
+        Variables:
+          PARAM1: VALUE
+
+      Events:
+        StoreProductsGet:
+          Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
+          Properties:
+            Path: /{store}/products
+            Method: GET
+
+            RestApiId:
+              Ref: ApiGateway
+
+
+
+  StoreProductsPostFunction:
+    Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
+    Properties:
+
+      CodeUri: StoreProductsPostFunction
+      Handler: com.networknt.market.handler.App::handleRequest
+      Runtime: provided
+      MemorySize: 512
+      FunctionName: StoreProductsPostFunction
+      Environment: # More info about Env Vars: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#environment-object
+        Variables:
+          PARAM1: VALUE
+
+      Events:
+        StoreProductsPost:
+          Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
+          Properties:
+            Path: /{store}/products
+            Method: POST
+
+            RestApiId:
+              Ref: ApiGateway
+
+
+
+
+  AuthorizerPerm:
+    Type: AWS::Lambda::Permission
+    DependsOn:
+      - ApiGateway
+    Properties:
+      Action: lambda:InvokeFunction
+      FunctionName: arn:aws:lambda:us-east-2:964637446810:function:Authorizer
+      Principal: apigateway.amazonaws.com
+      SourceArn:
+        'Fn::Sub': 'arn:aws:execute-api:${AWS::Region}:${AWS::AccountId}:*/*/*/*'

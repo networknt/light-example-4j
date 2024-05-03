@@ -1,0 +1,123 @@
+---
+openapi: "3.0.0"
+info:
+  version: "1.0.0"
+  title: "Swagger Market"
+  license:
+    name: "MIT"
+servers:
+- url: "http://market.swagger.io"
+paths:
+  /{store}/products:
+    get:
+      summary: "Get all products from stores"
+      operationId: "listProducts"
+      tags:
+      - "products"
+      parameters:
+      - name: "limit"
+        in: "query"
+        description: "How many items to return at one time (max 100)"
+        required: false
+        schema:
+          type: "integer"
+          format: "int32"
+      - name: "store"
+        in: "path"
+        description: "The downstream store name"
+        required: true
+        schema:
+          type: "string"
+      security:
+      - market_auth:
+        - "read:products"
+      responses:
+        "200":
+          description: "An paged array of products"
+          content:
+            application/json:
+              schema:
+                type: "array"
+                items:
+                  $ref: "#/components/schemas/Product"
+              example:
+              - id: 1
+                name: "catten"
+                tag: "cat"
+              - id: 2
+                name: "doggy"
+                tag: "dog"
+        default:
+          description: "unexpected error"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    post:
+      summary: "Create a product"
+      operationId: "createProducts"
+      parameters:
+      - name: "store"
+        in: "path"
+        description: "The downstream store name"
+        required: true
+        schema:
+          type: "string"
+      requestBody:
+        description: "Product to add to the target store"
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Product"
+      tags:
+      - "products"
+      security:
+      - market_auth:
+        - "read:products"
+        - "write:products"
+      responses:
+        "201":
+          description: "Null response"
+        default:
+          description: "unexpected error"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+components:
+  securitySchemes:
+    market_auth:
+      type: "oauth2"
+      description: "This API uses OAuth 2 with the client credential grant flow."
+      flows:
+        clientCredentials:
+          tokenUrl: "https://localhost:6882/token"
+          scopes:
+            write:products: "modify products"
+            read:products: "read your products"
+  schemas:
+    Product:
+      type: "object"
+      required:
+      - "id"
+      - "name"
+      properties:
+        id:
+          type: "integer"
+          format: "int64"
+        name:
+          type: "string"
+        tag:
+          type: "string"
+    Error:
+      type: "object"
+      required:
+      - "code"
+      - "message"
+      properties:
+        code:
+          type: "integer"
+          format: "int32"
+        message:
+          type: "string"
