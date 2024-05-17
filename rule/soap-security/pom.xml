@@ -14,10 +14,10 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<version.light-4j>2.1.2-SNAPSHOT</version.light-4j>
 		<version.yaml-rule>1.0.3</version.yaml-rule>
-		<version.jackson>2.15.3</version.jackson>
-		<version.slf4j>2.0.9</version.slf4j>
-		<version.jose4j>0.9.3</version.jose4j>
-		<version.logback>1.4.14</version.logback>
+		<version.jackson>2.17.0</version.jackson>
+		<version.slf4j>2.0.13</version.slf4j>
+		<version.jose4j>0.9.6</version.jose4j>
+		<version.logback>1.5.6</version.logback>
 		<version.junit>4.13.2</version.junit>
 		<version.commons-codec>1.15</version.commons-codec>
 		<version.undertow>2.3.12.Final</version.undertow>
