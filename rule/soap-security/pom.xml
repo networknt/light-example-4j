@@ -21,7 +21,7 @@
 		<version.junit>4.13.2</version.junit>
 		<version.commons-codec>1.15</version.commons-codec>
 		<version.undertow>2.3.14.Final</version.undertow>
-		<version.json-schema-validator>1.5.0</version.json-schema-validator>
+		<version.json-schema-validator>1.5.1</version.json-schema-validator>
 		<versions.maven-version>2.4</versions.maven-version>
       	<version.javadoc-packagelist-plugin>1.0.0</version.javadoc-packagelist-plugin>
        	<version.maven-javadoc>3.4.1</version.maven-javadoc>
