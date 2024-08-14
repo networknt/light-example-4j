@@ -67,6 +67,7 @@ handlers:
   - com.networknt.specification.SpecSwaggerUIHandler@swaggerui
   # - com.networknt.metrics.prometheus.PrometheusGetHandler@getprometheus
   - com.networknt.server.handler.ServerShutdownHandler@shutdown
+  - com.networknt.cache.CacheExplorerHandler@cache
   # Business Handlers
   - com.networknt.petstore.handler.PetsGetHandler
   - com.networknt.petstore.handler.PetsPostHandler
@@ -134,52 +135,66 @@ paths:
       - default
       - com.networknt.petstore.handler.StreamsGetHandler
 
+  - path: '/health'
+    method: 'get'
+    exec:
+      - health
+
   - path: '/health/${server.serviceId:com.networknt.petstore-3.0.1}'
     method: 'get'
     exec:
       - security
       - health
 
-  - path: '/server/info'
+  - path: '/adm/server/info'
     method: 'get'
     exec:
       - security
       - info
 
-  - path: '/logger'
+  - path: '/adm/logger'
     method: 'get'
     exec:
       - security
       - getLogger
 
-  - path: '/logger'
+  - path: '/adm/logger'
     method: 'post'
     exec:
       - security
       - body
       - postLogger
-  - path: '/logger/content'
+
+  - path: '/adm/logger/content'
     method: 'GET'
     exec:
       - security
       - getLogContents
 
-  - path: '/modules'
+  - path: '/adm/modules'
     method: 'get'
     exec:
+      - security
       - modules
 
-  - path: '/modules'
+  - path: '/adm/modules'
     method: 'post'
     exec:
+      - security
       - body
       - configReload
 
-  - path: '/shutdown'
+  - path: '/adm/shutdown'
     method: 'delete'
     exec:
+      - security
       - shutdown
 
+  - path: '/adm/cache/{name}'
+    method: 'get'
+    exec:
+      - security
+      - cache
 
   - path: '/spec.yaml'
     method: 'get'
