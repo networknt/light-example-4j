@@ -1,0 +1,65 @@
+
+#--------------------------------------------------------------------------------
+# values.yml : Set of values commonly overridden in microservices
+# 			   The file can be extended with other elements, as necessary
+#--------------------------------------------------------------------------------
+
+# client.yml
+# https://github.com/networknt/light-4j/blob/master/client/src/main/resources/config/client.yml
+client.timeout: 3000
+client.verifyHostname: true
+
+# server.yml
+# https://github.com/networknt/light-4j/blob/master/server/src/main/resources/config/server.yml
+server.httpPort: 8080
+server.enableHttp: false
+server.httpsPort: 9443
+server.enableHttps: true
+server.enableHttp2: true
+server.enableRegistry: false
+server.serviceId: com.networknt.isoxml-3.1.0
+server.buildNumber: 3.1.0
+
+# security.yml
+security.enableVerifyJwt: false
+
+# service.yml
+service.singletons:
+- com.networknt.registry.URL:
+  - com.networknt.registry.URLImpl:
+      protocol: light
+      host: localhost
+      port: 8080
+      path: portal
+      parameters:
+        registryRetryPeriod: '30000'
+- com.networknt.portal.registry.client.PortalRegistryClient:
+  - com.networknt.portal.registry.client.PortalRegistryClientImpl
+- com.networknt.registry.Registry:
+  - com.networknt.portal.registry.PortalRegistry
+- com.networknt.balance.LoadBalance:
+  - com.networknt.balance.RoundRobinLoadBalance
+- com.networknt.cluster.Cluster:
+  - com.networknt.cluster.LightCluster
+- com.networknt.cache.CacheManager:
+  - com.networknt.cache.CaffeineCacheManager
+# StartupHookProvider implementations, there are one to many and they are called in the same sequence defined.
+- com.networknt.server.StartupHookProvider:
+
+
+# ShutdownHookProvider implementations, there are one to many and they are called in the same sequence defined.
+- com.networknt.server.ShutdownHookProvider:
+
+
+
+
+
+
+# cache.yml
+cache.caches:
+  - cacheName: jwt
+    expiryInMinutes: 15
+    maxSize: 100
+  - cacheName: jwk
+    expiryInMinutes: 129600
+    maxSize: 100
