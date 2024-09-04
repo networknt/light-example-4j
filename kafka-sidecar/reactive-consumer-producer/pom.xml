@@ -16,7 +16,7 @@
         <version.jose4j>0.9.6</version.jose4j>
         <version.logback>1.5.6</version.logback>
         <version.junit>5.8.1</version.junit>
-        <version.undertow>2.3.16.Final</version.undertow>
+        <version.undertow>2.3.17.Final</version.undertow>
         <version.json-schema-validator>1.5.1</version.json-schema-validator>
 
 
