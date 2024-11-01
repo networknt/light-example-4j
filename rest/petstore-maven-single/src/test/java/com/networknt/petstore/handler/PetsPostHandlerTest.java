@@ -30,7 +30,6 @@ import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.atomic.AtomicReference;
 
 
-@Disabled
 @ExtendWith(TestServer.class)
 public class PetsPostHandlerTest {
 

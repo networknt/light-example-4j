@@ -22,7 +22,7 @@ server.buildNumber: 3.0.1
 
 # openapi-security.yml
 # https://github.com/networknt/light-rest-4j/blob/master/openapi-security/src/main/resources/config/openapi-security.yml
-openapi-security.enableVerifyJwt: false
+security.enableVerifyJwt: false
 
 # metrics.yml
 metrics.enabled: false
