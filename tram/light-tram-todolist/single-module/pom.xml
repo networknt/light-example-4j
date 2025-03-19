@@ -31,7 +31,7 @@
         <version.hikaricp>6.2.1</version.hikaricp>
         <version.fastscanner>2.18.1</version.fastscanner>
         <version.mysql>8.0.32</version.mysql>
-        <version.h2>2.2.220</version.h2>
+        <version.h2>2.3.232</version.h2>
         <version.elasticsearch>5.6.3</version.elasticsearch>
     </properties>
 

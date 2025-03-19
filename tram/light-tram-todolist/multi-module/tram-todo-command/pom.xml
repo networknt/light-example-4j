@@ -35,7 +35,7 @@
 
 
 
-        <version.h2>2.2.220</version.h2>
+        <version.h2>2.3.232</version.h2>
 
         <versions.maven-version>2.4</versions.maven-version>
     </properties>

@@ -24,7 +24,7 @@
 		<version.fastscanner>2.18.1</version.fastscanner>
 
 		<version.sqlserver>7.2.1.jre8</version.sqlserver>
-		<version.h2>2.2.220</version.h2>
+		<version.h2>2.3.232</version.h2>
 
 		<versions.maven-version>2.4</versions.maven-version>
 		<version.javadoc-packagelist-plugin>1.0.0</version.javadoc-packagelist-plugin>
