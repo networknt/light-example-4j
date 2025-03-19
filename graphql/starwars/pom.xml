@@ -21,7 +21,7 @@
         <version.graphql>22.2</version.graphql>
         <version.rxjava>2.1.5</version.rxjava>
 
-        <version.hikaricp>3.1.0</version.hikaricp>
+        <version.hikaricp>6.2.1</version.hikaricp>
 
 
 
