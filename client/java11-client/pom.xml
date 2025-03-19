@@ -14,7 +14,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <version.http-client>1.0.13</version.http-client>
         <version.slf4j>2.0.7</version.slf4j>
-        <version.logback>1.5.16</version.logback>
+        <version.logback>1.5.18</version.logback>
         <version.maven-javadoc>3.1.0</version.maven-javadoc>
         <versions.maven-version>2.4</versions.maven-version>
     </properties>
