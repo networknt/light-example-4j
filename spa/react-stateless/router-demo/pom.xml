@@ -63,6 +63,7 @@
         <version.json-schema-validator>1.5.1</version.json-schema-validator>
         <nexus.server>http://nexus.com:8080</nexus.server>
         <versions.maven-version>2.4</versions.maven-version>
+        <version.nexus-staging-maven>1.7.0</version.nexus-staging-maven>
         <argLine>-Xmx512m -XX:MaxPermSize=256m</argLine>
     </properties>
 
@@ -165,7 +166,7 @@
             <plugin>
                 <groupId>org.sonatype.plugins</groupId>
                 <artifactId>nexus-staging-maven-plugin</artifactId>
-                <version>1.6.8</version>
+                <version>${version.nexus-staging-maven}</version>
                 <extensions>true</extensions>
                 <configuration>
                     <serverId>ossrh</serverId>

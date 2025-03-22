@@ -69,6 +69,7 @@
         <version.mysql>8.0.32</version.mysql>
         <version.h2>2.3.232</version.h2>
         <version.elasticsearch>5.6.3</version.elasticsearch>
+        <version.nexus-staging-maven>1.7.0</version.nexus-staging-maven>
     </properties>
 
 
@@ -357,7 +358,7 @@
             <plugin>
                 <groupId>org.sonatype.plugins</groupId>
                 <artifactId>nexus-staging-maven-plugin</artifactId>
-                <version>1.6.7</version>
+                <version>${version.nexus-staging-maven}</version>
                 <extensions>true</extensions>
                 <configuration>
                     <serverId>ossrh</serverId>

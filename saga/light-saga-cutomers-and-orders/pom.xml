@@ -70,6 +70,7 @@
         <version.h2>2.3.232</version.h2>
         <version.caffeine>3.2.0</version.caffeine>
         <version.assertj>3.8.0</version.assertj>
+        <version.nexus-staging-maven>1.7.0</version.nexus-staging-maven>
     </properties>
 
 
@@ -388,7 +389,7 @@
             <plugin>
                 <groupId>org.sonatype.plugins</groupId>
                 <artifactId>nexus-staging-maven-plugin</artifactId>
-                <version>1.6.7</version>
+                <version>${version.nexus-staging-maven}</version>
                 <extensions>true</extensions>
                 <configuration>
                     <serverId>ossrh</serverId>
