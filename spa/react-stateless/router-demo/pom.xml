@@ -64,6 +64,7 @@
         <nexus.server>http://nexus.com:8080</nexus.server>
         <versions.maven-version>2.4</versions.maven-version>
         <version.nexus-staging-maven>1.7.0</version.nexus-staging-maven>
+        <version.maven-gpg>3.2.7</version.maven-gpg>
         <argLine>-Xmx512m -XX:MaxPermSize=256m</argLine>
     </properties>
 
@@ -307,7 +308,7 @@
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-gpg-plugin</artifactId>
-                        <version>1.6</version>
+                        <version>${version.maven-gpg}</version>
                         <executions>
                             <execution>
                                 <id>sign-artifacts</id>
