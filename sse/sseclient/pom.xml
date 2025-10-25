@@ -12,7 +12,7 @@
     <properties>
         <java.version>21</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <project.main.class>com.networknt.sse.RawStreamClient</project.main.class>
+        <project.main.class>com.networknt.sse.WorkingSseClient</project.main.class>
         <version.light-4j>2.3.2-SNAPSHOT</version.light-4j>
         <version.jackson>2.18.3</version.jackson>
         <version.slf4j>2.0.17</version.slf4j>
