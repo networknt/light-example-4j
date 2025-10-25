@@ -7,7 +7,7 @@ public class FixedSSEServer {
 
     public static void main(String[] args) {
         RoutingHandler router = new RoutingHandler()
-                //.get("/", new HtmlClientHandler())
+                .get("/", new HtmlClientHandler())
                 //.get("/sse", new BackgroundSSEHandler())
                 //.get("/sse", new RobustSSEHandler())
                 //.get("/sse", new SimpleSSEHandler())
