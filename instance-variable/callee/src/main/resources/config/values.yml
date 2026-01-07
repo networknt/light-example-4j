@@ -1,0 +1,8 @@
+#  server.yml
+server.httpPort: 7002
+server.enableHttp: true
+server.enableHttps: false
+server.serviceId: com.networknt.callee-1.0.0
+
+# security.yml
+security.enableVerifyJwt: false
