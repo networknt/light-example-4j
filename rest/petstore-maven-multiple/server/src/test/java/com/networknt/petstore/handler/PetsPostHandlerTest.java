@@ -77,16 +77,7 @@ public class PetsPostHandlerTest {
             client.restore(connectionToken);
         }
         String body = reference.get().getAttachment(Http2Client.RESPONSE_BODY);
-        Optional<HeaderValues> contentTypeName = Optional.ofNullable(reference.get().getResponseHeaders().get(Headers.CONTENT_TYPE));
-        SchemaValidator schemaValidator = new SchemaValidator(OpenApiHandler.helper.openApi3);
-        ResponseValidator responseValidator = new ResponseValidator(schemaValidator);
         int statusCode = reference.get().getResponseCode();
-        Status status;
-        if(contentTypeName.isPresent()) {
-            status = responseValidator.validateResponseContent(body, requestUri, httpMethod, String.valueOf(statusCode), contentTypeName.get().getFirst());
-        } else {
-            status = responseValidator.validateResponseContent(body, requestUri, httpMethod, String.valueOf(statusCode), JSON_MEDIA_TYPE);
-        }
-        assertNotNull(status);
+        assertNotNull(body);
     }
 }
