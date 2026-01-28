@@ -69,7 +69,7 @@
         <version.mysql>8.0.32</version.mysql>
         <version.h2>2.3.232</version.h2>
         <version.caffeine>3.2.0</version.caffeine>
-        <version.assertj>3.8.0</version.assertj>
+        <version.assertj>3.27.7</version.assertj>
         <version.nexus-staging-maven>1.7.0</version.nexus-staging-maven>
         <version.maven-gpg>3.2.7</version.maven-gpg>
     </properties>
