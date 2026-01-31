@@ -1,0 +1,46 @@
+# LLM Chat Server Example
+
+# server.yml
+server.httpPort: 8080
+server.enableHttp: true
+server.enableHttps: false
+server.serviceId: com.networknt.llmchat-1.0.0
+
+# service.yml
+service.singletons:
+  - com.networknt.genai.GenAiClient:
+    - com.networknt.genai.ollama.OllamaClient
+
+# handler.yml
+handler.handlers:
+  - com.networknt.websocket.handler.WebSocketHandler@websocket
+  - com.networknt.resource.PathResourceHandler@resource
+
+handler.chains:
+  default:
+    - websocket
+
+
+handler.paths:
+  - path: '/'
+    method: 'GET'
+    exec:
+      - resource
+
+  - path: '/chat'
+    method: 'GET'
+    exec:
+      - websocket
+
+# ollama.yml
+ollama.ollamaUrl: http://localhost:11434
+ollama.model: qwen3:14b
+
+# websocket-handler.yml
+websocket-handler.enabled: true
+websocket-handler.pathPrefixHandlers:
+  /chat: com.networknt.genai.handler.GenAiWebSocketHandler
+
+# path-resource.yaml
+path-resource.path: /
+path-resource.base: src/main/resources/public

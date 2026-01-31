@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Light GenAI Chat</title>
+    <style>
+        body { font-family: sans-serif; max-width: 800px; margin: 0 auto; padding: 20px; }
+        #chat-log { height: 400px; border: 1px solid #ccc; overflow-y: scroll; padding: 10px; margin-bottom: 10px; background: #f9f9f9; }
+        .message { margin-bottom: 5px; }
+        .user { color: blue; }
+        .assistant { color: green; }
+        .system { color: gray; font-style: italic; }
+        #controls { margin-bottom: 10px; }
+    </style>
+</head>
+<body>
+    <h1>Light GenAI Chat</h1>
+    
+    <div id="controls">
+        <label>User ID: <input type="text" id="userId" value="user1"></label>
+        <label>Model: <input type="text" id="model" value="qwen3:14b"></label>
+        <button onclick="connect()">Connect</button>
+        <button onclick="disconnect()" disabled id="disconnectBtn">Disconnect</button>
+    </div>
+
+    <div id="chat-log"></div>
+
+    <div id="input-area">
+        <input type="text" id="messageInput" placeholder="Type your message..." style="width: 70%;" disabled>
+        <button onclick="sendMessage()" id="sendBtn" disabled>Send</button>
+    </div>
+
+    <script>
+        let ws;
+        const chatLog = document.getElementById('chat-log');
+        const messageInput = document.getElementById('messageInput');
+        const sendBtn = document.getElementById('sendBtn');
+        const disconnectBtn = document.getElementById('disconnectBtn');
+
+        function connect() {
+            const userId = document.getElementById('userId').value;
+            const model = document.getElementById('model').value;
+            const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
+            const url = `${protocol}//${window.location.host}/chat?userId=${userId}&model=${model}`;
+
+            ws = new WebSocket(url);
+
+            ws.onopen = () => {
+                log('System', 'Connected to chat server.');
+                messageInput.disabled = false;
+                sendBtn.disabled = false;
+                disconnectBtn.disabled = false;
+            };
+
+            ws.onmessage = (event) => {
+                // Determine if it's a chunk or full message.
+                // Our server sends raw text chunks. 
+                // A simple UI approach: append to last assistant message if generic text, 
+                // or just log as new line for now.
+                // Improve: Check if previous element is "assistant-typing".
+                log('Assistant', event.data);
+            };
+
+            ws.onclose = () => {
+                log('System', 'Disconnected.');
+                messageInput.disabled = true;
+                sendBtn.disabled = true;
+                disconnectBtn.disabled = true;
+            };
+
+            ws.onerror = (error) => {
+                log('System', 'Error: ' + error);
+            };
+        }
+
+        function disconnect() {
+            if (ws) ws.close();
+        }
+
+        function sendMessage() {
+            const text = messageInput.value;
+            if (text && ws) {
+                log('User', text);
+                ws.send(text);
+                messageInput.value = '';
+            }
+        }
+
+        function log(role, text) {
+            const div = document.createElement('div');
+            div.className = 'message ' + role.toLowerCase();
+            div.innerHTML = `<strong>${role}:</strong> ${text}`;
+            chatLog.appendChild(div);
+            chatLog.scrollTop = chatLog.scrollHeight;
+        }
+
+        messageInput.addEventListener('keypress', function (e) {
+            if (e.key === 'Enter') {
+                sendMessage();
+            }
+        });
+    </script>
+</body>
+</html>
