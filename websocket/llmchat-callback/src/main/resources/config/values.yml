@@ -1,0 +1,18 @@
+# server.yml
+server.serviceId: com.networknt.llmchat-callback-1.0.0
+server.httpPort: 8080
+server.enableHttp: true
+server.enableHttps: false
+
+# handler.yml
+handler.enabled: true
+handler.handlers:
+  - com.networknt.llmchat.handler.ConnectHandler@connect
+handler.chains:
+  default:
+    - connect
+handler.paths:
+  - path: '/connect'
+    method: 'GET'
+    exec:
+      - connect
