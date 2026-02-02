@@ -1,49 +1,78 @@
 package com.networknt.llmchat.client;
 
-import java.net.URI;
-import java.net.http.HttpClient;
-import java.net.http.WebSocket;
-import java.util.concurrent.CompletionStage;
+import io.undertow.connector.ByteBufferPool;
+import io.undertow.websockets.client.WebSocketClient;
+import io.undertow.websockets.core.AbstractReceiveListener;
+import io.undertow.websockets.core.BufferedTextMessage;
+import io.undertow.websockets.core.WebSocketChannel;
+import io.undertow.websockets.core.WebSockets;
+import org.xnio.IoFuture;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.xnio.XnioWorker;
+
+import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 
 public class LlmClient {
     private static final Logger LOG = LoggerFactory.getLogger(LlmClient.class);
 
-    public void connect(String channelId) {
-        HttpClient client = HttpClient.newHttpClient();
-        // Gateway URL: ws://localhost:9080/connect?channelId=...
-        // Assuming Gateway is running on port 9080 (HTTP) based on recent changes
-        String url = "ws://localhost:9080/connect?channelId=" + channelId;
-        LOG.info("Connecting to Gateway: {}", url);
+    public void connect(String channelId, XnioWorker worker, ByteBufferPool bufferPool) {
+        try {
+            String url = "ws://localhost:9080/chat/connect?channelId=" + channelId;
+            LOG.info("Connecting to Gateway via Undertow Client: {}", url);
 
-        client.newWebSocketBuilder()
-                .buildAsync(URI.create(url), new WebSocket.Listener() {
-                    @Override
-                    public void onOpen(WebSocket webSocket) {
-                        LOG.info("Connected to Gateway for channel: {}", channelId);
-                        WebSocket.Listener.super.onOpen(webSocket);
-                    }
+            WebSocketClient.connectionBuilder(worker, bufferPool, new URI(url))
+                    .connect()
+                    .addNotifier(new IoFuture.Notifier<WebSocketChannel, Object>() {
+                        @Override
+                        public void notify(IoFuture<? extends WebSocketChannel> ioFuture, Object attachment) {
+                            if (ioFuture.getStatus() == IoFuture.Status.DONE) {
+                                try {
+                                    WebSocketChannel channel = ioFuture.get();
+                                    LOG.info("Connected to Gateway for channel: {}", channelId);
 
-                    @Override
-                    public CompletionStage<?> onText(WebSocket webSocket, CharSequence data, boolean last) {
-                        LOG.info("Received message: {}", data);
-                        // Simple Echo/Mock Response to demonstrate the callback pattern
-                        // In a real scenario, this would invoke the LLM
-                        String response = "Response from Callback: " + data;
-                        return webSocket.sendText(response, true);
-                    }
+                                    channel.getReceiveSetter().set(new AbstractReceiveListener() {
+                                        @Override
+                                        protected void onFullTextMessage(WebSocketChannel channel,
+                                                BufferedTextMessage message) {
+                                            String data = message.getData();
+                                            LOG.info("Received message: {}", data);
+                                            // Mock LLM Response
+                                            String response = "Response from Callback: " + data;
+                                            WebSockets.sendText(response, channel, null);
+                                        }
 
-                    @Override
-                    public void onError(WebSocket webSocket, Throwable error) {
-                        LOG.error("WebSocket Error", error);
-                    }
+                                        @Override
+                                        protected void onError(WebSocketChannel channel, Throwable error) {
+                                            LOG.error("WebSocket Error", error);
+                                        }
 
-                    @Override
-                    public CompletionStage<?> onClose(WebSocket webSocket, int statusCode, String reason) {
-                        LOG.info("WebSocket Closed: {} {}", statusCode, reason);
-                        return WebSocket.Listener.super.onClose(webSocket, statusCode, reason);
-                    }
-                });
+                                        @Override
+                                        protected void onClose(WebSocketChannel webSocketChannel,
+                                                io.undertow.websockets.core.StreamSourceFrameChannel channel)
+                                                throws IOException {
+                                            LOG.info("WebSocket Closed");
+                                            super.onClose(webSocketChannel, channel);
+                                        }
+                                    });
+                                    channel.resumeReceives();
+
+                                } catch (IOException e) {
+                                    LOG.error("Failed to connect", e);
+                                }
+                            } else {
+                                LOG.error("Connection failed: {}", ioFuture.getStatus());
+                                if (ioFuture.getException() != null) {
+                                    LOG.error("Exception: ", ioFuture.getException());
+                                }
+                            }
+                        }
+                    }, null);
+
+        } catch (URISyntaxException e) {
+            LOG.error("Invalid URI", e);
+        }
     }
 }
