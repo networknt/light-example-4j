@@ -14,9 +14,23 @@ import org.xnio.XnioWorker;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.Collections;
+import java.util.List;
+
+import com.networknt.genai.ollama.OllamaClient;
+import com.networknt.genai.ChatMessage;
+import com.networknt.genai.StreamCallback;
+import com.networknt.genai.handler.ChatHistoryRepository;
+import com.networknt.genai.handler.ChatSessionRepository;
+import com.networknt.genai.handler.InMemoryChatHistoryRepository;
+import com.networknt.genai.handler.InMemoryChatSessionRepository;
+import com.networknt.genai.handler.ChatSession;
 
 public class LlmClient {
     private static final Logger LOG = LoggerFactory.getLogger(LlmClient.class);
+    private final OllamaClient ollamaClient = new OllamaClient();
+    private final ChatSessionRepository sessionRepository = new InMemoryChatSessionRepository();
+    private final ChatHistoryRepository historyRepository = new InMemoryChatHistoryRepository();
 
     public void connect(String channelId, XnioWorker worker, ByteBufferPool bufferPool) {
         try {
@@ -33,15 +47,69 @@ public class LlmClient {
                                     WebSocketChannel channel = ioFuture.get();
                                     LOG.info("Connected to Gateway for channel: {}", channelId);
 
+                                    // Serialize session management using channelId as effective session identifier
+                                    // for now
+                                    // in a real app, we might handshake userId.
+                                    // For now, we assume a single user per channel connection or map channelId to
+                                    // session.
+                                    // Let's create a session.
+                                    ChatSession session = sessionRepository.createSession("user-" + channelId,
+                                            "llama3.2");
+                                    String sessionId = session.getSessionId();
+
                                     channel.getReceiveSetter().set(new AbstractReceiveListener() {
                                         @Override
                                         protected void onFullTextMessage(WebSocketChannel channel,
                                                 BufferedTextMessage message) {
                                             String data = message.getData();
                                             LOG.info("Received message: {}", data);
-                                            // Mock LLM Response
-                                            String response = "Response from Callback: " + data;
-                                            WebSockets.sendText(response, channel, null);
+
+                                            // Add to history
+                                            ChatMessage userMsg = new ChatMessage("user", data);
+                                            historyRepository.addMessage(sessionId, userMsg);
+
+                                            // Get full history
+                                            List<ChatMessage> history = historyRepository.getHistory(sessionId);
+
+                                            // Invoke Ollama with history
+                                            ollamaClient.chatStream(history, new StreamCallback() {
+                                                private final StringBuilder buffer = new StringBuilder();
+                                                private final StringBuilder fullResponse = new StringBuilder();
+
+                                                @Override
+                                                public void onEvent(String content) {
+                                                    try {
+                                                        buffer.append(content);
+                                                        fullResponse.append(content);
+                                                        // Send only when newline is detected to simulate chunking
+                                                        if (buffer.toString().contains("\n")) {
+                                                            WebSockets.sendText(buffer.toString(), channel, null);
+                                                            buffer.setLength(0);
+                                                        }
+                                                    } catch (Exception e) {
+                                                        LOG.error("Error sending message chunk", e);
+                                                    }
+                                                }
+
+                                                @Override
+                                                public void onComplete() {
+                                                    // Send remaining buffer
+                                                    if (buffer.length() > 0) {
+                                                        WebSockets.sendText(buffer.toString(), channel, null);
+                                                    }
+                                                    // Add assistant response to history
+                                                    ChatMessage assistantMsg = new ChatMessage("assistant",
+                                                            fullResponse.toString());
+                                                    historyRepository.addMessage(sessionId, assistantMsg);
+                                                }
+
+                                                @Override
+                                                public void onError(Throwable throwable) {
+                                                    LOG.error("Ollama Error", throwable);
+                                                    WebSockets.sendText("Error: " + throwable.getMessage(), channel,
+                                                            null);
+                                                }
+                                            });
                                         }
 
                                         @Override

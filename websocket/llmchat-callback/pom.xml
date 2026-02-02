@@ -50,6 +50,11 @@
         </dependency>
         <dependency>
              <groupId>com.networknt</groupId>
+             <artifactId>genai-websocket-handler</artifactId>
+             <version>${version.light-genai-4j}</version>
+        </dependency>
+        <dependency>
+             <groupId>com.networknt</groupId>
              <artifactId>genai-ollama</artifactId>
              <version>${version.light-genai-4j}</version>
         </dependency>

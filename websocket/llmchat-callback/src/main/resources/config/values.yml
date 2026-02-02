@@ -16,3 +16,7 @@ handler.paths:
     method: 'GET'
     exec:
       - connect
+
+# ollama.yml
+ollama.ollamaUrl: http://localhost:11434
+ollama.model: qwen3:14b
