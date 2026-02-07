@@ -1,6 +1,7 @@
 package com.networknt.client;
 
 import com.networknt.client.oauth.TokenResponse;
+import com.networknt.client.simplepool.SimpleConnectionHolder;
 import com.networknt.cluster.Cluster;
 import com.networknt.config.Config;
 import com.networknt.exception.ClientException;
@@ -47,7 +48,9 @@ public class Http2ClientExample {
 
     public static void main(String[] args) throws Exception {
         apiHost = cluster.serviceToUrl("https", "io.swagger.swagger-light-java-1.0.0", null, null);
-        reusedConnection = client.connect(new URI(apiHost), Http2Client.WORKER, Http2Client.SSL, Http2Client.BUFFER_POOL, OptionMap.create(UndertowOptions.ENABLE_HTTP2, true)).get();
+        SimpleConnectionHolder.ConnectionToken tokenReusedConnection = client.borrow(new URI(apiHost), Http2Client.WORKER, Http2Client.SSL, Http2Client.BUFFER_POOL, OptionMap.create(UndertowOptions.ENABLE_HTTP2, true));
+
+        reusedConnection = (ClientConnection) tokenReusedConnection.getRawConnection();
         Http2ClientExample e = new Http2ClientExample();
         e.testHttp2Get();
         e.testHttp2Post();
@@ -67,7 +70,19 @@ public class Http2ClientExample {
         // Create one CountDownLatch that will be reset in the callback function
         final CountDownLatch latch = new CountDownLatch(1);
         // Create an HTTP 2.0 connection to the server
-        final ClientConnection connection = client.connect(new URI("https://localhost:8443"), Http2Client.WORKER, Http2Client.SSL, Http2Client.BUFFER_POOL, OptionMap.create(UndertowOptions.ENABLE_HTTP2, true)).get();
+        final SimpleConnectionHolder.ConnectionToken token;
+
+        try {
+
+            token = client.borrow(new URI("https://localhost:8443"), Http2Client.WORKER, Http2Client.SSL, Http2Client.BUFFER_POOL, OptionMap.create(UndertowOptions.ENABLE_HTTP2, true));
+
+        } catch (Exception e) {
+
+            throw new ClientException(e);
+
+        }
+
+        final ClientConnection connection = (ClientConnection) token.getRawConnection();
         // Create an AtomicReference object to receive ClientResponse from callback function
         final AtomicReference<ClientResponse> reference = new AtomicReference<>();
         try {
@@ -93,7 +108,7 @@ public class Http2ClientExample {
         } finally {
             // here the connection is closed after one request. It should be used for in frequent
             // request as creating a new connection is costly with TLS handshake and ALPN.
-            IoUtils.safeClose(connection);
+            client.restore(token);
         }
         int statusCode = reference.get().getResponseCode();
         String body = reference.get().getAttachment(Http2Client.RESPONSE_BODY);
@@ -108,7 +123,19 @@ public class Http2ClientExample {
      */
     public void testHttp2Post() throws Exception {
         final CountDownLatch latch = new CountDownLatch(1);
-        final ClientConnection connection = client.connect(new URI("https://localhost:8443"), Http2Client.WORKER, Http2Client.SSL, Http2Client.BUFFER_POOL, OptionMap.create(UndertowOptions.ENABLE_HTTP2, true)).get();
+        final SimpleConnectionHolder.ConnectionToken token;
+
+        try {
+
+            token = client.borrow(new URI("https://localhost:8443"), Http2Client.WORKER, Http2Client.SSL, Http2Client.BUFFER_POOL, OptionMap.create(UndertowOptions.ENABLE_HTTP2, true));
+
+        } catch (Exception e) {
+
+            throw new ClientException(e);
+
+        }
+
+        final ClientConnection connection = (ClientConnection) token.getRawConnection();
         final AtomicReference<ClientResponse> reference = new AtomicReference<>();
         try {
             final ClientRequest request = new ClientRequest().setMethod(Methods.POST).setPath("/post");
@@ -122,7 +149,9 @@ public class Http2ClientExample {
             connection.sendRequest(request, client.createClientCallback(reference, latch, "post"));
             latch.await(100, TimeUnit.MILLISECONDS);
         } finally {
-            IoUtils.safeClose(connection);
+
+            client.restore(token);
+
         }
         System.out.println("testHttp2Post: statusCode = " + reference.get().getResponseCode() + " body = " + reference.get().getAttachment(Http2Client.RESPONSE_BODY));
     }
@@ -184,7 +213,9 @@ public class Http2ClientExample {
         final ClientConnection connection;
         try {
             // all the connection information should be from client.yml
-            connection = client.connect(new URI("https://localhost:6882"), Http2Client.WORKER, Http2Client.SSL, Http2Client.BUFFER_POOL, OptionMap.create(UndertowOptions.ENABLE_HTTP2, true)).get();
+            SimpleConnectionHolder.ConnectionToken token = client.borrow(new URI("https://localhost:6882"), Http2Client.WORKER, Http2Client.SSL, Http2Client.BUFFER_POOL, OptionMap.create(UndertowOptions.ENABLE_HTTP2, true));
+
+            connection = (ClientConnection) token.getRawConnection();
             final ClientRequest request = new ClientRequest().setMethod(Methods.POST).setPath("/oauth2/token");
             request.getRequestHeaders().put(Headers.HOST, "localhost");
             request.getRequestHeaders().put(Headers.AUTHORIZATION, "Basic " + encodeCredentials("f7d42348-c647-4efb-a52d-4c5787421e72", "f6h1FTI8Q3-7UScPZDzfXA"));

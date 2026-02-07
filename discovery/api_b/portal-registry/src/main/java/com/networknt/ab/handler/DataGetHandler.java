@@ -2,6 +2,7 @@ package com.networknt.ab.handler;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.networknt.client.Http2Client;
+import com.networknt.client.simplepool.SimpleConnectionHolder;
 import com.networknt.cluster.Cluster;
 import com.networknt.config.Config;
 import com.networknt.exception.ClientException;
@@ -53,7 +54,9 @@ public class DataGetHandler implements LightHttpHandler {
         ClientConnection connection = null;
         try {
             apidHost = cluster.serviceToUrl("https", "com.networknt.ad-1.0.0", tag, null);
-            connection = client.connect(new URI(apidHost), Http2Client.WORKER, Http2Client.SSL, Http2Client.BUFFER_POOL, OptionMap.create(UndertowOptions.ENABLE_HTTP2, true)).get();
+            SimpleConnectionHolder.ConnectionToken token = client.borrow(new URI(apidHost), Http2Client.WORKER, Http2Client.SSL, Http2Client.BUFFER_POOL, OptionMap.create(UndertowOptions.ENABLE_HTTP2, true));
+
+            connection = (ClientConnection) token.getRawConnection();
         } catch (Exception e) {
             logger.error("Exeption:", e);
             throw new ClientException(e);

@@ -1,6 +1,7 @@
 package com.networknt.client;
 
 import com.networknt.cluster.Cluster;
+import com.networknt.client.simplepool.SimpleConnectionHolder;
 import com.networknt.service.SingletonServiceFactory;
 import io.undertow.UndertowOptions;
 import io.undertow.client.ClientConnection;
@@ -54,7 +55,19 @@ public class Http2ClientConsul {
         // Create one CountDownLatch that will be reset in the callback function
         final CountDownLatch latch = new CountDownLatch(1);
         // Create an HTTP 2.0 connection to the server
-        final ClientConnection connection = client.connect(new URI(apiaHost), Http2Client.WORKER, Http2Client.SSL, Http2Client.BUFFER_POOL, OptionMap.create(UndertowOptions.ENABLE_HTTP2, true)).get();
+        final SimpleConnectionHolder.ConnectionToken token;
+
+        try {
+
+            token = client.borrow(new URI(apiaHost), Http2Client.WORKER, Http2Client.SSL, Http2Client.BUFFER_POOL, OptionMap.create(UndertowOptions.ENABLE_HTTP2, true));
+
+        } catch (Exception e) {
+
+            throw new ClientException(e);
+
+        }
+
+        final ClientConnection connection = (ClientConnection) token.getRawConnection();
         // Create an AtomicReference object to receive ClientResponse from callback function
         final AtomicReference<ClientResponse> reference = new AtomicReference<>();
         try {
@@ -67,7 +80,7 @@ public class Http2ClientConsul {
         } finally {
             // here the connection is closed after one request. It should be used for in frequent
             // request as creating a new connection is costly with TLS handshake and ALPN.
-            IoUtils.safeClose(connection);
+            client.restore(token);
         }
         int statusCode = reference.get().getResponseCode();
         String body = reference.get().getAttachment(Http2Client.RESPONSE_BODY);

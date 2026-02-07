@@ -2,6 +2,7 @@
 package ca.interac.etransfer.handler;
 
 import com.networknt.client.Http2Client;
+import com.networknt.client.simplepool.SimpleConnectionHolder;
 import com.networknt.exception.ClientException;
 import com.networknt.openapi.ResponseValidator;
 import com.networknt.schema.SchemaValidatorsConfig;
@@ -50,9 +51,13 @@ public class UserRegistrationsApiRegistartionIdGetHandlerTest {
         final ClientConnection connection;
         try {
             if(enableHttps) {
-                connection = client.connect(new URI(url), Http2Client.WORKER, Http2Client.SSL, Http2Client.BUFFER_POOL, enableHttp2 ? OptionMap.create(UndertowOptions.ENABLE_HTTP2, true): OptionMap.EMPTY).get();
+                SimpleConnectionHolder.ConnectionToken token = client.borrow(new URI(url), Http2Client.WORKER, Http2Client.SSL, Http2Client.BUFFER_POOL, enableHttp2 ? OptionMap.create(UndertowOptions.ENABLE_HTTP2, true): OptionMap.EMPTY);
+
+                connection = (ClientConnection) token.getRawConnection();
             } else {
-                connection = client.connect(new URI(url), Http2Client.WORKER, Http2Client.BUFFER_POOL, OptionMap.EMPTY).get();
+                SimpleConnectionHolder.ConnectionToken token = client.borrow(new URI(url), Http2Client.WORKER, Http2Client.BUFFER_POOL, OptionMap.EMPTY);
+
+                connection = (ClientConnection) token.getRawConnection();
             }
         } catch (Exception e) {
             throw new ClientException(e);
@@ -72,7 +77,9 @@ public class UserRegistrationsApiRegistartionIdGetHandlerTest {
             logger.error("Exception: ", e);
             throw new ClientException(e);
         } finally {
-            IoUtils.safeClose(connection);
+
+            client.restore(token);
+
         }
         String body = reference.get().getAttachment(Http2Client.RESPONSE_BODY);
         Optional<HeaderValues> contentTypeName = Optional.ofNullable(reference.get().getResponseHeaders().get(Headers.CONTENT_TYPE));

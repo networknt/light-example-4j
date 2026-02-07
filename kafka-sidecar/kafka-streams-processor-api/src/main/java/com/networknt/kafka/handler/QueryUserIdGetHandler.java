@@ -1,6 +1,7 @@
 package com.networknt.kafka.handler;
 
 import com.networknt.client.Http2Client;
+import com.networknt.client.simplepool.SimpleConnectionHolder;
 import com.networknt.config.Config;
 import com.networknt.config.JsonMapper;
 import com.networknt.handler.LightHttpHandler;
@@ -82,7 +83,9 @@ public class QueryUserIdGetHandler implements LightHttpHandler {
         try {
             ClientConnection conn = connCache.get(url);
             if(conn == null || !conn.isOpen()) {
-                conn = client.connect(new URI(url), Http2Client.WORKER, Http2Client.SSL, Http2Client.BUFFER_POOL, OptionMap.create(UndertowOptions.ENABLE_HTTP2, true)).get();
+                SimpleConnectionHolder.ConnectionToken tokenConn = client.borrow(new URI(url), Http2Client.WORKER, Http2Client.SSL, Http2Client.BUFFER_POOL, OptionMap.create(UndertowOptions.ENABLE_HTTP2, true));
+
+                conn = (ClientConnection) tokenConn.getRawConnection();
                 connCache.put(url, conn);
             }
             // Create one CountDownLatch that will be reset in the callback function

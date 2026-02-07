@@ -2,6 +2,7 @@
 package com.networknt.backend.handler;
 
 import com.networknt.client.Http2Client;
+import com.networknt.client.simplepool.SimpleConnectionHolder;
 import com.networknt.exception.ClientException;
 import com.networknt.openapi.OpenApiHandler;
 import com.networknt.openapi.ResponseValidator;
@@ -49,12 +50,19 @@ public class GetDataGetHandlerTest {
 
         final Http2Client client = Http2Client.getInstance();
         final CountDownLatch latch = new CountDownLatch(1);
-        final ClientConnection connection;
+        final SimpleConnectionHolder.ConnectionToken token;
+
         try {
-            connection = client.connect(new URI(url), Http2Client.WORKER, Http2Client.SSL, Http2Client.BUFFER_POOL, enableHttp2 ? OptionMap.create(UndertowOptions.ENABLE_HTTP2, true): OptionMap.EMPTY).get();
+
+            token = client.borrow(new URI(url), Http2Client.WORKER, Http2Client.SSL, Http2Client.BUFFER_POOL, enableHttp2 ? OptionMap.create(UndertowOptions.ENABLE_HTTP2, true): OptionMap.EMPTY);
+
         } catch (Exception e) {
+
             throw new ClientException(e);
+
         }
+
+        final ClientConnection connection = (ClientConnection) token.getRawConnection();
         final AtomicReference<ClientResponse> reference = new AtomicReference<>();
         String requestUri = "/v1/getData";
         String httpMethod = "get";
@@ -69,7 +77,9 @@ public class GetDataGetHandlerTest {
             logger.error("Exception: ", e);
             throw new ClientException(e);
         } finally {
-            IoUtils.safeClose(connection);
+
+            client.restore(token);
+
         }
         String body = reference.get().getAttachment(Http2Client.RESPONSE_BODY);
         int statusCode = reference.get().getResponseCode();

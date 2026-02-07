@@ -1,6 +1,7 @@
 package com.networknt.kafka;
 
 import com.networknt.client.ClientConfig;
+import com.networknt.client.simplepool.SimpleConnectionHolder;
 import com.networknt.client.Http2Client;
 import com.networknt.kafka.handler.QueryUserIdGetHandler;
 import io.confluent.ksql.api.client.Row;

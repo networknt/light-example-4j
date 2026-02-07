@@ -1,6 +1,7 @@
 package com.networknt.client;
 
 import com.networknt.client.oauth.TokenResponse;
+import com.networknt.client.simplepool.SimpleConnectionHolder;
 import com.networknt.cluster.Cluster;
 import com.networknt.config.Config;
 import com.networknt.exception.ClientException;
@@ -63,7 +64,19 @@ public class Http2ClientExample {
         // Create one CountDownLatch that will be reset in the callback function
         final CountDownLatch latch = new CountDownLatch(1);
         // Create an HTTP 2.0 connection to the server
-        final ClientConnection connection = client.connect(new URI(apiHost), Http2Client.WORKER, Http2Client.BUFFER_POOL, OptionMap.EMPTY).get();
+        final SimpleConnectionHolder.ConnectionToken token;
+
+        try {
+
+            token = client.borrow(new URI(apiHost), Http2Client.WORKER, Http2Client.BUFFER_POOL, OptionMap.EMPTY);
+
+        } catch (Exception e) {
+
+            throw new ClientException(e);
+
+        }
+
+        final ClientConnection connection = (ClientConnection) token.getRawConnection();
         // Create an AtomicReference object to receive ClientResponse from callback function
         final AtomicReference<ClientResponse> reference = new AtomicReference<>();
         try {
@@ -93,7 +106,7 @@ public class Http2ClientExample {
         } finally {
             // here the connection is closed after one request. It should be used for in frequent
             // request as creating a new connection is costly with TLS handshake and ALPN.
-            IoUtils.safeClose(connection);
+            client.restore(token);
         }
         int statusCode = reference.get().getResponseCode();
         String body = reference.get().getAttachment(Http2Client.RESPONSE_BODY);
@@ -119,7 +132,9 @@ public class Http2ClientExample {
         final ClientConnection connection;
         try {
             // all the connection information should be from client.yml
-            connection = client.connect(new URI("https://localhost:6882"), Http2Client.WORKER, Http2Client.SSL, Http2Client.BUFFER_POOL, OptionMap.create(UndertowOptions.ENABLE_HTTP2, true)).get();
+            SimpleConnectionHolder.ConnectionToken token = client.borrow(new URI("https://localhost:6882"), Http2Client.WORKER, Http2Client.SSL, Http2Client.BUFFER_POOL, OptionMap.create(UndertowOptions.ENABLE_HTTP2, true));
+
+            connection = (ClientConnection) token.getRawConnection();
             final ClientRequest request = new ClientRequest().setMethod(Methods.POST).setPath("/oauth2/token");
             request.getRequestHeaders().put(Headers.HOST, "localhost");
             request.getRequestHeaders().put(Headers.AUTHORIZATION, "Basic " + encodeCredentials("f7d42348-c647-4efb-a52d-4c5787421e72", "f6h1FTI8Q3-7UScPZDzfXA"));

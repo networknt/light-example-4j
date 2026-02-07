@@ -2,6 +2,7 @@ package com.networknt.aa.handler;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.networknt.client.Http2Client;
+import com.networknt.client.simplepool.SimpleConnectionHolder;
 import com.networknt.config.Config;
 import com.networknt.exception.ClientException;
 import com.networknt.handler.LightHttpHandler;
@@ -40,8 +41,12 @@ public class DataGetHandler implements LightHttpHandler {
 
     public DataGetHandler() {
         try {
-            connectionB = client.connect(new URI(apibHost), Http2Client.WORKER, Http2Client.SSL, Http2Client.BUFFER_POOL, OptionMap.create(UndertowOptions.ENABLE_HTTP2, true)).get();
-            connectionC = client.connect(new URI(apicHost), Http2Client.WORKER, Http2Client.SSL, Http2Client.BUFFER_POOL, OptionMap.create(UndertowOptions.ENABLE_HTTP2, true)).get();
+            SimpleConnectionHolder.ConnectionToken tokenConnectionB = client.borrow(new URI(apibHost), Http2Client.WORKER, Http2Client.SSL, Http2Client.BUFFER_POOL, OptionMap.create(UndertowOptions.ENABLE_HTTP2, true));
+
+            connectionB = (ClientConnection) tokenConnectionB.getRawConnection();
+            SimpleConnectionHolder.ConnectionToken tokenConnectionC = client.borrow(new URI(apicHost), Http2Client.WORKER, Http2Client.SSL, Http2Client.BUFFER_POOL, OptionMap.create(UndertowOptions.ENABLE_HTTP2, true));
+
+            connectionC = (ClientConnection) tokenConnectionC.getRawConnection();
         } catch (Exception e) {
             logger.error("Exeption:", e);
         }
@@ -52,7 +57,9 @@ public class DataGetHandler implements LightHttpHandler {
         List<String> list = new ArrayList<>();
         if(connectionB == null || !connectionB.isOpen()) {
             try {
-                connectionB = client.connect(new URI(apibHost), Http2Client.WORKER, Http2Client.SSL, Http2Client.BUFFER_POOL, OptionMap.create(UndertowOptions.ENABLE_HTTP2, true)).get();
+                SimpleConnectionHolder.ConnectionToken tokenConnectionB = client.borrow(new URI(apibHost), Http2Client.WORKER, Http2Client.SSL, Http2Client.BUFFER_POOL, OptionMap.create(UndertowOptions.ENABLE_HTTP2, true));
+
+                connectionB = (ClientConnection) tokenConnectionB.getRawConnection();
             } catch (Exception e) {
                 logger.error("Exeption:", e);
                 throw new ClientException(e);
@@ -60,7 +67,9 @@ public class DataGetHandler implements LightHttpHandler {
         }
         if(connectionC == null || !connectionC.isOpen()) {
             try {
-                connectionC = client.connect(new URI(apicHost), Http2Client.WORKER, Http2Client.SSL, Http2Client.BUFFER_POOL, OptionMap.create(UndertowOptions.ENABLE_HTTP2, true)).get();
+                SimpleConnectionHolder.ConnectionToken tokenConnectionC = client.borrow(new URI(apicHost), Http2Client.WORKER, Http2Client.SSL, Http2Client.BUFFER_POOL, OptionMap.create(UndertowOptions.ENABLE_HTTP2, true));
+
+                connectionC = (ClientConnection) tokenConnectionC.getRawConnection();
             } catch (Exception e) {
                 logger.error("Exeption:", e);
                 throw new ClientException(e);

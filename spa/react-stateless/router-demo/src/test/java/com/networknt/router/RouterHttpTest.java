@@ -1,6 +1,7 @@
 package com.networknt.router;
 
 import com.networknt.client.Http2Client;
+import com.networknt.client.simplepool.SimpleConnectionHolder;
 import com.networknt.common.DecryptUtil;
 import com.networknt.common.SecretConstants;
 import com.networknt.config.Config;
@@ -146,12 +147,19 @@ public class RouterHttpTest {
         final HttpString serviceId = new HttpString(Constants.SERVICE_ID);
         final Http2Client client = Http2Client.getInstance();
         final CountDownLatch latch = new CountDownLatch(10);
-        final ClientConnection connection;
+        final SimpleConnectionHolder.ConnectionToken token;
+
         try {
-            connection = client.connect(new URI(url), Http2Client.WORKER, Http2Client.SSL, Http2Client.BUFFER_POOL, enableHttp2 ? OptionMap.create(UndertowOptions.ENABLE_HTTP2, true): OptionMap.EMPTY).get();
+
+            token = client.borrow(new URI(url), Http2Client.WORKER, Http2Client.SSL, Http2Client.BUFFER_POOL, enableHttp2 ? OptionMap.create(UndertowOptions.ENABLE_HTTP2, true): OptionMap.EMPTY);
+
         } catch (Exception e) {
+
             throw new ClientException(e);
+
         }
+
+        final ClientConnection connection = (ClientConnection) token.getRawConnection();
         final List<AtomicReference<ClientResponse>> references = new CopyOnWriteArrayList<>();
         try {
             connection.getIoThread().execute(new Runnable() {
@@ -173,7 +181,9 @@ public class RouterHttpTest {
             logger.error("Exception: ", e);
             throw new ClientException(e);
         } finally {
-            IoUtils.safeClose(connection);
+
+            client.restore(token);
+
         }
         for (final AtomicReference<ClientResponse> reference : references) {
             String body = reference.get().getAttachment(Http2Client.RESPONSE_BODY);
