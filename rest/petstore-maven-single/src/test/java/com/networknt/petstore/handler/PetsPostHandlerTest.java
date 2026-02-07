@@ -2,6 +2,7 @@
 package com.networknt.petstore.handler;
 
 import com.networknt.client.Http2Client;
+import com.networknt.client.simplepool.SimpleConnectionHolder;
 import com.networknt.exception.ClientException;
 import com.networknt.openapi.OpenApiHandler;
 import com.networknt.openapi.ResponseValidator;
@@ -29,7 +30,6 @@ import java.util.Optional;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.atomic.AtomicReference;
 
-
 @ExtendWith(TestServer.class)
 public class PetsPostHandlerTest {
 
@@ -48,16 +48,18 @@ public class PetsPostHandlerTest {
 
         final Http2Client client = Http2Client.getInstance();
         final CountDownLatch latch = new CountDownLatch(1);
-        final ClientConnection connection;
+        SimpleConnectionHolder.ConnectionToken token;
         try {
-            if(enableHttps) {
-                connection = client.borrowConnection(new URI(url), Http2Client.WORKER, Http2Client.SSL, Http2Client.BUFFER_POOL, enableHttp2 ? OptionMap.create(UndertowOptions.ENABLE_HTTP2, true): OptionMap.EMPTY).get();
+            if (enableHttps) {
+                token = client.borrow(new URI(url), Http2Client.WORKER, Http2Client.SSL, Http2Client.BUFFER_POOL,
+                        enableHttp2 ? OptionMap.create(UndertowOptions.ENABLE_HTTP2, true) : OptionMap.EMPTY);
             } else {
-                connection = client.borrowConnection(new URI(url), Http2Client.WORKER, Http2Client.BUFFER_POOL, OptionMap.EMPTY).get();
+                token = client.borrow(new URI(url), Http2Client.WORKER, Http2Client.BUFFER_POOL, OptionMap.EMPTY);
             }
         } catch (Exception e) {
             throw new ClientException(e);
         }
+        final ClientConnection connection = (ClientConnection) token.getRawConnection();
         final AtomicReference<ClientResponse> reference = new AtomicReference<>();
         String requestUri = "/v1/pets";
         String httpMethod = "post";
@@ -66,16 +68,17 @@ public class PetsPostHandlerTest {
 
             request.getRequestHeaders().put(Headers.CONTENT_TYPE, JSON_MEDIA_TYPE);
             request.getRequestHeaders().put(Headers.TRANSFER_ENCODING, "chunked");
-            //customized header parameters
+            // customized header parameters
             request.getRequestHeaders().put(new HttpString("host"), "localhost");
-            connection.sendRequest(request, client.createClientCallback(reference, latch, "{\"content\": \"request body to be replaced\"}"));
+            connection.sendRequest(request,
+                    client.createClientCallback(reference, latch, "{\"content\": \"request body to be replaced\"}"));
 
             latch.await();
         } catch (Exception e) {
             logger.error("Exception: ", e);
             throw new ClientException(e);
         } finally {
-            client.returnConnection(connection);
+            client.restore(token);
         }
         String body = reference.get().getAttachment(Http2Client.RESPONSE_BODY);
         int statusCode = reference.get().getResponseCode();

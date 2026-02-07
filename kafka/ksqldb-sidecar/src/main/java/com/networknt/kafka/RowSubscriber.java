@@ -42,16 +42,12 @@ public class RowSubscriber implements Subscriber<Row> {
         System.out.println("Received a row!");
         System.out.println("Row: " + row.values());
         // send the row to the ksqldb-backend instance
-        if(connection == null || !connection.isOpen()) {
-            try {
-                connection = client.borrowConnection(new URI("https://localhost:8444"), Http2Client.WORKER, Http2Client.SSL, Http2Client.BUFFER_POOL, OptionMap.create(UndertowOptions.ENABLE_HTTP2, true)).get();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-        final CountDownLatch latch = new CountDownLatch(1);
-        final AtomicReference<ClientResponse> reference = new AtomicReference<>();
+        SimpleConnectionHolder.ConnectionToken token = null;
         try {
+            token = client.borrow(new URI("https://localhost:8444"), Http2Client.WORKER, Http2Client.SSL, Http2Client.BUFFER_POOL, OptionMap.create(UndertowOptions.ENABLE_HTTP2, true));
+            ClientConnection connection = (ClientConnection) token.getRawConnection();
+            final CountDownLatch latch = new CountDownLatch(1);
+            final AtomicReference<ClientResponse> reference = new AtomicReference<>();
             ClientRequest request = new ClientRequest().setMethod(Methods.POST).setPath("/kafka/ksqldb");
             request.getRequestHeaders().put(Headers.CONTENT_TYPE, "application/json");
             request.getRequestHeaders().put(Headers.TRANSFER_ENCODING, "chunked");
@@ -61,8 +57,10 @@ public class RowSubscriber implements Subscriber<Row> {
             String body = reference.get().getAttachment(Http2Client.RESPONSE_BODY);
             logger.debug("statusCode = " + statusCode);
             logger.debug("body = " + body);
-        } catch (Exception  e) {
+        } catch (Exception e) {
             e.printStackTrace();
+        } finally {
+            if(token != null) client.restore(token);
         }
         // Request the next row
         subscription.request(1);
