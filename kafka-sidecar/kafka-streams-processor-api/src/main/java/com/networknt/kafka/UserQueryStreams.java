@@ -1,7 +1,8 @@
 package com.networknt.kafka;
 
 import com.networknt.config.Config;
-import com.networknt.kafka.common.KafkaStreamsConfig;
+import com.networknt.kafka.common.config.KafkaStreamsConfig;
+import com.networknt.kafka.streams.KafkaStreamsRegistry;
 import com.networknt.kafka.streams.LightStreams;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.common.serialization.Serdes;
@@ -27,7 +28,7 @@ public class UserQueryStreams implements LightStreams {
 
     static {
         streamsProps = new Properties();
-        streamsProps.put(StreamsConfig.BOOTSTRAP_SERVERS_CONFIG, config.getBootstrapServers());
+        streamsProps.put(StreamsConfig.BOOTSTRAP_SERVERS_CONFIG, config.getProperties().getBootstrapServers());
         streamsProps.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "earliest");
     }
 
@@ -43,8 +44,8 @@ public class UserQueryStreams implements LightStreams {
         return userQueryStreams.store(StoreQueryParameters.fromNameAndType(userId, QueryableStoreTypes.keyValueStore()));
     }
 
-    public StreamsMetadata getUserIdStreamsMetadata(String id) {
-        return userQueryStreams.metadataForKey(userId,  id, Serdes.String().serializer());
+    public org.apache.kafka.streams.KeyQueryMetadata getUserIdStreamsMetadata(String id) {
+        return userQueryStreams.queryMetadataForKey(userId,  id, Serdes.String().serializer());
     }
 
     private void startUserQueryStreams(String ip, int port) {
@@ -62,10 +63,11 @@ public class UserQueryStreams implements LightStreams {
         streamsProps.put(StreamsConfig.APPLICATION_ID_CONFIG, "user-query");
         streamsProps.put(StreamsConfig.APPLICATION_SERVER_CONFIG, ip + ":" + port);
         userQueryStreams = new KafkaStreams(topology, streamsProps);
-        if(config.isCleanUp()) {
+        if(config.getCleanUp()) {
             userQueryStreams.cleanUp();
         }
         userQueryStreams.start();
+        KafkaStreamsRegistry.register("UserQueryStreams", userQueryStreams);
     }
 
     public static class UserEventProcessor extends AbstractProcessor<byte[], byte[]> {

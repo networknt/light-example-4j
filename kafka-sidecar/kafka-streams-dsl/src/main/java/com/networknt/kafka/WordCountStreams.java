@@ -1,7 +1,8 @@
 package com.networknt.kafka;
 
 import com.networknt.config.Config;
-import com.networknt.kafka.common.KafkaStreamsConfig;
+import com.networknt.kafka.common.config.KafkaStreamsConfig;
+import com.networknt.kafka.streams.KafkaStreamsRegistry;
 import com.networknt.kafka.streams.LightStreams;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.common.serialization.Serdes;
@@ -33,7 +34,7 @@ public class WordCountStreams implements LightStreams {
     public void start(String ip, int port) {
         if(logger.isDebugEnabled()) logger.debug("WordCountStreams is starting...");
         Properties streamsProps = new Properties();
-        streamsProps.putAll(config.getProperties());
+        streamsProps.putAll(config.getKafkaMapProperties());
         streamsProps.put(StreamsConfig.APPLICATION_SERVER_CONFIG, ip + ":" + port);
         streamsProps.put(StreamsConfig.DEFAULT_KEY_SERDE_CLASS_CONFIG, Serdes.String().getClass().getName());
         streamsProps.put(StreamsConfig.DEFAULT_VALUE_SERDE_CLASS_CONFIG, Serdes.String().getClass().getName());
@@ -43,10 +44,11 @@ public class WordCountStreams implements LightStreams {
             logger.error("Kafka-Streams uncaught exception occurred. Streams app will be replaced with a new thread", eh);
             return StreamsUncaughtExceptionHandler.StreamThreadExceptionResponse.REPLACE_THREAD;
         });
-        if(config.isCleanUp()) {
+        if(config.getCleanUp()) {
             wordCountStreams.cleanUp();
         }
         wordCountStreams.start();
+        KafkaStreamsRegistry.register("WordCountStreams", wordCountStreams);
         if(logger.isDebugEnabled()) logger.debug("WordCountStreams is started.");
     }
 

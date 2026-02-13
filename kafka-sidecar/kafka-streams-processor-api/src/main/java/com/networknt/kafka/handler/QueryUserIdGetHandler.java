@@ -21,6 +21,7 @@ import io.undertow.server.HttpServerExchange;
 import io.undertow.util.Headers;
 import io.undertow.util.HttpString;
 import io.undertow.util.Methods;
+import org.apache.kafka.streams.KeyQueryMetadata;
 import org.apache.kafka.streams.state.ReadOnlyKeyValueStore;
 import org.apache.kafka.streams.state.StreamsMetadata;
 import org.slf4j.Logger;
@@ -59,10 +60,10 @@ public class QueryUserIdGetHandler implements LightHttpHandler {
             exchange.getResponseHeaders().add(Headers.CONTENT_TYPE, "application/json");
             exchange.getResponseSender().send(data);
         } else {
-            StreamsMetadata metadata = UserQueryStartupHook.streams.getUserIdStreamsMetadata(userId);
-            if(logger.isDebugEnabled()) logger.debug("found address in another instance " + metadata.host() + ":" + metadata.port());
-            String url = "https://" + metadata.host() + ":" + metadata.port();
-            if(NetUtils.getLocalAddressByDatagram().equals(metadata.host()) && Server.getServerConfig().getHttpsPort() == metadata.port()) {
+            KeyQueryMetadata metadata = UserQueryStartupHook.streams.getUserIdStreamsMetadata(userId);
+            if(logger.isDebugEnabled()) logger.debug("found address in another instance " + metadata.activeHost().host() + ":" + metadata.activeHost().port());
+            String url = "https://" + metadata.activeHost().host() + ":" + metadata.activeHost().port();
+            if(NetUtils.getLocalAddressByDatagram().equals(metadata.activeHost().host()) && Server.getServerConfig().getHttpsPort() == metadata.activeHost().port()) {
                 setExchangeStatus(exchange, OBJECT_NOT_FOUND, "user", userId);
                 return;
             } else {
