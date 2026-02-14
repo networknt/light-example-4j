@@ -1,7 +1,7 @@
 package com.networknt.client;
 
 import com.networknt.client.oauth.TokenResponse;
-import com.networknt.client.simplepool.SimpleConnectionHolder;
+import com.networknt.client.simplepool.SimpleConnectionState;
 import com.networknt.cluster.Cluster;
 import com.networknt.config.Config;
 import com.networknt.exception.ClientException;
@@ -77,7 +77,7 @@ public class Http2ClientExample {
     public void testWrongPath() throws Exception {
         ClientConnection connection = null;
         try {
-            SimpleConnectionHolder.ConnectionToken token = client.borrow(new URI("https://localhost:8443"), Http2Client.WORKER, Http2Client.SSL, Http2Client.BUFFER_POOL, OptionMap.create(UndertowOptions.ENABLE_HTTP2, true));
+            SimpleConnectionState.ConnectionToken token = client.borrow(new URI("https://localhost:8443"), Http2Client.WORKER, Http2Client.SSL, Http2Client.BUFFER_POOL, OptionMap.create(UndertowOptions.ENABLE_HTTP2, true));
 
             connection = (ClientConnection) token.getRawConnection();
             final String json = getResourceFileAsString("4k.json");
@@ -108,7 +108,7 @@ public class Http2ClientExample {
     public void testDirect4k() throws Exception {
         ClientConnection connection = null;
         try {
-            SimpleConnectionHolder.ConnectionToken token = client.borrow(new URI("https://localhost:8443"), Http2Client.WORKER, Http2Client.SSL, Http2Client.BUFFER_POOL, OptionMap.create(UndertowOptions.ENABLE_HTTP2, true));
+            SimpleConnectionState.ConnectionToken token = client.borrow(new URI("https://localhost:8443"), Http2Client.WORKER, Http2Client.SSL, Http2Client.BUFFER_POOL, OptionMap.create(UndertowOptions.ENABLE_HTTP2, true));
 
             connection = (ClientConnection) token.getRawConnection();
             final String json = getResourceFileAsString("4k.json");
@@ -142,7 +142,7 @@ public class Http2ClientExample {
     public void testDirect48k() throws Exception {
         ClientConnection connection = null;
         try {
-            SimpleConnectionHolder.ConnectionToken token = client.borrow(new URI("https://localhost:8443"), Http2Client.WORKER, Http2Client.SSL, Http2Client.BUFFER_POOL, OptionMap.create(UndertowOptions.ENABLE_HTTP2, true));
+            SimpleConnectionState.ConnectionToken token = client.borrow(new URI("https://localhost:8443"), Http2Client.WORKER, Http2Client.SSL, Http2Client.BUFFER_POOL, OptionMap.create(UndertowOptions.ENABLE_HTTP2, true));
 
             connection = (ClientConnection) token.getRawConnection();
             final String json = getResourceFileAsString("48k.json");
@@ -175,7 +175,7 @@ public class Http2ClientExample {
     public void testDirect1000k() throws Exception {
         ClientConnection connection = null;
         try {
-            SimpleConnectionHolder.ConnectionToken token = client.borrow(new URI("https://localhost:8443"), Http2Client.WORKER, Http2Client.SSL, Http2Client.BUFFER_POOL, OptionMap.create(UndertowOptions.ENABLE_HTTP2, true));
+            SimpleConnectionState.ConnectionToken token = client.borrow(new URI("https://localhost:8443"), Http2Client.WORKER, Http2Client.SSL, Http2Client.BUFFER_POOL, OptionMap.create(UndertowOptions.ENABLE_HTTP2, true));
 
             connection = (ClientConnection) token.getRawConnection();
             final String json = getResourceFileAsString("1000k.json");
@@ -208,7 +208,7 @@ public class Http2ClientExample {
     public void testRouterHttps4k() throws Exception {
         ClientConnection connection = null;
         try {
-            SimpleConnectionHolder.ConnectionToken token = client.borrow(new URI("https://localhost:8000"), Http2Client.WORKER, Http2Client.SSL, Http2Client.BUFFER_POOL, OptionMap.create(UndertowOptions.ENABLE_HTTP2, true));
+            SimpleConnectionState.ConnectionToken token = client.borrow(new URI("https://localhost:8000"), Http2Client.WORKER, Http2Client.SSL, Http2Client.BUFFER_POOL, OptionMap.create(UndertowOptions.ENABLE_HTTP2, true));
 
             connection = (ClientConnection) token.getRawConnection();
             final String json = getResourceFileAsString("4k.json");
@@ -241,7 +241,7 @@ public class Http2ClientExample {
     public void testRouterHttps48k() throws Exception {
         ClientConnection connection = null;
         try {
-            SimpleConnectionHolder.ConnectionToken token = client.borrow(new URI("https://localhost:8000"), Http2Client.WORKER, Http2Client.SSL, Http2Client.BUFFER_POOL, OptionMap.create(UndertowOptions.ENABLE_HTTP2, true));
+            SimpleConnectionState.ConnectionToken token = client.borrow(new URI("https://localhost:8000"), Http2Client.WORKER, Http2Client.SSL, Http2Client.BUFFER_POOL, OptionMap.create(UndertowOptions.ENABLE_HTTP2, true));
 
             connection = (ClientConnection) token.getRawConnection();
             final String json = getResourceFileAsString("48k.json");
@@ -275,7 +275,7 @@ public class Http2ClientExample {
     public void testRouterHttps1000k() throws Exception {
         ClientConnection connection = null;
         try {
-            SimpleConnectionHolder.ConnectionToken token = client.borrow(new URI("https://localhost:8000"), Http2Client.WORKER, Http2Client.SSL, Http2Client.BUFFER_POOL, OptionMap.create(UndertowOptions.ENABLE_HTTP2, true));
+            SimpleConnectionState.ConnectionToken token = client.borrow(new URI("https://localhost:8000"), Http2Client.WORKER, Http2Client.SSL, Http2Client.BUFFER_POOL, OptionMap.create(UndertowOptions.ENABLE_HTTP2, true));
 
             connection = (ClientConnection) token.getRawConnection();
             final String json = getResourceFileAsString("1000k.json");
@@ -308,7 +308,7 @@ public class Http2ClientExample {
     public void testRouterHttp48k() throws Exception {
         ClientConnection connection = null;
         try {
-            SimpleConnectionHolder.ConnectionToken token = client.borrow(new URI("http://localhost:8000"), Http2Client.WORKER, Http2Client.BUFFER_POOL, OptionMap.EMPTY);
+            SimpleConnectionState.ConnectionToken token = client.borrow(new URI("http://localhost:8000"), Http2Client.WORKER, Http2Client.BUFFER_POOL, OptionMap.EMPTY);
 
             connection = (ClientConnection) token.getRawConnection();
             final String json = getResourceFileAsString("48k.json");
@@ -341,7 +341,7 @@ public class Http2ClientExample {
     public void testProxy4k() throws Exception {
         ClientConnection connection = null;
         try {
-            SimpleConnectionHolder.ConnectionToken token = client.borrow(new URI("http://localhost:8000"), Http2Client.WORKER, Http2Client.BUFFER_POOL, OptionMap.EMPTY);
+            SimpleConnectionState.ConnectionToken token = client.borrow(new URI("http://localhost:8000"), Http2Client.WORKER, Http2Client.BUFFER_POOL, OptionMap.EMPTY);
 
             connection = (ClientConnection) token.getRawConnection();
             final String json = getResourceFileAsString("4k.json");
@@ -375,7 +375,7 @@ public class Http2ClientExample {
     public void testProxy48k() throws Exception {
         ClientConnection connection = null;
         try {
-            SimpleConnectionHolder.ConnectionToken token = client.borrow(new URI("http://localhost:8000"), Http2Client.WORKER, Http2Client.BUFFER_POOL, OptionMap.EMPTY);
+            SimpleConnectionState.ConnectionToken token = client.borrow(new URI("http://localhost:8000"), Http2Client.WORKER, Http2Client.BUFFER_POOL, OptionMap.EMPTY);
 
             connection = (ClientConnection) token.getRawConnection();
             final String json = getResourceFileAsString("48k.json");

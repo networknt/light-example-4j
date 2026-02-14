@@ -2,7 +2,7 @@
 package com.networknt.example.pdf.handler;
 
 import com.networknt.client.Http2Client;
-import com.networknt.client.simplepool.SimpleConnectionHolder;
+import com.networknt.client.simplepool.SimpleConnectionState;
 import com.networknt.config.Config;
 import com.networknt.exception.ClientException;
 import com.networknt.openapi.ResponseValidator;
@@ -51,7 +51,7 @@ public class PdfReportPostHandlerTest {
 
         final Http2Client client = Http2Client.getInstance();
         final CountDownLatch latch = new CountDownLatch(1);
-        final SimpleConnectionHolder.ConnectionToken token;
+        final SimpleConnectionState.ConnectionToken token;
 
         try {
 

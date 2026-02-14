@@ -1,6 +1,6 @@
 package com.networknt.client;
 
-import com.networknt.client.simplepool.SimpleConnectionHolder;
+import com.networknt.client.simplepool.SimpleConnectionState;
 import io.undertow.UndertowOptions;
 import io.undertow.client.ClientConnection;
 import io.undertow.client.ClientRequest;
@@ -47,7 +47,7 @@ public class Http2ClientPool {
     public void testHttp2Get() throws Exception {
         // Create one CountDownLatch that will be reset in the callback function
         final CountDownLatch latch = new CountDownLatch(1);
-        SimpleConnectionHolder.ConnectionToken connectionToken = null;
+        SimpleConnectionState.ConnectionToken connectionToken = null;
         URI uri = new URI("https://localhost:8443");
         final AtomicReference<ClientResponse> reference = new AtomicReference<>();
         try {
@@ -68,7 +68,7 @@ public class Http2ClientPool {
     public void testHttp2Post() throws Exception {
         // Create one CountDownLatch that will be reset in the callback function
         final CountDownLatch latch = new CountDownLatch(1);
-        SimpleConnectionHolder.ConnectionToken connectionToken = null;
+        SimpleConnectionState.ConnectionToken connectionToken = null;
         URI uri = new URI("https://localhost:8443");
         final AtomicReference<ClientResponse> reference = new AtomicReference<>();
         String requestBody = "{\"id\":1,\"name\":\"doggie\"}";

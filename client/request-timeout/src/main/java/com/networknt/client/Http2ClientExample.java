@@ -1,7 +1,7 @@
 package com.networknt.client;
 
 import com.networknt.client.oauth.TokenResponse;
-import com.networknt.client.simplepool.SimpleConnectionHolder;
+import com.networknt.client.simplepool.SimpleConnectionState;
 import com.networknt.cluster.Cluster;
 import com.networknt.config.Config;
 import com.networknt.exception.ClientException;
@@ -60,7 +60,7 @@ public class Http2ClientExample {
      */
     public void testHttp2Get() throws Exception {
         final CountDownLatch latch = new CountDownLatch(1);
-        SimpleConnectionHolder.ConnectionToken connectionToken = null;
+        SimpleConnectionState.ConnectionToken connectionToken = null;
 
         final AtomicReference<ClientResponse> reference = new AtomicReference<>();
         boolean completed  = false;

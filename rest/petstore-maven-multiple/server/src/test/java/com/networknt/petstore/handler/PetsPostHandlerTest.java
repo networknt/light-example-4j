@@ -2,7 +2,7 @@
 package com.networknt.petstore.handler;
 
 import com.networknt.client.Http2Client;
-import com.networknt.client.simplepool.SimpleConnectionHolder;
+import com.networknt.client.simplepool.SimpleConnectionState;
 import com.networknt.exception.ClientException;
 import com.networknt.server.ServerConfig;
 import com.networknt.openapi.OpenApiHandler;
@@ -50,7 +50,7 @@ public class PetsPostHandlerTest {
     @Test
     public void testPetsPostHandlerTest() throws ClientException {
         final CountDownLatch latch = new CountDownLatch(1);
-        SimpleConnectionHolder.ConnectionToken connectionToken = null;
+        SimpleConnectionState.ConnectionToken connectionToken = null;
         final AtomicReference<ClientResponse> reference = new AtomicReference<>();
         String requestUri = "/v1/pets";
         String httpMethod = "post";

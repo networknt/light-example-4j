@@ -2,7 +2,7 @@
 package com.testinc.test.handler;
 
 import com.networknt.client.Http2Client;
-import com.networknt.client.simplepool.SimpleConnectionHolder;
+import com.networknt.client.simplepool.SimpleConnectionState;
 import com.networknt.exception.ClientException;
 import com.networknt.openapi.ResponseValidator;
 import com.networknt.schema.SchemaValidatorsConfig;
@@ -48,7 +48,7 @@ public class TestEndPointGetHandlerTest {
 
         final Http2Client client = Http2Client.getInstance();
         final CountDownLatch latch = new CountDownLatch(1);
-        final SimpleConnectionHolder.ConnectionToken token;
+        final SimpleConnectionState.ConnectionToken token;
 
         try {
 

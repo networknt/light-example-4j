@@ -1,7 +1,7 @@
 package com.networknt.client;
 
 import com.networknt.cluster.Cluster;
-import com.networknt.client.simplepool.SimpleConnectionHolder;
+import com.networknt.client.simplepool.SimpleConnectionState;
 import com.networknt.service.SingletonServiceFactory;
 import io.undertow.UndertowOptions;
 import io.undertow.client.ClientConnection;
@@ -55,7 +55,7 @@ public class Http2ClientConsul {
         // Create one CountDownLatch that will be reset in the callback function
         final CountDownLatch latch = new CountDownLatch(1);
         // Create an HTTP 2.0 connection to the server
-        final SimpleConnectionHolder.ConnectionToken token;
+        final SimpleConnectionState.ConnectionToken token;
 
         try {
 

@@ -1,7 +1,7 @@
 package com.networknt.router;
 
 import com.networknt.client.Http2Client;
-import com.networknt.client.simplepool.SimpleConnectionHolder;
+import com.networknt.client.simplepool.SimpleConnectionState;
 import com.networknt.common.DecryptUtil;
 import com.networknt.common.SecretConstants;
 import com.networknt.config.Config;
@@ -147,7 +147,7 @@ public class RouterHttpTest {
         final HttpString serviceId = new HttpString(Constants.SERVICE_ID);
         final Http2Client client = Http2Client.getInstance();
         final CountDownLatch latch = new CountDownLatch(10);
-        final SimpleConnectionHolder.ConnectionToken token;
+        final SimpleConnectionState.ConnectionToken token;
 
         try {
 

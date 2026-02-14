@@ -2,7 +2,7 @@ package com.networknt.client;
 
 import ch.qos.logback.core.net.server.Client;
 import com.networknt.client.oauth.TokenResponse;
-import com.networknt.client.simplepool.SimpleConnectionHolder;
+import com.networknt.client.simplepool.SimpleConnectionState;
 import com.networknt.cluster.Cluster;
 import com.networknt.config.Config;
 import com.networknt.exception.ClientException;
@@ -60,8 +60,8 @@ public class Http2ClientExample {
         // Create one CountDownLatch that will be reset in the callback function
         final CountDownLatch latch = new CountDownLatch(2);
 
-        SimpleConnectionHolder.ConnectionToken connectionTokenTableau = null;
-        SimpleConnectionHolder.ConnectionToken connectionTokenGoogle = null;
+        SimpleConnectionState.ConnectionToken connectionTokenTableau = null;
+        SimpleConnectionState.ConnectionToken connectionTokenGoogle = null;
 
 
         // Create an AtomicReference object to receive ClientResponse from callback function
@@ -102,7 +102,7 @@ public class Http2ClientExample {
         // Create one CountDownLatch that will be reset in the callback function
         final CountDownLatch latch = new CountDownLatch(1);
         // Create an HTTP 1.1 connection to the server
-        SimpleConnectionHolder.ConnectionToken connectionToken = null;;
+        SimpleConnectionState.ConnectionToken connectionToken = null;;
         // Create an AtomicReference object to receive ClientResponse from callback function
         final AtomicReference<ClientResponse> reference = new AtomicReference<>();
         try {
@@ -132,9 +132,9 @@ public class Http2ClientExample {
     public void testHttpTableauGoogleLocalhost() throws Exception {
         // Create one CountDownLatch that will be reset in the callback function
         final CountDownLatch latch = new CountDownLatch(3);
-        SimpleConnectionHolder.ConnectionToken connectionTokenTableau = null;
-        SimpleConnectionHolder.ConnectionToken connectionTokenGoogle = null;
-        SimpleConnectionHolder.ConnectionToken connectionTokenLocalhost = null;
+        SimpleConnectionState.ConnectionToken connectionTokenTableau = null;
+        SimpleConnectionState.ConnectionToken connectionTokenGoogle = null;
+        SimpleConnectionState.ConnectionToken connectionTokenLocalhost = null;
         // Create an AtomicReference object to receive ClientResponse from callback function
         final AtomicReference<ClientResponse> referenceTableau = new AtomicReference<>();
         final AtomicReference<ClientResponse> referenceGoogle = new AtomicReference<>();

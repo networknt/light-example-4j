@@ -3,7 +3,7 @@ package com.networknt.aa.handler;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.networknt.client.Http2Client;
-import com.networknt.client.simplepool.SimpleConnectionHolder;
+import com.networknt.client.simplepool.SimpleConnectionState;
 import com.networknt.cluster.Cluster;
 import com.networknt.config.Config;
 import com.networknt.exception.ClientException;
@@ -46,13 +46,13 @@ public class DataGetHandler implements HttpHandler {
             abHost = cluster.serviceToUrl("https", "com.networknt.ab-1.0.0", null, null);
             acHost = cluster.serviceToUrl("https", "com.networknt.ac-1.0.0", null, null);
             adHost = cluster.serviceToUrl("https", "com.networknt.ad-1.0.0", null, null);
-            SimpleConnectionHolder.ConnectionToken tokenConnectionAb = client.borrow(new URI(abHost), Http2Client.WORKER, Http2Client.SSL, Http2Client.BUFFER_POOL, OptionMap.create(UndertowOptions.ENABLE_HTTP2, true));
+            SimpleConnectionState.ConnectionToken tokenConnectionAb = client.borrow(new URI(abHost), Http2Client.WORKER, Http2Client.SSL, Http2Client.BUFFER_POOL, OptionMap.create(UndertowOptions.ENABLE_HTTP2, true));
 
             connectionAb = (ClientConnection) tokenConnectionAb.getRawConnection();
-            SimpleConnectionHolder.ConnectionToken tokenConnectionAc = client.borrow(new URI(acHost), Http2Client.WORKER, Http2Client.SSL, Http2Client.BUFFER_POOL, OptionMap.create(UndertowOptions.ENABLE_HTTP2, true));
+            SimpleConnectionState.ConnectionToken tokenConnectionAc = client.borrow(new URI(acHost), Http2Client.WORKER, Http2Client.SSL, Http2Client.BUFFER_POOL, OptionMap.create(UndertowOptions.ENABLE_HTTP2, true));
 
             connectionAc = (ClientConnection) tokenConnectionAc.getRawConnection();
-            SimpleConnectionHolder.ConnectionToken tokenConnectionAd = client.borrow(new URI(adHost), Http2Client.WORKER, Http2Client.SSL, Http2Client.BUFFER_POOL, OptionMap.create(UndertowOptions.ENABLE_HTTP2, true));
+            SimpleConnectionState.ConnectionToken tokenConnectionAd = client.borrow(new URI(adHost), Http2Client.WORKER, Http2Client.SSL, Http2Client.BUFFER_POOL, OptionMap.create(UndertowOptions.ENABLE_HTTP2, true));
 
             connectionAd = (ClientConnection) tokenConnectionAd.getRawConnection();
         } catch (Exception e) {
@@ -67,7 +67,7 @@ public class DataGetHandler implements HttpHandler {
         if(connectionAb == null || !connectionAb.isOpen()) {
             try {
                 abHost = cluster.serviceToUrl("https", "com.networknt.ab-1.0.0", null, null);
-                SimpleConnectionHolder.ConnectionToken tokenConnectionAb = client.borrow(new URI(abHost), Http2Client.WORKER, Http2Client.SSL, Http2Client.BUFFER_POOL, OptionMap.create(UndertowOptions.ENABLE_HTTP2, true));
+                SimpleConnectionState.ConnectionToken tokenConnectionAb = client.borrow(new URI(abHost), Http2Client.WORKER, Http2Client.SSL, Http2Client.BUFFER_POOL, OptionMap.create(UndertowOptions.ENABLE_HTTP2, true));
 
                 connectionAb = (ClientConnection) tokenConnectionAb.getRawConnection();
             } catch (Exception e) {
@@ -78,7 +78,7 @@ public class DataGetHandler implements HttpHandler {
         if(connectionAc == null || !connectionAc.isOpen()) {
             try {
                 acHost = cluster.serviceToUrl("https", "com.networknt.ac-1.0.0", null, null);
-                SimpleConnectionHolder.ConnectionToken tokenConnectionAc = client.borrow(new URI(acHost), Http2Client.WORKER, Http2Client.SSL, Http2Client.BUFFER_POOL, OptionMap.create(UndertowOptions.ENABLE_HTTP2, true));
+                SimpleConnectionState.ConnectionToken tokenConnectionAc = client.borrow(new URI(acHost), Http2Client.WORKER, Http2Client.SSL, Http2Client.BUFFER_POOL, OptionMap.create(UndertowOptions.ENABLE_HTTP2, true));
 
                 connectionAc = (ClientConnection) tokenConnectionAc.getRawConnection();
             } catch (Exception e) {
@@ -89,7 +89,7 @@ public class DataGetHandler implements HttpHandler {
         if(connectionAd == null || !connectionAd.isOpen()) {
             try {
                 adHost = cluster.serviceToUrl("https", "com.networknt.ad-1.0.0", null, null);
-                SimpleConnectionHolder.ConnectionToken tokenConnectionAd = client.borrow(new URI(adHost), Http2Client.WORKER, Http2Client.SSL, Http2Client.BUFFER_POOL, OptionMap.create(UndertowOptions.ENABLE_HTTP2, true));
+                SimpleConnectionState.ConnectionToken tokenConnectionAd = client.borrow(new URI(adHost), Http2Client.WORKER, Http2Client.SSL, Http2Client.BUFFER_POOL, OptionMap.create(UndertowOptions.ENABLE_HTTP2, true));
 
                 connectionAd = (ClientConnection) tokenConnectionAd.getRawConnection();
             } catch (Exception e) {

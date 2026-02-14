@@ -2,7 +2,7 @@
 package ca.interac.etransfer.handler;
 
 import com.networknt.client.Http2Client;
-import com.networknt.client.simplepool.SimpleConnectionHolder;
+import com.networknt.client.simplepool.SimpleConnectionState;
 import com.networknt.exception.ClientException;
 import com.networknt.openapi.ResponseValidator;
 import com.networknt.schema.SchemaValidatorsConfig;
@@ -51,11 +51,11 @@ public class ContactsContactIdDeleteHandlerTest {
         final ClientConnection connection;
         try {
             if(enableHttps) {
-                SimpleConnectionHolder.ConnectionToken token = client.borrow(new URI(url), Http2Client.WORKER, Http2Client.SSL, Http2Client.BUFFER_POOL, enableHttp2 ? OptionMap.create(UndertowOptions.ENABLE_HTTP2, true): OptionMap.EMPTY);
+                SimpleConnectionState.ConnectionToken token = client.borrow(new URI(url), Http2Client.WORKER, Http2Client.SSL, Http2Client.BUFFER_POOL, enableHttp2 ? OptionMap.create(UndertowOptions.ENABLE_HTTP2, true): OptionMap.EMPTY);
 
                 connection = (ClientConnection) token.getRawConnection();
             } else {
-                SimpleConnectionHolder.ConnectionToken token = client.borrow(new URI(url), Http2Client.WORKER, Http2Client.BUFFER_POOL, OptionMap.EMPTY);
+                SimpleConnectionState.ConnectionToken token = client.borrow(new URI(url), Http2Client.WORKER, Http2Client.BUFFER_POOL, OptionMap.EMPTY);
 
                 connection = (ClientConnection) token.getRawConnection();
             }

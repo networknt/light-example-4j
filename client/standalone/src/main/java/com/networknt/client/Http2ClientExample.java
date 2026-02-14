@@ -1,7 +1,7 @@
 package com.networknt.client;
 
 import com.networknt.client.oauth.TokenResponse;
-import com.networknt.client.simplepool.SimpleConnectionHolder;
+import com.networknt.client.simplepool.SimpleConnectionState;
 import com.networknt.cluster.Cluster;
 import com.networknt.config.Config;
 import com.networknt.exception.ClientException;
@@ -48,7 +48,7 @@ public class Http2ClientExample {
 
     public static void main(String[] args) throws Exception {
         apiHost = cluster.serviceToUrl("https", "io.swagger.swagger-light-java-1.0.0", null, null);
-        SimpleConnectionHolder.ConnectionToken tokenReusedConnection = client.borrow(new URI(apiHost), Http2Client.WORKER, Http2Client.SSL, Http2Client.BUFFER_POOL, OptionMap.create(UndertowOptions.ENABLE_HTTP2, true));
+        SimpleConnectionState.ConnectionToken tokenReusedConnection = client.borrow(new URI(apiHost), Http2Client.WORKER, Http2Client.SSL, Http2Client.BUFFER_POOL, OptionMap.create(UndertowOptions.ENABLE_HTTP2, true));
 
         reusedConnection = (ClientConnection) tokenReusedConnection.getRawConnection();
         Http2ClientExample e = new Http2ClientExample();
@@ -70,7 +70,7 @@ public class Http2ClientExample {
         // Create one CountDownLatch that will be reset in the callback function
         final CountDownLatch latch = new CountDownLatch(1);
         // Create an HTTP 2.0 connection to the server
-        final SimpleConnectionHolder.ConnectionToken token;
+        final SimpleConnectionState.ConnectionToken token;
 
         try {
 
@@ -123,7 +123,7 @@ public class Http2ClientExample {
      */
     public void testHttp2Post() throws Exception {
         final CountDownLatch latch = new CountDownLatch(1);
-        final SimpleConnectionHolder.ConnectionToken token;
+        final SimpleConnectionState.ConnectionToken token;
 
         try {
 
@@ -213,7 +213,7 @@ public class Http2ClientExample {
         final ClientConnection connection;
         try {
             // all the connection information should be from client.yml
-            SimpleConnectionHolder.ConnectionToken token = client.borrow(new URI("https://localhost:6882"), Http2Client.WORKER, Http2Client.SSL, Http2Client.BUFFER_POOL, OptionMap.create(UndertowOptions.ENABLE_HTTP2, true));
+            SimpleConnectionState.ConnectionToken token = client.borrow(new URI("https://localhost:6882"), Http2Client.WORKER, Http2Client.SSL, Http2Client.BUFFER_POOL, OptionMap.create(UndertowOptions.ENABLE_HTTP2, true));
 
             connection = (ClientConnection) token.getRawConnection();
             final ClientRequest request = new ClientRequest().setMethod(Methods.POST).setPath("/oauth2/token");

@@ -2,7 +2,7 @@
 package com.networknt.petstore.handler;
 
 import com.networknt.client.Http2Client;
-import com.networknt.client.simplepool.SimpleConnectionHolder;
+import com.networknt.client.simplepool.SimpleConnectionState;
 import com.networknt.exception.ClientException;
 import com.networknt.openapi.OpenApiHandler;
 import com.networknt.openapi.ResponseValidator;
@@ -48,7 +48,7 @@ public class NotificationsGetHandlerTest {
 
         final Http2Client client = Http2Client.getInstance();
         final CountDownLatch latch = new CountDownLatch(1);
-        SimpleConnectionHolder.ConnectionToken token;
+        SimpleConnectionState.ConnectionToken token;
         try {
             if (enableHttps) {
                 token = client.borrow(new URI(url), Http2Client.WORKER, Http2Client.SSL, Http2Client.BUFFER_POOL,

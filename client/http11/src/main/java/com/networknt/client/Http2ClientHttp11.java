@@ -1,6 +1,6 @@
 package com.networknt.client;
 
-import com.networknt.client.simplepool.SimpleConnectionHolder;
+import com.networknt.client.simplepool.SimpleConnectionState;
 import io.undertow.UndertowOptions;
 import io.undertow.client.ClientConnection;
 import io.undertow.client.ClientRequest;
@@ -46,7 +46,7 @@ public class Http2ClientHttp11 {
         // Create one CountDownLatch that will be reset in the callback function
         final CountDownLatch latch = new CountDownLatch(1);
         // Create an HTTP 2.0 connection to the server using SimplePool
-        SimpleConnectionHolder.ConnectionToken token = client.borrow((new URI("https://localhost:9443")),
+        SimpleConnectionState.ConnectionToken token = client.borrow((new URI("https://localhost:9443")),
                 Http2Client.WORKER, Http2Client.SSL, Http2Client.BUFFER_POOL,
                 OptionMap.create(UndertowOptions.ENABLE_HTTP2, true));
         final ClientConnection connection = (ClientConnection) token.getRawConnection();

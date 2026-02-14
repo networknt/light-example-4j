@@ -1,7 +1,7 @@
 package com.networknt.kafka;
 
 import com.networknt.client.ClientConfig;
-import com.networknt.client.simplepool.SimpleConnectionHolder;
+import com.networknt.client.simplepool.SimpleConnectionState;
 import com.networknt.client.Http2Client;
 import com.networknt.kafka.handler.QueryUserIdGetHandler;
 import io.confluent.ksql.api.client.Row;
@@ -43,7 +43,7 @@ public class RowSubscriber implements Subscriber<Row> {
         System.out.println("Received a row!");
         System.out.println("Row: " + row.values());
         // send the row to the ksqldb-backend instance
-        SimpleConnectionHolder.ConnectionToken token = null;
+        SimpleConnectionState.ConnectionToken token = null;
         try {
             token = client.borrow(new URI("https://localhost:8444"), Http2Client.WORKER, Http2Client.SSL, Http2Client.BUFFER_POOL, OptionMap.create(UndertowOptions.ENABLE_HTTP2, true));
             ClientConnection connection = (ClientConnection) token.getRawConnection();

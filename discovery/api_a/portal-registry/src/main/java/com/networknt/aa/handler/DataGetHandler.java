@@ -2,7 +2,7 @@ package com.networknt.aa.handler;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.networknt.client.Http2Client;
-import com.networknt.client.simplepool.SimpleConnectionHolder;
+import com.networknt.client.simplepool.SimpleConnectionState;
 import com.networknt.cluster.Cluster;
 import com.networknt.config.Config;
 import com.networknt.exception.ClientException;
@@ -55,7 +55,7 @@ public class DataGetHandler implements LightHttpHandler {
         ClientConnection connectionB = null;
         try {
             apibHost = cluster.serviceToUrl("https", "com.networknt.ab-1.0.0", tag, null);
-            SimpleConnectionHolder.ConnectionToken tokenConnectionB = client.borrow(new URI(apibHost), Http2Client.WORKER, Http2Client.SSL, Http2Client.BUFFER_POOL, OptionMap.create(UndertowOptions.ENABLE_HTTP2, true));
+            SimpleConnectionState.ConnectionToken tokenConnectionB = client.borrow(new URI(apibHost), Http2Client.WORKER, Http2Client.SSL, Http2Client.BUFFER_POOL, OptionMap.create(UndertowOptions.ENABLE_HTTP2, true));
 
             connectionB = (ClientConnection) tokenConnectionB.getRawConnection();
         } catch (Exception e) {
@@ -65,7 +65,7 @@ public class DataGetHandler implements LightHttpHandler {
         ClientConnection connectionC = null;
         try {
             apicHost = cluster.serviceToUrl("https", "com.networknt.ac-1.0.0", tag, null);
-            SimpleConnectionHolder.ConnectionToken tokenConnectionC = client.borrow(new URI(apicHost), Http2Client.WORKER, Http2Client.SSL, Http2Client.BUFFER_POOL, OptionMap.create(UndertowOptions.ENABLE_HTTP2, true));
+            SimpleConnectionState.ConnectionToken tokenConnectionC = client.borrow(new URI(apicHost), Http2Client.WORKER, Http2Client.SSL, Http2Client.BUFFER_POOL, OptionMap.create(UndertowOptions.ENABLE_HTTP2, true));
 
             connectionC = (ClientConnection) tokenConnectionC.getRawConnection();
         } catch (Exception e) {

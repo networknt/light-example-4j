@@ -2,7 +2,7 @@ package com.networknt.ab.handler;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.networknt.client.Http2Client;
-import com.networknt.client.simplepool.SimpleConnectionHolder;
+import com.networknt.client.simplepool.SimpleConnectionState;
 import com.networknt.config.Config;
 import com.networknt.exception.ClientException;
 import com.networknt.handler.LightHttpHandler;
@@ -38,7 +38,7 @@ public class DataGetHandler implements LightHttpHandler {
 
     public DataGetHandler() {
         try {
-            SimpleConnectionHolder.ConnectionToken token = client.borrow(new URI(apidHost), Http2Client.WORKER, Http2Client.SSL, Http2Client.BUFFER_POOL, OptionMap.create(UndertowOptions.ENABLE_HTTP2, true));
+            SimpleConnectionState.ConnectionToken token = client.borrow(new URI(apidHost), Http2Client.WORKER, Http2Client.SSL, Http2Client.BUFFER_POOL, OptionMap.create(UndertowOptions.ENABLE_HTTP2, true));
 
             connection = (ClientConnection) token.getRawConnection();
         } catch (Exception e) {
@@ -52,7 +52,7 @@ public class DataGetHandler implements LightHttpHandler {
         final CountDownLatch latch = new CountDownLatch(1);
         if(connection == null || !connection.isOpen()) {
             try {
-                SimpleConnectionHolder.ConnectionToken token = client.borrow(new URI(apidHost), Http2Client.WORKER, Http2Client.SSL, Http2Client.BUFFER_POOL, OptionMap.create(UndertowOptions.ENABLE_HTTP2, true));
+                SimpleConnectionState.ConnectionToken token = client.borrow(new URI(apidHost), Http2Client.WORKER, Http2Client.SSL, Http2Client.BUFFER_POOL, OptionMap.create(UndertowOptions.ENABLE_HTTP2, true));
 
                 connection = (ClientConnection) token.getRawConnection();
             } catch (Exception e) {
