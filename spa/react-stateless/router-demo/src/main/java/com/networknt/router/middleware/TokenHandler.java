@@ -13,7 +13,7 @@ import com.networknt.handler.Handler;
 import com.networknt.handler.MiddlewareHandler;
 import com.networknt.router.RouterProxyClient;
 import com.networknt.status.Status;
-import com.networknt.utility.ModuleRegistry;
+
 import io.undertow.Handlers;
 import io.undertow.server.HttpHandler;
 import io.undertow.server.HttpServerExchange;
@@ -26,8 +26,6 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
-import static com.networknt.client.Http2Client.CONFIG_SECRET;
-import static com.networknt.client.Http2Client.CONFIG_SECURITY;
 
 /**
  * This is a middleware handler that is responsible for getting a JWT access token from
@@ -107,13 +105,13 @@ public class TokenHandler implements MiddlewareHandler {
                 tokenConfig = (Map<String, Object>)oauthConfig.get(TOKEN);
             }
         }
-        Map<String, Object> securityConfig = Config.getInstance().getJsonMapConfig(CONFIG_SECURITY);
+        Map<String, Object> securityConfig = Config.getInstance().getJsonMapConfig("security");
         if(securityConfig != null) {
             Boolean b = (Boolean)securityConfig.get(OAUTH_HTTP2_SUPPORT);
             oauthHttp2Support = (b == null ? false : b.booleanValue());
         }
 
-        Map<String, Object> secretMap = Config.getInstance().getJsonMapConfig(CONFIG_SECRET);
+        Map<String, Object> secretMap = Config.getInstance().getJsonMapConfig("secret");
         if(secretMap != null) {
             secretConfig = DecryptUtil.decryptMap(secretMap);
         } else {
@@ -151,10 +149,6 @@ public class TokenHandler implements MiddlewareHandler {
         return object != null && (Boolean) object;
     }
 
-    @Override
-    public void register() {
-        ModuleRegistry.registerModule(TokenHandler.class.getName(), config, null);
-    }
 
     private void checkCCTokenExpired() throws ClientException, ApiException {
         long tokenRenewBeforeExpired = (Integer) tokenConfig.get(TOKEN_RENEW_BEFORE_EXPIRED);
@@ -216,7 +210,7 @@ public class TokenHandler implements MiddlewareHandler {
 
     private void getCCToken() throws ClientException {
         TokenRequest tokenRequest = new ClientCredentialsRequest();
-        TokenResponse tokenResponse = OauthHelper.getToken(tokenRequest);
+        TokenResponse tokenResponse = OauthHelper.getTokenResult(tokenRequest).getResult();
         synchronized (lock) {
             jwt = tokenResponse.getAccessToken();
             // the expiresIn is seconds and it is converted to millisecond in the future.

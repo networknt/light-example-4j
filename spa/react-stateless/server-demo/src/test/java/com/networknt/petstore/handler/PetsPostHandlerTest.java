@@ -2,7 +2,6 @@
 package com.networknt.petstore.handler;
 
 import com.networknt.client.Http2Client;
-import com.networknt.client.simplepool.SimpleConnectionState;
 import com.networknt.exception.ApiException;
 import com.networknt.exception.ClientException;
 import io.undertow.UndertowOptions;
@@ -11,9 +10,10 @@ import io.undertow.client.ClientRequest;
 import io.undertow.client.ClientResponse;
 import io.undertow.util.Headers;
 import io.undertow.util.Methods;
-import org.junit.Assert;
-import org.junit.ClassRule;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.xnio.IoUtils;
@@ -26,15 +26,6 @@ import java.io.IOException;
 
 
 public class PetsPostHandlerTest {
-    @ClassRule
-    public static TestServer server = TestServer.getInstance();
-
-    static final Logger logger = LoggerFactory.getLogger(PetsPostHandlerTest.class);
-    static final boolean enableHttp2 = server.getServerConfig().isEnableHttp2();
-    static final boolean enableHttps = server.getServerConfig().isEnableHttps();
-    static final int httpPort = server.getServerConfig().getHttpPort();
-    static final int httpsPort = server.getServerConfig().getHttpsPort();
-    static final String url = enableHttp2 || enableHttps ? "https://localhost:" + httpsPort : "http://localhost:" + httpPort;
 
     @Test
     public void testPetsPostHandlerTest() throws ClientException, ApiException {
@@ -73,8 +64,8 @@ public class PetsPostHandlerTest {
         }
         int statusCode = reference.get().getResponseCode();
         String body = reference.get().getAttachment(Http2Client.RESPONSE_BODY);
-        Assert.assertEquals(200, statusCode);
-        Assert.assertNotNull(body);
+        Assertions.assertEquals(200, statusCode);
+        Assertions.assertNotNull(body);
         */
     }
 }

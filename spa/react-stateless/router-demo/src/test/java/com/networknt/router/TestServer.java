@@ -2,13 +2,12 @@ package com.networknt.router;
 
 import com.networknt.server.Server;
 import com.networknt.server.ServerConfig;
-import org.junit.rules.ExternalResource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
-public class TestServer extends ExternalResource {
+public class TestServer {
     static final Logger logger = LoggerFactory.getLogger(TestServer.class);
 
     private static final AtomicInteger refCount = new AtomicInteger(0);
@@ -28,8 +27,7 @@ public class TestServer extends ExternalResource {
         return Server.getServerConfig();
     }
 
-    @Override
-    protected void before() {
+    public void start() {
         try {
             if (refCount.get() == 0) {
                 Server.start();
@@ -40,8 +38,7 @@ public class TestServer extends ExternalResource {
         }
     }
 
-    @Override
-    protected void after() {
+    public void stop() {
         refCount.getAndDecrement();
         if (refCount.get() == 0) {
             Server.stop();
