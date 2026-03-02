@@ -55,7 +55,10 @@ public class WordCountStreams implements LightStreams {
     @Override
     public void close() {
         if(logger.isDebugEnabled()) logger.debug("WordCountStreams is closing...");
-        wordCountStreams.close();
+        if (wordCountStreams != null) {
+            wordCountStreams.close();
+        }
+        KafkaStreamsRegistry.unregister("WordCountStreams");
     }
 
     public KafkaStreams getKafkaStreams() {

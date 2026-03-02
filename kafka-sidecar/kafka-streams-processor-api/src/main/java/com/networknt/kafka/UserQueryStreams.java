@@ -103,6 +103,9 @@ public class UserQueryStreams implements LightStreams {
     @Override
     public void close() {
         if(logger.isDebugEnabled()) logger.debug("userQueryStreams is closing...");
-        userQueryStreams.close();
+        if (userQueryStreams != null) {
+            userQueryStreams.close();
+        }
+        KafkaStreamsRegistry.unregister("UserQueryStreams");
     }
 }
