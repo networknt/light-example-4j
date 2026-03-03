@@ -17,9 +17,12 @@ import java.net.URISyntaxException;
 import java.util.Collections;
 import java.util.List;
 
-import com.networknt.genai.ollama.OllamaClient;
-import com.networknt.genai.ChatMessage;
-import com.networknt.genai.StreamCallback;
+import com.networknt.genai.model.ollama.OllamaStreamingChatModel;
+import com.networknt.genai.data.message.ChatMessage;
+import com.networknt.genai.data.message.UserMessage;
+import com.networknt.genai.data.message.AiMessage;
+import com.networknt.genai.model.chat.response.StreamingChatResponseHandler;
+import com.networknt.genai.model.chat.response.ChatResponse;
 import com.networknt.genai.handler.ChatHistoryRepository;
 import com.networknt.genai.handler.ChatSessionRepository;
 import com.networknt.genai.handler.InMemoryChatHistoryRepository;
@@ -28,7 +31,7 @@ import com.networknt.genai.handler.ChatSession;
 
 public class LlmClient {
     private static final Logger LOG = LoggerFactory.getLogger(LlmClient.class);
-    private final OllamaClient ollamaClient = new OllamaClient();
+    private final OllamaStreamingChatModel ollamaClient = OllamaStreamingChatModel.builder().build();
     private final ChatSessionRepository sessionRepository = new InMemoryChatSessionRepository();
     private final ChatHistoryRepository historyRepository = new InMemoryChatHistoryRepository();
 
@@ -65,22 +68,20 @@ public class LlmClient {
                                             LOG.info("Received message: {}", data);
 
                                             // Add to history
-                                            ChatMessage userMsg = new ChatMessage("user", data);
+                                            ChatMessage userMsg = UserMessage.from(data);
                                             historyRepository.addMessage(sessionId, userMsg);
 
                                             // Get full history
                                             List<ChatMessage> history = historyRepository.getHistory(sessionId);
 
                                             // Invoke Ollama with history
-                                            ollamaClient.chatStream(history, new StreamCallback() {
+                                            ollamaClient.chat(history, new StreamingChatResponseHandler() {
                                                 private final StringBuilder buffer = new StringBuilder();
-                                                private final StringBuilder fullResponse = new StringBuilder();
 
                                                 @Override
-                                                public void onEvent(String content) {
+                                                public void onPartialResponse(String partialResponse) {
                                                     try {
-                                                        buffer.append(content);
-                                                        fullResponse.append(content);
+                                                        buffer.append(partialResponse);
                                                         // Send only when newline is detected to simulate chunking
                                                         if (buffer.toString().contains("\n")) {
                                                             WebSockets.sendText(buffer.toString(), channel, null);
@@ -92,15 +93,13 @@ public class LlmClient {
                                                 }
 
                                                 @Override
-                                                public void onComplete() {
+                                                public void onCompleteResponse(ChatResponse completeResponse) {
                                                     // Send remaining buffer
                                                     if (buffer.length() > 0) {
                                                         WebSockets.sendText(buffer.toString(), channel, null);
                                                     }
                                                     // Add assistant response to history
-                                                    ChatMessage assistantMsg = new ChatMessage("assistant",
-                                                            fullResponse.toString());
-                                                    historyRepository.addMessage(sessionId, assistantMsg);
+                                                    historyRepository.addMessage(sessionId, completeResponse.aiMessage());
                                                 }
 
                                                 @Override
