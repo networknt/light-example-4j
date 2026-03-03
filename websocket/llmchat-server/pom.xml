@@ -56,11 +56,6 @@
             <artifactId>logback-classic</artifactId>
             <version>${version.logback}</version>
         </dependency>
-        <dependency>
-            <groupId>com.networknt</groupId>
-            <artifactId>resource</artifactId>
-            <version>${version.light-4j}</version>
-        </dependency>
     </dependencies>
     
 
