@@ -14,6 +14,17 @@
     <packaging>jar</packaging>
     <description>The generated handler service interfaces that will be implemented by the service implementations in domain with business logic.</description>
 
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>com.fasterxml.jackson</groupId>
+                <artifactId>jackson-bom</artifactId>
+                <version>${version.jackson}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
     <dependencies>
         <dependency>
             <groupId>com.networknt.example</groupId>
