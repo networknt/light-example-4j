@@ -18,8 +18,8 @@ singletons:
 - com.networknt.cluster.Cluster:
   - com.networknt.cluster.LightCluster
 # StartupHookProvider implementations, there are one to many and they are called in the same sequence defined.
-- com.networknt.server.StartupHookProvider:
-  - com.networknt.rule.RuleLoaderStartupHook
+- com.networknt.rule.RuleExecutor:
+  - com.networknt.rule.MultiThreadRuleExecutor
 
 # ShutdownHookProvider implementations, there are one to many and they are called in the same sequence defined.
 - com.networknt.server.ShutdownHookProvider:
