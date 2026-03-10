@@ -8,6 +8,23 @@ const port = 5000;
 app.use(cors());
 app.use(bodyParser.json());
 
+// SSE for MCP Discovery
+app.get('/mcp', (req, res) => {
+    console.log(`SSE discovery request from ${req.ip}`);
+    res.setHeader('Content-Type', 'text/event-stream');
+    res.setHeader('Cache-Control', 'no-cache');
+    res.setHeader('Connection', 'keep-alive');
+    res.flushHeaders();
+
+    // Send the POST endpoint relative to this server
+    res.write('data: /mcp\n\n');
+
+    req.on('close', () => {
+        console.log('SSE connection closed');
+        res.end();
+    });
+});
+
 // Tools implementation
 const tools = {
     getRandomNumber: {
@@ -103,6 +120,6 @@ app.post('/mcp', (req, res) => {
     }
 });
 
-app.listen(port, () => {
-    console.log(`MCP Server listening on port ${port}`);
+app.listen(port, '0.0.0.0', () => {
+    console.log(`MCP Server listening on port ${port} (all interfaces)`);
 });
