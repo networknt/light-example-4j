@@ -8,8 +8,8 @@ server.serviceId: com.networknt.llmchat-1.0.0
 
 # service.yml
 service.singletons:
-  - com.networknt.genai.GenAiClient:
-    - com.networknt.genai.ollama.OllamaClient
+  - com.networknt.genai.model.chat.StreamingChatModel:
+    - com.networknt.genai.model.ollama.OllamaStreamingChatModel
 
 # handler.yml
 handler.handlers:
