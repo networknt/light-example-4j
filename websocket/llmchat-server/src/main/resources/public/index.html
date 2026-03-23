@@ -31,6 +31,7 @@
 
     <script>
         let ws;
+        let currentAssistantMsgDiv = null;
         const chatLog = document.getElementById('chat-log');
         const messageInput = document.getElementById('messageInput');
         const sendBtn = document.getElementById('sendBtn');
@@ -39,9 +40,15 @@
         function connect() {
             const userId = document.getElementById('userId').value;
             const model = document.getElementById('model').value;
+            const sessionId = sessionStorage.getItem('sessionId');
+            
+            // Version: 1.0.4 - Robust Session and Streaming
             const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
-            const url = `${protocol}//${window.location.host}/chat?userId=${userId}&model=${model}`;
-
+            let url = `${protocol}//${window.location.host}/chat?userId=${encodeURIComponent(userId)}&model=${encodeURIComponent(model)}`;
+            if (sessionId) {
+                url += `&sessionId=${sessionId}`;
+            }
+            console.log("Connecting to:", url);
             ws = new WebSocket(url);
 
             ws.onopen = () => {
@@ -52,12 +59,32 @@
             };
 
             ws.onmessage = (event) => {
-                // Determine if it's a chunk or full message.
-                // Our server sends raw text chunks. 
-                // A simple UI approach: append to last assistant message if generic text, 
-                // or just log as new line for now.
-                // Improve: Check if previous element is "assistant-typing".
-                log('Assistant', event.data);
+                const data = event.data;
+                console.log("Message:", data);
+                
+                try {
+                    // Check if it represents a JSON session message
+                    if (data.includes('"type": "session"') || data.includes('"type":"session"')) {
+                        const json = JSON.parse(data);
+                        if (json.type === 'session') {
+                            sessionStorage.setItem('sessionId', json.sessionId);
+                            log('System', 'Session initialized: ' + json.sessionId);
+                            return;
+                        }
+                    }
+                } catch (e) {
+                    console.error("JSON parse error for potential session message:", e);
+                }
+
+                // If we don't have a current assistant message div, create one
+                if (!currentAssistantMsgDiv || currentAssistantMsgDiv.parentElement === null) {
+                    currentAssistantMsgDiv = createMessageDiv('Assistant');
+                }
+                
+                // Append chunk to the div
+                const textNode = document.createTextNode(data);
+                currentAssistantMsgDiv.appendChild(textNode);
+                chatLog.scrollTop = chatLog.scrollHeight;
             };
 
             ws.onclose = () => {
@@ -65,10 +92,12 @@
                 messageInput.disabled = true;
                 sendBtn.disabled = true;
                 disconnectBtn.disabled = true;
+                currentAssistantMsgDiv = null;
             };
 
             ws.onerror = (error) => {
-                log('System', 'Error: ' + error);
+                log('System', 'Error encountered. Check console.');
+                console.error(error);
             };
         }
 
@@ -82,15 +111,25 @@
                 log('User', text);
                 ws.send(text);
                 messageInput.value = '';
+                // Reset assistant div for next turn
+                currentAssistantMsgDiv = null;
             }
         }
 
-        function log(role, text) {
+        function createMessageDiv(role) {
+            console.log("createMessageDiv called for role:", role);
             const div = document.createElement('div');
             div.className = 'message ' + role.toLowerCase();
-            div.innerHTML = `<strong>${role}:</strong> ${text}`;
+            div.innerHTML = `<strong>${role}:</strong> `;
             chatLog.appendChild(div);
+            return div;
+        }
+
+        function log(role, text) {
+            const div = createMessageDiv(role);
+            div.appendChild(document.createTextNode(text));
             chatLog.scrollTop = chatLog.scrollHeight;
+            return div;
         }
 
         messageInput.addEventListener('keypress', function (e) {
