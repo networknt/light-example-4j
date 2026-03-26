@@ -1,0 +1,5 @@
+enabled: ${mcp-client.enabled:false}
+gatewayUrl: ${mcp-client.gatewayUrl:}
+path: ${mcp-client.path:/mcp}
+timeout: ${mcp-client.timeout:5000}
+verifyHostname: ${mcp-client.verifyHostname:false}

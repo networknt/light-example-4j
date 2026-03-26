@@ -10,6 +10,8 @@ server.serviceId: com.networknt.llmchat-1.0.0
 service.singletons:
   - com.networknt.genai.model.chat.StreamingChatModel:
     - com.networknt.genai.model.ollama.OllamaStreamingChatModel
+  - com.networknt.genai.service.tool.ToolProvider:
+    - com.networknt.llmchat.mcp.McpToolProvider
 
 # handler.yml
 handler.handlers:
@@ -35,6 +37,13 @@ handler.paths:
 # ollama.yml
 ollama.ollamaUrl: http://localhost:11434
 ollama.model: qwen3:14b
+
+# mcp-client.yml
+mcp-client.enabled: true
+mcp-client.gatewayUrl: https://localhost
+mcp-client.path: /mcp
+mcp-client.timeout: 5000
+mcp-client.verifyHostname: false
 
 # websocket-handler.yml
 websocket-handler.enabled: true
