@@ -25,9 +25,12 @@ build() {
 }
 
 cleanup() {
-    if [[ "$(docker images -q $IMAGE_NAME 2> /dev/null)" != "" ]]; then
+    local image_ids
+    image_ids="$(docker image ls --quiet "$IMAGE_NAME" 2> /dev/null | sort -u)"
+
+    if [[ "$image_ids" != "" ]]; then
         echo "Removing old $IMAGE_NAME images"
-        docker images | grep $IMAGE_NAME | awk '{print $3}' | xargs docker rmi -f
+        printf '%s\n' "$image_ids" | xargs docker rmi -f
         echo "Cleanup completed!"
     fi
 }
