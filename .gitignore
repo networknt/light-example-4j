@@ -23,3 +23,7 @@ hs_err_pid*
 
 
 .DS_Store
+.gitnexus
+.claude/
+AGENTS.md
+CLAUDE.md
