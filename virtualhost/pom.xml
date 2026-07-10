@@ -22,7 +22,7 @@
         <version.commons.codec>1.18.0</version.commons.codec>
         <version.encoder>1.2</version.encoder>
         <version.metrics>3.1.2</version.metrics>
-        <version.logback>1.5.26</version.logback>
+        <version.logback>1.5.37</version.logback>
         <version.junit>5.11.4</version.junit>
         <version.mockito>2.1.0-beta.124</version.mockito>
         <version.undertow>2.4.1.Final</version.undertow>
