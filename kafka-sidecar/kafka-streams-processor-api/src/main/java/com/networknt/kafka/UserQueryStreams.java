@@ -1,7 +1,7 @@
 package com.networknt.kafka;
 
 import com.networknt.config.Config;
-import com.networknt.kafka.common.config.KafkaStreamsConfig;
+import com.networknt.kafka.common.KafkaStreamsConfig;
 import com.networknt.kafka.streams.KafkaStreamsRegistry;
 import com.networknt.kafka.streams.LightStreams;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
@@ -28,7 +28,8 @@ public class UserQueryStreams implements LightStreams {
 
     static {
         streamsProps = new Properties();
-        streamsProps.put(StreamsConfig.BOOTSTRAP_SERVERS_CONFIG, config.getProperties().getBootstrapServers());
+        streamsProps.put(StreamsConfig.BOOTSTRAP_SERVERS_CONFIG,
+                config.getKafkaMapProperties().get(StreamsConfig.BOOTSTRAP_SERVERS_CONFIG));
         streamsProps.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "earliest");
     }
 
