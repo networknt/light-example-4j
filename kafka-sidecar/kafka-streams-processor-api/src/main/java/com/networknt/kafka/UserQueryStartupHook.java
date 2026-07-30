@@ -1,6 +1,6 @@
 package com.networknt.kafka;
 
-import com.networknt.server.Server;
+import com.networknt.server.ServerConfig;
 import com.networknt.server.StartupHookProvider;
 import com.networknt.utility.NetUtils;
 import org.slf4j.Logger;
@@ -11,7 +11,7 @@ public class UserQueryStartupHook implements StartupHookProvider {
     public static UserQueryStreams streams = null;
     @Override
     public void onStartup() {
-        int port = Server.getServerConfig().getHttpsPort();
+        int port = ServerConfig.load().getHttpsPort();
         String ip = NetUtils.getLocalAddressByDatagram();
         logger.info("ip = " + ip + " port = " + port);
         streams = new UserQueryStreams();

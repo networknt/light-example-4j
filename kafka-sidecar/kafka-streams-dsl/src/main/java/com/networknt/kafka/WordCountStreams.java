@@ -4,21 +4,13 @@ import com.networknt.config.Config;
 import com.networknt.kafka.common.KafkaStreamsConfig;
 import com.networknt.kafka.streams.KafkaStreamsRegistry;
 import com.networknt.kafka.streams.LightStreams;
-import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.common.serialization.Serdes;
 import org.apache.kafka.streams.KafkaStreams;
-import org.apache.kafka.streams.StoreQueryParameters;
 import org.apache.kafka.streams.StreamsConfig;
-import org.apache.kafka.streams.Topology;
 import org.apache.kafka.streams.errors.StreamsUncaughtExceptionHandler;
-import org.apache.kafka.streams.processor.AbstractProcessor;
-import org.apache.kafka.streams.processor.ProcessorContext;
-import org.apache.kafka.streams.state.*;
-import org.checkerframework.checker.units.qual.K;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.nio.charset.StandardCharsets;
 import java.util.Properties;
 
 public class WordCountStreams implements LightStreams {

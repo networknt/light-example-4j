@@ -9,7 +9,7 @@ import com.networknt.kafka.UserQueryStartupHook;
 import com.networknt.monad.Failure;
 import com.networknt.monad.Result;
 import com.networknt.monad.Success;
-import com.networknt.server.Server;
+import com.networknt.server.ServerConfig;
 import com.networknt.status.Status;
 import com.networknt.utility.NetUtils;
 import com.networknt.utility.NioUtils;
@@ -23,7 +23,6 @@ import io.undertow.util.HttpString;
 import io.undertow.util.Methods;
 import org.apache.kafka.streams.KeyQueryMetadata;
 import org.apache.kafka.streams.state.ReadOnlyKeyValueStore;
-import org.apache.kafka.streams.state.StreamsMetadata;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.xnio.OptionMap;
@@ -63,7 +62,7 @@ public class QueryUserIdGetHandler implements LightHttpHandler {
             KeyQueryMetadata metadata = UserQueryStartupHook.streams.getUserIdStreamsMetadata(userId);
             if(logger.isDebugEnabled()) logger.debug("found address in another instance " + metadata.activeHost().host() + ":" + metadata.activeHost().port());
             String url = "https://" + metadata.activeHost().host() + ":" + metadata.activeHost().port();
-            if(NetUtils.getLocalAddressByDatagram().equals(metadata.activeHost().host()) && Server.getServerConfig().getHttpsPort() == metadata.activeHost().port()) {
+            if(NetUtils.getLocalAddressByDatagram().equals(metadata.activeHost().host()) && ServerConfig.load().getHttpsPort() == metadata.activeHost().port()) {
                 setExchangeStatus(exchange, OBJECT_NOT_FOUND, "user", userId);
                 return;
             } else {
@@ -84,7 +83,7 @@ public class QueryUserIdGetHandler implements LightHttpHandler {
         try {
             ClientConnection conn = connCache.get(url);
             if(conn == null || !conn.isOpen()) {
-                SimpleConnectionState.ConnectionToken tokenConn = client.borrow(new URI(url), Http2Client.WORKER, Http2Client.SSL, Http2Client.BUFFER_POOL, OptionMap.create(UndertowOptions.ENABLE_HTTP2, true));
+                SimpleConnectionState.ConnectionToken tokenConn = client.borrow(new URI(url), Http2Client.WORKER, client.getDefaultXnioSsl(), Http2Client.BUFFER_POOL, OptionMap.create(UndertowOptions.ENABLE_HTTP2, true));
 
                 conn = (ClientConnection) tokenConn.getRawConnection();
                 connCache.put(url, conn);

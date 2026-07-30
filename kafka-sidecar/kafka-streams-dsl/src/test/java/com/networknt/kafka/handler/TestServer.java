@@ -1,7 +1,6 @@
 
 package com.networknt.kafka.handler;
 
-import com.networknt.server.Server;
 import org.junit.rules.ExternalResource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,7 +27,7 @@ public class TestServer extends ExternalResource {
 
 
     public ServerConfig getServerConfig() {
-        return Server.getServerConfig();
+        return ServerConfig.load();
     }
 
     @Override

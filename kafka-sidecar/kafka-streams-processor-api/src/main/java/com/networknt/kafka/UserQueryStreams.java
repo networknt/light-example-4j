@@ -10,8 +10,9 @@ import org.apache.kafka.streams.KafkaStreams;
 import org.apache.kafka.streams.StoreQueryParameters;
 import org.apache.kafka.streams.StreamsConfig;
 import org.apache.kafka.streams.Topology;
-import org.apache.kafka.streams.processor.AbstractProcessor;
-import org.apache.kafka.streams.processor.ProcessorContext;
+import org.apache.kafka.streams.processor.api.Processor;
+import org.apache.kafka.streams.processor.api.ProcessorContext;
+import org.apache.kafka.streams.processor.api.Record;
 import org.apache.kafka.streams.state.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -71,25 +72,23 @@ public class UserQueryStreams implements LightStreams {
         KafkaStreamsRegistry.register("UserQueryStreams", userQueryStreams);
     }
 
-    public static class UserEventProcessor extends AbstractProcessor<byte[], byte[]> {
+    public static class UserEventProcessor implements Processor<byte[], byte[], Void, Void> {
 
-        private ProcessorContext pc;
         private KeyValueStore<String, String> userIdStore;
 
         public UserEventProcessor() {
         }
 
         @Override
-        public void init(ProcessorContext pc) {
-            this.pc = pc;
-            this.userIdStore = (KeyValueStore<String, String>) pc.getStateStore(userId);
+        public void init(ProcessorContext<Void, Void> pc) {
+            this.userIdStore = pc.getStateStore(userId);
             if (logger.isInfoEnabled()) logger.info("Processor initialized");
         }
 
         @Override
-        public void process(byte[] key, byte[] value) {
-            String userId = new String(key, StandardCharsets.UTF_8);
-            String userStr = new String(value, StandardCharsets.UTF_8);
+        public void process(Record<byte[], byte[]> record) {
+            String userId = new String(record.key(), StandardCharsets.UTF_8);
+            String userStr = new String(record.value(), StandardCharsets.UTF_8);
             if(logger.isTraceEnabled()) logger.trace("Event = " + userStr);
             userIdStore.put(userId, userStr);
         }
