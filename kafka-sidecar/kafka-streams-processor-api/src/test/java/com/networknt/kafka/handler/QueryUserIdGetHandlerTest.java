@@ -5,7 +5,6 @@ import com.networknt.client.Http2Client;
 import com.networknt.client.simplepool.SimpleConnectionState;
 import com.networknt.exception.ClientException;
 import com.networknt.openapi.ResponseValidator;
-import com.networknt.schema.SchemaValidatorsConfig;
 import com.networknt.status.Status;
 import com.networknt.utility.StringUtils;
 import io.undertow.UndertowOptions;
