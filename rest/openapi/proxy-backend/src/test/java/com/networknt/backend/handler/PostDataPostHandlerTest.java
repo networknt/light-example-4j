@@ -7,7 +7,6 @@ import com.networknt.exception.ClientException;
 import com.networknt.openapi.OpenApiHandler;
 import com.networknt.openapi.ResponseValidator;
 import com.networknt.openapi.SchemaValidator;
-import com.networknt.schema.SchemaValidatorsConfig;
 import com.networknt.status.Status;
 import com.networknt.utility.StringUtils;
 import io.undertow.UndertowOptions;
