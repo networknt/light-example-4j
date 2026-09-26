@@ -20,7 +20,7 @@
         <version.undertow>2.4.1.Final</version.undertow>
         <version.json-schema-validator>2.0.7</version.json-schema-validator>
 
-        <version.hikaricp>6.2.1</version.hikaricp>
+        <version.hikaricp>7.1.0</version.hikaricp>
 
 
 
