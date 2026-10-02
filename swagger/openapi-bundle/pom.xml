@@ -13,7 +13,7 @@
 		<java.version>11</java.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
-		<versions.maven-version>2.4</versions.maven-version>
+		<versions.maven-version>2.22.0</versions.maven-version>
 
 	</properties>
 
