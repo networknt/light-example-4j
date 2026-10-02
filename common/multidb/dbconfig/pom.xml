@@ -28,7 +28,7 @@
         <version.json-schema-validator>2.0.7</version.json-schema-validator>
         <version.fastscanner>2.18.1</version.fastscanner>
         <version.hikaricp>7.1.0</version.hikaricp>
-        <version.h2>2.5.250</version.h2>
+        <version.h2>2.5.252</version.h2>
         <versions.maven-version>2.22.0</versions.maven-version>
     </properties>
 
