@@ -24,7 +24,7 @@
         <version.encoder>1.5.0</version.encoder>
         <version.logback>1.6.5</version.logback>
         <version.junit>4.13.2</version.junit>
-        <version.undertow>2.4.1.Final</version.undertow>
+        <version.undertow>2.4.4.Final</version.undertow>
         <version.json-schema-validator>2.0.8</version.json-schema-validator>
         <version.fastscanner>2.18.1</version.fastscanner>
 

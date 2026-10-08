@@ -24,7 +24,7 @@
         <version.encoder>1.2</version.encoder>
         <version.logback>1.6.5</version.logback>
         <version.junit>5.11.4</version.junit>
-        <version.undertow>2.4.1.Final</version.undertow>
+        <version.undertow>2.4.4.Final</version.undertow>
         <versions.maven-version>2.22.0</versions.maven-version>
         <version.maven-javadoc>3.12.0</version.maven-javadoc>
         <version.maven-jar>3.5.1</version.maven-jar>
