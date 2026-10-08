@@ -59,7 +59,7 @@
         <version.logback>1.6.3</version.logback>
         <version.junit>5.11.4</version.junit>
         <version.undertow>2.4.1.Final</version.undertow>
-        <version.json-schema-validator>2.0.7</version.json-schema-validator>
+        <version.json-schema-validator>2.0.8</version.json-schema-validator>
         <versions.maven-version>2.22.0</versions.maven-version>
         <version.nexus-staging-maven>1.7.0</version.nexus-staging-maven>
         <version.maven-gpg>3.2.7</version.maven-gpg>
