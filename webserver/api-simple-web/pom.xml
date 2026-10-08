@@ -17,7 +17,7 @@
         <version.slf4j>2.0.20</version.slf4j>
         <version.jose4j>0.9.7</version.jose4j>
         <version.encoder>1.5.0</version.encoder>
-        <version.logback>1.6.3</version.logback>
+        <version.logback>1.6.5</version.logback>
         <version.junit>5.11.4</version.junit>
         <version.undertow>2.4.1.Final</version.undertow>
         <nexus.server>http://nexus.com:8080</nexus.server>
