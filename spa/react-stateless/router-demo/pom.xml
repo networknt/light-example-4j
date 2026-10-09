@@ -62,7 +62,7 @@
         <version.json-schema-validator>2.0.8</version.json-schema-validator>
         <versions.maven-version>2.22.0</versions.maven-version>
         <version.nexus-staging-maven>1.7.0</version.nexus-staging-maven>
-        <version.maven-gpg>3.2.7</version.maven-gpg>
+        <version.maven-gpg>3.2.8</version.maven-gpg>
         <argLine>-Xmx512m</argLine>
     </properties>
 
