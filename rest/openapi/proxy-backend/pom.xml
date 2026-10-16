@@ -24,7 +24,7 @@
 
 
 
-        <versions.maven-version>2.22.0</versions.maven-version>
+        <versions.maven-version>2.23.0</versions.maven-version>
         <version.maven-javadoc>3.12.0</version.maven-javadoc>
         <version.maven-jar>3.5.1</version.maven-jar>
         <version.maven-shade>3.6.2</version.maven-shade>
